@@ -1,5 +1,9 @@
 # SAE PONEY
 
+## Membre de la SAE
+Chris Mathevet
+Clement Renaudin
+Julian Marques 
 
 ## Consigne 
 Un couple passionne d’equitation a ouvert depuis plusieurs annees le poney club ≪ Grand
