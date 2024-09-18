@@ -29,6 +29,8 @@ peuvent portes un cavalier jusqu’a un certain poids.
 - **semaine 1**
     - Analyse du projet
     - MCD
+    - Listes des contraintes
+    
 - **semaine 2**
     
 ### Clement Renaudin
