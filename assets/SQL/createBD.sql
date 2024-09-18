@@ -156,10 +156,10 @@ CREATE TABLE RESERVATION(
     idNiveau INT,  -- cle etrangere ==> idNiveau
     idType INT, -- cle etrangere ==> idType
     idMoniteur INT, -- cle etrangere ==> idMoniteur
-    dateCours DATE -- cle etrangere ==> dateCours,
-    heureDebutCours INT -- cle etrangere ==> heureDebutCours,
-    idClient INT -- cle etrangere ==> idClient,
-    idPoney INT -- cle etrangere ==> idPoney,
+    dateCours DATE, -- cle etrangere ==> dateCours,
+    heureDebutCours INT, -- cle etrangere ==> heureDebutCours,
+    idClient INT, -- cle etrangere ==> idClient,
+    idPoney INT, -- cle etrangere ==> idPoney,
     
     PRIMARY KEY (idCours, idNiveau, idType, idMoniteur, dateCours, heureDebutCours, idClient, idPoney),
 
