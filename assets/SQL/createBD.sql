@@ -1,45 +1,52 @@
 -- creation des tables SQL : PONEY WEB
-create table PERSONNE(
-    idPersonne int,
-    mdp varchar(100),
-    prenomPersonne varchar(100),
-    nomPersonne varchar(100),
-    mail varchar(100),
+
+
+-- Formats :
+-- Date au format ISO 8601 (YYYY-MM-DD)
+-- Heure au format hh:mm
+-- photo ==> lien vers le dossier images/photoPoney/ mettre juste le nom de l'image donc "michelLePoney.png" pas "images/photoPoney/michelLePoney.png"
+
+CREATE TABLE PERSONNE(
+    idPersonne INT,
+    mdp VARCHAR(100),
+    prenomPersonne VARCHAR(100),
+    nomPersonne VARCHAR(100),
+    mail VARCHAR(100),
     
     PRIMARY KEY (idPersonne)
 );
 
-create table CLIENT(
-    idClient int, -- cle etrangere ==> idPersonne
-    dateInscription date,
-    poidsClient int, 
-    solde int,
+CREATE TABLE CLIENT(
+    idClient INT, -- cle etrangere ==> idPersonne
+    dateInscription DATE,
+    poidsClient INT, 
+    solde INT,
     
     PRIMARY KEY (idClient),
     
     FOREIGN KEY (idClient) REFERENCES PERSONNE(idPersonne)
 );
 
-create table MONITEUR(
-    idMoniteur int, -- cle etrangere ==> idPersonne
-    salaire float,
+CREATE TABLE MONITEUR(
+    idMoniteur INT, -- cle etrangere ==> idPersonne
+    salaire DECIMAL(5,2),
     
     PRIMARY KEY (idMoniteur),
     
     FOREIGN KEY (idMoniteur) REFERENCES PERSONNE(idPersonne)
 );
 
-create table NIVEAU(
-    idNiveau int,
-    nomNiveau varchar(30),
+CREATE TABLE NIVEAU(
+    idNiveau INT,
+    nomNiveau VARCHAR(30),
    
     PRIMARY KEY (idNiveau)
 );
 
-create table OBTENTION(
-    idPersonne int, -- cle etrangere ==> idPersonne
-    idNiveau int, -- cle etrangere ==> idNiveau
-    dateObtention date,
+CREATE TABLE OBTENTION(
+    idPersonne INT, -- cle etrangere ==> idPersonne
+    idNiveau INT, -- cle etrangere ==> idNiveau
+    dateObtention DATE,
     
     PRIMARY KEY (idPersonne, idNiveau),
     
@@ -47,40 +54,40 @@ create table OBTENTION(
     FOREIGN KEY (idNiveau) REFERENCES NIVEAU(idNiveau)
 );
 
-create table DISPONIBILITE(
-    idMoniteur int, -- cle etrangere ==> idMoniteur
-    heureDebutDispo int, 
-    dateDispo date,
-    finHeureDispo int,
+CREATE TABLE DISPONIBILITE(
+    idMoniteur INT, -- cle etrangere ==> idMoniteur
+    heureDebutDispo INT, 
+    dateDispo DATE,
+    finHeureDispo INT,
     
     PRIMARY KEY (idMoniteur, heureDebutDispo, dateDispo),
     
     FOREIGN KEY (idMoniteur) REFERENCES MONITEUR(idMoniteur)
 );
 
-create table FACTURE_SOLDE(
-    idClient int, -- cle etrangere ==> idPersonne
-    idFacture int,
-    dateFacture date,
-    montant int,
+CREATE TABLE FACTURE_SOLDE(
+    idClient INT, -- cle etrangere ==> idPersonne
+    idFacture INT,
+    dateFacture DATE,
+    montant INT,
     
     PRIMARY KEY (idClient, idFacture),
     
     FOREIGN KEY (idClient) REFERENCES CLIENT(idClient)
 );
 
-create table COTISATION(
-    idCotisation int,
-    nomCotisation varchar(100),
-    annees int,
-    prixCotisationAnnuelle int,
+CREATE TABLE COTISATION(
+    idCotisation INT,
+    nomCotisation VARCHAR(100),
+    annees INT,
+    prixCotisationAnnuelle INT,
     
     PRIMARY KEY (idCotisation)    
 );
 
-create table PAYER(
-    idCotisation int, -- cle etrangere ==> idCotisation
-    idClient int, -- cle etrangere ==> idPersonne
+CREATE TABLE PAYER(
+    idCotisation INT, -- cle etrangere ==> idCotisation
+    idClient INT, -- cle etrangere ==> idPersonne
     
     PRIMARY KEY (idCotisation, idClient),
     
@@ -88,41 +95,41 @@ create table PAYER(
     FOREIGN KEY (idClient) REFERENCES CLIENT(idClient)
 );
 
-create table RACE(
-    idRace int,
-    nomRace varchar(50),
-    descriptionRace varchar(255),
+CREATE TABLE RACE(
+    idRace INT,
+    nomRace VARCHAR(50),
+    descriptionRace VARCHAR(255),
     
     PRIMARY KEY (idRace)
 );
 
-create table PONEY(
-    idPoney int,
-    nomPoney varchar(30),
-    poidsMax int,
-    photo varchar(30), -- photo ==> lien vers le dossier images/photoPoney/ mettre juste le nom de l'image donc "michelLePoney.png" pas "images/photoPoney/michelLePoney.png"
-    idRace int, -- cle etrangere ==> idRace
+CREATE TABLE PONEY(
+    idPoney INT,
+    nomPoney VARCHAR(30),
+    poidsMax INT,
+    photo VARCHAR(30), 
+    idRace INT, -- cle etrangere ==> idRace
     
     PRIMARY KEY (idPoney),
     
     FOREIGN KEY (idRace) REFERENCES RACE(idRace)
 );
 
-create table TYPE_COURS(
-    idType int,
-    nomType varchar(30),
-    nbMax int,
+CREATE TABLE TYPE_COURS(
+    idType INT,
+    nomType VARCHAR(30),
+    nbMax INT,
     
     PRIMARY KEY (idType)
 );
 
-create table COURS(
-    idCours int,
-    idNiveau int,  -- cle etrangere ==> idNiveau
-    idType int, -- cle etrangere ==> idType
-    nomCours varchar(30),
-    duree int,
-    prix int,
+CREATE TABLE COURS(
+    idCours INT,
+    idNiveau INT,  -- cle etrangere ==> idNiveau
+    idType INT, -- cle etrangere ==> idType
+    nomCours VARCHAR(30),
+    duree INT CHECK (duree = 1 or duree = 2),
+    prix INT,
     
     PRIMARY KEY (idCours, idNiveau, idType),
     
@@ -130,44 +137,34 @@ create table COURS(
     FOREIGN KEY (idType) REFERENCES TYPE_COURS(idType)
 );
 
-create table REPRESENTATION(
-    idCours int, -- cle etrangere ==> idCours
-    idNiveau int,  -- cle etrangere ==> idNiveau
-    idType int, -- cle etrangere ==> idType
-    idMoniteur int, -- cle etrangere ==> idMoniteur
-    dateDebutCours date,
-    heureDebutCour int,
-    activite varchar(30),
+CREATE TABLE REPRESENTATION(
+    idCours INT, -- cle etrangere ==> idCours
+    idNiveau INT,  -- cle etrangere ==> idNiveau
+    idType INT, -- cle etrangere ==> idType
+    idMoniteur INT, -- cle etrangere ==> idMoniteur
+    dateDebutCours DATE,
+    heureDebutCours INT,
+    activite VARCHAR(30),
 
-    PRIMARY KEY (idCours, idNiveau, idType, idMoniteur, dateDebutCours, heureDebutCour),
+    PRIMARY KEY (idCours, idNiveau, idType, idMoniteur, dateDebutCours, heureDebutCours),
     FOREIGN KEY (idCours, idNiveau, idType) REFERENCES COURS(idCours, idNiveau, idType),
-    -- FOREIGN KEY (idCours) REFERENCES COURS(idCours),
-    -- FOREIGN KEY (idNiveau) REFERENCES COURS(idNiveau),
-    -- FOREIGN KEY (idType) REFERENCES COURS(idType),
     FOREIGN KEY (idMoniteur) REFERENCES MONITEUR(idMoniteur)
 );
 
-create table RESERVATION(
-    idCours int, -- cle etrangere ==> idCours
-    idNiveau int,  -- cle etrangere ==> idNiveau
-    idType int, -- cle etrangere ==> idType
-    idMoniteur int, -- cle etrangere ==> idMoniteur
-    dateDebutCours date,
-    heureDebutCour int,
-    idClient int,
-    idPoney int,
+CREATE TABLE RESERVATION(
+    idCours INT, -- cle etrangere ==> idCours
+    idNiveau INT,  -- cle etrangere ==> idNiveau
+    idType INT, -- cle etrangere ==> idType
+    idMoniteur INT, -- cle etrangere ==> idMoniteur
+    dateDebutCours DATE -- cle etrangere ==> dateDebutCours,
+    heureDebutCours INT -- cle etrangere ==> heureDebutCours,
+    idClient INT -- cle etrangere ==> idClient,
+    idPoney INT -- cle etrangere ==> idPoney,
     
-    PRIMARY KEY (idCours, idNiveau, idType, idMoniteur, dateDebutCours, heureDebutCour, idClient, idPoney),
-    
-    -- FOREIGN KEY (idCours) REFERENCES REPRESENTATION(idCours),
-    -- FOREIGN KEY (idNiveau) REFERENCES REPRESENTATION(idNiveau),
-    -- FOREIGN KEY (idType) REFERENCES REPRESENTATION(idType),
-    -- FOREIGN KEY (idMoniteur) REFERENCES REPRESENTATION(idMoniteur),
-    -- FOREIGN KEY (dateDebutCours) REFERENCES REPRESENTATION(dateDebutCours),
-    -- FOREIGN KEY (heureDebutCour) REFERENCES REPRESENTATION(heureDebutCour),
+    PRIMARY KEY (idCours, idNiveau, idType, idMoniteur, dateDebutCours, heureDebutCours, idClient, idPoney),
 
-    FOREIGN KEY (idCours, idNiveau, idType, idMoniteur, dateDebutCours, heureDebutCour) 
-        REFERENCES REPRESENTATION(idCours, idNiveau, idType, idMoniteur, dateDebutCours, heureDebutCour),
+    FOREIGN KEY (idCours, idNiveau, idType, idMoniteur, dateDebutCours, heureDebutCours) 
+    REFERENCES REPRESENTATION(idCours, idNiveau, idType, idMoniteur, dateDebutCours, heureDebutCours),
 
     FOREIGN KEY (idClient) REFERENCES CLIENT(idClient),
     FOREIGN KEY (idPoney) REFERENCES PONEY(idPoney)
