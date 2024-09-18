@@ -26,16 +26,24 @@ peuvent portes un cavalier jusqu’a un certain poids.
 
 
 ### Chris Mathevet
+- **semaine 1**
     - Analyse du projet
     - MCD
+- **semaine 2**
+    
 ### Clement Renaudin
+- **semaine 1**
     - Analyse du projet
     - USE CASE
+- **semaine 2**
+
 ### Julian Marques 
+- **semaine 1**
     - Analyse du projet
     - USE CASE
     - Script sql
     - Maquette site
+- **semaine 2**
 
 
 
