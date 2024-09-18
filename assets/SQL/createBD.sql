@@ -142,11 +142,11 @@ CREATE TABLE REPRESENTATION(
     idNiveau INT,  -- cle etrangere ==> idNiveau
     idType INT, -- cle etrangere ==> idType
     idMoniteur INT, -- cle etrangere ==> idMoniteur
-    dateDebutCours DATE,
+    dateCours DATE,
     heureDebutCours INT,
     activite VARCHAR(30),
 
-    PRIMARY KEY (idCours, idNiveau, idType, idMoniteur, dateDebutCours, heureDebutCours),
+    PRIMARY KEY (idCours, idNiveau, idType, idMoniteur, dateCours, heureDebutCours),
     FOREIGN KEY (idCours, idNiveau, idType) REFERENCES COURS(idCours, idNiveau, idType),
     FOREIGN KEY (idMoniteur) REFERENCES MONITEUR(idMoniteur)
 );
@@ -156,15 +156,15 @@ CREATE TABLE RESERVATION(
     idNiveau INT,  -- cle etrangere ==> idNiveau
     idType INT, -- cle etrangere ==> idType
     idMoniteur INT, -- cle etrangere ==> idMoniteur
-    dateDebutCours DATE -- cle etrangere ==> dateDebutCours,
+    dateCours DATE -- cle etrangere ==> dateCours,
     heureDebutCours INT -- cle etrangere ==> heureDebutCours,
     idClient INT -- cle etrangere ==> idClient,
     idPoney INT -- cle etrangere ==> idPoney,
     
-    PRIMARY KEY (idCours, idNiveau, idType, idMoniteur, dateDebutCours, heureDebutCours, idClient, idPoney),
+    PRIMARY KEY (idCours, idNiveau, idType, idMoniteur, dateCours, heureDebutCours, idClient, idPoney),
 
-    FOREIGN KEY (idCours, idNiveau, idType, idMoniteur, dateDebutCours, heureDebutCours) 
-    REFERENCES REPRESENTATION(idCours, idNiveau, idType, idMoniteur, dateDebutCours, heureDebutCours),
+    FOREIGN KEY (idCours, idNiveau, idType, idMoniteur, dateCours, heureDebutCours) 
+    REFERENCES REPRESENTATION(idCours, idNiveau, idType, idMoniteur, dateCours, heureDebutCours),
 
     FOREIGN KEY (idClient) REFERENCES CLIENT(idClient),
     FOREIGN KEY (idPoney) REFERENCES PONEY(idPoney)
