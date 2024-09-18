@@ -22,6 +22,23 @@ personne, un poney et un moniteur, il se deroule a une date, une heure precise e
 peuvent portes un cavalier jusqu’a un certain poids.
 
 
+## Tache par membre du groupe
+
+
+### Chris Mathevet
+    - Analyse du projet
+    - MCD
+### Clement Renaudin
+    - Analyse du projet
+    - USE CASE
+### Julian Marques 
+    - Analyse du projet
+    - USE CASE
+    - Script sql
+    - Maquette site
+
+
+
 
 
 ### A FAIRE
@@ -67,3 +84,4 @@ peuvent portes un cavalier jusqu’a un certain poids.
 [ ] tache  
 [ ]     ==> sous tache  
 [ ]         ==> sous sous tache  
+²
