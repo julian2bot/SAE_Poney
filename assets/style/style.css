@@ -114,11 +114,12 @@ h2{
     font-size:2.5em ;
     margin-bottom: .5em ;
 }
+
 .login p, .signIn p{
-    margin-bottom: .5em ;
-    
+    margin-bottom: .5em ;   
 }
-.login{
+
+.login, .signIn{
     position: absolute;
     width: 50vw;
     height: 82vh;
@@ -130,24 +131,42 @@ h2{
     display: none;
 }
 
-.login > img{
+.login > img{ 
+    right: 0;
+    box-shadow: rgba(0, 0, 0, 0.225) -11px 0px 4px 0px; /*a faire*/
+}
+
+.signIn > img{
+    left: 0;
+    box-shadow: rgba(0, 0, 0, 0.225) 11px 0px 4px 0px; /*a faire*/
+    margin-left: 0;
+}
+
+.login > img, .signIn > img{
     max-width: 50%;
     height: 100%;
     position: absolute;
-    right: 0;
     bottom: 0;
     border-radius: 42px;
-    box-shadow: rgba(0, 0, 0, 0.225) -11px 0px 4px 0px;
+    /* box-shadow: rgba(0, 0, 0, 0.225) -11px 0px 4px 0px; */
     object-fit: cover;
 }
 
 .login > section {
+    margin-top: calc((100vh - 70%) / 2 ); /* 10% a changer */
+    left: 0;
+
+}
+.signIn > section {
+    margin-top: calc((100vh - 80%) / 2 ); /* 10% a changer */
+    left: 50%;
+
+}
+.login > section, .signIn > section  {
     padding: 2em;
     width: calc(50% - 2em * 2);
     position: absolute;
-    left: 0;
     color: #eee;
-    margin-top: calc((100vh - 70%) / 2 ); /* 10% a changer */
 }
 
 form button{
@@ -162,18 +181,11 @@ form button{
 }
 form > a{
     text-decoration: none;
-    color: #8a8a8a;
+    color: #b3b2b2;
 }
 form > a:hover{
-    text-decoration: underline #8a8a8a;
+    text-decoration: underline #b3b2b2;
 }
-
-/* .form-input {
-    display: flex;
-    flex-direction: column;
-    align-items: start;
-    margin-top: 1em;
-} */
 
 form > input {
     width: 100%;
@@ -188,42 +200,11 @@ form > input {
     color: white;
 }
 
-
-.signIn{
-    position: absolute;
-    width: 50vw;
-    height: 82vh;
-    margin-left: calc(50vw / 2);
-    z-index: 3;
-    background-color: #495B4B;
-    position: relative;
-    border-radius: 42px;
-    display: none;
+form > input::placeholder{
+    color: white;
 }
 
-
-.signIn > img{
-    max-width: 50%;
-    height: 100%;
-    position: absolute;
-    margin-left: 0;
-    left: 0;
-    bottom: 0;
-    border-radius: 42px;
-    box-shadow: rgba(0, 0, 0, 0.225) -11px 0px 4px 0px;
-    object-fit: cover;
+form > label{
+    visibility: hidden;
 }
-
-.signIn > section {
-    padding: 2em;
-    width: calc(50% - 2em * 2);
-    position: absolute;
-    left: 50%;
-    color: #eee;
-    margin-top: calc((100vh - 80%) / 2 ); /* 10% a changer */
-
-    /* margin-top: calc((50% - 30%) / 2 );  10% a changer */
-}
-
-
 /*  Footer  */
