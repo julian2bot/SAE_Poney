@@ -19,7 +19,7 @@ CREATE TABLE PERSONNE(
 CREATE TABLE CLIENT(
     idClient INT, -- cle etrangere ==> idPersonne
     dateInscription DATE,
-    poidsClient INT, 
+    poidsClient TINYINT, 
     solde INT,
     
     PRIMARY KEY (idClient),
@@ -37,7 +37,7 @@ CREATE TABLE MONITEUR(
 );
 
 CREATE TABLE NIVEAU(
-    idNiveau INT,
+    idNiveau TINYINT,
     nomNiveau VARCHAR(30),
    
     PRIMARY KEY (idNiveau)
@@ -45,7 +45,7 @@ CREATE TABLE NIVEAU(
 
 CREATE TABLE OBTENTION(
     idPersonne INT, -- cle etrangere ==> idPersonne
-    idNiveau INT, -- cle etrangere ==> idNiveau
+    idNiveau TINYINT, -- cle etrangere ==> idNiveau
     dateObtention DATE,
     
     PRIMARY KEY (idPersonne, idNiveau),
@@ -56,9 +56,9 @@ CREATE TABLE OBTENTION(
 
 CREATE TABLE DISPONIBILITE(
     idMoniteur INT, -- cle etrangere ==> idMoniteur
-    heureDebutDispo INT, 
+    heureDebutDispo DECIMAL(2,1) CHECK (heureDebutDispo BETWEEN 1 AND 24),
     dateDispo DATE,
-    finHeureDispo INT,
+    finHeureDispo DECIMAL(2,1) CHECK (heureDebutDispo BETWEEN 1 AND 24 AND heureDebutDispo < finHeureDispo),
     
     PRIMARY KEY (idMoniteur, heureDebutDispo, dateDispo),
     
@@ -69,7 +69,7 @@ CREATE TABLE FACTURE_SOLDE(
     idClient INT, -- cle etrangere ==> idPersonne
     idFacture INT,
     dateFacture DATE,
-    montant INT,
+    montant SMALLINT CHECK (montant > 0),
     
     PRIMARY KEY (idClient, idFacture),
     
@@ -79,8 +79,8 @@ CREATE TABLE FACTURE_SOLDE(
 CREATE TABLE COTISATION(
     idCotisation INT,
     nomCotisation VARCHAR(100),
-    annees INT,
-    prixCotisationAnnuelle INT,
+    annees SMALLINT,
+    prixCotisationAnnuelle SMALLINT CHECK (montant > 0),
     
     PRIMARY KEY (idCotisation)    
 );
@@ -96,7 +96,7 @@ CREATE TABLE PAYER(
 );
 
 CREATE TABLE RACE(
-    idRace INT,
+    idRace SMALLINT,
     nomRace VARCHAR(50),
     descriptionRace VARCHAR(255),
     
@@ -106,9 +106,9 @@ CREATE TABLE RACE(
 CREATE TABLE PONEY(
     idPoney INT,
     nomPoney VARCHAR(30),
-    poidsMax INT,
+    poidsMax TINYINT,
     photo VARCHAR(30), 
-    idRace INT, -- cle etrangere ==> idRace
+    idRace SMALLINT, -- cle etrangere ==> idRace
     
     PRIMARY KEY (idPoney),
     
@@ -116,20 +116,20 @@ CREATE TABLE PONEY(
 );
 
 CREATE TABLE TYPE_COURS(
-    idType INT,
+    idType TINYINT,
     nomType VARCHAR(30),
-    nbMax INT,
+    nbMax TINYINT,
     
     PRIMARY KEY (idType)
 );
 
 CREATE TABLE COURS(
     idCours INT,
-    idNiveau INT,  -- cle etrangere ==> idNiveau
-    idType INT, -- cle etrangere ==> idType
+    idNiveau TINYINT,  -- cle etrangere ==> idNiveau
+    idType TINYINT, -- cle etrangere ==> idType
     nomCours VARCHAR(30),
     duree INT CHECK (duree = 1 or duree = 2),
-    prix INT,
+    prix SMALLINT,
     
     PRIMARY KEY (idCours, idNiveau, idType),
     
@@ -139,11 +139,11 @@ CREATE TABLE COURS(
 
 CREATE TABLE REPRESENTATION(
     idCours INT, -- cle etrangere ==> idCours
-    idNiveau INT,  -- cle etrangere ==> idNiveau
-    idType INT, -- cle etrangere ==> idType
+    idNiveau TINYINT,  -- cle etrangere ==> idNiveau
+    idType TINYINT, -- cle etrangere ==> idType
     idMoniteur INT, -- cle etrangere ==> idMoniteur
     dateCours DATE,
-    heureDebutCours INT,
+    heureDebutCours DECIMAL(2,1) CHECK (heureDebutDispo BETWEEN 1 AND 24),
     activite VARCHAR(30),
 
     PRIMARY KEY (idCours, idNiveau, idType, idMoniteur, dateCours, heureDebutCours),
@@ -153,11 +153,11 @@ CREATE TABLE REPRESENTATION(
 
 CREATE TABLE RESERVATION(
     idCours INT, -- cle etrangere ==> idCours
-    idNiveau INT,  -- cle etrangere ==> idNiveau
-    idType INT, -- cle etrangere ==> idType
+    idNiveau TINYINT,  -- cle etrangere ==> idNiveau
+    idType TINYINT, -- cle etrangere ==> idType
     idMoniteur INT, -- cle etrangere ==> idMoniteur
     dateCours DATE, -- cle etrangere ==> dateCours,
-    heureDebutCours INT, -- cle etrangere ==> heureDebutCours,
+    heureDebutCours DECIMAL(2,1) CHECK (heureDebutDispo BETWEEN 1 AND 24), -- cle etrangere ==> heureDebutCours,
     idClient INT, -- cle etrangere ==> idClient,
     idPoney INT, -- cle etrangere ==> idPoney,
     
