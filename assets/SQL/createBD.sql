@@ -77,30 +77,31 @@ CREATE TABLE FACTURE_SOLDE(
 );
 
 CREATE TABLE COTISATION(
-    idCotisation INT,
+    
     nomCotisation VARCHAR(100),
     annees SMALLINT,
-    prixCotisationAnnuelle SMALLINT CHECK (montant > 0),
+    prixCotisationAnnuelle SMALLINT CHECK (prixCotisationAnnuelle > 0),
     
-    PRIMARY KEY (idCotisation)    
+    PRIMARY KEY (nomCotisation, annees)    
 );
 
 CREATE TABLE PAYER(
-    idCotisation INT, -- cle etrangere ==> idCotisation
+
+    nomCotisation VARCHAR(100),-- cle etrangere ==> nomCotisation
+    anneesCoti SMALLINT,-- cle etrangere ==> annees de cotisation
     idClient INT, -- cle etrangere ==> idPersonne
     
-    PRIMARY KEY (idCotisation, idClient),
+    PRIMARY KEY (nomCotisation, anneesCoti, idClient),
     
-    FOREIGN KEY (idCotisation) REFERENCES COTISATION(idCotisation),
+    FOREIGN KEY (nomCotisation, anneesCoti) REFERENCES COTISATION(nomCotisation, annees),
     FOREIGN KEY (idClient) REFERENCES CLIENT(idClient)
 );
 
 CREATE TABLE RACE(
-    idRace SMALLINT,
     nomRace VARCHAR(50),
     descriptionRace VARCHAR(255),
     
-    PRIMARY KEY (idRace)
+    PRIMARY KEY (nomRace)
 );
 
 CREATE TABLE PONEY(
@@ -108,63 +109,54 @@ CREATE TABLE PONEY(
     nomPoney VARCHAR(30),
     poidsMax TINYINT,
     photo VARCHAR(30), 
-    idRace SMALLINT, -- cle etrangere ==> idRace
+    nomRace VARCHAR(50), -- cle etrangere ==> nomRace
     
     PRIMARY KEY (idPoney),
     
-    FOREIGN KEY (idRace) REFERENCES RACE(idRace)
+    FOREIGN KEY (nomRace) REFERENCES RACE(nomRace)
 );
 
-CREATE TABLE TYPE_COURS(
-    idType TINYINT,
-    nomType VARCHAR(30),
-    nbMax TINYINT,
-    
-    PRIMARY KEY (idType)
-);
 
 CREATE TABLE COURS(
     idCours INT,
     idNiveau TINYINT,  -- cle etrangere ==> idNiveau
-    idType TINYINT, -- cle etrangere ==> idType
     nomCours VARCHAR(30),
     duree INT CHECK (duree = 1 or duree = 2),
     prix SMALLINT,
+    nbMax TINYINT CHECK (nbMax = 1 or nbMax =4 10),
     
-    PRIMARY KEY (idCours, idNiveau, idType),
+    PRIMARY KEY (idCours, idNiveau),
     
-    FOREIGN KEY (idNiveau) REFERENCES NIVEAU(idNiveau),
-    FOREIGN KEY (idType) REFERENCES TYPE_COURS(idType)
+    FOREIGN KEY (idNiveau) REFERENCES NIVEAU(idNiveau)
 );
 
 CREATE TABLE REPRESENTATION(
     idCours INT, -- cle etrangere ==> idCours
     idNiveau TINYINT,  -- cle etrangere ==> idNiveau
-    idType TINYINT, -- cle etrangere ==> idType
     idMoniteur INT, -- cle etrangere ==> idMoniteur
     dateCours DATE,
-    heureDebutCours DECIMAL(2,1) CHECK (heureDebutDispo BETWEEN 1 AND 24),
+    heureDebutCours DECIMAL(2,1) CHECK (heureDebutCours BETWEEN 1 AND 24),
     activite VARCHAR(30),
 
-    PRIMARY KEY (idCours, idNiveau, idType, idMoniteur, dateCours, heureDebutCours),
-    FOREIGN KEY (idCours, idNiveau, idType) REFERENCES COURS(idCours, idNiveau, idType),
+    PRIMARY KEY (idCours, idNiveau, idMoniteur, dateCours, heureDebutCours),
+    FOREIGN KEY (idCours, idNiveau) REFERENCES COURS(idCours, idNiveau),
     FOREIGN KEY (idMoniteur) REFERENCES MONITEUR(idMoniteur)
 );
 
 CREATE TABLE RESERVATION(
     idCours INT, -- cle etrangere ==> idCours
     idNiveau TINYINT,  -- cle etrangere ==> idNiveau
-    idType TINYINT, -- cle etrangere ==> idType
     idMoniteur INT, -- cle etrangere ==> idMoniteur
     dateCours DATE, -- cle etrangere ==> dateCours,
-    heureDebutCours DECIMAL(2,1) CHECK (heureDebutDispo BETWEEN 1 AND 24), -- cle etrangere ==> heureDebutCours,
+    heureDebutCours DECIMAL(2,1) CHECK (heureDebutCours BETWEEN 1 AND 24), -- cle etrangere ==> heureDebutCours,
     idClient INT, -- cle etrangere ==> idClient,
     idPoney INT, -- cle etrangere ==> idPoney,
     
-    PRIMARY KEY (idCours, idNiveau, idType, idMoniteur, dateCours, heureDebutCours, idClient, idPoney),
+    PRIMARY KEY (idCours, idNiveau, idMoniteur, dateCours, heureDebutCours, idClient, idPoney),
 
-    FOREIGN KEY (idCours, idNiveau, idType, idMoniteur, dateCours, heureDebutCours) 
-    REFERENCES REPRESENTATION(idCours, idNiveau, idType, idMoniteur, dateCours, heureDebutCours),
+    FOREIGN KEY (idCours, idNiveau, idMoniteur, dateCours, heureDebutCours) 
+    REFERENCES REPRESENTATION(idCours, idNiveau, idMoniteur, dateCours, heureDebutCours 
+    ),
 
     FOREIGN KEY (idClient) REFERENCES CLIENT(idClient),
     FOREIGN KEY (idPoney) REFERENCES PONEY(idPoney)
