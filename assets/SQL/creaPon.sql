@@ -7,7 +7,7 @@
 -- photo ==> lien vers le dossier images/photoPoney/ mettre juste le nom de l'image donc "michelLePoney.png" pas "images/photoPoney/michelLePoney.png"
 
 CREATE TABLE PERSONNE(
-    idPersonne INT,
+    idPersonne VARCHAR(32),
     mdp VARCHAR(100),
     prenomPersonne VARCHAR(100),
     nomPersonne VARCHAR(100),
@@ -17,7 +17,7 @@ CREATE TABLE PERSONNE(
 );
 
 CREATE TABLE CLIENT(
-    idClient INT, -- cle etrangere ==> idPersonne
+    idClient VARCHAR(32), -- cle etrangere ==> idPersonne
     dateInscription DATE,
     poidsClient TINYINT, 
     solde INT,
@@ -28,7 +28,7 @@ CREATE TABLE CLIENT(
 );
 
 CREATE TABLE MONITEUR(
-    idMoniteur INT, -- cle etrangere ==> idPersonne
+    idMoniteur VARCHAR(32), -- cle etrangere ==> idPersonne
     salaire DECIMAL(7,2),
     
     PRIMARY KEY (idMoniteur),
@@ -44,7 +44,7 @@ CREATE TABLE NIVEAU(
 );
 
 CREATE TABLE OBTENTION(
-    idPersonne INT, -- cle etrangere ==> idPersonne
+    idPersonne VARCHAR(30), -- cle etrangere ==> idPersonne
     idNiveau TINYINT, -- cle etrangere ==> idNiveau
     dateObtention DATE,
     
@@ -55,7 +55,7 @@ CREATE TABLE OBTENTION(
 );
 
 CREATE TABLE DISPONIBILITE(
-    idMoniteur INT, -- cle etrangere ==> idMoniteur
+    idMoniteur VARCHAR(32), -- cle etrangere ==> idMoniteur
     heureDebutDispo DECIMAL(4,1) CHECK (heureDebutDispo BETWEEN 1 AND 24),
     dateDispo DATE,
     finHeureDispo DECIMAL(4,1) CHECK (heureDebutDispo BETWEEN 1 AND 24 AND heureDebutDispo < finHeureDispo),
@@ -66,7 +66,7 @@ CREATE TABLE DISPONIBILITE(
 );
 
 CREATE TABLE FACTURE_SOLDE(
-    idClient INT, -- cle etrangere ==> idPersonne
+    idClient VARCHAR(32), -- cle etrangere ==> idPersonne
     idFacture INT,
     dateFacture DATE,
     montant SMALLINT CHECK (montant > 0),
@@ -89,7 +89,7 @@ CREATE TABLE PAYER(
 
     nomCotisation VARCHAR(100),-- cle etrangere ==> nomCotisation
     anneesCoti SMALLINT,-- cle etrangere ==> annees de cotisation
-    idClient INT, -- cle etrangere ==> idPersonne
+    idClient VARCHAR(32), -- cle etrangere ==> idPersonne
     
     PRIMARY KEY (nomCotisation, anneesCoti, idClient),
     
@@ -131,7 +131,7 @@ CREATE TABLE COURS(
 
 CREATE TABLE REPRESENTATION(
     idCours INT, -- cle etrangere ==> idCours
-    idMoniteur INT, -- cle etrangere ==> idMoniteur
+    idMoniteur VARCHAR(32), -- cle etrangere ==> idMoniteur
     dateCours DATE,
     heureDebutCours DECIMAL(2,1) CHECK (heureDebutCours BETWEEN 1 AND 24),
     activite VARCHAR(30),
@@ -143,10 +143,10 @@ CREATE TABLE REPRESENTATION(
 
 CREATE TABLE RESERVATION(
     idCours INT, -- cle etrangere ==> idCours
-    idMoniteur INT, -- cle etrangere ==> idMoniteur
+    idMoniteur VARCHAR(32), -- cle etrangere ==> idMoniteur
     dateCours DATE, -- cle etrangere ==> dateCours,
     heureDebutCours DECIMAL(2,1) CHECK (heureDebutCours BETWEEN 1 AND 24), -- cle etrangere ==> heureDebutCours,
-    idClient INT, -- cle etrangere ==> idClient,
+    idClient VARCHAR(32), -- cle etrangere ==> idClient,
     idPoney INT, -- cle etrangere ==> idPoney,
     
     PRIMARY KEY (idCours, idMoniteur, dateCours, heureDebutCours, idClient, idPoney),
