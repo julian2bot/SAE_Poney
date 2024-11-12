@@ -118,14 +118,14 @@ CREATE TABLE PONEY(
 
 
 CREATE TABLE COURS(
-    idCours INT PRIMARY KEY,
+    idCours INT,
     idNiveau TINYINT,  -- cle etrangere ==> idNiveau
     nomCours VARCHAR(30),
     duree INT CHECK (duree = 1 or duree = 2),
     prix SMALLINT,
-    nbMax TINYINT CHECK (nbMax = 1 or nbMax =4 10),
+    nbMax TINYINT CHECK (nbMax = 1 or nbMax = 10),
     
-    
+    PRIMARY KEY (idCours),
     FOREIGN KEY (idNiveau) REFERENCES NIVEAU(idNiveau)
 );
 
