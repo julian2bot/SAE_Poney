@@ -29,7 +29,7 @@ CREATE TABLE CLIENT(
 
 CREATE TABLE MONITEUR(
     idMoniteur INT, -- cle etrangere ==> idPersonne
-    salaire DECIMAL(5,2),
+    salaire DECIMAL(7,2),
     
     PRIMARY KEY (idMoniteur),
     
@@ -56,9 +56,9 @@ CREATE TABLE OBTENTION(
 
 CREATE TABLE DISPONIBILITE(
     idMoniteur INT, -- cle etrangere ==> idMoniteur
-    heureDebutDispo DECIMAL(2,1) CHECK (heureDebutDispo BETWEEN 1 AND 24),
+    heureDebutDispo DECIMAL(4,1) CHECK (heureDebutDispo BETWEEN 1 AND 24),
     dateDispo DATE,
-    finHeureDispo DECIMAL(2,1) CHECK (heureDebutDispo BETWEEN 1 AND 24 AND heureDebutDispo < finHeureDispo),
+    finHeureDispo DECIMAL(4,1) CHECK (heureDebutDispo BETWEEN 1 AND 24 AND heureDebutDispo < finHeureDispo),
     
     PRIMARY KEY (idMoniteur, heureDebutDispo, dateDispo),
     
