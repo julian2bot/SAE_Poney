@@ -118,44 +118,41 @@ CREATE TABLE PONEY(
 
 
 CREATE TABLE COURS(
-    idCours INT,
+    idCours INT PRIMARY KEY,
     idNiveau TINYINT,  -- cle etrangere ==> idNiveau
     nomCours VARCHAR(30),
     duree INT CHECK (duree = 1 or duree = 2),
     prix SMALLINT,
     nbMax TINYINT CHECK (nbMax = 1 or nbMax =4 10),
     
-    PRIMARY KEY (idCours, idNiveau),
     
     FOREIGN KEY (idNiveau) REFERENCES NIVEAU(idNiveau)
 );
 
 CREATE TABLE REPRESENTATION(
     idCours INT, -- cle etrangere ==> idCours
-    idNiveau TINYINT,  -- cle etrangere ==> idNiveau
     idMoniteur INT, -- cle etrangere ==> idMoniteur
     dateCours DATE,
     heureDebutCours DECIMAL(2,1) CHECK (heureDebutCours BETWEEN 1 AND 24),
     activite VARCHAR(30),
 
-    PRIMARY KEY (idCours, idNiveau, idMoniteur, dateCours, heureDebutCours),
-    FOREIGN KEY (idCours, idNiveau) REFERENCES COURS(idCours, idNiveau),
+    PRIMARY KEY (idCours, idMoniteur, dateCours, heureDebutCours),
+    FOREIGN KEY (idCours) REFERENCES COURS(idCours),
     FOREIGN KEY (idMoniteur) REFERENCES MONITEUR(idMoniteur)
 );
 
 CREATE TABLE RESERVATION(
     idCours INT, -- cle etrangere ==> idCours
-    idNiveau TINYINT,  -- cle etrangere ==> idNiveau
     idMoniteur INT, -- cle etrangere ==> idMoniteur
     dateCours DATE, -- cle etrangere ==> dateCours,
     heureDebutCours DECIMAL(2,1) CHECK (heureDebutCours BETWEEN 1 AND 24), -- cle etrangere ==> heureDebutCours,
     idClient INT, -- cle etrangere ==> idClient,
     idPoney INT, -- cle etrangere ==> idPoney,
     
-    PRIMARY KEY (idCours, idNiveau, idMoniteur, dateCours, heureDebutCours, idClient, idPoney),
+    PRIMARY KEY (idCours, idMoniteur, dateCours, heureDebutCours, idClient, idPoney),
 
-    FOREIGN KEY (idCours, idNiveau, idMoniteur, dateCours, heureDebutCours) 
-    REFERENCES REPRESENTATION(idCours, idNiveau, idMoniteur, dateCours, heureDebutCours 
+    FOREIGN KEY (idCours, idMoniteur, dateCours, heureDebutCours) 
+    REFERENCES REPRESENTATION(idCours, idMoniteur, dateCours, heureDebutCours 
     ),
 
     FOREIGN KEY (idClient) REFERENCES CLIENT(idClient),
