@@ -59,7 +59,7 @@ CREATE TABLE DISPONIBILITE(
     usernameMoniteur VARCHAR(32), -- cle etrangere ==> usernameMoniteur
     heureDebutDispo DECIMAL(4,1) CHECK (heureDebutDispo BETWEEN 1 AND 24),
     dateDispo DATE,
-    finHeureDispo DECIMAL(4,1) NOT NULL CHECK (heureDebutDispo BETWEEN 1 AND 24 AND heureDebutDispo < finHeureDispo),
+    heureFinDispo DECIMAL(4,1) NOT NULL CHECK (heureDebutDispo BETWEEN 1 AND 24 AND heureDebutDispo < heureFinDispo),
     
     PRIMARY KEY (usernameMoniteur, heureDebutDispo, dateDispo),
     
