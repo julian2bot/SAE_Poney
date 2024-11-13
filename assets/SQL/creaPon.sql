@@ -59,7 +59,7 @@ CREATE TABLE DISPONIBILITE(
     usernameMoniteur VARCHAR(32), -- cle etrangere ==> usernameMoniteur
     heureDebutDispo DECIMAL(4,1) CHECK (heureDebutDispo BETWEEN 1 AND 24),
     dateDispo DATE,
-    finHeureDispo DECIMAL(4,1) CHECK (heureDebutDispo BETWEEN 1 AND 24 AND heureDebutDispo < finHeureDispo) NOT NULL,
+    finHeureDispo DECIMAL(4,1) NOT NULL CHECK (heureDebutDispo BETWEEN 1 AND 24 AND heureDebutDispo < finHeureDispo),
     
     PRIMARY KEY (usernameMoniteur, heureDebutDispo, dateDispo),
     
@@ -70,7 +70,7 @@ CREATE TABLE FACTURE_SOLDE(
     usernameClient VARCHAR(32), -- cle etrangere ==> username
     idFacture INT,
     dateFacture DATE NOT NULL,
-    montant SMALLINT CHECK (montant > 0) NOT NULL DEFAULT 0,
+    montant SMALLINT NOT NULL DEFAULT 1 CHECK (montant > 0),
     
     PRIMARY KEY (usernameClient, idFacture),
     
@@ -81,7 +81,7 @@ CREATE TABLE COTISATION(
     
     nomCotisation VARCHAR(100),
     annees SMALLINT,
-    prixCotisationAnnuelle SMALLINT CHECK (prixCotisationAnnuelle > 0) NOT NULL,
+    prixCotisationAnnuelle SMALLINT NOT NULL CHECK (prixCotisationAnnuelle > 0),
     
     PRIMARY KEY (nomCotisation, annees)    
 );
@@ -120,9 +120,9 @@ CREATE TABLE COURS(
     idCours INT,
     idNiveau TINYINT NOT NULL,  -- cle etrangere ==> idNiveau
     nomCours VARCHAR(30) NOT NULL DEFAULT "Cours",
-    duree INT CHECK (duree = 1 or duree = 2) NOT NULL DEFAULT 1,
+    duree INT NOT NULL DEFAULT 1 CHECK (duree = 1 or duree = 2),
     prix SMALLINT NOT NULL DEFAULT 0,
-    nbMax TINYINT CHECK (nbMax = 1 or nbMax = 10) NOT NULL DEFAULT 10,
+    nbMax TINYINT NOT NULL DEFAULT 10 CHECK (nbMax = 1 or nbMax = 10),
     
     PRIMARY KEY (idCours),
     FOREIGN KEY (idNiveau) REFERENCES NIVEAU(idNiveau)
