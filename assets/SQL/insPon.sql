@@ -22,6 +22,23 @@ INSERT INTO RACE (nomRace, descriptionRace) VALUES
 ('Fjord', 'Race de poney scandinave, utilisée pour des travaux légers'),
 ('New Forest', 'Poney britannique de grande taille, polyvalent et calme');
 
+INSERT INTO COTISATION (nomCotisation, periode, prixCotisationAnnuelle) VALUES 
+('Cotisation A', '2024-2025', 120),
+('Cotisation B', '2024-2025', 150),
+('Cotisation C', '2024-2025', 200),
+
+('Cotisation A', '2023-2024', 115),
+('Cotisation B', '2023-2024', 145),
+('Cotisation C', '2023-2024', 195),
+
+('Cotisation A', '2022-2023', 110),
+('Cotisation B', '2022-2023', 140),
+('Cotisation C', '2022-2023', 190),
+
+('Cotisation A', '2021-2022', 105),
+('Cotisation B', '2021-2022', 135),
+('Cotisation C', '2021-2022', 185);
+
 -- Insertion pour la table PERSONNE (incluant moniteurs et clients)
 INSERT INTO PERSONNE (username, mdp, prenomPersonne, nomPersonne, mail) VALUES
 ('moniteur1', 'mdp123', 'Alice', 'Martin', 'alice.martin@poneyclub.com'),
@@ -67,6 +84,24 @@ INSERT INTO CLIENT (usernameClient, dateInscription, poidsClient, solde) VALUES
 ('client14', '2023-03-30', 62, 120),
 ('client15', '2022-02-25', 55, 60);
 
+INSERT INTO PAYER (nomCotisation, periode, usernameClient) VALUES 
+('Cotisation A', '2024-2025', 'client1'),
+('Cotisation B', '2024-2025', 'client2'),
+('Cotisation B', '2024-2025', 'client5'),
+('Cotisation C', '2024-2025', 'client6'),
+
+('Cotisation B', '2023-2024', 'client8'),
+('Cotisation A', '2023-2024', 'client10'),
+('Cotisation B', '2023-2024', 'client11'),
+
+('Cotisation C', '2022-2023', 'client15'),
+('Cotisation A', '2022-2023', 'client1'),
+('Cotisation C', '2022-2023', 'client3'),
+
+('Cotisation C', '2021-2022', 'client6'),
+('Cotisation A', '2021-2022', 'client7');
+
+
 -- Insertion pour la table COURS
 INSERT INTO COURS (idCours, idNiveau, nomCours, duree, prix, nbMax) VALUES
 (1, 5, 'Initiation Galop 1', 1, 30, 10),
@@ -94,7 +129,7 @@ INSERT INTO PONEY (idPoney, nomPoney, poidsMax, photo, nomRace) VALUES
 (10, 'Rêve', 53, 'reve.jpg', 'Dartmoor');
 
 -- Insertion pour la table DISPONIBILITE
-INSERT INTO DISPONIBILITE (usernameMoniteur, heureDebutDispo, dateDispo, finHeureDispo) VALUES
+INSERT INTO DISPONIBILITE (usernameMoniteur, heureDebutDispo, dateDispo, heureFinDispo) VALUES
 ('moniteur1', 9.0, '2023-11-20', 12.0),
 ('moniteur1', 14.0, '2023-11-20', 18.0),
 ('moniteur2', 10.0, '2023-11-21', 13.0),

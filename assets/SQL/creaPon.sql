@@ -80,20 +80,20 @@ CREATE TABLE FACTURE_SOLDE(
 CREATE TABLE COTISATION(
     
     nomCotisation VARCHAR(100),
-    annees SMALLINT,
+    periode VARCHAR(9),
     prixCotisationAnnuelle SMALLINT NOT NULL CHECK (prixCotisationAnnuelle > 0),
     
-    PRIMARY KEY (nomCotisation, annees)    
+    PRIMARY KEY (nomCotisation, periode)    
 );
 
 CREATE TABLE PAYER(
     nomCotisation VARCHAR(100),-- cle etrangere ==> nomCotisation
-    anneesCoti SMALLINT,-- cle etrangere ==> annees de cotisation
+    periode VARCHAR(9),-- cle etrangere ==> annees de cotisation
     usernameClient VARCHAR(32), -- cle etrangere ==> username
     
-    PRIMARY KEY (nomCotisation, anneesCoti, usernameClient),
+    PRIMARY KEY (nomCotisation, periode, usernameClient),
     
-    FOREIGN KEY (nomCotisation, anneesCoti) REFERENCES COTISATION(nomCotisation, annees),
+    FOREIGN KEY (nomCotisation, periode) REFERENCES COTISATION(nomCotisation, periode),
     FOREIGN KEY (usernameClient) REFERENCES CLIENT(usernameClient)
 );
 
