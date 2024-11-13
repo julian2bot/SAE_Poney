@@ -1,4 +1,4 @@
--- Table NIVEAU : exemples de niveaux réels dans un club d'équitation
+-- Insertion pour la table NIVEAU
 INSERT INTO NIVEAU (idNiveau, nomNiveau) VALUES
 (1, 'Débutant'),
 (2, 'Intermédiaire'),
@@ -9,158 +9,126 @@ INSERT INTO NIVEAU (idNiveau, nomNiveau) VALUES
 (7, 'Galop 3'),
 (8, 'Galop 4'),
 (9, 'Galop 5'),
-(10, 'Galop 6');
+(10, 'Galop 6'),
+(11, 'Galop 7');
 
--- Table RACE : exemples de races de poney
+-- Insertion pour la table RACE
 INSERT INTO RACE (nomRace, descriptionRace) VALUES
-('Shetland', 'Petits poneys robustes originaires des îles Shetland.'),
-('Connemara', 'Race irlandaise connue pour son agilité et endurance.'),
-('Welsh', 'Race galloise, polyvalente et populaire.'),
-('Pottok', 'Race des Pyrénées, adaptée aux terrains escarpés.'),
-('New Forest', 'Race britannique, résistante et intelligente.'),
-('Fjord', 'Race norvégienne, caractérisée par son dos robuste et crinière bicolore.'),
-('Haflinger', 'Race autrichienne, docile et adaptée aux montagnes.'),
-('Dartmoor', 'Poney de la région de Dartmoor en Angleterre.'),
-('Exmoor', 'Race anglaise ancienne, endurante.'),
-('Camargue', 'Poney de la région de Camargue en France, souvent de couleur grise.');
+('Shetland', 'Petit poney robuste originaire des îles Shetland'),
+('Connemara', 'Poney irlandais polyvalent et apprécié pour son caractère doux'),
+('Dartmoor', 'Race de poney britannique, idéale pour les jeunes cavaliers'),
+('Welsh', 'Poney gallois élégant et dynamique'),
+('Pottok', 'Poney des montagnes basques, résistant et endurant'),
+('Fjord', 'Race de poney scandinave, utilisée pour des travaux légers'),
+('New Forest', 'Poney britannique de grande taille, polyvalent et calme');
 
+-- Insertion pour la table PERSONNE (incluant moniteurs et clients)
+INSERT INTO PERSONNE (username, mdp, prenomPersonne, nomPersonne, mail) VALUES
+('moniteur1', 'mdp123', 'Alice', 'Martin', 'alice.martin@poneyclub.com'),
+('moniteur2', 'mdp123', 'Pierre', 'Dupont', 'pierre.dupont@poneyclub.com'),
+('moniteur3', 'mdp123', 'Sophie', 'Leroy', 'sophie.leroy@poneyclub.com'),
+('client1', 'mdp123', 'Julien', 'Bernard', 'julien.bernard@client.com'),
+('client2', 'mdp123', 'Claire', 'Petit', 'claire.petit@client.com'),
+('client3', 'mdp123', 'Lucas', 'Blanc', 'lucas.blanc@client.com'),
+('client4', 'mdp123', 'Marie', 'Moreau', 'marie.moreau@client.com'),
+('client5', 'mdp123', 'Paul', 'Dumont', 'paul.dumont@client.com'),
+('client6', 'mdp123', 'Emma', 'Garnier', 'emma.garnier@client.com'),
+('client7', 'mdp123', 'Léo', 'Lemoine', 'leo.lemoine@client.com'),
+('client8', 'mdp123', 'Chloé', 'Perrot', 'chloe.perrot@client.com'),
+('client9', 'mdp123', 'Hugo', 'Roussel', 'hugo.roussel@client.com'),
+('client10', 'mdp123', 'Anaïs', 'Fischer', 'anais.fischer@client.com'),
+('client11', 'mdp123', 'Lucas', 'Fabre', 'lucas.fabre@client.com'),
+('client12', 'mdp123', 'Julie', 'Olivier', 'julie.olivier@client.com'),
+('client13', 'mdp123', 'Thomas', 'Michel', 'thomas.michel@client.com'),
+('client14', 'mdp123', 'Sarah', 'Renaud', 'sarah.renaud@client.com'),
+('client15', 'mdp123', 'Nina', 'Jacquet', 'nina.jacquet@client.com');
 
-INSERT INTO PERSONNE (idPersonne, mdp, prenomPersonne, nomPersonne, mail) VALUES
-(1, 'password123', 'Alice', 'Durand', 'alice.durand@example.com'),
-(2, 'securepass', 'Bob', 'Martin', 'bob.martin@example.com'),
-(3, 'mypassword', 'Claire', 'Dubois', 'claire.dubois@example.com'),
-(4, 'pass789', 'David', 'Lefevre', 'david.lefevre@example.com'),
-(5, 'letmein', 'Emma', 'Moreau', 'emma.moreau@example.com'),
-(6, 'ponylover', 'Fabien', 'Garcia', 'fabien.garcia@example.com'),
-(7, 'password321', 'Julie', 'Bernard', 'julie.bernard@example.com'),
-(8, 'safepassword', 'Henri', 'Roux', 'henri.roux@example.com'),
-(9, 'monpassword', 'Isabelle', 'Petit', 'isabelle.petit@example.com'),
-(10, 'hello1234', 'Louis', 'Blanc', 'louis.blanc@example.com');
+-- Insertion pour la table MONITEUR
+INSERT INTO MONITEUR (usernameMoniteur, salaire, isAdmin) VALUES
+('moniteur1', 2500.00, 1),
+('moniteur2', 2300.00, 0),
+('moniteur3', 2200.00, 0);
 
+-- Insertion pour la table CLIENT
+INSERT INTO CLIENT (usernameClient, dateInscription, poidsClient, solde) VALUES
+('client1', '2022-01-15', 60, 200),
+('client2', '2021-11-20', 50, 150),
+('client3', '2023-03-10', 45, 100),
+('client4', '2022-04-25', 55, 300),
+('client5', '2022-09-01', 65, 250),
+('client6', '2023-06-30', 52, 100),
+('client7', '2021-12-12', 58, 80),
+('client8', '2023-05-05', 47, 50),
+('client9', '2022-07-14', 63, 150),
+('client10', '2023-08-21', 49, 0),
+('client11', '2023-09-10', 54, 100),
+('client12', '2022-10-15', 59, 90),
+('client13', '2021-09-09', 60, 75),
+('client14', '2023-03-30', 62, 120),
+('client15', '2022-02-25', 55, 60);
 
-
--- Table CLIENT : des clients fictifs
-INSERT INTO CLIENT (idClient, dateInscription, poidsClient, solde) VALUES
-(1, '2023-01-15', 55, 200),
-(2, '2023-02-20', 60, 150),
-(3, '2023-03-05', 50, 300),
-(4, '2023-04-18', 70, 250),
-(5, '2023-05-10', 48, 100),
-(6, '2023-06-25', 63, 120),
-(7, '2023-07-14', 58, 180),
-(8, '2023-08-01', 52, 220),
-(9, '2023-09-23', 75, 350),
-(10, '2023-10-12', 68, 90);
-
--- Table MONITEUR : des moniteurs fictifs avec salaires
-INSERT INTO MONITEUR (idMoniteur, salaire) VALUES
-(1, 2000.00),
-(2, 2200.00),
-(3, 2500.00),
-(4, 2400.00),
-(5, 2100.00),
-(6, 2300.00),
-(7, 2600.00),
-(8, 2700.00),
-(9, 2800.00),
-(10, 2900.00);
-
--- Table COURS : des cours fictifs avec durées et niveaux associés
+-- Insertion pour la table COURS
 INSERT INTO COURS (idCours, idNiveau, nomCours, duree, prix, nbMax) VALUES
-(1, 1, 'Initiation au poney', 1, 30, 10),
-(2, 2, 'Dressage débutant', 2, 40, 1),
-(3, 3, 'Obstacle', 1, 50, 1),
-(4, 4, 'Galop 1', 1, 35, 10),
-(5, 5, 'Galop 2', 1, 40, 1),
-(6, 6, 'Balade en forêt', 2, 60, 1),
-(7, 7, 'Galop 3', 1, 50, 10),
-(8, 8, 'Perfectionnement obstacle', 2, 65, 1),
-(9, 9, 'Galop 4', 1, 45, 10),
-(10, 10, 'Galop 5', 2, 55, 1);
+(1, 5, 'Initiation Galop 1', 1, 30, 10),
+(2, 6, 'Initiation Galop 2', 1, 35, 10),
+(3, 7, 'Perfectionnement Galop 3', 2, 40, 1),
+(4, 8, 'Stage Galop 4', 2, 45, 10),
+(5, 9, 'Cours Galop 5', 2, 50, 1),
+(6, 10, 'Cours Galop 6', 2, 60, 1),
+(7, 11, 'Cours Galop 7', 2, 70, 1),
+(8, 1, 'Cours Débutant', 1, 20, 10),
+(9, 3, 'Cours Confirmé', 1, 30, 10),
+(10, 4, 'Cours Avancé', 1, 35, 10);
 
--- Table PONEY : des poneys fictifs avec poids maximum et photos
+-- Insertion pour la table PONEY
 INSERT INTO PONEY (idPoney, nomPoney, poidsMax, photo, nomRace) VALUES
-(1, 'Eclair', 45, 'eclair.jpg', 'Shetland'),
-(2, 'Lumière', 50, 'lumiere.jpg', 'Connemara'),
-(3, 'Storm', 55, 'storm.jpg', 'Welsh'),
-(4, 'Brise', 60, 'brise.jpg', 'Pottok'),
-(5, 'Roxy', 48, 'roxy.jpg', 'New Forest'),
-(6, 'Tornado', 63, 'tornado.jpg', 'Fjord'),
-(7, 'Luna', 52, 'luna.jpg', 'Haflinger'),
-(8, 'Bella', 56, 'bella.jpg', 'Dartmoor'),
-(9, 'Choco', 47, 'choco.jpg', 'Exmoor'),
-(10, 'Neige', 65, 'neige.jpg', 'Camargue');
+(1, 'Flocon', 55, 'flocon.jpg', 'Shetland'),
+(2, 'Caramel', 60, 'caramel.jpg', 'Connemara'),
+(3, 'Eclair', 50, 'eclair.jpg', 'Dartmoor'),
+(4, 'Noisette', 65, 'noisette.jpg', 'Welsh'),
+(5, 'Tonnerre', 70, 'tonnerre.jpg', 'Pottok'),
+(6, 'Neige', 60, 'neige.jpg', 'Fjord'),
+(7, 'Alezan', 55, 'alezan.jpg', 'New Forest'),
+(8, 'Luna', 58, 'luna.jpg', 'Shetland'),
+(9, 'Biscuit', 65, 'biscuit.jpg', 'Connemara'),
+(10, 'Rêve', 53, 'reve.jpg', 'Dartmoor');
 
--- Table DISPONIBILITE : disponibilité des moniteurs
-INSERT INTO DISPONIBILITE (idMoniteur, heureDebutDispo, dateDispo, finHeureDispo) VALUES
-(1, 9.0, '2023-12-01', 12.0),
-(2, 10.0, '2023-12-01', 13.0),
-(3, 14.0, '2023-12-02', 16.0),
-(4, 15.0, '2023-12-02', 17.0),
-(5, 8.0, '2023-12-03', 10.0),
-(6, 13.0, '2023-12-03', 15.0),
-(7, 9.0, '2023-12-04', 11.0),
-(8, 11.0, '2023-12-04', 13.0),
-(9, 10.0, '2023-12-05', 12.0),
-(10, 12.0, '2023-12-05', 14.0);
+-- Insertion pour la table DISPONIBILITE
+INSERT INTO DISPONIBILITE (usernameMoniteur, heureDebutDispo, dateDispo, finHeureDispo) VALUES
+('moniteur1', 9.0, '2023-11-20', 12.0),
+('moniteur1', 14.0, '2023-11-20', 18.0),
+('moniteur2', 10.0, '2023-11-21', 13.0),
+('moniteur2', 15.0, '2023-11-21', 18.0),
+('moniteur3', 9.0, '2023-11-22', 11.0),
+('moniteur3', 13.0, '2023-11-22', 17.0),
+('moniteur1', 9.0, '2023-11-23', 12.0),
+('moniteur2', 10.0, '2023-11-24', 13.0),
+('moniteur3', 14.0, '2023-11-25', 17.0),
+('moniteur1', 15.0, '2023-11-26', 18.0);
 
--- Table COTISATION : cotisations fictives pour les clients
-INSERT INTO COTISATION (nomCotisation, annees, prixCotisationAnnuelle) VALUES
-('Cotisation annuelle', 2023, 500),
-('Cotisation annuelle', 2022, 480),
-('Cotisation familiale', 2023, 900),
-('Cotisation mensuelle', 2023, 50),
-('Cotisation junior', 2023, 300),
-('Cotisation senior', 2023, 400),
-('Cotisation premium', 2023, 1000),
-('Cotisation annuelle', 2021, 470),
-('Cotisation annuelle', 2020, 450),
-('Cotisation familiale', 2022, 880);
-
--- Table PAYER : associations entre clients et cotisations
-INSERT INTO PAYER (nomCotisation, anneesCoti, idClient) VALUES
-('Cotisation annuelle', 2023, 1),
-('Cotisation familiale', 2023, 2),
-('Cotisation mensuelle', 2023, 3),
-('Cotisation junior', 2023, 4),
-('Cotisation senior', 2023, 5),
-('Cotisation premium', 2023, 6),
-('Cotisation annuelle', 2022, 7),
-('Cotisation annuelle', 2021, 8),
-('Cotisation annuelle', 2020, 9),
-('Cotisation familiale', 2022, 10);
-
--- Table FACTURE_SOLDE : factures fictives des clients
-INSERT INTO FACTURE_SOLDE (idClient, idFacture, dateFacture, montant) VALUES
-(1, 1001, '2023-11-01', 200),
-(2, 1002, '2023-10-15', 150),
-(3, 1003, '2023-09-10', 300),
-(4, 1004, '2023-08-20', 250),
-(5, 1005, '2023-07-25', 100),
-(6, 1006, '2023-06-30', 120),
-(7, 1007, '2023-05-05', 180),
-(8, 1008, '2023-04-12', 220),
-(9, 1009, '2023-03-08', 350),
-(10, 1010, '2023-02-14', 90);
-
--- Table OBTENTION : obtentions de niveau par des clients fictifs
-INSERT INTO OBTENTION (idPersonne, idNiveau, dateObtention) VALUES
-(1, 3, '2023-04-10'),
-(2, 4, '2023-05-15'),
-(3, 5, '2023-06-20'),
-(4, 6, '2023-07-25'),
-(5, 7, '2023-08-30'),
-(6, 8, '2023-09-05'),
-(7, 2, '2023-10-10'),
-(8, 3, '2023-11-01'),
-(9, 1, '2023-12-15'),
-(10, 9, '2023-12-20');
+-- Insertion dans la table REPRESENTATION
+INSERT INTO REPRESENTATION (idCours, usernameMoniteur, dateCours, heureDebutCours) VALUES
+(1, 'moniteur1', '2023-12-01', 10.0),
+(2, 'moniteur1', '2023-12-02', 11.0),
+(3, 'moniteur2', '2023-12-03', 9.5),
+(4, 'moniteur2', '2023-12-04', 10.5),
+(5, 'moniteur3', '2023-12-05', 11.0),
+(6, 'moniteur3', '2023-12-06', 14.0),
+(7, 'moniteur1', '2023-12-07', 15.0),
+(8, 'moniteur2', '2023-12-08', 16.0),
+(9, 'moniteur3', '2023-12-09', 17.0),
+(10, 'moniteur1', '2023-12-10', 18.0);
 
 
-
-
-
-
-
-
-
+-- Insertion dans la table RESERVATION
+INSERT INTO RESERVATION (idCours, usernameMoniteur, dateCours, heureDebutCours, usernameClient, idPoney) VALUES
+(1, 'moniteur1', '2023-12-01', 10.0, 'client1', 1),
+(2, 'moniteur1', '2023-12-02', 11.0, 'client2', 2),
+(3, 'moniteur2', '2023-12-03', 9.5, 'client3', 3),
+(4, 'moniteur2', '2023-12-04', 10.5, 'client4', 4),
+(5, 'moniteur3', '2023-12-05', 11.0, 'client5', 5),
+(6, 'moniteur3', '2023-12-06', 14.0, 'client6', 6),
+(7, 'moniteur1', '2023-12-07', 15.0, 'client7', 7),
+(8, 'moniteur2', '2023-12-08', 16.0, 'client8', 8),
+(9, 'moniteur3', '2023-12-09', 17.0, 'client9', 9),
+(10, 'moniteur1', '2023-12-10', 18.0, 'client10', 10);

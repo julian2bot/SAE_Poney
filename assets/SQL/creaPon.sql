@@ -132,7 +132,7 @@ CREATE TABLE REPRESENTATION(
     idCours INT, -- cle etrangere ==> idCours
     usernameMoniteur VARCHAR(32), -- cle etrangere ==> usernameMoniteur
     dateCours DATE,
-    heureDebutCours DECIMAL(2,1) CHECK (heureDebutCours BETWEEN 1 AND 24),
+    heureDebutCours DECIMAL(3,1) CHECK (heureDebutCours BETWEEN 1 AND 24),
     activite VARCHAR(30),
 
     PRIMARY KEY (idCours, usernameMoniteur, dateCours, heureDebutCours),
@@ -144,7 +144,7 @@ CREATE TABLE RESERVATION(
     idCours INT, -- cle etrangere ==> idCours
     usernameMoniteur VARCHAR(32), -- cle etrangere ==> usernameMoniteur
     dateCours DATE, -- cle etrangere ==> dateCours,
-    heureDebutCours DECIMAL(2,1) CHECK (heureDebutCours BETWEEN 1 AND 24), -- cle etrangere ==> heureDebutCours,
+    heureDebutCours DECIMAL(3,1) CHECK (heureDebutCours BETWEEN 1 AND 24), -- cle etrangere ==> heureDebutCours,
     usernameClient VARCHAR(32), -- cle etrangere ==> usernameClient,
     idPoney INT, -- cle etrangere ==> idPoney,
     
