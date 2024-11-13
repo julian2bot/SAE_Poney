@@ -8,27 +8,19 @@
 
 CREATE TABLE PERSONNE(
     username VARCHAR(32),
-    mdp VARCHAR(100),
-    prenomPersonne VARCHAR(100),
-    nomPersonne VARCHAR(100),
-    mail VARCHAR(100) UNIQUE,
+    mdp VARCHAR(100) NOT NULL,
+    prenomPersonne VARCHAR(100) NOT NULL,
+    nomPersonne VARCHAR(100) NOT NULL,
+    mail VARCHAR(100) UNIQUE NOT NULL,
     
     PRIMARY KEY (username)
 );
 
-CREATE TABLE ADMINISTRATEUR(
-    usernameAdmin VARCHAR(32), -- cle etrangere ==> username
-    
-    PRIMARY KEY (usernameAdmin),
-    
-    FOREIGN KEY (usernameAdmin) REFERENCES PERSONNE(username)
-);
-
 CREATE TABLE CLIENT(
     usernameClient VARCHAR(32), -- cle etrangere ==> username
-    dateInscription DATE,
-    poidsClient TINYINT, 
-    solde INT,
+    dateInscription DATE NOT NULL,
+    poidsClient TINYINT NOT NULL, 
+    solde INT NOT NULL DEFAULT 0,
     
     PRIMARY KEY (usernameClient),
     
@@ -37,7 +29,8 @@ CREATE TABLE CLIENT(
 
 CREATE TABLE MONITEUR(
     usernameMoniteur VARCHAR(32), -- cle etrangere ==> username
-    salaire DECIMAL(7,2),
+    salaire DECIMAL(7,2) NOT NULL DEFAULT 0,
+    isAdmin BOOLEAN NOT NULL DEFAULT FALSE,
     
     PRIMARY KEY (usernameMoniteur),
     
@@ -46,7 +39,7 @@ CREATE TABLE MONITEUR(
 
 CREATE TABLE NIVEAU(
     idNiveau TINYINT,
-    nomNiveau VARCHAR(30),
+    nomNiveau VARCHAR(30) NOT NULL DEFAULT "Niveau",
    
     PRIMARY KEY (idNiveau)
 );
@@ -54,7 +47,7 @@ CREATE TABLE NIVEAU(
 CREATE TABLE OBTENTION(
     username VARCHAR(30), -- cle etrangere ==> username
     idNiveau TINYINT, -- cle etrangere ==> idNiveau
-    dateObtention DATE,
+    dateObtention DATE NOT NULL,
     
     PRIMARY KEY (username, idNiveau),
     
@@ -66,7 +59,7 @@ CREATE TABLE DISPONIBILITE(
     usernameMoniteur VARCHAR(32), -- cle etrangere ==> usernameMoniteur
     heureDebutDispo DECIMAL(4,1) CHECK (heureDebutDispo BETWEEN 1 AND 24),
     dateDispo DATE,
-    finHeureDispo DECIMAL(4,1) CHECK (heureDebutDispo BETWEEN 1 AND 24 AND heureDebutDispo < finHeureDispo),
+    finHeureDispo DECIMAL(4,1) CHECK (heureDebutDispo BETWEEN 1 AND 24 AND heureDebutDispo < finHeureDispo) NOT NULL,
     
     PRIMARY KEY (usernameMoniteur, heureDebutDispo, dateDispo),
     
@@ -76,8 +69,8 @@ CREATE TABLE DISPONIBILITE(
 CREATE TABLE FACTURE_SOLDE(
     usernameClient VARCHAR(32), -- cle etrangere ==> username
     idFacture INT,
-    dateFacture DATE,
-    montant SMALLINT CHECK (montant > 0),
+    dateFacture DATE NOT NULL,
+    montant SMALLINT CHECK (montant > 0) NOT NULL DEFAULT 0,
     
     PRIMARY KEY (usernameClient, idFacture),
     
@@ -88,13 +81,12 @@ CREATE TABLE COTISATION(
     
     nomCotisation VARCHAR(100),
     annees SMALLINT,
-    prixCotisationAnnuelle SMALLINT CHECK (prixCotisationAnnuelle > 0),
+    prixCotisationAnnuelle SMALLINT CHECK (prixCotisationAnnuelle > 0) NOT NULL,
     
     PRIMARY KEY (nomCotisation, annees)    
 );
 
 CREATE TABLE PAYER(
-
     nomCotisation VARCHAR(100),-- cle etrangere ==> nomCotisation
     anneesCoti SMALLINT,-- cle etrangere ==> annees de cotisation
     usernameClient VARCHAR(32), -- cle etrangere ==> username
@@ -107,16 +99,16 @@ CREATE TABLE PAYER(
 
 CREATE TABLE RACE(
     nomRace VARCHAR(50),
-    descriptionRace VARCHAR(255),
+    descriptionRace VARCHAR(255) NOT NULL DEFAULT "Description",
     
     PRIMARY KEY (nomRace)
 );
 
 CREATE TABLE PONEY(
     idPoney INT,
-    nomPoney VARCHAR(30),
-    poidsMax TINYINT,
-    photo VARCHAR(30), 
+    nomPoney VARCHAR(30) NOT NULL,
+    poidsMax TINYINT NOT NULL DEFAULT 0,
+    photo VARCHAR(30) NOT NULL, 
     nomRace VARCHAR(50), -- cle etrangere ==> nomRace
     
     PRIMARY KEY (idPoney),
@@ -124,14 +116,13 @@ CREATE TABLE PONEY(
     FOREIGN KEY (nomRace) REFERENCES RACE(nomRace)
 );
 
-
 CREATE TABLE COURS(
     idCours INT,
-    idNiveau TINYINT,  -- cle etrangere ==> idNiveau
-    nomCours VARCHAR(30),
-    duree INT CHECK (duree = 1 or duree = 2),
-    prix SMALLINT,
-    nbMax TINYINT CHECK (nbMax = 1 or nbMax = 10),
+    idNiveau TINYINT NOT NULL,  -- cle etrangere ==> idNiveau
+    nomCours VARCHAR(30) NOT NULL DEFAULT "Cours",
+    duree INT CHECK (duree = 1 or duree = 2) NOT NULL DEFAULT 1,
+    prix SMALLINT NOT NULL DEFAULT 0,
+    nbMax TINYINT CHECK (nbMax = 1 or nbMax = 10) NOT NULL DEFAULT 10,
     
     PRIMARY KEY (idCours),
     FOREIGN KEY (idNiveau) REFERENCES NIVEAU(idNiveau)
