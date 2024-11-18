@@ -106,9 +106,8 @@ declare mes varchar (100) ;
 select duree into durees from COURS where  idCours = new.idCours;
 
 
-if duree = 2 then
-select count(*)  into comptage from REPRESENTATION where  usernameMoniteur = new.usernameMoniteur and dateCours = new.dateCours and heureDebutCours = new.heureDebutCours+1  ;
-end if ;
+select count(*)  into comptage from REPRESENTATION where  usernameMoniteur = new.usernameMoniteur and dateCours = new.dateCours and heureDebutCours BETWEEN new.heureDebutCours AND new.heureDebutCours + durees ;
+
 
 if comptage > 0 then
 set mes = concat ( 'des cours se chevauche' ) ;
@@ -125,22 +124,56 @@ DISPONIBILITE
 create or replace trigger court_deja_present_1h_avant_representer before insert on REPRESENTATION for each row
 begin
 declare durees INT ;
-declare comptage INT DEFAULT 0;
+declare est_chevaucher boolean default false ;
 declare mes varchar (100) ;
 
 
 select duree into durees from COURS where  idCours = new.idCours;
 
+call proc_heure_avant (new.heureDebutCours ,new.dateCours,new.usernameMoniteur,durees,est_chevaucher) ;
 
 
-if duree = 2 then
-select count(*)  into comptage from REPRESENTATION where  usernameMoniteur = new.usernameMoniteur and dateCours = new.dateCours and heureDebutCours = new.heureDebutCours+1  ;
-end if ;
-
-
-if comptage > 0 then
-set mes = concat ( 'les cours se chevauche' ) ;
+if est_chevaucher = true then
+set mes = concat ( 'un precedent cours chevauche le nouveau' ) ;
 signal SQLSTATE '45000' set MESSAGE_TEXT = mes ;
 end if ;
 
 end |
+
+
+delimiter |
+create or replace procedure proc_heure_avant (heure_deb DECIMAL,dateCourss DATE,usernameMoniteur VARCHAR,duree_existant INT,est_chevaucher boolean ) as
+heure_deb DECIMAL;
+dateCourss DATE;
+usernameMoniteurs VARCHAR(32);
+duree_existant INT;
+ est_chevaucher boolean;
+
+begin
+declare identifant_cours int;
+
+declare durees INT ;
+declare heureDebutCourss DECIMAL;
+declare fini boolean default false ;
+declare lesCours cursor for
+
+select idcours from REPRESENTATION where dateCours = dateCourss and usernameMoniteur = usernameMoniteurs and heureDebutCours < heure_deb;
+
+declare continue handler for not found set fini = true;
+open lesCours ;
+while not fini do
+    fetch lesCours into identifant_cours ;
+    if not fini then
+        select duree into durees from COURS where idCours = identifant_cours
+        select heureDebutCours into heureDebutCourss from COURS where idCours = identifant_cours
+
+        if heureDebutCourss+durees < heure_deb + duree_existant then
+                est_chevaucher = true;
+        end if ;
+    end if ;
+end while ;
+close lesCours ;
+select est_chevaucher ;
+
+end |
+delimiter ;
