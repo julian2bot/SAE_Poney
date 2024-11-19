@@ -17,6 +17,108 @@ begin
 end |
 delimiter ;
 
+--Client--
+--Il doit rester de la place dans le cours--
+delimiter |
+create or replace trigger reste_place before insert on RESERVATION for each row
+begin
+    declare idNiveau_cours INT ;
+    declare nbmax int ;
+    declare nbins int ;
+    declare mes varchar (100) ;
+
+    select idNiveau into idNiveau_cours from COURS where idCours = new.idCours  ;
+    select nbMax into nbmax from COURS where idCours = new.idCours and idNiveau = idNiveau_cours ;
+    select count ( usernameClient ) into nbins from RESERVATION where idCours = new.idCours and idNiveau = idNiveau_cours;
+
+    if nbins +1 > nbmax then
+        set mes = concat ( 'inscription impossible le cours est complet' ) ;
+        signal SQLSTATE '45000' set MESSAGE_TEXT = mes ;
+    end if ;
+end |
+delimiter ;
+
+--Doit avoir le niveau nécessaire --
+delimiter |
+create or replace trigger niveauClient_avant_reserve before insert on RESERVATION for each row
+begin
+    declare idNiveau_client TINYINT ;
+    declare idNiveau_cours INT ;
+
+    declare mes varchar (100) ;
+
+    select idNiveau into idNiveau_cours from COURS where idCours = new.idCours  ;
+    select idNiveau into idNiveau_client from OBTENTION where username = new.usernameClient;
+
+    if  idNiveau_client < idNiveau_cours then
+        set mes = concat ( 'inscription impossible le niveau' , idNiveau_cours , 'de', new.usernameClient,'est trop faible' ) ;
+        signal SQLSTATE '45000' set MESSAGE_TEXT = mes ;
+    end if ;
+end |
+delimiter ;
+
+
+--Client--
+--Doit avoir payer la cotisation annuelle--x
+delimiter |
+create or replace trigger cotisation_avant_reserve before insert on RESERVATION for each row
+begin
+    declare datereserve date  ;
+    declare cotise int;
+    declare mes varchar (100) ;
+
+    select dateCours into datereserve from reserver where   dateCours = new.dateCours ;
+    select count(anneesCoti) into cotise from payer where usernameClient = new.usernameClient and anneesCoti = YEAR(datereserve);
+
+    if  cotise < 1 then
+        set mes = concat ( 'il na pas la cotisation' ) ;
+        signal SQLSTATE '45000' set MESSAGE_TEXT = mes ;
+    end if ;
+end |
+delimiter ;
+
+
+--Un client ne doit pouvoir réserver qu’une cotisation par année--x
+delimiter |
+create or replace trigger une_cotisation_pas_plus before insert on RESERVATION for each row
+begin
+    declare datereserve date  ;
+    declare cotise int;
+    declare mes varchar (100) ;
+
+    select dateCours into datereserve from reserver where   dateCours = new.dateCours ;
+    select count(anneesCoti) into cotise from payer where usernameClient = new.usernameClient and anneesCoti = YEAR(datereserve);
+
+    if  cotise >= 1 then
+        set mes = concat ( 'il a deja la cotisation' ) ;
+        signal SQLSTATE '45000' set MESSAGE_TEXT = mes ;
+    end if ;
+end |
+delimiter ;
+
+--Doit avoir les fonds suffisant sur son solde-- 
+delimiter |
+create or replace trigger sufisant_fonds_avant_reserve before insert on RESERVATION for each row
+begin
+    declare soldes int  ;
+    declare montant_cours int;
+    declare mes varchar (100) ;
+    declare idNiveau_cours INT ;
+
+    select idNiveau into idNiveau_cours from COURS where idCours = new.idCours  ;
+    select solde into soldes from Client where   usernameClient = new.usernameClient ;
+    select prix into montant_cours from COURS where idCours = new.idCours and  idNiveau = idNiveau_cours;
+
+    if  soldes < montant_cours then
+        set mes = concat ( 'il na pas assez de fond' ) ;
+        signal SQLSTATE '45000' set MESSAGE_TEXT = mes ;
+    end if ;
+end |
+delimiter ;
+
+
+
+
 
 
 --Personne--
@@ -76,50 +178,6 @@ end |
 delimiter ;
 
 
-
---Client--
---Il doit rester de la place dans le cours--
-delimiter |
-create or replace trigger reste_place before insert on RESERVATION for each row
-begin
-    declare idNiveau_cours INT ;
-    declare nbmax int ;
-    declare nbins int ;
-    declare mes varchar (100) ;
-
-    select idNiveau into idNiveau_cours from COURS where idCours = new.idCours  ;
-    select nbMax into nbmax from COURS where idCours = new.idCours and idNiveau = idNiveau_cours ;
-    select count ( usernameClient ) into nbins from RESERVATION where idCours = new.idCours and idNiveau = idNiveau_cours;
-
-    if nbins +1 > nbmax then
-        set mes = concat ( 'inscription impossible le cours est complet' ) ;
-        signal SQLSTATE '45000' set MESSAGE_TEXT = mes ;
-    end if ;
-end |
-delimiter ;
-
-
-
---Doit avoir le niveau nécessaire --
-delimiter |
-create or replace trigger niveauClient_avant_reserve before insert on RESERVATION for each row
-begin
-    declare idNiveau_client TINYINT ;
-    declare idNiveau_cours INT ;
-
-    declare mes varchar (100) ;
-
-    select idNiveau into idNiveau_cours from COURS where idCours = new.idCours  ;
-    select idNiveau into idNiveau_client from OBTENTION where username = new.usernameClient;
-
-    if  idNiveau_client < idNiveau_cours then
-        set mes = concat ( 'inscription impossible le niveau' , idNiveau_cours , 'de', new.usernameClient,'est trop faible' ) ;
-        signal SQLSTATE '45000' set MESSAGE_TEXT = mes ;
-    end if ;
-end |
-delimiter ;
-
-
 --update--
 delimiter |
 create or replace trigger niveauMoniteur_avant_reserve before update on RESERVATION for each row
@@ -137,81 +195,6 @@ begin
     end if ;
 end |
 delimiter ;
-
-
-
---Un client ne doit pouvoir réserver qu’une cotisation par année--x
-delimiter |
-create or replace trigger une_cotisation_pas_plus before insert on RESERVATION for each row
-begin
-    declare datereserve date  ;
-    declare cotise int;
-    declare mes varchar (100) ;
-
-    select dateCours into datereserve from reserver where   dateCours = new.dateCours ;
-    select count(anneesCoti) into cotise from payer where usernameClient = new.usernameClient and anneesCoti = YEAR(datereserve);
-
-    if  cotise >= 1 then
-        set mes = concat ( 'il a deja la cotisation' ) ;
-        signal SQLSTATE '45000' set MESSAGE_TEXT = mes ;
-    end if ;
-end |
-delimiter ;
-
-
-
---Client--
---Doit avoir payer la cotisation annuelle--x
-delimiter |
-create or replace trigger cotisation_avant_reserve before insert on RESERVATION for each row
-begin
-    declare datereserve date  ;
-    declare cotise int;
-    declare mes varchar (100) ;
-
-    select dateCours into datereserve from reserver where   dateCours = new.dateCours ;
-    select count(anneesCoti) into cotise from payer where usernameClient = new.usernameClient and anneesCoti = YEAR(datereserve);
-
-    if  cotise < 1 then
-        set mes = concat ( 'il na pas la cotisation' ) ;
-        signal SQLSTATE '45000' set MESSAGE_TEXT = mes ;
-    end if ;
-end |
-delimiter ;
-
-
-
---Doit avoir les fonds suffisant sur son solde-- 
-delimiter |
-create or replace trigger sufisant_fonds_avant_reserve before insert on RESERVATION for each row
-begin
-    declare soldes int  ;
-    declare montant_cours int;
-    declare mes varchar (100) ;
-    declare idNiveau_cours INT ;
-
-    select idNiveau into idNiveau_cours from COURS where idCours = new.idCours  ;
-    select solde into soldes from Client where   usernameClient = new.usernameClient ;
-    select prix into montant_cours from COURS where idCours = new.idCours and  idNiveau = idNiveau_cours;
-
-    if  soldes < montant_cours then
-        set mes = concat ( 'il na pas assez de fond' ) ;
-        signal SQLSTATE '45000' set MESSAGE_TEXT = mes ;
-    end if ;
-end |
-delimiter ;
-
-
-
-
-
-
-
---
---
---
-
-
 
 
 
@@ -297,6 +280,29 @@ delimiter ;
 
 
 
+
+
+
+
+
+
+
+--
+--
+--
+
+
+
+
+
+
+
+
+
+
+
+
+/*
 --procesdure question 5
 
 delimiter |
@@ -351,3 +357,4 @@ begin
     end if ;
 end |
 delimiter ;
+*/
