@@ -8,7 +8,7 @@ declare poidsponeymax TINYINT ;
 declare mes varchar (100) ;
 
 select poidsMax into poidsponeymax from PONEY where  idPoney = new.idPoney  ;
-select poidsClient into poidsclientchoisie from CLIENT where  idClient = new.idClient  ;
+select poidsClient into poidsclientchoisie from CLIENT where  usernameClient = new.usernameClient  ;
 
 if  poidsponeymax < poidsclientchoisie  then
 set mes = concat ( 'inscription impossible' , new.idPoney , 'ne supporteras pas la charge') ;
@@ -28,14 +28,14 @@ create or replace trigger admine_ou_client before insert on CLIENT for each row
 begin
 declare identifiant_Moniteur int ;
 declare mes varchar (100) ;
-select idMoniteur into identifiant_Moniteur from MONITEUR where  idanim = new.idClient  ;
+select usernameMoniteur into identifiant_Moniteur from MONITEUR where  idanim = new.usernameClient  ;
 
-if  new.idClient =  identifiant_Moniteur then
-set mes = concat ( 'inscription impossible le client numero' , new.idClient , 'est Moniteur') ;
+if  new.usernameClient =  identifiant_Moniteur then
+set mes = concat ( 'inscription impossible le client numero' , new.usernameClient , 'est Moniteur') ;
 signal SQLSTATE '45000' set MESSAGE_TEXT = mes ;
 end if ;
--- if  new.idPersonne =  identifiant_Client then
--- set mes = concat ( 'inscription impossible le client numero' , new.idClient , 'est deja present dans la base') ;
+-- if  new.username =  identifiant_Client then
+-- set mes = concat ( 'inscription impossible le client numero' , new.usernameClient , 'est deja present dans la base') ;
 -- signal SQLSTATE '45000' set MESSAGE_TEXT = mes ;
 -- end if ;
 end |
@@ -48,11 +48,11 @@ create or replace trigger admin_est_client before insert on MONITEUR for each ro
 begin
 declare identifiant_Client int ;
 declare mes varchar (100) ;
-select idClient into identifiant_Client from CLIENT where  idClient = new.idMoniteur  ;
+select usernameClient into identifiant_Client from CLIENT where  usernameClient = new.usernameMoniteur  ;
 
 
-if  new.idMoniteur =  identifiant_Client then
-set mes = concat ( 'inscription impossible le client numero' , new.idMoniteur , 'est client') ;
+if  new.usernameMoniteur =  identifiant_Client then
+set mes = concat ( 'inscription impossible le client numero' , new.usernameMoniteur , 'est client') ;
 signal SQLSTATE '45000' set MESSAGE_TEXT = mes ;
 end if ;
 end |
@@ -73,11 +73,11 @@ delimiter ;
 -- declare idNiveau_moniteur TINYINT ;
 -- declare idNiveau_cours INT ;
 -- declare mes varchar (100) ;
--- select idNiveau into idNiveau_moniteur from OBTENTION where  idPersonne = new.idMoniteur  ;
+-- select idNiveau into idNiveau_moniteur from OBTENTION where  username = new.usernameMoniteur  ;
 -- select idNiveau into idNiveau_cours from COURS where idCours = new.idCours  ;
 
 -- if  idNiveau_moniteur <  idNiveau_cours then
--- set mes = concat ( 'inscription impossible le niveau' , idNiveau_moniteur , 'de', new.idMoniteur,'est trop faible par rapport a celui du cours', idNiveau_cours ) ;
+-- set mes = concat ( 'inscription impossible le niveau' , idNiveau_moniteur , 'de', new.usernameMoniteur,'est trop faible par rapport a celui du cours', idNiveau_cours ) ;
 -- signal SQLSTATE '45000' set MESSAGE_TEXT = mes ;
 -- end if ;
 -- end |
@@ -95,11 +95,11 @@ begin
 declare idNiveau_moniteur TINYINT ;
 declare idNiveau_cours INT ;
 declare mes varchar (100) ;
-select idNiveau into idNiveau_moniteur from OBTENTION where  idPersonne = new.idMoniteur  ;
+select idNiveau into idNiveau_moniteur from OBTENTION where  username = new.usernameMoniteur  ;
 select idNiveau into idNiveau_cours from COURS where idCours = new.idCours  ;
 
 if  idNiveau_moniteur <  idNiveau_cours then
-set mes = concat ( 'inscription impossible le niveau' , idNiveau_moniteur , 'de', new.idMoniteur,'est trop faible par rapport a celui du cours', idNiveau_cours ) ;
+set mes = concat ( 'inscription impossible le niveau' , idNiveau_moniteur , 'de', new.usernameMoniteur,'est trop faible par rapport a celui du cours', idNiveau_cours ) ;
 signal SQLSTATE '45000' set MESSAGE_TEXT = mes ;
 end if ;
 end |
@@ -121,7 +121,7 @@ declare nbins int ;
 declare mes varchar (100) ;
 select idNiveau into idNiveau_cours from COURS where idCours = new.idCours  ;
 select nbMax into nbmax from COURS where idCours = new.idCours and idNiveau = idNiveau_cours ;
-select count ( idClient ) into nbins from RESERVATION where idCours = new.idCours and idNiveau = idNiveau_cours;
+select count ( usernameClient ) into nbins from RESERVATION where idCours = new.idCours and idNiveau = idNiveau_cours;
 if nbins +1 > nbmax then
     set mes = concat ( 'inscription impossible le cours est complet' ) ;
     signal SQLSTATE '45000' set MESSAGE_TEXT = mes ;
@@ -140,10 +140,10 @@ declare mes varchar (100) ;
 
 select idNiveau into idNiveau_cours from COURS where idCours = new.idCours  ;
 
-select idNiveau into idNiveau_client from OBTENTION where idPersonne = new.idClient;
+select idNiveau into idNiveau_client from OBTENTION where username = new.usernameClient;
 
 if  idNiveau_client < idNiveau_cours then
-    set mes = concat ( 'inscription impossible le niveau' , idNiveau_cours , 'de', new.idClient,'est trop faible' ) ;
+    set mes = concat ( 'inscription impossible le niveau' , idNiveau_cours , 'de', new.usernameClient,'est trop faible' ) ;
     signal SQLSTATE '45000' set MESSAGE_TEXT = mes ;
     end if ;
 end |
@@ -158,9 +158,9 @@ declare idNiveau_client TINYINT ;
 declare mes varchar (100) ;
 select idNiveau into idNiveau_cours from COURS where idCours = new.idCours  ;
 
-select idNiveau into idNiveau_client from OBTENTION where idPersonne = new.idClient  ;
+select idNiveau into idNiveau_client from OBTENTION where username = new.usernameClient  ;
 if  idNiveau_client <  idNiveau_cours then
-set mes = concat ( 'inscription impossible le niveau' , idNiveau_cours , 'de', new.idClient,'est trop faible' ) ;
+set mes = concat ( 'inscription impossible le niveau' , idNiveau_cours , 'de', new.usernameClient,'est trop faible' ) ;
 signal SQLSTATE '45000' set MESSAGE_TEXT = mes ;
 end if ;
 end |
@@ -178,7 +178,7 @@ declare cotise int;
 declare mes varchar (100) ;
 
 select dateCours into datereserve from reserver where   dateCours = new.dateCours ;
-select count(anneesCoti) into cotise from payer where idClient = new.idClient and anneesCoti = YEAR(datereserve);
+select count(anneesCoti) into cotise from payer where usernameClient = new.usernameClient and anneesCoti = YEAR(datereserve);
 
 if  cotise >= 1 then
 set mes = concat ( 'il a deja la cotisation' ) ;
@@ -198,7 +198,7 @@ declare cotise int;
 declare mes varchar (100) ;
 
 select dateCours into datereserve from reserver where   dateCours = new.dateCours ;
-select count(anneesCoti) into cotise from payer where idClient = new.idClient and anneesCoti = YEAR(datereserve);
+select count(anneesCoti) into cotise from payer where usernameClient = new.usernameClient and anneesCoti = YEAR(datereserve);
 
 if  cotise < 1 then
 set mes = concat ( 'il na pas la cotisation' ) ;
@@ -218,7 +218,7 @@ declare mes varchar (100) ;
 declare idNiveau_cours INT ;
 select idNiveau into idNiveau_cours from COURS where idCours = new.idCours  ;
 
-select solde into soldes from Client where   idClient = new.idClient ;
+select solde into soldes from Client where   usernameClient = new.usernameClient ;
 select prix into montant_cours from COURS where idCours = new.idCours and  idNiveau = idNiveau_cours;
 
 if  soldes < montant_cours then
