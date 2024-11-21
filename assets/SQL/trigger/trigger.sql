@@ -1,5 +1,5 @@
 
---Poney--
+--Poney remplacer par celui de chris
 -- a revoire--
 create or replace trigger repos before insert on RESERVATION for each row
 begin

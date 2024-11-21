@@ -57,10 +57,10 @@ begin
 end |
 delimiter ;
 
-
---Client--
---Doit avoir payer la cotisation annuelle--x
+--it avoir payer la cotisation annuelle--x
 delimiter |
+--Client--
+--Domiter |
 create or replace trigger cotisation_avant_reserve before insert on RESERVATION for each row
 begin
     declare datereserve date  ;
@@ -112,7 +112,7 @@ begin
     if  soldes < montant_cours then
         set mes = concat ( 'il na pas assez de fond' ) ;
         signal SQLSTATE '45000' set MESSAGE_TEXT = mes ;
-    end if ;
+    end if;
 end |
 delimiter ;
 
@@ -120,41 +120,6 @@ delimiter ;
 
 
 
-
---Personne--
---Client doit pas être moniteur--
-delimiter |
-create or replace trigger admine_ou_client before insert on CLIENT for each row
-begin
-    declare identifiant_Moniteur int ;
-    declare mes varchar (100) ;
-
-    select usernameMoniteur into identifiant_Moniteur from MONITEUR where  usernameMoniteur = new.usernameClient  ;
-
-    if  new.usernameClient =  identifiant_Moniteur then
-        set mes = concat ( 'inscription impossible le client numero' , new.usernameClient , 'est Moniteur') ;
-        signal SQLSTATE '45000' set MESSAGE_TEXT = mes ;
-    end if ;
-end |
-delimiter ;
-
-
-
---moniteur doit pas être Client--
-delimiter |
-create or replace trigger admin_est_client before insert on MONITEUR for each row
-begin
-    declare identifiant_Client int ;
-    declare mes varchar (100) ;
-
-    select usernameClient into identifiant_Client from CLIENT where  usernameClient = new.usernameMoniteur  ;
-
-    if  new.usernameMoniteur =  identifiant_Client then
-        set mes = concat ( 'inscription impossible le client numero' , new.usernameMoniteur , 'est client') ;
-        signal SQLSTATE '45000' set MESSAGE_TEXT = mes ;
-    end if ;
-end |
-delimiter ;
 
 
 
