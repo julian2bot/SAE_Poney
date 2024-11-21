@@ -154,7 +154,6 @@ INSERT INTO REPRESENTATION (idCours, usernameMoniteur, dateCours, heureDebutCour
 (9, 'moniteur3', '2023-12-09', 17.0),
 (10, 'moniteur1', '2023-12-10', 18.0);
 
-
 -- Insertion dans la table RESERVATION
 INSERT INTO RESERVATION (idCours, usernameMoniteur, dateCours, heureDebutCours, usernameClient, idPoney) VALUES
 (1, 'moniteur1', '2023-12-01', 10.0, 'client1', 1),

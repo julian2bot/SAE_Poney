@@ -120,7 +120,7 @@ CREATE TABLE COURS(
     idCours INT,
     idNiveau TINYINT NOT NULL,  -- cle etrangere ==> idNiveau
     nomCours VARCHAR(30) NOT NULL DEFAULT "Cours",
-    duree INT NOT NULL DEFAULT 1 CHECK (duree = 1 or duree = 2),
+    duree TINYINT NOT NULL DEFAULT 1 CHECK (duree = 1 or duree = 2),
     prix SMALLINT NOT NULL DEFAULT 0,
     nbMax TINYINT NOT NULL DEFAULT 10 CHECK (nbMax = 1 or nbMax = 10),
     
