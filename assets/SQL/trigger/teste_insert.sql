@@ -159,6 +159,25 @@ INSERT INTO DISPONIBILITE (usernameMoniteur, heureDebutDispo, dateDispo, heureFi
 ('moniteur1', 15.0, '2023-11-26', 18.0);
 
 
+INSERT INTO OBTENTION ( username ,idNiveau,dateObtention) VALUES  
+('moniteur1',11, '2023-12-01'),
+('moniteur2',11, '2023-12-01'),
+('moniteur3',11, '2023-12-01'),
+('client1',  8 , '2023-12-01'),
+('client2',  8 , '2023-12-01'), 
+('client3',  8 , '2023-12-01'),
+('client4',  8 , '2023-12-01'),
+('client5',  11 , '2023-12-01'),
+('client6',  10 , '2023-12-01'),
+('client7',  11 , '2023-12-01'),
+('client8',  8 , '2023-12-01'),
+('client9',  8 , '2023-12-01'),
+('client10', 8 , '2023-12-01'),
+('client11', 8 , '2023-12-01'),
+('client12', 8 , '2023-12-01'),
+('client13', 8 , '2023-12-01'),
+('client14', 8 , '2023-12-01'),
+('client15', 8 , '2023-12-01');
 
 
 -- Insertion dans la table REPRESENTATION
@@ -193,7 +212,8 @@ INSERT INTO RESERVATION (idCours, usernameMoniteur, dateCours, heureDebutCours, 
 -- Insertion dans la table RESERVATION pour le trigger poidx max
 INSERT INTO RESERVATION (idCours, usernameMoniteur, dateCours, heureDebutCours, usernameClient, idPoney) VALUES
 (11, 'moniteur1', '2023-10-10', 18.0, 'client9', 10)
-*/
+
+
 
 -- Insertion pour la table COURS pour le trigger reste_place
 INSERT INTO COURS (idCours, idNiveau, nomCours, duree, prix, nbMax) VALUES
@@ -205,14 +225,38 @@ INSERT INTO REPRESENTATION (idCours, usernameMoniteur, dateCours, heureDebutCour
 
 -- Insertion dans la table RESERVATION  pour le trigger reste_place
 INSERT INTO RESERVATION (idCours, usernameMoniteur, dateCours, heureDebutCours, usernameClient, idPoney) VALUES
-(11, 'moniteur1', '2023-10-10', 18.0, 'client9', 1),
-(11, 'moniteur1', '2023-10-10', 18.0, 'client9', 2),
-(11, 'moniteur1', '2023-10-10', 18.0, 'client9', 3),
-(11, 'moniteur1', '2023-10-10', 18.0, 'client9', 4),
-(11, 'moniteur1', '2023-10-10', 18.0, 'client9', 5),
-(11, 'moniteur1', '2023-10-10', 18.0, 'client9', 6),
-(11, 'moniteur1', '2023-10-10', 18.0, 'client9', 7),
-(11, 'moniteur1', '2023-10-10', 18.0, 'client9', 8),
+(11, 'moniteur1', '2023-10-10', 18.0, 'client1', 1),
+(11, 'moniteur1', '2023-10-10', 18.0, 'client2', 2),
+(11, 'moniteur1', '2023-10-10', 18.0, 'client3', 3),
+(11, 'moniteur1', '2023-10-10', 18.0, 'client4', 4),
+(11, 'moniteur1', '2023-10-10', 18.0, 'client5', 5),
+(11, 'moniteur1', '2023-10-10', 18.0, 'client6', 6),
+(11, 'moniteur1', '2023-10-10', 18.0, 'client7', 7),
+(11, 'moniteur1', '2023-10-10', 18.0, 'client8', 8),
 (11, 'moniteur1', '2023-10-10', 18.0, 'client9', 9),
-(11, 'moniteur1', '2023-10-10', 18.0, 'client9', 10),
-(11, 'moniteur1', '2023-10-10', 18.0, 'client9', 10);
+(11, 'moniteur1', '2023-10-10', 18.0, 'client10', 10),
+(11, 'moniteur1', '2023-10-10', 18.0, 'client11', 10);
+
+*/
+
+-- Insertion pour la table COURS pour le trigger niveauClient_avant_reserve
+INSERT INTO COURS (idCours, idNiveau, nomCours, duree, prix, nbMax) VALUES
+(11, 11, 'Cours Avancé', 1, 35, 1);
+
+-- Insertion dans la table RESERVATION  pour le trigger niveauClient_avant_reserve
+INSERT INTO REPRESENTATION (idCours, usernameMoniteur, dateCours, heureDebutCours) VALUES
+(11, 'moniteur1', '2023-10-10', 18.0);
+
+-- Insertion dans la table RESERVATION  pour le trigger niveauClient_avant_reserve
+INSERT INTO RESERVATION (idCours, usernameMoniteur, dateCours, heureDebutCours, usernameClient, idPoney) VALUES
+(11, 'moniteur1', '2023-10-10', 18.0, 'client1', 1),
+(11, 'moniteur1', '2023-10-10', 18.0, 'client2', 2),
+(11, 'moniteur1', '2023-10-10', 18.0, 'client3', 3),
+(11, 'moniteur1', '2023-10-10', 18.0, 'client4', 4),
+(11, 'moniteur1', '2023-10-10', 18.0, 'client5', 5),
+(11, 'moniteur1', '2023-10-10', 18.0, 'client6', 6),
+(11, 'moniteur1', '2023-10-10', 18.0, 'client7', 7),
+(11, 'moniteur1', '2023-10-10', 18.0, 'client8', 8),
+(11, 'moniteur1', '2023-10-10', 18.0, 'client9', 9),
+(11, 'moniteur1', '2023-10-10', 18.0, 'client10', 10),
+(11, 'moniteur1', '2023-10-10', 18.0, 'client11', 10);

@@ -12,7 +12,7 @@ begin
     select idNiveau into idNiveau_client from OBTENTION where username = new.usernameClient;
 
     if  idNiveau_client < idNiveau_cours then
-        set mes = concat ( 'inscription impossible le niveau' , idNiveau_cours , 'de', new.usernameClient,'est trop faible' ) ;
+        set mes = concat ( 'inscription impossible le niveau de ', new.usernameClient,' est trop faible ', idNiveau_client,' < ',idNiveau_cours ) ;
         signal SQLSTATE '45000' set MESSAGE_TEXT = mes ;
     end if ;
 end |
