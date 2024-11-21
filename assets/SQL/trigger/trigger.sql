@@ -1,4 +1,5 @@
---Poney--
+
+-- Fonction prennant deux horaires de cours et renvoyant s'ils se chevauchent
 delimiter  |
 create or replace function collisionCours(
     dateCours1 DATE,
@@ -21,6 +22,7 @@ BEGIN
 END |
 delimiter ;
 
+-- Fonction prennant un horaires de cours et renvoyant s'il existe un cours juste avant ou après celui ci
 delimiter  |
 create or replace function collisionMillieux(
     dateCours1 DATE,
@@ -34,49 +36,9 @@ BEGIN
 END |
 delimiter ;
 
--- Test fonctions
--- Faux
--- select collisionCours(
---     STR_TO_DATE("10 05 2024", "%d %m %Y"), 10,1,
---     STR_TO_DATE("11 05 2024", "%d %m %Y"), 11,1);
+-- TRUNCATE log_table;
 
--- select collisionCours(
---     STR_TO_DATE("10 05 2024", "%d %m %Y"), 10,1,
---     STR_TO_DATE("10 06 2024", "%d %m %Y"), 11,1);
-
--- select collisionCours(
---     STR_TO_DATE("10 05 2024", "%d %m %Y"), 10,1,
---     STR_TO_DATE("10 05 2025", "%d %m %Y"), 11,1);
-
--- select collisionCours(
---     STR_TO_DATE("10 05 2024", "%d %m %Y"), 10,1,
---     STR_TO_DATE("10 05 2025", "%d %m %Y"), 11,1);
-
--- select collisionCours(
---     STR_TO_DATE("10 05 2024", "%d %m %Y"), 10,1,
---     STR_TO_DATE("10 05 2025", "%d %m %Y"), 14,1);
-
--- select collisionCours(
---     STR_TO_DATE("10 05 2024", "%d %m %Y"), 10,2,
---     STR_TO_DATE("10 05 2025", "%d %m %Y"), 12,1);
-
--- Vrai
--- select collisionCours(
---     STR_TO_DATE("10 05 2024", "%d %m %Y"), 10,2,
---     STR_TO_DATE("10 05 2024", "%d %m %Y"), 11,1);
-
--- select collisionCours(
---     STR_TO_DATE("10 05 2024", "%d %m %Y"), 12,2,
---     STR_TO_DATE("10 05 2024", "%d %m %Y"), 12,1);
-    
--- select collisionCours(
---     STR_TO_DATE("10 05 2024", "%d %m %Y"), 11,2,
---     STR_TO_DATE("10 05 2024", "%d %m %Y"), 12,2);
-
--- select collisionCours(
---     STR_TO_DATE("10 05 2024", "%d %m %Y"), 10,1,
---     STR_TO_DATE("10 05 2024", "%d %m %Y"), 9,2);
-TRUNCATE log_table;
+-- Function renvoie si un poney est disponible pour un cours 
 delimiter |
 create or replace function poneyDispo(
     idPoneyF INT,
@@ -104,7 +66,8 @@ BEGIN
         select heureDebutCours, duree from RESERVATION NATURAL JOIN COURS where dateCours=dateCoursF and idPoney=idPoneyF order by heureDebutCours;
     declare continue handler for not found set fini = TRUE;
 
-    if dureeCours = 2 then
+    -- Si la duree du cours est de 2, on l'a passe a 3 pour compter l'heure de repot
+    if dureeCours = 2 then 
         set vraiDureeCours = 3;
     end if;
 
@@ -114,22 +77,33 @@ BEGIN
         fetch lesCours into heureDebutUnCours, dureeUnCours;
 
         if not fini then
-            INSERT INTO log_table (log_message)
-                VALUES (CONCAT(NOW()," ", heureDebutUnCours," ", dureeUnCours));
-            if cptCoursUneHeure = 0 then -- Met la vrai heure de cours avant les conteurs
+            -- INSERT INTO log_table (log_message)
+            --     VALUES (CONCAT(NOW()," ", heureDebutUnCours," ", dureeUnCours));
+
+            -- Si le compteur de cours d'une heure est a 0, on met l'heure de début du premier cours en vrai heure de cours
+            -- Pour créer un cours factisse regroupant les différents cours d'une heure pour voir la collision avec le cours a réserver
+            if cptCoursUneHeure = 0 then
                 set vraiHeureDebutUnCours = heureDebutUnCours;
             end if;
+
+            -- Vérifier si le prochain cours d'une heure est a la suite du dernier
             set calculHeure = vraiHeureDebutUnCours+cptCoursUneHeure;
             if dureeUnCours = 1 and (cptCoursUneHeure = 0 or calculHeure = heureDebutUnCours) then
                 set cptCoursUneHeure = cptCoursUneHeure + 1;
             elseif dureeUnCours = 2 then
-                set dureeUnCours = 3; -- Prendre en compte une heure de repoos si le cours fait 2h
+                -- Prendre en compte une heure de repoos si le cours fait 2h
+                set dureeUnCours = 3;
                 set cptCoursUneHeure = 0;
                 set vraiHeureDebutUnCours = heureDebutUnCours;
-            else 
+            else
                 set vraiHeureDebutUnCours = heureDebutUnCours;
                 set cptCoursUneHeure = 0;
             end if;
+
+            -- Partie vérification collisions
+            -- Plusieurs vérifications en fonctions des cours d'une heure et 2 heures
+            -- Vérifications double (avant et après) pour les cours d'au moins 2 heures (ou multiple cours de 1, passée en au moins 3 pour compter l'heure de repos)
+            -- Car l'heure de repos peut être avant ou après 
 
             if cptCoursUneHeure > 1 then
                 set dureeUnCours = (dureeUnCours*cptCoursUneHeure)+1;
@@ -151,6 +125,7 @@ BEGIN
 END |
 delimiter ;
 
+-- Trigger gérant le repos d'un poney après 2h de cours
 delimiter |
 create or replace trigger repos before insert on RESERVATION for each row
     begin
@@ -162,6 +137,7 @@ create or replace trigger repos before insert on RESERVATION for each row
     select duree into dureeCours from COURS where idCours = new.idCours;
     select IFNULL(count(new.idPoney),0) into countRes from RESERVATION where idPoney = new.idPoney and dateCours = new.dateCours;
 
+    -- Si le poney n'a pas été réservé de la journée, il est libre
     if countRes > 0 then
         set res = (select poneyDispo(new.idPoney, new.idCours, new.usernameMoniteur, new.dateCours, new.heureDebutCours, dureeCours));
     else
