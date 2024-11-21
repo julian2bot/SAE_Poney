@@ -65,14 +65,14 @@ delimiter ;
 --     STR_TO_DATE("10 05 2024", "%d %m %Y"), 9,2);
 
 delimiter |
-create or replace procedure poneyDispo(
+create or replace function poneyDispo(
     idPoney INT,
     idCours INT,
     usernameMoniteur VARCHAR(32),
     dateCours DATE,
     heureDebutCours DECIMAL(3,1),
     dureeCours TINYINT
-    )
+    ) returns BOOLEAN
 BEGIN
     declare heureDebutUnCours DECIMAL(3,1) DEFAULT 0.0;
     declare dureeUnCours TINYINT DEFAULT 1;
@@ -92,7 +92,7 @@ BEGIN
     if dureeCours = 2 then
         set vraiDureeCours = 3;
     end if;
-
+    open lesCours;
     while not (fini and res) do
         fetch lesCours into heureDebutUnCours, dureeUnCours;
 
@@ -103,7 +103,7 @@ BEGIN
 
             if dureeUnCours = 1 and vraiHeureDebutUnCours+dureeUnCours*(cptCoursUneHeure) = heureDebutUnCours then
                 set cptCoursUneHeure = cptCoursUneHeure + 1;
-            else if dureeUnCours = 2 then
+            elseif dureeUnCours = 2 then
                 set dureeUnCours = 3; -- Prendre en compte une heure de repoos si le cours fait 2h
                 set cptCoursUneHeure = 0;
             end if;
@@ -112,25 +112,37 @@ BEGIN
                 set dureeUnCours = dureeUnCours*cptCoursUneHeure;
             end if;
 
-            set res = (select collisionCours(dateCours,heureDebutCours,vraiDureeCours,dateCours,vraiHeureDebutUnCours,dureeUnCours));
+            set res = not (select collisionCours(dateCours,heureDebutCours,vraiDureeCours,dateCours,vraiHeureDebutUnCours,dureeUnCours));
         end if;
     end while;
     close lesCours;
-    select res;
+    return res;
 END |
 delimiter ;
 
--- delimiter |
--- create or replace trigger repos before insert on RESERVATION for each row
---     begin
---     declare Debut_heure_cours DECIMAL(2,1) ;
---     declare mes varchar (100) ;
---     select heureDebutCours into Debut_heure_cours from RESERVATION where dateCours = new.dateCours AND idPoney = new.idPoney AND ;
---     select count ( idp ) int o nbins from PARTICIPER where ida = new.ida ;
+delimiter |
+create or replace trigger repos before insert on RESERVATION for each row
+    begin
+    declare res BOOLEAN DEFAULT FALSE;
+    declare dureeCours TINYINT DEFAULT 1;
+    declare mes VARCHAR(100) DEFAULT "";
+    select duree into dureeCours from COURS where idCours = new.idCours;
+    set res = (select poneyDispo(new.idPoney, new.idCours,new.usernameMoniteur,new.dateCours,new.heureDebutCours,dureeCours));
 
---     if  new.heureDebutCours not in ( ’ oui ’ , ’ non ’) )  then
---     set mes = concat ( 'inscription impossible' , new.idPoney , 'na pas terminer son repos') ;
---     signal SQLSTATE '45000' set MESSAGE_TEXT = mes ;
---     end if ;
--- end |
--- delimiter ;
+    if not res then
+        set mes = concat ("inscription impossible" , new.idPoney , "n'est pas disponible") ;
+        signal SQLSTATE '45000' set MESSAGE_TEXT = mes ;
+    end if ;
+end |
+delimiter ;
+
+INSERT INTO REPRESENTATION (idCours, usernameMoniteur, dateCours, heureDebutCours) VALUES
+(1, 'moniteur2', '2023-12-01', 11.0), -- Valide
+(1, 'moniteur2', '2023-12-01', 10.5), -- Invalide car chevauchement
+-- (1, 'moniteur2', '2023-12-01', 9.0), -- Valide car avant
+(1, 'moniteur2', '2023-12-01', 12.0); -- Invalide suite au court de 10h et 11h
+
+INSERT INTO RESERVATION (idCours, usernameMoniteur, dateCours, heureDebutCours, usernameClient, idPoney) VALUES
+(1, 'moniteur2', '2023-12-01', 11.0, 'client1', 1), -- Valide
+(1, 'moniteur2', '2023-12-01', 10.5, 'client1', 1),
+(1, 'moniteur2', '2023-12-01', 12.0, 'client1', 1);
