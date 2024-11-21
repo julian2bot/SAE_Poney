@@ -44,6 +44,7 @@ INSERT INTO PERSONNE (username, mdp, prenomPersonne, nomPersonne, mail) VALUES
 ('moniteur1', 'mdp123', 'Alice', 'Martin', 'alice.martin@poneyclub.com'),
 ('moniteur2', 'mdp123', 'Pierre', 'Dupont', 'pierre.dupont@poneyclub.com'),
 ('moniteur3', 'mdp123', 'Sophie', 'Leroy', 'sophie.leroy@poneyclub.com'),
+('moniteur4', 'mdp123', 'Ban', 'Leroy', 'Ban.leroy@poneyclub.com'),
 ('client1', 'mdp123', 'Julien', 'Bernard', 'julien.bernard@client.com'),
 ('client2', 'mdp123', 'Claire', 'Petit', 'claire.petit@client.com'),
 ('client3', 'mdp123', 'Lucas', 'Blanc', 'lucas.blanc@client.com'),
@@ -67,7 +68,8 @@ INSERT INTO PERSONNE (username, mdp, prenomPersonne, nomPersonne, mail) VALUES
 INSERT INTO MONITEUR (usernameMoniteur, salaire, isAdmin) VALUES
 ('moniteur1', 2500.00, 1),
 ('moniteur2', 2300.00, 0),
-('moniteur3', 2200.00, 0);
+('moniteur3', 2200.00, 0),
+('moniteur4', 1.00, 0);
 
 
 
@@ -141,7 +143,8 @@ INSERT INTO COURS (idCours, idNiveau, nomCours, duree, prix, nbMax) VALUES
 (7, 11, 'Cours Galop 7', 2, 70, 1),
 (8, 1, 'Cours Débutant', 1, 20, 10),
 (9, 3, 'Cours Confirmé', 1, 30, 10),
-(10, 4, 'Cours Avancé', 1, 35, 10);
+(10, 4, 'Cours Avancé', 1, 35, 10),
+(14, 4, 'Cours Avancé', 1, 35, 10);
 
 -- Insertion pour la table PONEY
 INSERT INTO PONEY (idPoney, nomPoney, poidsMax, photo, nomRace) VALUES
@@ -165,6 +168,7 @@ INSERT INTO DISPONIBILITE (usernameMoniteur, heureDebutDispo, dateDispo, heureFi
 ('moniteur2', 15.0, '2023-11-21', 18.0),
 ('moniteur3', 9.0, '2023-11-22', 11.0),
 ('moniteur3', 13.0, '2023-11-22', 17.0),
+('moniteur4', 13.0, '2023-11-22', 17.0),
 ('moniteur1', 9.0, '2023-11-23', 12.0),
 ('moniteur2', 10.0, '2023-11-24', 13.0),
 ('moniteur3', 14.0, '2023-11-25', 17.0),
@@ -175,6 +179,7 @@ INSERT INTO OBTENTION ( username ,idNiveau,dateObtention) VALUES
 ('moniteur1',11, '2023-12-01'),
 ('moniteur2',11, '2023-12-01'),
 ('moniteur3',11, '2023-12-01'),
+('moniteur4',2, '2023-12-01'),
 ('client1',  8 , '2023-12-01'),
 ('client2',  8 , '2023-12-01'), 
 ('client3',  8 , '2023-12-01'),
@@ -206,6 +211,11 @@ INSERT INTO REPRESENTATION (idCours, usernameMoniteur, dateCours, heureDebutCour
 (10, 'moniteur1', '2023-12-10', 18.0);
 
 
+
+-- Insertion dans la table REPRESENTATION pour le trigger niveauMoniteur_avant_representer
+INSERT INTO REPRESENTATION (idCours, usernameMoniteur, dateCours, heureDebutCours) VALUES
+(14, 'moniteur4', '2023-12-06', 14.0);
+
 -- Insertion dans la table RESERVATION
 INSERT INTO RESERVATION (idCours, usernameMoniteur, dateCours, heureDebutCours, usernameClient, idPoney) VALUES
 (1, 'moniteur1', '2023-12-01', 10.0, 'client1', 1),
@@ -219,6 +229,10 @@ INSERT INTO RESERVATION (idCours, usernameMoniteur, dateCours, heureDebutCours, 
 (9, 'moniteur3', '2023-12-09', 17.0, 'client9', 9),
 (10, 'moniteur1', '2023-12-10', 18.0, 'client10', 10);
 
+
+-- Insertion dans la table RESERVATION pour le trigger niveauMoniteur_avant_representer
+INSERT INTO RESERVATION (idCours, usernameMoniteur, dateCours, heureDebutCours, usernameClient, idPoney) VALUES
+(14, 'moniteur4', '2023-12-06', 14.0, 'client10', 10);
 
 /*
 -- Insertion dans la table RESERVATION pour le trigger poidx max
