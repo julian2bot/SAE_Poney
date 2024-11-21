@@ -1,16 +1,19 @@
---Un client ne doit pouvoir réserver qu’une cotisation par année--x
+--Doit avoir les fonds suffisant sur son solde-- 
 delimiter |
-create or replace trigger une_cotisation_pas_plus before insert on PAYER for each row
+create or replace trigger sufisant_fonds_avant_reserve before insert on RESERVATION for each row
 begin
-    declare datereserve date  ;
-    declare cotise varchar (9);
+    declare soldes int  ;
+    declare montant_cours int;
     declare mes varchar (100) ;
+    declare idNiveau_cours INT ;
 
-    select count(periode) into cotise from PAYER where usernameClient = new.usernameClient and periode =NEW.periode ;
+    select idNiveau into idNiveau_cours from COURS where idCours = new.idCours  ;
+    select solde into soldes from CLIENT where   usernameClient = new.usernameClient ;
+    select prix into montant_cours from COURS where idCours = new.idCours and  idNiveau = idNiveau_cours;
 
-    if  cotise >= 1 then
-        set mes = concat ( 'le ',NEW.usernameClient,' a deja la cotisation payer du ',NEW.periode ) ;
+    if  soldes < montant_cours then
+        set mes = concat ( 'le ',new.usernameClient,' n a pas assez de fond le solde est a ',soldes ,' contre ', montant_cours,' a payer' ) ;
         signal SQLSTATE '45000' set MESSAGE_TEXT = mes ;
-    end if ;
+    end if;
 end |
 delimiter ;

@@ -95,6 +95,8 @@ INSERT INTO CLIENT (usernameClient, dateInscription, poidsClient, solde) VALUES
 INSERT INTO CLIENT (usernameClient, dateInscription, poidsClient, solde) VALUES
 ('moniteur3', '2022-05-30', 55,60); --marche
 
+
+
 -- Insertion pour la table MONITEUR avec trigger
 INSERT INTO MONITEUR (usernameMoniteur, salaire, isAdmin) VALUES
 ('client15', 2200.00, 0); --marche
@@ -286,8 +288,10 @@ INSERT INTO REPRESENTATION (idCours, usernameMoniteur, dateCours, heureDebutCour
 -- Insertion dans la table RESERVATION  pour le trigger cotisation_payer_avant_reserve
 INSERT INTO RESERVATION (idCours, usernameMoniteur, dateCours, heureDebutCours, usernameClient, idPoney) VALUES
 (12, 'moniteur1', '2022-10-10', 18.0, 'client4', 1);
-*/
+
 
 -- Insertion pour la table PAYER
 INSERT INTO PAYER (nomCotisation, periode, usernameClient) VALUES 
 ('Cotisation A', '2024-2025', 'client2');
+
+*/
