@@ -106,7 +106,16 @@ INSERT INTO PAYER (nomCotisation, periode, usernameClient) VALUES
 ('Cotisation B', '2024-2025', 'client5'),
 ('Cotisation C', '2024-2025', 'client6'),
 
+
+('Cotisation A', '2023-2024', 'client1'),
+('Cotisation A', '2023-2024', 'client2'),
+('Cotisation C', '2023-2024', 'client3'),
+('Cotisation C', '2023-2024', 'client4'),
+('Cotisation A', '2023-2024', 'client5'),
+('Cotisation A', '2023-2024', 'client6'),
+('Cotisation C', '2023-2024', 'client7'),
 ('Cotisation B', '2023-2024', 'client8'),
+('Cotisation B', '2023-2024', 'client9'),
 ('Cotisation A', '2023-2024', 'client10'),
 ('Cotisation B', '2023-2024', 'client11'),
 
@@ -237,7 +246,8 @@ INSERT INTO RESERVATION (idCours, usernameMoniteur, dateCours, heureDebutCours, 
 (11, 'moniteur1', '2023-10-10', 18.0, 'client10', 10),
 (11, 'moniteur1', '2023-10-10', 18.0, 'client11', 10);
 
-*/
+
+
 
 -- Insertion pour la table COURS pour le trigger niveauClient_avant_reserve
 INSERT INTO COURS (idCours, idNiveau, nomCours, duree, prix, nbMax) VALUES
@@ -260,3 +270,18 @@ INSERT INTO RESERVATION (idCours, usernameMoniteur, dateCours, heureDebutCours, 
 (11, 'moniteur1', '2023-10-10', 18.0, 'client9', 9),
 (11, 'moniteur1', '2023-10-10', 18.0, 'client10', 10),
 (11, 'moniteur1', '2023-10-10', 18.0, 'client11', 10);
+
+*/
+
+-- Insertion pour la table COURS pour le trigger cotisation_payer_avant_reserve
+INSERT INTO COURS (idCours, idNiveau, nomCours, duree, prix, nbMax) VALUES
+(12, 4, 'Cours Avancé', 1, 35, 1);
+
+-- Insertion dans la table RESERVATION  pour le trigger cotisation_payer_avant_reserve
+INSERT INTO REPRESENTATION (idCours, usernameMoniteur, dateCours, heureDebutCours) VALUES
+(12, 'moniteur1', '2022-10-10', 18.0);
+
+
+-- Insertion dans la table RESERVATION  pour le trigger cotisation_payer_avant_reserve
+INSERT INTO RESERVATION (idCours, usernameMoniteur, dateCours, heureDebutCours, usernameClient, idPoney) VALUES
+(12, 'moniteur1', '2022-10-10', 18.0, 'client4', 1);

@@ -3,25 +3,7 @@
 
 
 
---it avoir payer la cotisation annuelle--x
-delimiter |
---Client--
---Domiter |
-create or replace trigger cotisation_avant_reserve before insert on RESERVATION for each row
-begin
-    declare datereserve date  ;
-    declare cotise int;
-    declare mes varchar (100) ;
 
-    select dateCours into datereserve from reserver where   dateCours = new.dateCours ;
-    select count(anneesCoti) into cotise from payer where usernameClient = new.usernameClient and anneesCoti = YEAR(datereserve);
-
-    if  cotise < 1 then
-        set mes = concat ( 'il na pas la cotisation' ) ;
-        signal SQLSTATE '45000' set MESSAGE_TEXT = mes ;
-    end if ;
-end |
-delimiter ;
 
 
 --Un client ne doit pouvoir réserver qu’une cotisation par année--x

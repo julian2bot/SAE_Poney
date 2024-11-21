@@ -1,18 +1,20 @@
-
---Doit avoir le niveau nécessaire --
+--it avoir payer la cotisation annuelle--x
 delimiter |
-create or replace trigger niveauClient_avant_reserve before insert on RESERVATION for each row
+--Client--
+--Domiter |
+create or replace trigger cotisation_payer_avant_reserve before insert on RESERVATION for each row
 begin
-    declare idNiveau_client TINYINT ;
-    declare idNiveau_cours INT ;
+    declare datereserve date  ;
+    declare date_en_string varchar(10);
 
-    declare mes varchar (100) ;
+    declare cotise INT;
+    declare mes varchar (150) ;
 
-    select idNiveau into idNiveau_cours from COURS where idCours = new.idCours  ;
-    select idNiveau into idNiveau_client from OBTENTION where username = new.usernameClient;
+    set date_en_string =  CONCAT ( CAST(YEAR(new.dateCours) As varchar(4)),'-',CAST(YEAR(new.dateCours)+1 As varchar(4))) ;
+    select count(periode) into cotise from PAYER where usernameClient = new.usernameClient and periode = date_en_string ;
 
-    if  idNiveau_client < idNiveau_cours then
-        set mes = concat ( 'inscription impossible le niveau de ', new.usernameClient,' est trop faible ', idNiveau_client,' < ',idNiveau_cours ) ;
+    if  cotise < 1 then
+        set mes = concat ( " le " ,NEW.usernameClient,' n a pas la cotisation actif cette annee ',date_en_string,' pour la reservation ',NEW.idCours ,' et la date ' ,new.dateCours ) ;
         signal SQLSTATE '45000' set MESSAGE_TEXT = mes ;
     end if ;
 end |
