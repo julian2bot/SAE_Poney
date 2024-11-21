@@ -80,7 +80,7 @@ INSERT INTO CLIENT (usernameClient, dateInscription, poidsClient, solde) VALUES
 ('client4', '2022-04-25', 55, 300),
 ('client5', '2022-09-01', 65, 250),
 ('client6', '2023-06-30', 52, 100),
-('client7', '2021-12-12', 58, 80),
+('client7', '2021-12-12', 45, 80),
 ('client8', '2023-05-05', 47, 50),
 ('client9', '2022-07-14', 63, 150),
 ('client10', '2023-08-21', 49, 0),
@@ -90,14 +90,15 @@ INSERT INTO CLIENT (usernameClient, dateInscription, poidsClient, solde) VALUES
 ('client14', '2023-03-30', 62, 120),
 ('client15', '2022-02-25', 55, 60);
 
-
+/*
+-- Insertion pour la table CLIENT avec trigger
 INSERT INTO CLIENT (usernameClient, dateInscription, poidsClient, solde) VALUES
-('moniteur3', '2022-05-30', 55,60); --erreur
+('moniteur3', '2022-05-30', 55,60); --marche
 
-
+-- Insertion pour la table MONITEUR avec trigger
 INSERT INTO MONITEUR (usernameMoniteur, salaire, isAdmin) VALUES
 ('client15', 2200.00, 0); --marche
-
+*/
 
 INSERT INTO PAYER (nomCotisation, periode, usernameClient) VALUES 
 ('Cotisation A', '2024-2025', 'client1'),
@@ -132,7 +133,7 @@ INSERT INTO COURS (idCours, idNiveau, nomCours, duree, prix, nbMax) VALUES
 
 -- Insertion pour la table PONEY
 INSERT INTO PONEY (idPoney, nomPoney, poidsMax, photo, nomRace) VALUES
-(1, 'Flocon', 55, 'flocon.jpg', 'Shetland'),
+(1, 'Flocon', 80, 'flocon.jpg', 'Shetland'),
 (2, 'Caramel', 60, 'caramel.jpg', 'Connemara'),
 (3, 'Eclair', 50, 'eclair.jpg', 'Dartmoor'),
 (4, 'Noisette', 65, 'noisette.jpg', 'Welsh'),
@@ -141,7 +142,8 @@ INSERT INTO PONEY (idPoney, nomPoney, poidsMax, photo, nomRace) VALUES
 (7, 'Alezan', 55, 'alezan.jpg', 'New Forest'),
 (8, 'Luna', 58, 'luna.jpg', 'Shetland'),
 (9, 'Biscuit', 65, 'biscuit.jpg', 'Connemara'),
-(10, 'Rêve', 53, 'reve.jpg', 'Dartmoor');
+(10, 'Rêve', 53, 'reve.jpg', 'Dartmoor'),
+(11, 'scarabcia', 90, 'scarabcia.jpg', 'Dartmoor');
 
 -- Insertion pour la table DISPONIBILITE
 INSERT INTO DISPONIBILITE (usernameMoniteur, heureDebutDispo, dateDispo, heureFinDispo) VALUES
@@ -186,3 +188,31 @@ INSERT INTO RESERVATION (idCours, usernameMoniteur, dateCours, heureDebutCours, 
 (9, 'moniteur3', '2023-12-09', 17.0, 'client9', 9),
 (10, 'moniteur1', '2023-12-10', 18.0, 'client10', 10);
 
+
+/*
+-- Insertion dans la table RESERVATION pour le trigger poidx max
+INSERT INTO RESERVATION (idCours, usernameMoniteur, dateCours, heureDebutCours, usernameClient, idPoney) VALUES
+(11, 'moniteur1', '2023-10-10', 18.0, 'client9', 10)
+*/
+
+-- Insertion pour la table COURS pour le trigger reste_place
+INSERT INTO COURS (idCours, idNiveau, nomCours, duree, prix, nbMax) VALUES
+(11, 4, 'Cours Avancé', 1, 35, 1);
+
+-- Insertion dans la table RESERVATION  pour le trigger reste_place
+INSERT INTO REPRESENTATION (idCours, usernameMoniteur, dateCours, heureDebutCours) VALUES
+(11, 'moniteur1', '2023-10-10', 18.0);
+
+-- Insertion dans la table RESERVATION  pour le trigger reste_place
+INSERT INTO RESERVATION (idCours, usernameMoniteur, dateCours, heureDebutCours, usernameClient, idPoney) VALUES
+(11, 'moniteur1', '2023-10-10', 18.0, 'client9', 1),
+(11, 'moniteur1', '2023-10-10', 18.0, 'client9', 2),
+(11, 'moniteur1', '2023-10-10', 18.0, 'client9', 3),
+(11, 'moniteur1', '2023-10-10', 18.0, 'client9', 4),
+(11, 'moniteur1', '2023-10-10', 18.0, 'client9', 5),
+(11, 'moniteur1', '2023-10-10', 18.0, 'client9', 6),
+(11, 'moniteur1', '2023-10-10', 18.0, 'client9', 7),
+(11, 'moniteur1', '2023-10-10', 18.0, 'client9', 8),
+(11, 'moniteur1', '2023-10-10', 18.0, 'client9', 9),
+(11, 'moniteur1', '2023-10-10', 18.0, 'client9', 10),
+(11, 'moniteur1', '2023-10-10', 18.0, 'client9', 10);

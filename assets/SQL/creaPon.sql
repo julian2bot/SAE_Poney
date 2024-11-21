@@ -156,4 +156,6 @@ CREATE TABLE RESERVATION(
 
     FOREIGN KEY (usernameClient) REFERENCES CLIENT(usernameClient),
     FOREIGN KEY (idPoney) REFERENCES PONEY(idPoney)
+
+    
 );

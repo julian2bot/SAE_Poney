@@ -1,61 +1,7 @@
---Peuvent porter jusqu'à un poids max dans réservation--
 
-delimiter |
-create or replace trigger poidsmaxponey_reservation before insert on RESERVATION for each row
-begin
-    declare poidsclientchoisie TINYINT ;
-    declare poidsponeymax TINYINT ;
-    declare mes varchar (100) ;
 
-    select poidsMax into poidsponeymax from PONEY where  idPoney = new.idPoney  ;
-    select poidsClient into poidsclientchoisie from CLIENT where  usernameClient = new.usernameClient  ;
 
-    if  poidsponeymax < poidsclientchoisie  then
-        set mes = concat ( 'inscription impossible' , new.idPoney , 'ne supporteras pas la charge') ;
-        signal SQLSTATE '45000' set MESSAGE_TEXT = mes ;
-    end if ;
-end |
-delimiter ;
 
---Client--
---Il doit rester de la place dans le cours--
-delimiter |
-create or replace trigger reste_place before insert on RESERVATION for each row
-begin
-    declare idNiveau_cours INT ;
-    declare nbmax int ;
-    declare nbins int ;
-    declare mes varchar (100) ;
-
-    select idNiveau into idNiveau_cours from COURS where idCours = new.idCours  ;
-    select nbMax into nbmax from COURS where idCours = new.idCours and idNiveau = idNiveau_cours ;
-    select count ( usernameClient ) into nbins from RESERVATION where idCours = new.idCours and idNiveau = idNiveau_cours;
-
-    if nbins +1 > nbmax then
-        set mes = concat ( 'inscription impossible le cours est complet' ) ;
-        signal SQLSTATE '45000' set MESSAGE_TEXT = mes ;
-    end if ;
-end |
-delimiter ;
-
---Doit avoir le niveau nécessaire --
-delimiter |
-create or replace trigger niveauClient_avant_reserve before insert on RESERVATION for each row
-begin
-    declare idNiveau_client TINYINT ;
-    declare idNiveau_cours INT ;
-
-    declare mes varchar (100) ;
-
-    select idNiveau into idNiveau_cours from COURS where idCours = new.idCours  ;
-    select idNiveau into idNiveau_client from OBTENTION where username = new.usernameClient;
-
-    if  idNiveau_client < idNiveau_cours then
-        set mes = concat ( 'inscription impossible le niveau' , idNiveau_cours , 'de', new.usernameClient,'est trop faible' ) ;
-        signal SQLSTATE '45000' set MESSAGE_TEXT = mes ;
-    end if ;
-end |
-delimiter ;
 
 --it avoir payer la cotisation annuelle--x
 delimiter |
@@ -115,10 +61,6 @@ begin
     end if;
 end |
 delimiter ;
-
-
-
-
 
 
 
