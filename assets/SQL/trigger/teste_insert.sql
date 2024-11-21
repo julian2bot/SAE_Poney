@@ -100,6 +100,7 @@ INSERT INTO MONITEUR (usernameMoniteur, salaire, isAdmin) VALUES
 ('client15', 2200.00, 0); --marche
 */
 
+-- Insertion pour la table PAYER
 INSERT INTO PAYER (nomCotisation, periode, usernameClient) VALUES 
 ('Cotisation A', '2024-2025', 'client1'),
 ('Cotisation B', '2024-2025', 'client2'),
@@ -167,7 +168,7 @@ INSERT INTO DISPONIBILITE (usernameMoniteur, heureDebutDispo, dateDispo, heureFi
 ('moniteur3', 14.0, '2023-11-25', 17.0),
 ('moniteur1', 15.0, '2023-11-26', 18.0);
 
-
+-- Insertion pour la table OBTENTION
 INSERT INTO OBTENTION ( username ,idNiveau,dateObtention) VALUES  
 ('moniteur1',11, '2023-12-01'),
 ('moniteur2',11, '2023-12-01'),
@@ -271,7 +272,7 @@ INSERT INTO RESERVATION (idCours, usernameMoniteur, dateCours, heureDebutCours, 
 (11, 'moniteur1', '2023-10-10', 18.0, 'client10', 10),
 (11, 'moniteur1', '2023-10-10', 18.0, 'client11', 10);
 
-*/
+
 
 -- Insertion pour la table COURS pour le trigger cotisation_payer_avant_reserve
 INSERT INTO COURS (idCours, idNiveau, nomCours, duree, prix, nbMax) VALUES
@@ -285,3 +286,8 @@ INSERT INTO REPRESENTATION (idCours, usernameMoniteur, dateCours, heureDebutCour
 -- Insertion dans la table RESERVATION  pour le trigger cotisation_payer_avant_reserve
 INSERT INTO RESERVATION (idCours, usernameMoniteur, dateCours, heureDebutCours, usernameClient, idPoney) VALUES
 (12, 'moniteur1', '2022-10-10', 18.0, 'client4', 1);
+*/
+
+-- Insertion pour la table PAYER
+INSERT INTO PAYER (nomCotisation, periode, usernameClient) VALUES 
+('Cotisation A', '2024-2025', 'client2');

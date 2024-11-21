@@ -1,29 +1,5 @@
 
 
-
-
-
-
-
-
---Un client ne doit pouvoir réserver qu’une cotisation par année--x
-delimiter |
-create or replace trigger une_cotisation_pas_plus before insert on RESERVATION for each row
-begin
-    declare datereserve date  ;
-    declare cotise int;
-    declare mes varchar (100) ;
-
-    select dateCours into datereserve from reserver where   dateCours = new.dateCours ;
-    select count(anneesCoti) into cotise from payer where usernameClient = new.usernameClient and anneesCoti = YEAR(datereserve);
-
-    if  cotise >= 1 then
-        set mes = concat ( 'il a deja la cotisation' ) ;
-        signal SQLSTATE '45000' set MESSAGE_TEXT = mes ;
-    end if ;
-end |
-delimiter ;
-
 --Doit avoir les fonds suffisant sur son solde-- 
 delimiter |
 create or replace trigger sufisant_fonds_avant_reserve before insert on RESERVATION for each row
