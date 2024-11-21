@@ -157,3 +157,12 @@ CREATE TABLE RESERVATION(
     FOREIGN KEY (usernameClient) REFERENCES CLIENT(usernameClient),
     FOREIGN KEY (idPoney) REFERENCES PONEY(idPoney)
 );
+
+
+--  pour debug
+
+-- CREATE TABLE log_table (
+--     id INT AUTO_INCREMENT PRIMARY KEY,
+--     log_date DATETIME DEFAULT CURRENT_TIMESTAMP,
+--     log_message TEXT
+-- );
