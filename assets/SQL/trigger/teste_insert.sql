@@ -173,7 +173,8 @@ INSERT INTO DISPONIBILITE (usernameMoniteur, heureDebutDispo, dateDispo, heureFi
 ('moniteur1', 9.0, '2023-11-23', 12.0),
 ('moniteur2', 10.0, '2023-11-24', 13.0),
 ('moniteur3', 14.0, '2023-11-25', 17.0),
-('moniteur1', 15.0, '2023-11-26', 18.0);
+('moniteur1', 15.0, '2023-11-26', 18.0),
+('moniteur4',2.0,'2023-12-06', 17.0);
 
 -- Insertion pour la table OBTENTION
 INSERT INTO OBTENTION ( username ,idNiveau,dateObtention) VALUES  
@@ -212,16 +213,23 @@ INSERT INTO REPRESENTATION (idCours, usernameMoniteur, dateCours, heureDebutCour
 (10, 'moniteur1', '2023-12-10', 18.0);
 
 
-
+/*
 -- Insertion dans la table REPRESENTATION pour le trigger niveauMoniteur_avant_representer
 INSERT INTO REPRESENTATION (idCours, usernameMoniteur, dateCours, heureDebutCours) VALUES
 (14, 'moniteur4', '2023-12-06', 14.0);
+*/
 
+
+/*
 -- Insertion dans la table REPRESENTATION pour le trigger court_deja_present_avant_representer
 --(14, 'moniteur4', '2023-12-06', 14.0);
 INSERT INTO REPRESENTATION (idCours, usernameMoniteur, dateCours, heureDebutCours) VALUES
-
   (15, 'moniteur4', '2023-12-06', 14.0);
+*/
+
+-- Insertion dans la table REPRESENTATION pour le trigger cours_hors_planning
+INSERT INTO REPRESENTATION (idCours, usernameMoniteur, dateCours, heureDebutCours) VALUES
+  (15, 'moniteur4', '2023-12-06', 1.0);
 
 -- Insertion dans la table RESERVATION
 INSERT INTO RESERVATION (idCours, usernameMoniteur, dateCours, heureDebutCours, usernameClient, idPoney) VALUES
@@ -237,6 +245,7 @@ INSERT INTO RESERVATION (idCours, usernameMoniteur, dateCours, heureDebutCours, 
 (10, 'moniteur1', '2023-12-10', 18.0, 'client10', 10);
 
 
+/*
 -- Insertion dans la table RESERVATION pour le trigger niveauMoniteur_avant_representer
 INSERT INTO RESERVATION (idCours, usernameMoniteur, dateCours, heureDebutCours, usernameClient, idPoney) VALUES
 (14, 'moniteur4', '2023-12-06', 14.0, 'client10', 10);

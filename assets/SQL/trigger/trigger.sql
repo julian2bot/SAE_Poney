@@ -233,3 +233,23 @@ begin
 end |
 delimiter ;
 
+
+
+---
+--partie trigger
+---
+--Les horaires du cours doivent être dans ses disponibilités-- partie 1
+delimiter |
+create or replace trigger court_deja_present_avant_representer before insert on REPRESENTATION for each row
+begin
+    declare comptage INT;
+    declare mes varchar (100) ;
+
+    select count(*)  into comptage from REPRESENTATION where  usernameMoniteur = new.usernameMoniteur and dateCours = new.dateCours and heureDebutCours = new.heureDebutCours  ;
+
+    if comptage > 0 then
+        set mes = concat ( 'cours deja present la meme heure pour le moniteur ',new.usernameMoniteur," du cours numero ", new.idCours," le ",new.dateCours ) ;
+        signal SQLSTATE '45000' set MESSAGE_TEXT = mes ;
+    end if ;
+end |
+delimiter ;
