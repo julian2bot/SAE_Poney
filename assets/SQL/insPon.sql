@@ -165,7 +165,7 @@ INSERT INTO RESERVATION (idCours, usernameMoniteur, dateCours, heureDebutCours, 
 (1, 'moniteur1', '2023-12-01', 11.0, 'client1', 1),
 (3, 'moniteur1', '2023-12-01', 14.0, 'client1', 1),
 (3, 'moniteur1', '2023-12-01', 18.0, 'client1', 1),
--- (3, 'moniteur1', '2023-12-01', 21.0, 'client1', 1),
+-- (3, 'moniteur1', '2023-12-01', 21.0, 'client1', 1), Censé passé
 
 (2, 'moniteur1', '2023-12-02', 11.0, 'client2', 2),
 (3, 'moniteur2', '2023-12-03', 9.5, 'client3', 3),
@@ -183,7 +183,7 @@ select poneyDispo(1,3, 'moniteur1', '2023-12-01', 8.0, 2);
 select poneyDispo(1,1, 'moniteur1', '2023-12-01', 10.0, 1); 
 select poneyDispo(1,1, 'moniteur1', '2023-12-01', 12.0, 1); 
 select poneyDispo(1,3, 'moniteur1', '2023-12-01', 13.0, 2); 
-select poneyDispo(1,1, 'moniteur1', '2023-12-01', 17.0, 1);
+select poneyDispo(1,1, 'moniteur1', '2023-12-01', 17.0, 1); -- Censé ne pas passé 
 select poneyDispo(1,3, 'moniteur1', '2023-12-01', 17.0, 2); 
 select poneyDispo(1,1, 'moniteur1', '2023-12-01', 20.0, 1); 
 select poneyDispo(1,1, 'moniteur1', '2023-12-01', 22.0, 1); 
