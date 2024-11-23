@@ -144,6 +144,11 @@ INSERT INTO DISPONIBILITE (usernameMoniteur, heureDebutDispo, dateDispo, heureFi
 -- Insertion dans la table REPRESENTATION
 INSERT INTO REPRESENTATION (idCours, usernameMoniteur, dateCours, heureDebutCours) VALUES
 (1, 'moniteur1', '2023-12-01', 10.0),
+(1, 'moniteur1', '2023-12-01', 11.0),
+(3, 'moniteur1', '2023-12-01', 14.0),
+(3, 'moniteur1', '2023-12-01', 18.0),
+(3, 'moniteur1', '2023-12-01', 21.0),
+
 (2, 'moniteur1', '2023-12-02', 11.0),
 (3, 'moniteur2', '2023-12-03', 9.5),
 (4, 'moniteur2', '2023-12-04', 10.5),
@@ -157,6 +162,11 @@ INSERT INTO REPRESENTATION (idCours, usernameMoniteur, dateCours, heureDebutCour
 -- Insertion dans la table RESERVATION
 INSERT INTO RESERVATION (idCours, usernameMoniteur, dateCours, heureDebutCours, usernameClient, idPoney) VALUES
 (1, 'moniteur1', '2023-12-01', 10.0, 'client1', 1),
+(1, 'moniteur1', '2023-12-01', 11.0, 'client1', 1),
+(3, 'moniteur1', '2023-12-01', 14.0, 'client1', 1),
+(3, 'moniteur1', '2023-12-01', 18.0, 'client1', 1),
+-- (3, 'moniteur1', '2023-12-01', 21.0, 'client1', 1),
+
 (2, 'moniteur1', '2023-12-02', 11.0, 'client2', 2),
 (3, 'moniteur2', '2023-12-03', 9.5, 'client3', 3),
 (4, 'moniteur2', '2023-12-04', 10.5, 'client4', 4),
@@ -166,3 +176,15 @@ INSERT INTO RESERVATION (idCours, usernameMoniteur, dateCours, heureDebutCours, 
 (8, 'moniteur2', '2023-12-08', 16.0, 'client8', 8),
 (9, 'moniteur3', '2023-12-09', 17.0, 'client9', 9),
 (10, 'moniteur1', '2023-12-10', 18.0, 'client10', 10);
+
+
+-- idPoneyF idCours usernameMoniteur dateCoursF heureDebutCoursF dureeCours
+select poneyDispo(1,3, 'moniteur1', '2023-12-01', 8.0, 2); 
+select poneyDispo(1,1, 'moniteur1', '2023-12-01', 10.0, 1); 
+select poneyDispo(1,1, 'moniteur1', '2023-12-01', 12.0, 1); 
+select poneyDispo(1,3, 'moniteur1', '2023-12-01', 13.0, 2); 
+select poneyDispo(1,1, 'moniteur1', '2023-12-01', 17.0, 1);
+select poneyDispo(1,3, 'moniteur1', '2023-12-01', 17.0, 2); 
+select poneyDispo(1,1, 'moniteur1', '2023-12-01', 20.0, 1); 
+select poneyDispo(1,1, 'moniteur1', '2023-12-01', 22.0, 1); 
+select poneyDispo(1,1, 'moniteur1', '2023-12-01', 23.0, 1); 

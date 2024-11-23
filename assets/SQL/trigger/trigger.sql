@@ -187,5 +187,5 @@ delimiter ;
 -- select poneyDispo(1,3, 'moniteur2', '2023-12-01', 11.0, 'client1', 2);
 
 -- select poneyDispo(1,3, 'moniteur2', '2023-12-01', 11.0, 2);
-select poneyDispo(1,1, 'moniteur2', '2027-12-01', 12.0, 1); 
+-- select poneyDispo(1,1, 'moniteur2', '2027-12-01', 12.0, 1); 
 -- select truc('2027-12-01', 15.0, 1,1);
