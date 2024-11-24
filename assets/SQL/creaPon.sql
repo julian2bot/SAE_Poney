@@ -874,7 +874,6 @@ begin
     end if ;
 
     if  cours_hors_planning (new.usernameMoniteur,new.dateCours,new.heureDebutCours) then
-
         select heureDebutDispo into heureDebutDispos from DISPONIBILITE where  usernameMoniteur = new.usernameMoniteur and dateDispo = new.dateCours  ;
         set mes = concat ( "le moniteur ",new.usernameMoniteur," n\'a pas commencer son service, trouver une autre heure que ", new.heureDebutCours ,"h le moniteur commence a " ,heureDebutDispos,"h" ) ;
         signal SQLSTATE "45000" set MESSAGE_TEXT = mes ;
@@ -901,35 +900,6 @@ begin
 
 end |
 delimiter ;
-
--- INSERT INTO REPRESENTATION (idCours, usernameMoniteur, dateCours, heureDebutCours) VALUES
--- (1, 'moniteur2', '2023-12-01', 10.5), -- Invalide car chevauchement
--- (1, 'moniteur2', '2023-12-01', 11.0), -- Valide
--- -- (1, 'moniteur2', '2023-12-01', 9.0), -- Valide car avant
--- (1, 'moniteur2', '2023-12-01', 12.0); -- Invalide suite au court de 10h et 11h
-
-
--- -- 1H 1H
--- INSERT INTO RESERVATION (idCours, usernameMoniteur, dateCours, heureDebutCours, usernameClient, idPoney) VALUES
--- (1, 'moniteur2', '2023-12-01', 11.0, 'client1', 1); -- Valide
--- INSERT INTO RESERVATION (idCours, usernameMoniteur, dateCours, heureDebutCours, usernameClient, idPoney) VALUES
--- (1, 'moniteur2', '2023-12-01', 10.5, 'client1', 1);
--- INSERT INTO RESERVATION (idCours, usernameMoniteur, dateCours, heureDebutCours, usernameClient, idPoney) VALUES
--- (1, 'moniteur2', '2023-12-01', 12.0, 'client1', 1);
-
-
--- -- 2H2H
--- INSERT INTO RESERVATION (idCours, usernameMoniteur, dateCours, heureDebutCours, usernameClient, idPoney) VALUES
--- (3, 'moniteur2', '2023-12-01', 11.0, 'client1', 1); -- Valide
-
--- INSERT INTO REPRESENTATION (idCours, usernameMoniteur, dateCours, heureDebutCours) VALUES
--- (1, 'moniteur2', '2027-12-01', 12.0);
-
--- INSERT INTO RESERVATION (idCours, usernameMoniteur, dateCours, heureDebutCours, usernameClient, idPoney) VALUES
---     (1, 'moniteur2', '2027-12-01', 12.0, 'client1', 1);
-    -- (3, 'moniteur2', '2027-12-01', 11.0, 'client1', 1);
-
-
 
 -- select poneyDispo(1, 1, 'moniteur2', '2023-12-01', 11.0, 1);
 -- select poneyDispo(1, 1, 'moniteur2', '2023-12-01', 10.5, 1);

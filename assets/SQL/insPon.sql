@@ -76,6 +76,7 @@ INSERT INTO OBTENTION ( username ,idNiveau,dateObtention) VALUES
 ('moniteur3',11, '2023-12-01'),
 ('moniteur4',2, '2023-12-01'),
 ('client1',  8 , '2023-12-01'),
+('client1',  11 , '2023-12-01'),
 ('client2',  8 , '2023-12-01'), 
 ('client3',  8 , '2023-12-01'),
 ('client4',  8 , '2023-12-01'),
@@ -166,6 +167,7 @@ INSERT INTO PONEY (idPoney, nomPoney, poidsMax, photo, nomRace) VALUES
 
 -- Insertion pour la table DISPONIBILITE
 INSERT INTO DISPONIBILITE (usernameMoniteur, heureDebutDispo, dateDispo, heureFinDispo) VALUES
+('moniteur1', 2.0, '2023-12-01', 24.0),
 ('moniteur1', 9.0, '2023-12-20', 12.0),
 ('moniteur1', 14.0, '2023-12-20', 18.0),
 ('moniteur2', 10.0, '2023-12-21', 13.0),
@@ -189,69 +191,13 @@ INSERT INTO REPRESENTATION (idCours, usernameMoniteur, dateCours, heureDebutCour
 (7, 'moniteur1', '2023-12-23', 9.0),  -- Disponible entre 9h et 12h
 (8, 'moniteur2', '2023-12-24', 10.0), -- Disponible entre 10h et 13h
 (9, 'moniteur3', '2023-12-25', 14.0), -- Disponible entre 14h et 17h
-(10, 'moniteur1', '2023-12-26', 15.0); -- Disponible entre 15h et 18h
+(10, 'moniteur1', '2023-12-26', 15.0), -- Disponible entre 15h et 18h
 
--- -- Insertion dans la table REPRESENTATION
--- INSERT INTO REPRESENTATION (idCours, usernameMoniteur, dateCours, heureDebutCours) VALUES
--- (1, 'moniteur1', '2023-12-01', 10.0),
--- (1, 'moniteur1', '2023-12-01', 11.0),
--- (3, 'moniteur1', '2023-12-01', 14.0),
--- (3, 'moniteur1', '2023-12-01', 18.0),
--- (3, 'moniteur1', '2023-12-01', 21.0),
-
--- (2, 'moniteur1', '2023-12-02', 11.0),
--- (3, 'moniteur2', '2023-12-03', 9.5),
--- (4, 'moniteur2', '2023-12-04', 10.5),
--- (5, 'moniteur3', '2023-12-05', 11.0),
--- (6, 'moniteur3', '2023-12-06', 14.0),
--- (7, 'moniteur1', '2023-12-07', 15.0),
--- (8, 'moniteur2', '2023-12-08', 16.0),
--- (9, 'moniteur3', '2023-12-09', 17.0),
--- (10, 'moniteur1', '2023-12-10', 18.0);
-
--- -- Insertion dans la table REPRESENTATION
--- INSERT INTO REPRESENTATION (idCours, usernameMoniteur, dateCours, heureDebutCours) VALUES
--- (1, 'moniteur1', '2023-12-01', 10.0),
--- (2, 'moniteur1', '2023-12-02', 11.0),
--- (3, 'moniteur2', '2023-12-03', 9.5),
--- (4, 'moniteur2', '2023-12-04', 10.5),
--- (5, 'moniteur3', '2023-12-05', 11.0),
--- (6, 'moniteur3', '2023-12-06', 14.0),
--- (7, 'moniteur1', '2023-12-07', 15.0),
--- (8, 'moniteur2', '2023-12-08', 16.0),
--- (9, 'moniteur3', '2023-12-09', 17.0),
--- (10, 'moniteur1', '2023-12-10', 18.0);
-
--- -- Insertion dans la table RESERVATION
--- INSERT INTO RESERVATION (idCours, usernameMoniteur, dateCours, heureDebutCours, usernameClient, idPoney) VALUES
--- (1, 'moniteur1', '2023-12-01', 10.0, 'client1', 1),
--- (1, 'moniteur1', '2023-12-01', 11.0, 'client1', 1),
--- (3, 'moniteur1', '2023-12-01', 14.0, 'client1', 1),
--- (3, 'moniteur1', '2023-12-01', 18.0, 'client1', 1),
--- -- (3, 'moniteur1', '2023-12-01', 21.0, 'client1', 1), Censé passé
-
--- (2, 'moniteur1', '2023-12-02', 11.0, 'client2', 2),
--- (3, 'moniteur2', '2023-12-03', 9.5, 'client3', 3),
--- (4, 'moniteur2', '2023-12-04', 10.5, 'client4', 4),
--- (5, 'moniteur3', '2023-12-05', 11.0, 'client5', 5),
--- (6, 'moniteur3', '2023-12-06', 14.0, 'client6', 6),
--- (7, 'moniteur1', '2023-12-07', 15.0, 'client7', 7),
--- (8, 'moniteur2', '2023-12-08', 16.0, 'client8', 8),
--- (9, 'moniteur3', '2023-12-09', 17.0, 'client9', 9),
--- (10, 'moniteur1', '2023-12-10', 18.0, 'client10', 10);
-
--- -- Insertion dans la table RESERVATION
--- INSERT INTO RESERVATION (idCours, usernameMoniteur, dateCours, heureDebutCours, usernameClient, idPoney) VALUES
--- (1, 'moniteur1', '2023-12-01', 10.0, 'client1', 1),
--- (2, 'moniteur1', '2023-12-02', 11.0, 'client2', 2),
--- (3, 'moniteur2', '2023-12-03', 9.5, 'client3', 3),
--- (4, 'moniteur2', '2023-12-04', 10.5, 'client4', 4),
--- (5, 'moniteur3', '2023-12-05', 11.0, 'client5', 5),
--- (6, 'moniteur3', '2023-12-06', 14.0, 'client6', 6),
--- (7, 'moniteur1', '2023-12-07', 15.0, 'client7', 7),
--- (8, 'moniteur2', '2023-12-08', 16.0, 'client8', 8),
--- (9, 'moniteur3', '2023-12-09', 17.0, 'client9', 9),
--- (10, 'moniteur1', '2023-12-10', 18.0, 'client10', 10);
+(1, 'moniteur1', '2023-12-01', 10.0),
+(1, 'moniteur1', '2023-12-01', 11.0),
+(3, 'moniteur1', '2023-12-01', 14.0),
+(3, 'moniteur1', '2023-12-01', 18.0),
+(3, 'moniteur1', '2023-12-01', 21.0);
 
 INSERT INTO RESERVATION (idCours, usernameMoniteur, dateCours, heureDebutCours, usernameClient, idPoney) VALUES
 (1, 'moniteur1', '2023-12-20', 9.0, 'client1', 1),
@@ -263,16 +209,161 @@ INSERT INTO RESERVATION (idCours, usernameMoniteur, dateCours, heureDebutCours, 
 (7, 'moniteur1', '2023-12-23', 9.0, 'client7', 7),
 (8, 'moniteur2', '2023-12-24', 10.0, 'client8', 8),
 (9, 'moniteur3', '2023-12-25', 14.0, 'client9', 9),
-(10, 'moniteur1', '2023-12-26', 15.0, 'client10', 10);
+(10, 'moniteur1', '2023-12-26', 15.0, 'client10', 10),
+
+(1, 'moniteur1', '2023-12-01', 10.0, 'client1', 1),
+(1, 'moniteur1', '2023-12-01', 11.0, 'client1', 1),
+(3, 'moniteur1', '2023-12-01', 14.0, 'client1', 1),
+-- (3, 'moniteur1', '2023-12-01', 21.0, 'client1', 1), Censé passé
+(3, 'moniteur1', '2023-12-01', 18.0, 'client1', 1);
 
 
--- idPoneyF idCours usernameMoniteur dateCoursF heureDebutCoursF dureeCours
--- select poneyDispo(1,3, 'moniteur1', '2023-12-01', 8.0, 2); 
--- select poneyDispo(1,1, 'moniteur1', '2023-12-01', 10.0, 1); 
--- select poneyDispo(1,1, 'moniteur1', '2023-12-01', 12.0, 1); 
--- select poneyDispo(1,3, 'moniteur1', '2023-12-01', 13.0, 2); 
--- select poneyDispo(1,1, 'moniteur1', '2023-12-01', 17.0, 1); -- Censé ne pas passé 
--- select poneyDispo(1,3, 'moniteur1', '2023-12-01', 17.0, 2); 
--- select poneyDispo(1,1, 'moniteur1', '2023-12-01', 20.0, 1); 
--- select poneyDispo(1,1, 'moniteur1', '2023-12-01', 22.0, 1); 
--- select poneyDispo(1,1, 'moniteur1', '2023-12-01', 23.0, 1); 
+----------------------------------------------------------------------------------
+------------------------- Inserts qui ne fonctionnes pas -------------------------
+----------------------------------------------------------------------------------
+
+/*
+-- Insertion pour la table CLIENT avec trigger
+INSERT INTO CLIENT (usernameClient, dateInscription, poidsClient, solde) VALUES
+('moniteur3', '2022-05-30', 55,60); --marche
+
+
+
+-- Insertion pour la table MONITEUR avec trigger
+INSERT INTO MONITEUR (usernameMoniteur, salaire, isAdmin) VALUES
+('client15', 2200.00, 0); --marche
+*/
+
+
+/*
+-- Insertion dans la table REPRESENTATION pour le trigger niveauMoniteur_avant_representer
+INSERT INTO REPRESENTATION (idCours, usernameMoniteur, dateCours, heureDebutCours) VALUES
+(14, 'moniteur4', '2023-12-06', 14.0);
+*/
+
+
+/*
+-- Insertion dans la table REPRESENTATION pour le trigger court_deja_present_avant_representer
+--(14, 'moniteur4', '2023-12-06', 14.0);
+INSERT INTO REPRESENTATION (idCours, usernameMoniteur, dateCours, heureDebutCours) VALUES
+  (15, 'moniteur4', '2023-12-06', 14.0);
+*/
+
+/*
+-- Insertion dans la table REPRESENTATION pour le trigger cours_hors_planning
+INSERT INTO REPRESENTATION (idCours, usernameMoniteur, dateCours, heureDebutCours) VALUES
+  (15, 'moniteur4', '2023-12-06', 1.0);
+
+
+-- Insertion dans la table REPRESENTATION pour le trigger cours_hors_planning
+INSERT INTO REPRESENTATION (idCours, usernameMoniteur, dateCours, heureDebutCours) VALUES
+  (15, 'moniteur4', '2023-12-06', 16.0);
+
+
+
+-- Insertion dans la table REPRESENTATION pour le trigger court_deja_present_1h_apres_representer
+INSERT INTO REPRESENTATION (idCours, usernameMoniteur, dateCours, heureDebutCours) VALUES
+  (16, 'moniteur4', '2023-12-06', 15.0),
+  (15, 'moniteur4', '2023-12-06', 14.0);
+  */
+
+
+  -- Insertion dans la table REPRESENTATION pour le trigger court_deja_present_1h_apres_representer
+-- INSERT INTO REPRESENTATION (idCours, usernameMoniteur, dateCours, heureDebutCours) VALUES
+--   (15, 'moniteur4', '2023-12-06', 14.0),
+--   (16, 'moniteur4', '2023-12-06', 15.0);
+
+
+
+
+/*
+-- Insertion dans la table RESERVATION pour le trigger niveauMoniteur_avant_representer
+INSERT INTO RESERVATION (idCours, usernameMoniteur, dateCours, heureDebutCours, usernameClient, idPoney) VALUES
+(14, 'moniteur4', '2023-12-06', 14.0, 'client10', 10);
+
+/*
+-- Insertion dans la table RESERVATION pour le trigger poidx max
+INSERT INTO RESERVATION (idCours, usernameMoniteur, dateCours, heureDebutCours, usernameClient, idPoney) VALUES
+(11, 'moniteur1', '2023-10-10', 18.0, 'client9', 10)
+
+
+
+-- Insertion pour la table COURS pour le trigger reste_place
+INSERT INTO COURS (idCours, idNiveau, nomCours, duree, prix, nbMax) VALUES
+(11, 4, 'Cours Avancé', 1, 35, 1);
+
+-- Insertion dans la table RESERVATION  pour le trigger reste_place
+INSERT INTO REPRESENTATION (idCours, usernameMoniteur, dateCours, heureDebutCours) VALUES
+(11, 'moniteur1', '2023-10-10', 18.0);
+
+-- Insertion dans la table RESERVATION  pour le trigger reste_place
+INSERT INTO RESERVATION (idCours, usernameMoniteur, dateCours, heureDebutCours, usernameClient, idPoney) VALUES
+(11, 'moniteur1', '2023-10-10', 18.0, 'client1', 1),
+(11, 'moniteur1', '2023-10-10', 18.0, 'client2', 2),
+(11, 'moniteur1', '2023-10-10', 18.0, 'client3', 3),
+(11, 'moniteur1', '2023-10-10', 18.0, 'client4', 4),
+(11, 'moniteur1', '2023-10-10', 18.0, 'client5', 5),
+(11, 'moniteur1', '2023-10-10', 18.0, 'client6', 6),
+(11, 'moniteur1', '2023-10-10', 18.0, 'client7', 7),
+(11, 'moniteur1', '2023-10-10', 18.0, 'client8', 8),
+(11, 'moniteur1', '2023-10-10', 18.0, 'client9', 9),
+(11, 'moniteur1', '2023-10-10', 18.0, 'client10', 10),
+(11, 'moniteur1', '2023-10-10', 18.0, 'client11', 10);
+
+
+-- Insertion pour la table COURS pour le trigger niveauClient_avant_reserve
+INSERT INTO COURS (idCours, idNiveau, nomCours, duree, prix, nbMax) VALUES
+(11, 11, 'Cours Avancé', 1, 35, 1);
+
+-- Insertion dans la table RESERVATION  pour le trigger niveauClient_avant_reserve
+INSERT INTO REPRESENTATION (idCours, usernameMoniteur, dateCours, heureDebutCours) VALUES
+(11, 'moniteur1', '2023-10-10', 18.0);
+
+-- Insertion dans la table RESERVATION  pour le trigger niveauClient_avant_reserve
+INSERT INTO RESERVATION (idCours, usernameMoniteur, dateCours, heureDebutCours, usernameClient, idPoney) VALUES
+(11, 'moniteur1', '2023-10-10', 18.0, 'client1', 1),
+(11, 'moniteur1', '2023-10-10', 18.0, 'client2', 2),
+(11, 'moniteur1', '2023-10-10', 18.0, 'client3', 3),
+(11, 'moniteur1', '2023-10-10', 18.0, 'client4', 4),
+(11, 'moniteur1', '2023-10-10', 18.0, 'client5', 5),
+(11, 'moniteur1', '2023-10-10', 18.0, 'client6', 6),
+(11, 'moniteur1', '2023-10-10', 18.0, 'client7', 7),
+(11, 'moniteur1', '2023-10-10', 18.0, 'client8', 8),
+(11, 'moniteur1', '2023-10-10', 18.0, 'client9', 9),
+(11, 'moniteur1', '2023-10-10', 18.0, 'client10', 10),
+(11, 'moniteur1', '2023-10-10', 18.0, 'client11', 10);
+
+
+-- Insertion pour la table COURS pour le trigger cotisation_payer_avant_reserve
+INSERT INTO COURS (idCours, idNiveau, nomCours, duree, prix, nbMax) VALUES
+(12, 4, 'Cours Avancé', 1, 35, 1);
+
+-- Insertion dans la table RESERVATION  pour le trigger cotisation_payer_avant_reserve
+INSERT INTO REPRESENTATION (idCours, usernameMoniteur, dateCours, heureDebutCours) VALUES
+(12, 'moniteur1', '2022-10-10', 18.0);
+
+
+-- Insertion dans la table RESERVATION  pour le trigger cotisation_payer_avant_reserve
+INSERT INTO RESERVATION (idCours, usernameMoniteur, dateCours, heureDebutCours, usernameClient, idPoney) VALUES
+(12, 'moniteur1', '2022-10-10', 18.0, 'client4', 1);
+
+
+-- Insertion pour la table PAYER
+INSERT INTO PAYER (nomCotisation, periode, usernameClient) VALUES 
+('Cotisation A', '2024-2025', 'client2');
+
+*/
+
+-- INSERT INTO RESERVATION (idCours, usernameMoniteur, dateCours, heureDebutCours, usernameClient, idPoney) VALUES
+-- (1, 'moniteur1', '2023-12-20', 9.0, 'client1', 1),
+-- (2, 'moniteur1', '2023-12-20', 14.0, 'client2', 1),
+-- (3, 'moniteur2', '2023-12-20', 10.0, 'client3', 1),
+-- (4, 'moniteur2', '2023-12-20', 15.0, 'client4', 1),
+-- (5, 'moniteur3', '2023-12-20', 9.0, 'client5', 1),
+-- (6, 'moniteur3', '2023-12-20', 13.0, 'client6', 1),
+-- (7, 'moniteur1', '2023-12-20', 9.0, 'client7', 1),
+-- (8, 'moniteur2', '2023-12-20', 10.0, 'client8', 1),
+-- (9, 'moniteur3', '2023-12-20', 14.0, 'client9', 1),
+-- (10, 'moniteur1', '2023-12-20', 15.0, 'client10', 1);
+
+
