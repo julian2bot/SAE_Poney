@@ -318,24 +318,29 @@ delimiter ;
 delimiter |
 create or replace trigger reservation before insert on RESERVATION for each row
 begin
+    declare idNiveau_client TINYINT ;
+    declare soldes int  ;
+    declare montant_cours int;
+    declare idNiveau_cours INT ;
+    declare date_en_string varchar(10);
+
     declare mes varchar (200) ;
-    if  select poids_max_poney_reservation(new.idPoney,new.usernameClient)  then
+    if   poids_max_poney_reservation(new.idPoney,new.usernameClient)  then
         set mes = concat ( 'inscription impossible le poney numero ' , new.idPoney , ' ne supporteras pas la charge de ',new.usernameClient," pour la reservation du cours avec le numero" ,new.idCours) ;
         signal SQLSTATE '45000' set MESSAGE_TEXT = mes ;
     end if ;
 
 
-    if select reste_place_pour_reservation(new.idCours) then
+    if  reste_place_pour_reservation(new.idCours) then
         set mes = concat ( 'inscription impossible le cours est complet donc ',new.usernameClient," a besoin de choisir un autre cours que le cours",new.idCours ) ;
         signal SQLSTATE '45000' set MESSAGE_TEXT = mes ;
     end if ;
 
 
-    if  select niveauClient_avant_reserve(new.idCours,new.usernameClient) then
-        declare idNiveau_client TINYINT ;
-        declare idNiveau_cours INT ;
+    if   niveauClient_avant_reserve(new.idCours,new.usernameClient) then
 
-        select idNiveau into idNiveau_cours from COURS where idCours = courss  ;
+
+        select idNiveau into idNiveau_cours from COURS where idCours = new.idCours  ;
         select idNiveau into idNiveau_client from OBTENTION where username = clientel;
 
         set mes = concat ( 'inscription impossible le niveau de ', new.usernameClient,' est trop faible ', idNiveau_client,' < ',idNiveau_cours ) ;
@@ -343,8 +348,8 @@ begin
     end if ;
 
 
-    if  select cotisation_payer_avant_reserve (new.dateCours,new.usernameClient) then
-        declare date_en_string varchar(10);
+    if   cotisation_payer_avant_reserve (new.dateCours,new.usernameClient) then
+        
         set date_en_string =  CONCAT ( CAST(YEAR(new.dateCours) As varchar(4)),'-',CAST(YEAR(new.dateCours)+1 As varchar(4))) ;
 
         set mes = concat ( " le " ,NEW.usernameClient,' n a pas la cotisation actif cette annee ',date_en_string,' pour la reservation ',NEW.idCours ,' et la date ' ,new.dateCours ) ;
@@ -353,14 +358,12 @@ begin
 
 
 
-    if  select sufisant_fonds_avant_reserve(new.idCours ,new.usernameClient) then
-        declare soldes int  ;
-        declare montant_cours int;
-        declare idNiveau_cours INT ;
+    if   sufisant_fonds_avant_reserve(new.idCours ,new.usernameClient) then
 
-        select idNiveau into idNiveau_cours from COURS where idCours = courss  ;
-        select solde into soldes from CLIENT where   usernameClient = clientel ;
-        select prix into montant_cours from COURS where idCours = courss and  idNiveau = idNiveau_cours;
+
+        select idNiveau into idNiveau_cours from COURS where idCours = new.idCours  ;
+        select solde into soldes from CLIENT where   usernameClient = new.usernameClient ;
+        select prix into montant_cours from COURS where idCours = new.idCours and  idNiveau = idNiveau_cours;
 
         set mes = concat ( 'le ',new.usernameClient,' n a pas assez de fond le solde est a ',soldes ,' contre ', montant_cours,' a payer' ) ;
         signal SQLSTATE '45000' set MESSAGE_TEXT = mes ;
@@ -368,7 +371,7 @@ begin
 
 
 
-    if  select representation_existe_avant_RESERVATION (new.usernameMoniteur ,new.idCours ,new.dateCours ,new.heure_deb) then
+    if   representation_existe_avant_RESERVATION (new.usernameMoniteur ,new.idCours ,new.dateCours ,new.heureDebutCours) then
         set mes = concat ( 'inscription impossible la representation na pas definie le cours avec ',new.usernameMoniteur,' le ', new.dateCours ," num cours ",new.idCours ) ;
         signal SQLSTATE '45000' set MESSAGE_TEXT = mes ;
     end if ;
@@ -526,48 +529,61 @@ delimiter ;
 delimiter |
 create or replace trigger REPRESENTATION before insert on REPRESENTATION for each row
 begin
-    declare mes varchar (150) ;
-    if  select niveauMoniteur_avant_representer (new.usernameMoniteur,new.idCours) then
-            declare idNiveau_moniteur TINYINT ;
-            declare idNiveau_cours INT ;
+    declare idNiveau_moniteur TINYINT ;
+    declare idNiveau_cours INT ;
+    declare heureDebutDispos DECIMAL ;
+    declare durees INT ;
+    declare heureFinDispos DECIMAL ;
 
-            select idNiveau into idNiveau_moniteur from OBTENTION where  username = monit  ;
-            select idNiveau into idNiveau_cours from COURS where idCours = courss  ;
+    declare mes VARCHAR (150) ;
+
+    if  niveauMoniteur_avant_representer (new.usernameMoniteur,new.idCours) then
+        select idNiveau into idNiveau_moniteur from OBTENTION where  username = new.usernameMoniteur  ;
+        select idNiveau into idNiveau_cours from COURS where idCours = new.idCours  ;
 
         set mes = concat ( 'inscription impossible le niveau ' , idNiveau_moniteur , ' de ', new.usernameMoniteur,' est trop faible par rapport a celui du cours ', idNiveau_cours ) ;
         signal SQLSTATE '45000' set MESSAGE_TEXT = mes ;
     end if ;
 
-    if select court_deja_present_avant_representer(new.usernameMoniteur,new.dateCours,new.heureDebutCours) then
+
+
+
+    if  court_deja_present_avant_representer(new.usernameMoniteur,new.dateCours,new.heureDebutCours) then
         set mes = concat ( 'cours deja present la meme heure pour le moniteur ',new.usernameMoniteur," du cours numero ", new.idCours," le ",new.dateCours ) ;
         signal SQLSTATE '45000' set MESSAGE_TEXT = mes ;
     end if ;
 
 
 
-    if  select cours_hors_Possibiliter (new.usernameMoniteur,new.dateCours)  then
+    if   cours_hors_Possibiliter (new.usernameMoniteur,new.dateCours)  then
         set mes = concat ( "le moniteur ",new.usernameMoniteur," n\'est pas dispo tout la journé pour le cours numero " ,NEW.idcours ," le ",new.dateCours ) ;
         signal SQLSTATE "45000" set MESSAGE_TEXT = mes ;
     end if ;
 
-    if select cours_hors_planning (new.usernameMoniteur,new.dateCours,new.heureDebutCour) then
-        declare heureDebutDispos DECIMAL ;
-        select heureDebutDispo into heureDebutDispos from DISPONIBILITE where  usernameMoniteur = monit and dateDispo = da  ;
+
+
+
+    if  cours_hors_planning (new.usernameMoniteur,new.dateCours,new.heureDebutCours) then
+
+        select heureDebutDispo into heureDebutDispos from DISPONIBILITE where  usernameMoniteur = new.usernameMoniteur and dateDispo = new.dateCours  ;
         set mes = concat ( "le moniteur ",new.usernameMoniteur," n\'a pas commencer son service, trouver une autre heure que ", new.heureDebutCours ,"h le moniteur commence a " ,heureDebutDispos,"h" ) ;
         signal SQLSTATE "45000" set MESSAGE_TEXT = mes ;
     end if ;
 
-    if select cours_depasse_planning(new.idCours,new.usernameMoniteur,new.dateCours,new.heureDebutCours)  then
-        declare durees INT ;
-        declare heureFinDispos DECIMAL ;
 
-        select duree into durees from COURS where  idCours = courss;
-        select heureFinDispo into heureFinDispos from DISPONIBILITE where  usernameMoniteur = monit and dateDispo = da  ;
+
+    if  cours_depasse_planning(new.idCours,new.usernameMoniteur,new.dateCours,new.heureDebutCours)  then
+        select duree into durees from COURS where  idCours = new.idCours;
+        select heureFinDispo into heureFinDispos from DISPONIBILITE where  usernameMoniteur = new.usernameMoniteur and dateDispo = new.dateCours  ;
+        
         set mes = concat ( 'le moniteur ne peux pas realiser ce cours car il depasse son temps de travails ',heureFinDispos  ," < ",  new.heureDebutCours + durees , " le ",new.dateCours ) ;
         signal SQLSTATE '45000' set MESSAGE_TEXT = mes ;
     end if ;
 
-    if select court_deja_present_1h_apres_representer (new.idCours,new.usernameMoniteur,new.dateCours,new.heureDebutCours) then
+
+
+
+    if  court_deja_present_1h_apres_representer (new.idCours,new.usernameMoniteur,new.dateCours,new.heureDebutCours) then
         set mes = concat ( 'le cours ',new.idCours,' se chevauche avec celui d apres pour le ',new.dateCours, ' a ',new.heureDebutCours ) ;
         signal SQLSTATE '45000' set MESSAGE_TEXT = mes ;
     end if ;
