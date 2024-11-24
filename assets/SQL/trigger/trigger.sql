@@ -139,7 +139,7 @@ delimiter ;
 delimiter |
 create or replace function poids_max_poney_reservation (
 poney INT,
-clientel VARCHAR(32),
+clientel VARCHAR(32)
 ) returns BOOLEAN
 begin
     declare poidsclientchoisie TINYINT ;
@@ -289,7 +289,7 @@ monite VARCHAR(32),
 courss INT,
 da date,
 heureDeb DECIMAL
-) return BOOLEAN
+) returns BOOLEAN
 begin
     declare est_present INT;
     select COUNT(idCours) 
@@ -319,8 +319,6 @@ delimiter |
 create or replace trigger reservation before insert on RESERVATION for each row
 begin
     declare mes varchar (200) ;
-
-
     if  select poids_max_poney_reservation(new.idPoney,new.usernameClient)  then
         set mes = concat ( 'inscription impossible le poney numero ' , new.idPoney , ' ne supporteras pas la charge de ',new.usernameClient," pour la reservation du cours avec le numero" ,new.idCours) ;
         signal SQLSTATE '45000' set MESSAGE_TEXT = mes ;
@@ -418,16 +416,16 @@ delimiter ;
 --Les horaires du cours doivent être dans ses disponibilités-- partie 1.0
 delimiter |
 create or replace function court_deja_present_avant_representer(
-    new.usernameMoniteur
-    new.dateCours
-    new.heureDebutCours
+    monit VARCHAR(32),
+    da date,
+    heurD DECIMAL
 )returns BOOLEAN
 begin
     declare comptage INT;
     select count(*)  
     into comptage 
     from REPRESENTATION 
-    where  usernameMoniteur = new.usernameMoniteur and dateCours = new.dateCours and heureDebutCours = new.heureDebutCours  ;
+    where  usernameMoniteur = monit and dateCours = da and heureDebutCours = heurD  ;
     return comptage > 0 ;
 end |
 delimiter ;
@@ -435,11 +433,82 @@ delimiter ;
 
 
 
+--Les horaires du cours doivent être dans ses disponibilités-- partie 1.1
+delimiter |
+create or replace function cours_hors_Possibiliter (
+    monit VARCHAR(32),
+    da date
+) returns BOOLEAN
+begin
+    declare heure_disp INT ;
+
+    select COUNT(*) 
+    into heure_disp 
+    from DISPONIBILITE 
+    where  usernameMoniteur = monit and dateDispo = da  ;
+
+    return heure_disp = 0 ;
+
+end |
+delimiter ;
 
 
 
+--Les horaires du cours doivent être dans ses disponibilités-- partie 1.2
+delimiter |
+create or replace function cours_hors_planning (
+    monit VARCHAR(32),
+    da date,
+    heurD DECIMAL
+
+) returns BOOLEAN
+begin
+    declare heureDebutDispos DECIMAL ;
+    select heureDebutDispo into heureDebutDispos from DISPONIBILITE where  usernameMoniteur = monit and dateDispo = da  ;
+    return heureDebutDispos > heurD ;
+
+end |
+delimiter ;
 
 
+--Les horaires du cours doivent être dans ses disponibilités-- partie 3
+delimiter |
+create or replace function cours_depasse_planning(
+courss INT,
+monit VARCHAR(32),
+da date,
+heurD DECIMAL
+) returns BOOLEAN
+begin
+    declare durees INT ;
+    declare heureFinDispos DECIMAL ;
+
+    select duree into durees from COURS where  idCours = courss;
+    select heureFinDispo into heureFinDispos from DISPONIBILITE where  usernameMoniteur = monit and dateDispo = da  ;
+
+    return heureFinDispos < heurD + durees ;
+
+end |
+delimiter ;
+
+--Les horaires du cours doivent être dans ses disponibilités-- partie 4
+delimiter |
+create or replace function court_deja_present_1h_apres_representer (
+courss INT,
+monit VARCHAR(32),
+da date,
+heurD DECIMAL
+) returns BOOLEAN
+begin
+    declare durees INT ;
+    declare comptage INT;
+    select duree into durees from COURS where  idCours = courss;
+    select count(*)  into comptage from REPRESENTATION where  usernameMoniteur = monit and dateCours = da and heureDebutCours BETWEEN heurD AND heurD + durees ;
+
+    return comptage > 0 ;
+
+end |
+delimiter ;
 
 ----------------------------------------------------------------------------------------------------
 -------------        fonction  FIN  REPRESENTATION          ----------------------------------------
@@ -458,8 +527,6 @@ delimiter |
 create or replace trigger REPRESENTATION before insert on REPRESENTATION for each row
 begin
     declare mes varchar (150) ;
-
-
     if  select niveauMoniteur_avant_representer (new.usernameMoniteur,new.idCours) then
             declare idNiveau_moniteur TINYINT ;
             declare idNiveau_cours INT ;
@@ -478,22 +545,29 @@ begin
 
 
 
-    if heure_disp = 0 then
+    if  select cours_hors_Possibiliter (new.usernameMoniteur,new.dateCours)  then
         set mes = concat ( "le moniteur ",new.usernameMoniteur," n\'est pas dispo tout la journé pour le cours numero " ,NEW.idcours ," le ",new.dateCours ) ;
         signal SQLSTATE "45000" set MESSAGE_TEXT = mes ;
     end if ;
 
-    if heureDebutDispos > new.heureDebutCours then
+    if select cours_hors_planning (new.usernameMoniteur,new.dateCours,new.heureDebutCour) then
+        declare heureDebutDispos DECIMAL ;
+        select heureDebutDispo into heureDebutDispos from DISPONIBILITE where  usernameMoniteur = monit and dateDispo = da  ;
         set mes = concat ( "le moniteur ",new.usernameMoniteur," n\'a pas commencer son service, trouver une autre heure que ", new.heureDebutCours ,"h le moniteur commence a " ,heureDebutDispos,"h" ) ;
         signal SQLSTATE "45000" set MESSAGE_TEXT = mes ;
     end if ;
 
-    if heureFinDispos < new.heureDebutCours + durees then
+    if select cours_depasse_planning(new.idCours,new.usernameMoniteur,new.dateCours,new.heureDebutCours)  then
+        declare durees INT ;
+        declare heureFinDispos DECIMAL ;
+
+        select duree into durees from COURS where  idCours = courss;
+        select heureFinDispo into heureFinDispos from DISPONIBILITE where  usernameMoniteur = monit and dateDispo = da  ;
         set mes = concat ( 'le moniteur ne peux pas realiser ce cours car il depasse son temps de travails ',heureFinDispos  ," < ",  new.heureDebutCours + durees , " le ",new.dateCours ) ;
         signal SQLSTATE '45000' set MESSAGE_TEXT = mes ;
     end if ;
 
-    if comptage > 0 then
+    if select court_deja_present_1h_apres_representer (new.idCours,new.usernameMoniteur,new.dateCours,new.heureDebutCours) then
         set mes = concat ( 'le cours ',new.idCours,' se chevauche avec celui d apres pour le ',new.dateCours, ' a ',new.heureDebutCours ) ;
         signal SQLSTATE '45000' set MESSAGE_TEXT = mes ;
     end if ;
@@ -508,93 +582,4 @@ delimiter ;
 ----------------------------------------------------------------------------------------------------
 ----------------------------------------------------------------------------------------------------
 ----------------------------------------------------------------------------------------------------
-----------------------------------------------------------------------------------------------------
-----------------------------------------------------------------------------------------------------
-----------------------------------------------------------------------------------------------------
 
-
-
-
-
-
-
-
-
-
-
-
---Les horaires du cours doivent être dans ses disponibilités-- partie 1.1
-delimiter |
-create or replace trigger cours_hors_Possibiliter before insert on REPRESENTATION for each row
-begin
-    declare heure_disp INT ;
-    declare mes varchar (150) ;
-
-    select COUNT(*) into heure_disp from DISPONIBILITE where  usernameMoniteur = new.usernameMoniteur and dateDispo = new.dateCours  ;
-
-    if heure_disp = 0 then
-        set mes = concat ( "le moniteur ",new.usernameMoniteur," n\'est pas dispo tout la journé pour le cours numero " ,NEW.idcours ," le ",new.dateCours ) ;
-        signal SQLSTATE "45000" set MESSAGE_TEXT = mes ;
-    end if ;
-end |
-delimiter ;
-
-
---Les horaires du cours doivent être dans ses disponibilités-- partie 1.2
-delimiter |
-create or replace trigger cours_hors_planning before insert on REPRESENTATION for each row
-begin
-    declare heureDebutDispos DECIMAL ;
-    declare mes varchar (150) ;
-
-    select heureDebutDispo into heureDebutDispos from DISPONIBILITE where  usernameMoniteur = new.usernameMoniteur and dateDispo = new.dateCours  ;
-
-    if heureDebutDispos > new.heureDebutCours then
-        set mes = concat ( "le moniteur ",new.usernameMoniteur," n\'a pas commencer son service, trouver une autre heure que ", new.heureDebutCours ,"h le moniteur commence a " ,heureDebutDispos,"h" ) ;
-        signal SQLSTATE "45000" set MESSAGE_TEXT = mes ;
-    end if ;
-end |
-delimiter ;
-
-
-
---Les horaires du cours doivent être dans ses disponibilités-- partie 3
-delimiter |
-create or replace trigger cours_depasse_planning before insert on REPRESENTATION for each row
-begin
-    declare durees INT ;
-    declare heureFinDispos DECIMAL ;
-    declare mes varchar (150) ;
-
-    select duree into durees from COURS where  idCours = new.idCours;
-    select heureFinDispo into heureFinDispos from DISPONIBILITE where  usernameMoniteur = new.usernameMoniteur and dateDispo = new.dateCours  ;
-
-    if heureFinDispos < new.heureDebutCours + durees then
-        set mes = concat ( 'le moniteur ne peux pas realiser ce cours car il depasse son temps de travails ',heureFinDispos  ," < ",  new.heureDebutCours + durees , " le ",new.dateCours ) ;
-        signal SQLSTATE '45000' set MESSAGE_TEXT = mes ;
-    end if ;
-end |
-delimiter ;
-
---Les horaires du cours doivent être dans ses disponibilités-- partie 4
-delimiter |
-create or replace trigger court_deja_present_1h_apres_representer before insert on REPRESENTATION for each row
-begin
-    declare durees INT ;
-    declare comptage INT;
-    declare mes varchar (100) ;
-
-    select duree into durees from COURS where  idCours = new.idCours;
-    select count(*)  into comptage from REPRESENTATION where  usernameMoniteur = new.usernameMoniteur and dateCours = new.dateCours and heureDebutCours BETWEEN new.heureDebutCours AND new.heureDebutCours + durees ;
-
-    if comptage > 0 then
-        set mes = concat ( 'le cours ',new.idCours,' se chevauche avec celui d apres pour le ',new.dateCours, ' a ',new.heureDebutCours ) ;
-        signal SQLSTATE '45000' set MESSAGE_TEXT = mes ;
-    end if ;
-end |
-delimiter ;
-
-
-----------------------------------------------------------------------------------------------------
-----------------------------------------------------------------------------------------------------
-----------------------------------------------------------------------------------------------------
