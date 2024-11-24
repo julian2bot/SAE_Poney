@@ -238,7 +238,7 @@ delimiter ;
 ---
 --partie trigger
 ---
---Les horaires du cours doivent être dans ses disponibilités-- partie 1
+--Les horaires du cours doivent être dans ses disponibilités-- partie 1.0
 delimiter |
 create or replace trigger court_deja_present_avant_representer before insert on REPRESENTATION for each row
 begin
@@ -249,6 +249,79 @@ begin
 
     if comptage > 0 then
         set mes = concat ( 'cours deja present la meme heure pour le moniteur ',new.usernameMoniteur," du cours numero ", new.idCours," le ",new.dateCours ) ;
+        signal SQLSTATE '45000' set MESSAGE_TEXT = mes ;
+    end if ;
+end |
+delimiter ;
+
+
+
+--Les horaires du cours doivent être dans ses disponibilités-- partie 1.1
+delimiter |
+create or replace trigger cours_hors_Possibiliter before insert on REPRESENTATION for each row
+begin
+    declare heure_disp INT ;
+    declare mes varchar (150) ;
+
+    select COUNT(*) into heure_disp from DISPONIBILITE where  usernameMoniteur = new.usernameMoniteur and dateDispo = new.dateCours  ;
+
+    if heure_disp = 0 then
+        set mes = concat ( "le moniteur ",new.usernameMoniteur," n\'est pas dispo tout la journé pour le cours numero " ,NEW.idcours ," le ",new.dateCours ) ;
+        signal SQLSTATE "45000" set MESSAGE_TEXT = mes ;
+    end if ;
+end |
+delimiter ;
+
+
+--Les horaires du cours doivent être dans ses disponibilités-- partie 1.2
+delimiter |
+create or replace trigger cours_hors_planning before insert on REPRESENTATION for each row
+begin
+    declare heureDebutDispos DECIMAL ;
+    declare mes varchar (150) ;
+
+    select heureDebutDispo into heureDebutDispos from DISPONIBILITE where  usernameMoniteur = new.usernameMoniteur and dateDispo = new.dateCours  ;
+
+    if heureDebutDispos > new.heureDebutCours then
+        set mes = concat ( "le moniteur ",new.usernameMoniteur," n\'a pas commencer son service, trouver une autre heure que ", new.heureDebutCours ,"h le moniteur commence a " ,heureDebutDispos,"h" ) ;
+        signal SQLSTATE "45000" set MESSAGE_TEXT = mes ;
+    end if ;
+end |
+delimiter ;
+
+
+
+--Les horaires du cours doivent être dans ses disponibilités-- partie 3
+delimiter |
+create or replace trigger cours_depasse_planning before insert on REPRESENTATION for each row
+begin
+    declare durees INT ;
+    declare heureFinDispos DECIMAL ;
+    declare mes varchar (150) ;
+
+    select duree into durees from COURS where  idCours = new.idCours;
+    select heureFinDispo into heureFinDispos from DISPONIBILITE where  usernameMoniteur = new.usernameMoniteur and dateDispo = new.dateCours  ;
+
+    if heureFinDispos < new.heureDebutCours + durees then
+        set mes = concat ( 'le moniteur ne peux pas realiser ce cours car il depasse son temps de travails ',heureFinDispos  ," < ",  new.heureDebutCours + durees , " le ",new.dateCours ) ;
+        signal SQLSTATE '45000' set MESSAGE_TEXT = mes ;
+    end if ;
+end |
+delimiter ;
+
+--Les horaires du cours doivent être dans ses disponibilités-- partie 4
+delimiter |
+create or replace trigger court_deja_present_1h_apres_representer before insert on REPRESENTATION for each row
+begin
+    declare durees INT ;
+    declare comptage INT;
+    declare mes varchar (100) ;
+
+    select duree into durees from COURS where  idCours = new.idCours;
+    select count(*)  into comptage from REPRESENTATION where  usernameMoniteur = new.usernameMoniteur and dateCours = new.dateCours and heureDebutCours BETWEEN new.heureDebutCours AND new.heureDebutCours + durees ;
+
+    if comptage > 0 then
+        set mes = concat ( 'le cours ',new.idCours,' se chevauche avec celui d apres pour le ',new.dateCours, ' a ',new.heureDebutCours ) ;
         signal SQLSTATE '45000' set MESSAGE_TEXT = mes ;
     end if ;
 end |

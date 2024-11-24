@@ -1,46 +1,6 @@
 
 
 
---Les horaires du cours doivent être dans ses disponibilités-- partie 3
-delimiter |
-create or replace trigger cours_depasse_planning before insert on REPRESENTATION for each row
-begin
-    declare durees INT ;
-    declare finHeureDispos DECIMAL ;
-    declare mes varchar (100) ;
-
-    select duree into durees from COURS where  idCours = new.idCours;
-    select finHeureDispo into finHeureDispos from DISPONIBILITE where  usernameMoniteur = new.usernameMoniteur and dateDispo = new.dateCours  ;
-
-    if finHeureDispos > new.heureDebutCours + durees then
-        set mes = concat ( 'le moniteur ne peux pas realiser ce cours car il depasse son temps de travails' ) ;
-        signal SQLSTATE '45000' set MESSAGE_TEXT = mes ;
-    end if ;
-end |
-delimiter ;
-
-
-
-
-
---Les horaires du cours doivent être dans ses disponibilités-- partie 4
-delimiter |
-create or replace trigger court_deja_present_1h_apres_representer before insert on REPRESENTATION for each row
-begin
-    declare durees INT ;
-    declare comptage INT;
-    declare mes varchar (100) ;
-
-    select duree into durees from COURS where  idCours = new.idCours;
-    select count(*)  into comptage from REPRESENTATION where  usernameMoniteur = new.usernameMoniteur and dateCours = new.dateCours and heureDebutCours BETWEEN new.heureDebutCours AND new.heureDebutCours + durees ;
-
-    if comptage > 0 then
-        set mes = concat ( 'des cours se chevauche' ) ;
-        signal SQLSTATE '45000' set MESSAGE_TEXT = mes ;
-    end if ;
-end |
-delimiter ;
-
 
 /*
 --procesdure question 5
