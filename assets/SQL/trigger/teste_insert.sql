@@ -146,7 +146,7 @@ INSERT INTO COURS (idCours, idNiveau, nomCours, duree, prix, nbMax) VALUES
 (10, 4, 'Cours Avancé', 1, 35, 10),
 (14, 4, 'Cours Avancé', 1, 35, 10),
 (15, 4, 'Perfectionnement Galop 3', 2, 35, 10),
-(16, 4, 'Perfectionnement Galop 3', 1, 35, 10);
+(16, 4, 'Perfectionnement Galop 3', 2, 35, 10);
 
 -- Insertion pour la table PONEY
 INSERT INTO PONEY (idPoney, nomPoney, poidsMax, photo, nomRace) VALUES
@@ -241,13 +241,20 @@ INSERT INTO REPRESENTATION (idCours, usernameMoniteur, dateCours, heureDebutCour
 -- Insertion dans la table REPRESENTATION pour le trigger cours_hors_planning
 INSERT INTO REPRESENTATION (idCours, usernameMoniteur, dateCours, heureDebutCours) VALUES
   (15, 'moniteur4', '2023-12-06', 16.0);
-*/
 
--- Insertion dans la table REPRESENTATION pour le trigger cours_hors_planning
+
+
+-- Insertion dans la table REPRESENTATION pour le trigger court_deja_present_1h_apres_representer
 INSERT INTO REPRESENTATION (idCours, usernameMoniteur, dateCours, heureDebutCours) VALUES
   (16, 'moniteur4', '2023-12-06', 15.0),
   (15, 'moniteur4', '2023-12-06', 14.0);
-  
+  */
+
+
+  -- Insertion dans la table REPRESENTATION pour le trigger court_deja_present_1h_apres_representer
+INSERT INTO REPRESENTATION (idCours, usernameMoniteur, dateCours, heureDebutCours) VALUES
+  (15, 'moniteur4', '2023-12-06', 14.0),
+  (16, 'moniteur4', '2023-12-06', 15.0);
 
 -- Insertion dans la table RESERVATION
 INSERT INTO RESERVATION (idCours, usernameMoniteur, dateCours, heureDebutCours, usernameClient, idPoney) VALUES
