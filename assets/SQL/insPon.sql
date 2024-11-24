@@ -273,9 +273,6 @@ INSERT INTO REPRESENTATION (idCours, usernameMoniteur, dateCours, heureDebutCour
 --   (15, 'moniteur4', '2023-12-06', 14.0),
 --   (16, 'moniteur4', '2023-12-06', 15.0);
 
-
-
-
 /*
 -- Insertion dans la table RESERVATION pour le trigger niveauMoniteur_avant_representer
 INSERT INTO RESERVATION (idCours, usernameMoniteur, dateCours, heureDebutCours, usernameClient, idPoney) VALUES
