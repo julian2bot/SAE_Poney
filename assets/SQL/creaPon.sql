@@ -793,7 +793,7 @@ begin
 
 
         select idNiveau into idNiveau_cours from COURS where idCours = new.idCours  ;
-        select idNiveau into idNiveau_client from OBTENTION where username = clientel;
+        select max(idNiveau) into idNiveau_client from OBTENTION where username = clientel;
 
         set mes = concat ( 'inscription impossible le niveau de ', new.usernameClient,' est trop faible ', idNiveau_client,' < ',idNiveau_cours ) ;
         signal SQLSTATE '45000' set MESSAGE_TEXT = mes ;
@@ -837,14 +837,10 @@ begin
         signal SQLSTATE '45000' set MESSAGE_TEXT = mes ;
     end if ;
 
-    
-
 end |
 delimiter ;
 
-
 ------------- REPRESENTATION -------------
-
 
 delimiter |
 create or replace trigger triggerRepresentation before insert on REPRESENTATION for each row
@@ -857,10 +853,10 @@ begin
     declare duree_existant TINYINT default 0;
     declare mes VARCHAR (150) ;
 
-    select duree into duree_existant from COURS where  idCours = new.idCours;
+    select duree into duree_existant from COURS where idCours = new.idCours;
 
     if (select niveauMoniteur_avant_representer (new.usernameMoniteur,new.idCours)) then
-        select idNiveau into idNiveau_moniteur from OBTENTION where  username = new.usernameMoniteur  ;
+        select max(idNiveau) into idNiveau_moniteur from OBTENTION where username = new.usernameMoniteur;
         select idNiveau into idNiveau_cours from COURS where idCours = new.idCours  ;
 
         set mes = concat ( 'inscription impossible le niveau ' , idNiveau_moniteur , ' de ', new.usernameMoniteur,' est trop faible par rapport a celui du cours ', idNiveau_cours ) ;
@@ -872,7 +868,7 @@ begin
         signal SQLSTATE '45000' set MESSAGE_TEXT = mes ;
     end if ;
 
-    if   cours_hors_Possibiliter (new.usernameMoniteur,new.dateCours)  then
+    if cours_hors_Possibiliter (new.usernameMoniteur,new.dateCours)  then
         set mes = concat ( "le moniteur ",new.usernameMoniteur," n\'est pas dispo tout la journé pour le cours numero " ,NEW.idcours ," le ",new.dateCours ) ;
         signal SQLSTATE "45000" set MESSAGE_TEXT = mes ;
     end if ;
