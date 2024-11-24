@@ -19,16 +19,11 @@ begin
     while not fini DO
         fetch lesCours into identifant_cours ;
         if not fini then
-            select duree,heureDebutCours 
-            into durees,heureDebutCourss 
-            from COURS 
-            where idCours = identifant_cours;
-            
-            
+            select duree,heureDebutCours into durees,heureDebutCourss from COURS where idCours = identifant_cours;
+
+
             if heureDebutCourss + durees < heure_deb + duree_existant then
-                SET est_chevaucher = TRUE;
-                CLOSE lesCours;
-                RETURN;
+                   set est_chevaucher = true;
                    
             end if ;
         end if ;
