@@ -26,72 +26,16 @@ peuvent portes un cavalier jusqu’a un certain poids.
 
 
 ### Chris Mathevet
-- **semaine 1**
     - Analyse du projet
     - MCD
-    - Listes des contraintes
-    
-- **semaine 2**
-    
 ### Clement Renaudin
-- **semaine 1**
     - Analyse du projet
     - USE CASE
-- **semaine 2**
-
 ### Julian Marques 
-- **semaine 1**
     - Analyse du projet
     - USE CASE
     - Script sql
     - Maquette site
-- **semaine 2**
 
 
 
-
-
-### A FAIRE
-
-[ ] les Diagrammes  
-[ ]     ==> trello  
-[ ]     ==> BD  
-[ ]     ==> use case  
-
-
-[ ] script sql  
-[ ]     ==> script creation table de base   
-[ ]     ==> trigger    
-[ ]         ==> reserver un corus particulier ou 10 personnes max  
-[ ]         ==> cours = une personne + un poney ° un moniteur  
-[ ]         ==> date et heure precise  
-[ ]         ==> cours = 1 heure ou 2 max  
-[ ]         ==> poney apres 2h => 1h de pause 
-[ ]         ==> poney doit suppor   té un certain poid  
-[ ]     ==> insert    
-[ ]     ==> test   
-
-[ ] maquette  
-[ ]     ==> choix du style   
-[ ]     ==> choix des couleurs   
-[ ]     ==> choix des choses affichées   
-   
-[ ] SQL     
-[ ]     ==> inscription / connexion   
-   
-
-[ ] html/ css / js / php   
-[ ]     ==> page connexion / inscription    
-[ ]     ==> page planing    
-[ ]     ==> page resevation  
- 
-[ ] divers  
-[ ]     ==> exporter un PDF avec les plannings et les horaires    
-
-
-
-
-[ ] tache  
-[ ]     ==> sous tache  
-[ ]         ==> sous sous tache  
-²

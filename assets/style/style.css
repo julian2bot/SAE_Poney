@@ -1,0 +1,210 @@
+/*  Reset CSS  */
+
+*{
+    padding: 0;
+    margin: 0;
+}
+
+/*  BODY  */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #F8F3D8;
+    max-height: 100vh;
+
+}
+
+/*  HEADER  */
+header {
+    text-align: center;
+    padding: 20px;
+    height: 10vh;
+}
+
+h1 {
+    font-size: 3rem;
+}
+
+.auth-buttons {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+}
+
+.auth-buttons button {
+    margin-left: 10px;
+    padding: 10px 20px;
+    background-color: #eee;
+    border: none;
+    cursor: pointer;
+    border-radius: 10px;
+    border: #6e6e6e 1px solid;
+}
+
+.auth-buttons button:first-child {
+    background-color: rgb(48, 79, 254);
+    /* background-color: rgb(31, 31, 226); */
+    color: #eee;
+}
+
+
+/*  Page Principal  */
+.container {
+    position: relative;
+    width: 100%;
+    height: calc(90vh - 20px * 2);
+}
+
+.image-section {
+    background-color: #95B597;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 60vw;
+    height: 60vh;
+    z-index: 2;
+    padding: 10px;
+    border-radius: 00px 26px 0px 0px;
+    box-shadow: rgba(0, 0, 0, 0.225) 26px 37px 15px 10px;
+}
+
+img {
+    width: 75%;
+    height: 80%;
+    margin-left: calc((60vw - 80%) / 2);
+    /* margin-top: calc(46% - 60vh); */
+}
+
+
+.text-section {
+    background-color: #347429;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 60vw;
+    height: 80vh;
+    padding-right: 30px;
+    box-sizing: border-box;
+    border-radius: 26px 0px 0px 0px;
+    box-shadow: rgba(0, 0, 0, 0.225) -23px 30px 15px 10px;
+}
+
+.text-block {
+    text-align: justify;
+    color:#eee;
+    font-size: 20px;
+    position: absolute;
+    top: 15%; 
+    right: 30px; 
+    box-sizing: border-box;
+    width: calc(100% - 60px); 
+    max-width: 35vw;
+}
+.cheval{
+    width: 252px;
+    height: 173px;
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+}
+
+
+
+/*  Login & SignIn  */
+h2{
+    font-size:2.5em ;
+    margin-bottom: .5em ;
+}
+
+.login p, .signIn p{
+    margin-bottom: .5em ;   
+}
+
+.login, .signIn{
+    position: absolute;
+    width: 50vw;
+    height: 82vh;
+    margin-left: calc(50vw / 2);
+    z-index: 3;
+    background-color: #495B4B;
+    position: relative;
+    border-radius: 42px;
+    display: none;
+}
+
+.login > img{ 
+    right: 0;
+    box-shadow: rgba(0, 0, 0, 0.225) -11px 0px 4px 0px; /*a faire*/
+}
+
+.signIn > img{
+    left: 0;
+    box-shadow: rgba(0, 0, 0, 0.225) 11px 0px 4px 0px; /*a faire*/
+    margin-left: 0;
+}
+
+.login > img, .signIn > img{
+    max-width: 50%;
+    height: 100%;
+    position: absolute;
+    bottom: 0;
+    border-radius: 42px;
+    /* box-shadow: rgba(0, 0, 0, 0.225) -11px 0px 4px 0px; */
+    object-fit: cover;
+}
+
+.login > section {
+    margin-top: calc((100vh - 70%) / 2 ); /* 10% a changer */
+    left: 0;
+
+}
+.signIn > section {
+    margin-top: calc((100vh - 80%) / 2 ); /* 10% a changer */
+    left: 50%;
+
+}
+.login > section, .signIn > section  {
+    padding: 2em;
+    width: calc(50% - 2em * 2);
+    position: absolute;
+    color: #eee;
+}
+
+form button{
+    margin: 1em;
+    padding: 10px calc(50% - 2em - 1em);
+    background-color: #eee;
+    border: none;
+    cursor: pointer;
+    border-radius: 10px;
+    border: #6e6e6e 1px solid;
+
+}
+form > a{
+    text-decoration: none;
+    color: #b3b2b2;
+}
+form > a:hover{
+    text-decoration: underline #b3b2b2;
+}
+
+form > input {
+    width: 100%;
+    padding: 3px;
+    border: none;
+    margin-bottom: 1em;
+
+    border-bottom: 1px solid #eee;
+    background-color: transparent;
+    caret-color: white;
+    outline: none;
+    color: white;
+}
+
+form > input::placeholder{
+    color: white;
+}
+
+form > label{
+    visibility: hidden;
+}
+/*  Footer  */
