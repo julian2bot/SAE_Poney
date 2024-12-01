@@ -1,3 +1,14 @@
+<?php
+ require_once "utils/connexionBD.php";
+ 
+
+// echo "<pre>";
+// print_r($_SESSION);
+
+// echo "</pre>";
+?>
+
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -9,6 +20,9 @@
     <body>
         <header>
             <h1>GRAND GALOP</h1>
+            <?php
+                //
+            ?>
             <div class="auth-buttons">
                 <button class="affichelogin">Login</button>
                 <button class="afficheSignIn">Sign In</button>
@@ -37,7 +51,7 @@
                 <section>
                     <h2>Login</h2>
                     <p>Entrer vos compte pour vous connecter</p>
-                    <form method="POST" class="form">
+                    <form method="POST" action ="utils/login.php" class="form">
 
                         <label for="Name">UserName</label>
                         <input type="text" name="Name" id="Name" placeholder="UserName" autocomplete="off" class="form-control-material">
@@ -46,8 +60,13 @@
                         <label for="PassWordLogin">Password</label>
                         <input type="text" name="PassWordLogin" id="PassWordLogin" placeholder="PassWord" autocomplete="off" class="form-control-material">
                         <!-- <img src="assets/images/eye-off.png" id="eye" onclick="" alt=""> -->
-
-                        <button type="submit" class="btn">
+                        <?php
+                        if(isset($_GET["erreurLogin"])){
+                            // print_r($_GET);
+                            echo '<font color="red">'.$_GET["erreurLogin"]."</font>";
+                        }
+                        ?>
+                        <button type="submit" class="btn" name="fromLogin">
                             Envoyer
                         </button>
                         <a href="#" class="afficheSignIn">Sign In</a>
@@ -62,11 +81,15 @@
                 <section>
                     <h2>SignIn</h2>
                     <p>Entrer vos compte pour vous connecter</p>
-                    <form method="POST" class="form">
+                    <form method="POST" action="utils/signIn.php" class="form">
 
                         <label for="NameSignIn">UserName</label>
                         <input type="text" name="NameSignIn" id="NameSignIn" placeholder="UserName" autocomplete="off" class="form-control-material">
 
+                        <label for="nomSignIn">nom</label>
+                        <input type="text" name="nomSignIn" id="nomSignIn" placeholder="nom" autocomplete="off" class="form-control-material">
+                        <label for="prenomSignIn">prenom</label>
+                        <input type="text" name="prenomSignIn" id="prenomSignIn" placeholder="prenom" autocomplete="off" class="form-control-material">
                         
                         <label for="Mail">Mail</label>
                         <input type="email" name="Mail" id="Mail" placeholder="Email" autocomplete="off" class="form-control-material">
@@ -77,8 +100,14 @@
                         
                         <label for="RePassword">Re-Password</label>
                         <input type="text" name="RePassword" id="RePassword" placeholder="Re-Password" autocomplete="off" class="form-control-material">
+                        <?php
+                        if(isset($_GET["erreurSignIn"])){
+                            // print_r($_GET);
+                            echo '<font color="red">'.$_GET["erreurSignIn"]."</font>";
+                        }
+                        ?>
 
-                        <button type="submit" class="btn">
+                        <button type="submit" class="btn" name="fromSignIn">
                             Envoyer
                         </button>
                         <a href="#" class="affichelogin">Login</a>
