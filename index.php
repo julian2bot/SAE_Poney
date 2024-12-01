@@ -20,13 +20,25 @@
     <body>
         <header>
             <h1>GRAND GALOP</h1>
+            
             <?php
                 //
+                if(isset($_SESSION["connecte"])){
+                    
+                    echo '<div class="auth-buttons">
+                            <p>'.$_SESSION["connecte"]["prenom"].'</p>
+                    
+                            <button onclick="location.href=\'utils/logout.php\';" class="affichelogin">Logout</button>
+                        </div>';
+                    
+                }
+                else{
+                    echo '<div class="auth-buttons">
+                        <button class="affichelogin">Login</button>
+                        <button class="afficheSignIn">Sign In</button>
+                    </div>';
+                }
             ?>
-            <div class="auth-buttons">
-                <button class="affichelogin">Login</button>
-                <button class="afficheSignIn">Sign In</button>
-            </div>
         </header>
         
         <main class="container">
@@ -63,6 +75,7 @@
                         <?php
                         if(isset($_GET["erreurLogin"])){
                             // print_r($_GET);
+
                             echo '<font color="red">'.$_GET["erreurLogin"]."</font>";
                         }
                         ?>
@@ -121,4 +134,18 @@
         <script src="assets/script/from.js"></script>
     </body>
 
+    <?php
+    // ouvrir le login ou signin s'il y a une erreur 
+    if(isset($_GET["erreurLogin"])){
+        // print_r($_GET);
+        echo '<script type="text/javascript">
+                afficheLogin();
+                </script>';
+    }
+    elseif (isset($_GET["erreurSignIn"])) {
+        echo '<script type="text/javascript">
+            afficheSignIn();
+        </script>';
+    }
+    ?>
 </html>

@@ -2,11 +2,11 @@
 // base de base 
 // code de connexion a une base de donnée
 session_start();
-session_destroy();
+// session_destroy();
 $host ="localhost";
 $table ="saeponey";
-$user = 'root';
-$mdp = ' ';
+$user = 'root'; 
+$mdp = ' '; // meme si j'oublie de l'enlevé c'est pas le bon mdrrr il est changé haha
 $bdd = new PDO('mysql:host='.$host.';dbname='.$table.'', $user, $mdp);
 
 

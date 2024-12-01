@@ -40,5 +40,11 @@ if(isset($_POST['fromLogin'])){
 }
 
 
-header("Location: ../index.php?erreurLogin=$erreur");
+// retourne sur la page index avec l'erreur s'il y en a une 
+if($erreur){
+	header("Location: ../index.php?erreurLogin=$erreur");
+}
+else{
+	header("Location: ../index.php");
+}
 ?>

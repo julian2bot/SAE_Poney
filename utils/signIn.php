@@ -35,7 +35,7 @@ if(isset($_POST['fromSignIn']))
                 		{
                 			$insertmbr = $bdd->prepare("INSERT INTO PERSONNE(username, mdp, prenomPersonne, nomPersonne, mail) VALUES(?, ?, ?, ?, ?)");
                 			$insertmbr->execute(array($username, $pass, $prenom, $nom, $mail));
-                			$erreur = "Votre compte a bien été créé!";
+                			// $erreur = "Votre compte a bien été créé!";
 							$_SESSION["connecte"] = array(
 									"username" => $username, 
 									"prenom" => $prenom, 
@@ -81,5 +81,11 @@ else
 	$erreur =  "Tous ...!";
 }
 
-header("Location: ../index.php?erreurSignIn=$erreur");
+// retourne sur la page index avec l'erreur s'il y en a une 
+if($erreur){
+	header("Location: ../index.php?erreurSignIn=$erreur");
+}
+else{
+	header("Location: ../index.php");
+}
 ?>
