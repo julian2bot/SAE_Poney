@@ -14,9 +14,6 @@ if (!feof($passCsv)) {
     $mdp = str_replace($replace,"",fgets($passCsv)) ;
 }
 
-echo $table;
-echo $mdp;
-
 $bdd = new PDO('mysql:host='.$host.';dbname='.$table.'', $user, $mdp);
 
 
