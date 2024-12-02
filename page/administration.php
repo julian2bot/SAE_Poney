@@ -14,7 +14,7 @@ if(!isset($_SESSION["connecte"]) OR $_SESSION["connecte"]["role"] !== "admin"){
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Administration - Cas d'utilisation</title>
+    <title>Administration</title>
     <link rel="stylesheet" href="../assets/style/admin.css">
     <link rel="stylesheet" href="../assets/style/header.css">
 </head>
@@ -44,43 +44,42 @@ if(!isset($_SESSION["connecte"]) OR $_SESSION["connecte"]["role"] !== "admin"){
             
             <!-- Section des listes -->
             <section class="lists-section">
-                <h2>Gestion des Poneys, Élèves et Clients</h2>
-                <div class="list">
-                <h3>Liste des Poneys</h3>
                 
-                <ul id="pony-list">
-                    <!-- <li>Poney 1 <button class="remove-btn">Retirer</button></li> -->
-                    <?php
-                    // echo '<pre>';
-                    // print_r(getPoney($bdd));
-                    // echo '</pre>';
+                <h2>Gestion des Poneys & Clients</h2>
+                
+                
+                <!-- PONEY -->
+                <div class="list" style="overflow:scroll; max-height:500px;">
+                    <h3>Liste des Poneys</h3>
                     
-                    foreach (getPoney($bdd) as $poney) {
-                        echo '<li>'.$poney["nomPoney"].' <a href="../utils/removePoney.php?idPoney='.$poney["idPoney"].'" class="remove-btn">Retirer</a></li>';
-                    }
-                    
-                    ?>
-                </ul>
+                    <ul id="pony-list">
+                        <?php
+                        
+                            foreach (getPoney($bdd) as $poney) {
+                                echo '<li>'.$poney["nomPoney"].' <a href="../utils/removePoney.php?idPoney='.$poney["idPoney"].'" class="remove-btn">Retirer</a></li>';
+                            }
+
+                        ?>
+                    </ul>
+                </div>
                 <button class="add-btn">Ajouter un Poney</button>
-                </div>
 
-                <div class="list">
-                <h3>Liste des Élèves</h3>
-                <ul id="student-list">
-                    <li>Élève 1 <button class="remove-btn">Retirer</button></li>
-                    <li>Élève 2 <button class="remove-btn">Retirer</button></li>
-                </ul>
-                <button class="add-btn">Ajouter un Élève</button>
-                </div>
-
-                <div class="list">
+                
+                <div class="list" style="overflow:scroll; max-height:500px;">
                 <h3>Liste des Clients</h3>
                 <ul id="client-list">
-                    <li>Client 1 <button class="remove-btn">Retirer</button></li>
+                    <?php
+                    
+                    foreach (getClient($bdd) as $client) {
+                        echo '<li>'. $client["usernameClient"].' <a href="../utils/removeClient.php?id='.$client["usernameClient"].'" class="remove-btn">Retirer</a></li>';
+                    }
+
+                    ?>
+                
                     <li>Client 2 <button class="remove-btn">Retirer</button></li>
                 </ul>
-                <button class="add-btn">Ajouter un Client</button>
-                </div>
+            </div>
+            <button class="add-btn">Ajouter un Client</button>
             </section>
             </main>
         </div>

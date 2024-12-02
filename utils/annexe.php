@@ -82,3 +82,9 @@ function getPoney($bdd){
     return $info;
 }
 
+function getClient($bdd){
+    $reqUser = $bdd->prepare("SELECT * FROM CLIENT");
+    $reqUser->execute();
+    $info = $reqUser->fetchAll();
+    return $info;
+}
