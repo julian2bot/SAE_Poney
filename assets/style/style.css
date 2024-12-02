@@ -25,9 +25,12 @@ h1 {
 }
 
 .auth-buttons {
+    display: flex;
     position: absolute;
     top: 20px;
     right: 20px;
+    text-align: center;
+    align-items: center;
 }
 
 .auth-buttons button {
