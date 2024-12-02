@@ -1,6 +1,7 @@
 <?php
 
 require_once "./connexionBD.php";
+require_once "./annexe.php";
 
 
 
@@ -23,7 +24,10 @@ if(isset($_POST['fromLogin'])){
 				"username" => $userinfo['username'], 
 				"prenom" => $userinfo['prenomPersonne'], 
 				"nom" => $userinfo['nomPersonne'], 
-				"mail" => $userinfo['mail']
+				"mail" => $userinfo['mail'],
+				"role" =>  getRole($bdd, $username),
+				"info" => getInfo($bdd, $username)
+
 			);
 		}  
 		else

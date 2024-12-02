@@ -1,11 +1,6 @@
 <?php
  require_once "utils/connexionBD.php";
  
-
-// echo "<pre>";
-// print_r($_SESSION);
-
-// echo "</pre>";
 ?>
 
 
@@ -16,6 +11,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Grand Galop</title>
     <link rel="stylesheet" href="assets/style/style.css">
+    <link rel="stylesheet" href="assets/style/form.css">
 </head>
     <body>
         <header>
@@ -24,13 +20,19 @@
             <?php
                 //
                 if(isset($_SESSION["connecte"])){
-                    
-                    echo '<div class="auth-buttons">
-                            <p>'.$_SESSION["connecte"]["prenom"].'</p>
-                    
-                            <button onclick="location.href=\'utils/logout.php\';" class="affichelogin">Logout</button>
-                        </div>';
-                    
+                    switch ($_SESSION["connecte"]["role"]) {
+                        case 'client':
+                            header("Location: page/adherent.php");
+                            break;
+                        case "moniteur":
+                        case "admin":
+                            header("Location: page/moniteur.php");
+                            break;
+                        
+                        default:
+                            header("Location: page/404.php");
+                            break;
+                    }
                 }
                 else{
                     echo '<div class="auth-buttons">
@@ -43,14 +45,14 @@
         
         <main class="container">
 
-            <section class="image-section">
+            <section class="gauche-section">
                 <figure class="image-block">
                     <img src="assets/images/cheval.png" alt="Cheval" class="cheval-image">
                     <!-- <figcaption>Chevaux dans la nature</figcaption> -->
                 </figure>
             </section>
             
-            <section class="text-section">
+            <section class="droite-section">
                 <article class="text-block">
                         <p> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam quis quam dignissim, consequat magna et, fringilla diam. Fusce egestas id elit ac laoreet. In ut viverra velit, eget iaculis enim. Ut vel lectus vel nunc luctus blandit at sit amet eros. Cras hendrerit laoreet pharetra. Donec pellentesque dui sed ante vehicula mattis. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus venenatis ante nisl, volutpat facilisis lectus tristique vestibulum. Morbi non velit purus. Nam euismod enim eget purus vehicula, non tristique sapien pulvinar. Sed mollis odio lobortis lectus hendrerit, malesuada facilisis nunc consectetur. Etiam ut risus et mi tincidunt molestie. Vestibulum scelerisque risus sem. Aenean placerat mi et commodo pellentesque.
                         </p>
@@ -74,7 +76,6 @@
                         <!-- <img src="assets/images/eye-off.png" id="eye" onclick="" alt=""> -->
                         <?php
                         if(isset($_GET["erreurLogin"])){
-                            // print_r($_GET);
 
                             echo '<font color="red">'.$_GET["erreurLogin"]."</font>";
                         }
@@ -101,11 +102,15 @@
 
                         <label for="nomSignIn">nom</label>
                         <input type="text" name="nomSignIn" id="nomSignIn" placeholder="nom" autocomplete="off" class="form-control-material">
+                        
                         <label for="prenomSignIn">prenom</label>
                         <input type="text" name="prenomSignIn" id="prenomSignIn" placeholder="prenom" autocomplete="off" class="form-control-material">
                         
                         <label for="Mail">Mail</label>
                         <input type="email" name="Mail" id="Mail" placeholder="Email" autocomplete="off" class="form-control-material">
+                        
+                        <label for="poids">Votre Poids</label>
+                        <input type="number" name="poids" id="poids" placeholder="poids" autocomplete="off" class="form-control-material">
 
                         <!-- passWord -->
                         <label for="Password">Password</label>
@@ -115,7 +120,6 @@
                         <input type="text" name="RePassword" id="RePassword" placeholder="Re-Password" autocomplete="off" class="form-control-material">
                         <?php
                         if(isset($_GET["erreurSignIn"])){
-                            // print_r($_GET);
                             echo '<font color="red">'.$_GET["erreurSignIn"]."</font>";
                         }
                         ?>
