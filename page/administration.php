@@ -79,7 +79,6 @@ if(!isset($_SESSION["connecte"]) OR $_SESSION["connecte"]["role"] !== "admin"){
                     <li>Client 2 <button class="remove-btn">Retirer</button></li>
                 </ul>
             </div>
-            <button class="add-btn">Ajouter un Client</button>
             </section>
             </main>
         </div>
