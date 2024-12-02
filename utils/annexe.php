@@ -75,3 +75,10 @@ function getInfo($bdd, $username){
     return array() ;  
 }
 
+function getPoney($bdd){
+    $reqUser = $bdd->prepare("SELECT * FROM PONEY");
+    $reqUser->execute();
+    $info = $reqUser->fetchAll();
+    return $info;
+}
+

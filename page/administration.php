@@ -1,6 +1,6 @@
 <?php
-session_start();
-
+require_once "../utils/connexionBD.php";
+require_once "../utils/annexe.php";
 if(!isset($_SESSION["connecte"]) OR $_SESSION["connecte"]["role"] !== "admin"){
 
     header("Location: ../");
@@ -16,8 +16,24 @@ if(!isset($_SESSION["connecte"]) OR $_SESSION["connecte"]["role"] !== "admin"){
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Administration - Cas d'utilisation</title>
     <link rel="stylesheet" href="../assets/style/admin.css">
+    <link rel="stylesheet" href="../assets/style/header.css">
 </head>
     <body>
+    <header class="pageAdmin">
+        <nav>
+            <ul>
+                <li>
+                    <a href="moniteur.php">
+                        retour
+                    </a>
+                </li>
+            
+            </ul>
+        </nav>
+    </header>
+
+
+
         <div class="admin-container">
             <!-- Section des cas d'utilisation -->
             <header>
@@ -31,9 +47,19 @@ if(!isset($_SESSION["connecte"]) OR $_SESSION["connecte"]["role"] !== "admin"){
                 <h2>Gestion des Poneys, Élèves et Clients</h2>
                 <div class="list">
                 <h3>Liste des Poneys</h3>
+                
                 <ul id="pony-list">
-                    <li>Poney 1 <button class="remove-btn">Retirer</button></li>
-                    <li>Poney 2 <button class="remove-btn">Retirer</button></li>
+                    <!-- <li>Poney 1 <button class="remove-btn">Retirer</button></li> -->
+                    <?php
+                    // echo '<pre>';
+                    // print_r(getPoney($bdd));
+                    // echo '</pre>';
+                    
+                    foreach (getPoney($bdd) as $poney) {
+                        echo '<li>'.$poney["nomPoney"].' <a href="../utils/removePoney.php?idPoney='.$poney["idPoney"].'" class="remove-btn">Retirer</a></li>';
+                    }
+                    
+                    ?>
                 </ul>
                 <button class="add-btn">Ajouter un Poney</button>
                 </div>
