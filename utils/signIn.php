@@ -1,7 +1,7 @@
 <?php
 
 require_once "./connexionBD.php";
-
+require_once "./annexe.php";
 
 if(isset($_POST['fromSignIn']))
 {
@@ -40,7 +40,8 @@ if(isset($_POST['fromSignIn']))
 									"username" => $username, 
 									"prenom" => $prenom, 
 									"nom" => $nom, 
-									"mail" => $mail
+									"mail" => $mail,
+									"role" =>  getRole($bdd, $username)
 								);
                 		}
                 		else

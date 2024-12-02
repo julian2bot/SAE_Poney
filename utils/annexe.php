@@ -22,3 +22,25 @@ function CrypterMdp($bdd){
             echo "Mot de passe de l'utilisateur $username a été crypté avec succès.<br>";
     }
 }
+
+
+function getRole($bdd, $username): string{
+    $reqUser = $bdd->prepare("SELECT * FROM MONITEUR WHERE usernameMoniteur = ?");
+    $reqUser->execute(array($username));
+    $userExist = $reqUser->rowCount();
+    if($userExist == 1)
+    {
+        $userinfo = $reqUser->fetch();   
+        return $userinfo['isAdmin'] ? "admin" : "moniteur";
+    }
+    else{
+        $reqUser = $bdd->prepare("SELECT * FROM CLIENT WHERE usernameClient = ?");
+        $reqUser->execute(array($username));
+        $userExist = $reqUser->rowCount();
+        if($userExist == 1)
+        {
+            return "client";
+        }                
+    }
+    return "etranger";
+}

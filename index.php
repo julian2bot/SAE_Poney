@@ -16,6 +16,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Grand Galop</title>
     <link rel="stylesheet" href="assets/style/style.css">
+    <link rel="stylesheet" href="assets/style/form.css">
 </head>
     <body>
         <header>
@@ -24,13 +25,19 @@
             <?php
                 //
                 if(isset($_SESSION["connecte"])){
-                    
-                    echo '<div class="auth-buttons">
-                            <p>'.$_SESSION["connecte"]["prenom"].'</p>
-                    
-                            <button onclick="location.href=\'utils/logout.php\';" class="affichelogin">Logout</button>
-                        </div>';
-                    
+                    switch ($_SESSION["connecte"]["role"]) {
+                        case 'client':
+                            header("Location: page/adherent.php");
+                            break;
+                        case "moniteur":
+                        case "admin":
+                            header("Location: page/moniteur.php");
+                            break;
+                        
+                        default:
+                            header("Location: page/404.php");
+                            break;
+                    }
                 }
                 else{
                     echo '<div class="auth-buttons">
