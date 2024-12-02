@@ -2,3 +2,31 @@
     margin: 5em;
     text-align: center;
 }
+
+.cheval-image-droite{
+    width: 75%;
+    height: 80%;
+    position: absolute;
+    /* margin-left: calc((60vw - 80%) / 2); */
+    right: 2em;
+    margin-top: 2em;
+}
+
+.droite{
+    bottom: auto;
+    padding-right: 0;
+}
+
+.gauche{
+    bottom: auto;
+    
+    padding-left: 0;
+}
+
+.gauche img{
+    margin-top: 2em;
+}
+
+.sectionPage{
+    height: 100vh;
+}

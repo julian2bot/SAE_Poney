@@ -7,15 +7,15 @@ if($_SESSION["connecte"]["role"] ==="client"){
         <nav>
         <ul>    
             <li>
-            <a href="#">Planning</a>
+            <a href="#planning">Planning</a>
             </li>
             
             <li>
-            <a href="#">Reserver cours</a>
+            <a href="#reserverCours">Reserver cours</a>
             </li>
             
             <li>
-            <a href="#">Parametre</a>
+            <a href="#parametre">Parametre</a>
             </li>
         </nav>
     </header>';

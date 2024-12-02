@@ -47,19 +47,56 @@ if(!isset($_SESSION["connecte"])){
         </header>
         
         <main class="container">
-            <h2 id="planning" class="titreSection"> Planning</h2>
-            <section class="image-section">
-                <figure class="image-block">
-                    <img src="assets/images/cheval.png" alt="Cheval" class="cheval-image">
-                    <!-- <figcaption>Chevaux dans la nature</figcaption> -->
-                </figure>
+
+            <section id="planning" class="sectionPage">
+                <h2 class="titreSection"> Planning</h2>
+                <section class="gauche-section gauche">
+                    <!-- ? a faire calendrier -->
+                    <figure class="image-block">
+                        <img src="../assets/images/cal.png" alt="cal" class="planning">
+                    </figure>
+                </section>
+                
+                <section class="droite-section droite">
+                    <figure class="image-block">
+                        <img src="../assets/images/cheval2.png" alt="Cheval" class="cheval-image-droite">
+                    </figure>
+                </section>
             </section>
+                    
+            <section id="reserverCours" class="sectionPage">
+                <h2 class="titreSection"> Réserver un cours</h2>
             
-            <section class="text-section">
-                <article class="text-block">
-                        <p> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam quis quam dignissim, consequat magna et, fringilla diam. Fusce egestas id elit ac laoreet. In ut viverra velit, eget iaculis enim. Ut vel lectus vel nunc luctus blandit at sit amet eros. Cras hendrerit laoreet pharetra. Donec pellentesque dui sed ante vehicula mattis. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus venenatis ante nisl, volutpat facilisis lectus tristique vestibulum. Morbi non velit purus. Nam euismod enim eget purus vehicula, non tristique sapien pulvinar. Sed mollis odio lobortis lectus hendrerit, malesuada facilisis nunc consectetur. Etiam ut risus et mi tincidunt molestie. Vestibulum scelerisque risus sem. Aenean placerat mi et commodo pellentesque.
-                        </p>
-                </article>
+                <section class="gauche-section gauche">
+                    <!-- ? a faire calendrier -->
+                    <figure class="image-block">
+                        <img src="../assets/images/cal.png" alt="cal" class="planning">
+                    </figure>
+                </section>
+                
+                <section class="droite-section droite">
+                    <figure class="image-block">
+                            <img src="../assets/images/cheval2.png" alt="Cheval" class="cheval-image-droite">
+                    </figure>
+                </section>
+            </section>
+
+                                
+            <section id="parametre" class="sectionPage">
+                <h2 class="titreSection"> Gérer mon dossier</h2>
+            
+                <section class="gauche-section gauche">
+                    <!-- ? a faire calendrier -->
+                    <figure class="image-block">
+                        <img src="../assets/images/cal.png" alt="cal" class="planning">
+                    </figure>
+                </section>
+                
+                <section class="droite-section droite">
+                    <figure class="image-block">
+                            <img src="../assets/images/cheval2.png" alt="Cheval" class="cheval-image-droite">
+                    </figure>
+                </section>
             </section>
 
         </main>

@@ -57,7 +57,7 @@ h1 {
     height: calc(90vh - 20px * 2);
 }
 
-.image-section {
+.gauche-section {
     background-color: #95B597;
     position: absolute;
     bottom: 0;
@@ -78,7 +78,7 @@ img {
 }
 
 
-.text-section {
+.droite-section {
     background-color: #347429;
     position: absolute;
     bottom: 0;
