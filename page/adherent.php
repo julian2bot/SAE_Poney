@@ -5,6 +5,10 @@ require_once "../utils/connexionBD.php";
 // require_once __DIR__ . "/../../utils/connexion.php";
 
 require_once "../utils/annexe.php";
+if(!isset($_SESSION["connecte"])){
+    header("Location: ../");
+}
+
 
 ?>
 
@@ -16,6 +20,8 @@ require_once "../utils/annexe.php";
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Grand Galop</title>
     <link rel="stylesheet" href="../assets/style/style.css">
+    <link rel="stylesheet" href="../assets/style/header.css">
+    <link rel="stylesheet" href="../assets/style/styleSousPage.css">
 </head>
     <body>
         <header>
@@ -41,7 +47,7 @@ require_once "../utils/annexe.php";
         </header>
         
         <main class="container">
-
+            <h2 id="planning" class="titreSection"> Planning</h2>
             <section class="image-section">
                 <figure class="image-block">
                     <img src="assets/images/cheval.png" alt="Cheval" class="cheval-image">
