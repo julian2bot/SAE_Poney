@@ -28,7 +28,6 @@ if(!isset($_SESSION["connecte"])){
             <h1>GRAND GALOP</h1>
             
             <?php
-                //
                 if(isset($_SESSION["connecte"])){
                     echo '<div class="auth-buttons">
                             <p>'.$_SESSION["connecte"]["prenom"].'</p>

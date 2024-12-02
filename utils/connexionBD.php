@@ -7,7 +7,7 @@ require_once "annexe.php";
 $host ="localhost";
 $table ="saeponey";
 $user = 'root'; 
-$mdp = 'marques'; // meme si j'oublie de l'enlevé c'est pas le bon mdrrr il est changé haha
+$mdp = ' '; // meme si j'oublie de l'enlevé c'est pas le bon mdrrr il est changé haha
 $bdd = new PDO('mysql:host='.$host.';dbname='.$table.'', $user, $mdp);
 
 

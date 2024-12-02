@@ -37,6 +37,8 @@
 [ ]     ==> page demande cours client
 [ ]     ==> page creation cours moniteur 
 [ ]     ==> page disponibilité moniteur 
+[ ]     ==> page 404 
+[ ]     ==> page deniedAcces ?mais est ce vraiment utile avec le mode actuelle ?? 
  
 [ ] divers  
 [ ]     ==> exporter un PDF avec les plannings et les horaires    

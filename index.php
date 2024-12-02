@@ -1,11 +1,6 @@
 <?php
  require_once "utils/connexionBD.php";
  
-
-// echo "<pre>";
-// print_r($_SESSION);
-
-// echo "</pre>";
 ?>
 
 
@@ -81,7 +76,6 @@
                         <!-- <img src="assets/images/eye-off.png" id="eye" onclick="" alt=""> -->
                         <?php
                         if(isset($_GET["erreurLogin"])){
-                            // print_r($_GET);
 
                             echo '<font color="red">'.$_GET["erreurLogin"]."</font>";
                         }
@@ -126,7 +120,6 @@
                         <input type="text" name="RePassword" id="RePassword" placeholder="Re-Password" autocomplete="off" class="form-control-material">
                         <?php
                         if(isset($_GET["erreurSignIn"])){
-                            // print_r($_GET);
                             echo '<font color="red">'.$_GET["erreurSignIn"]."</font>";
                         }
                         ?>
