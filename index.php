@@ -108,11 +108,15 @@
 
                         <label for="nomSignIn">nom</label>
                         <input type="text" name="nomSignIn" id="nomSignIn" placeholder="nom" autocomplete="off" class="form-control-material">
+                        
                         <label for="prenomSignIn">prenom</label>
                         <input type="text" name="prenomSignIn" id="prenomSignIn" placeholder="prenom" autocomplete="off" class="form-control-material">
                         
                         <label for="Mail">Mail</label>
                         <input type="email" name="Mail" id="Mail" placeholder="Email" autocomplete="off" class="form-control-material">
+                        
+                        <label for="poids">Votre Poids</label>
+                        <input type="number" name="poids" id="poids" placeholder="poids" autocomplete="off" class="form-control-material">
 
                         <!-- passWord -->
                         <label for="Password">Password</label>

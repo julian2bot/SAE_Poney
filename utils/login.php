@@ -25,7 +25,9 @@ if(isset($_POST['fromLogin'])){
 				"prenom" => $userinfo['prenomPersonne'], 
 				"nom" => $userinfo['nomPersonne'], 
 				"mail" => $userinfo['mail'],
-				"role" =>  getRole($bdd, $username)
+				"role" =>  getRole($bdd, $username),
+				"info" => getInfo($bdd, $username)
+
 			);
 		}  
 		else

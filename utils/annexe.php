@@ -42,5 +42,36 @@ function getRole($bdd, $username): string{
             return "client";
         }                
     }
-    return "etranger";
+    return "non-adherent";
 }
+
+
+function getInfo($bdd, $username){
+    $reqUser = $bdd->prepare("SELECT * FROM MONITEUR NATURAL JOIN PERSONNE WHERE username = ? and usernameMoniteur = ?");
+    $reqUser->execute(array($username,$username));
+    $userExist = $reqUser->rowCount();
+    if($userExist == 1)
+    {
+        $info = $reqUser->fetch();
+        return array(
+            "salaire" => $info["salaire"], 
+            "isAdmin" => $info["isAdmin"] 
+        ); 
+    }
+    else{
+        $reqUser = $bdd->prepare("SELECT * FROM CLIENT NATURAL JOIN PERSONNE WHERE username = ? and usernameClient = ?");
+        $reqUser->execute(array($username,$username));
+        $userExist = $reqUser->rowCount();
+        if($userExist == 1)
+        {
+            $info=$reqUser->fetch();   
+            return array(
+                "dateInscription" => $info["dateInscription"], 
+                "poid" => $info["poidsClient"], 
+                "solde" => $info["solde"]
+            ); 
+        }                
+    }
+    return array() ;  
+}
+
