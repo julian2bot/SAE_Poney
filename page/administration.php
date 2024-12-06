@@ -4,6 +4,7 @@ require_once "../utils/annexe.php";
 if(!isset($_SESSION["connecte"]) OR $_SESSION["connecte"]["role"] !== "admin"){
 
     header("Location: ../");
+    exit;
 
 }
 
@@ -17,8 +18,9 @@ if(!isset($_SESSION["connecte"]) OR $_SESSION["connecte"]["role"] !== "admin"){
     <title>Administration</title>
     <link rel="stylesheet" href="../assets/style/admin.css">
     <link rel="stylesheet" href="../assets/style/header.css">
+    <link rel="stylesheet" href="../assets/style/form.css">
 </head>
-    <body>
+    <body style="position: relative;">
     <header class="pageAdmin">
         <nav>
             <ul>
@@ -31,6 +33,57 @@ if(!isset($_SESSION["connecte"]) OR $_SESSION["connecte"]["role"] !== "admin"){
             </ul>
         </nav>
     </header>
+
+
+    <div class="creerPoney" id="creerPoney" style="display: none;">
+
+                <img src="../assets/images/SignInImage.jpg" alt=""> 
+                <section>
+                    <h2>creerPoney</h2>
+                    <p>Entrer vos compte pour vous connecter</p>
+                    <form method="POST" action="../utils/creerPoney.php" class="form">
+
+                        <label for="nomPoney">nom du Poney</label>
+                        <input type="text" name="nomPoney" id="nomPoney" placeholder="gerard" autocomplete="off" class="form-control-material">
+
+                        
+                        <label for="poidMax">le poid poney</label>
+                        <input type="number" name="poidMax" id="poidMax" placeholder="lourd" autocomplete="off" class="form-control-material">
+                        
+                        <label for="photo">photo (chemin acces)</label>
+                        <input type="text" name="photo" id="photo" placeholder="blabla.png" autocomplete="off" class="form-control-material">
+
+                        <label for="race">race</label>
+                        <input type="text" name="race" id="race" placeholder="licorned" autocomplete="off" class="form-control-material">
+
+                        <!-- <?php
+                        echo "<pre>";
+                        print_r( getIdMax($bdd, "idPoney", "PONEY")); 
+                        echo "</.pre>";
+                        ?> -->
+<!--    
+nomPoney
+poidsMax
+photo
+nomRace 
+-->
+
+                        <?php
+                        if(isset($_GET["erreurCreerPoney"])){
+                            echo '<font color="red">'.$_GET["erreurSignIn"]."</font>";
+                        }
+                        ?>
+
+                        <button type="submit" class="btn" name="fromSignIn">
+                            creer poney
+                        </button>
+                    </form>
+                </section>
+
+            </div>
+
+
+
 
 
 
@@ -62,7 +115,8 @@ if(!isset($_SESSION["connecte"]) OR $_SESSION["connecte"]["role"] !== "admin"){
                         ?>
                     </ul>
                 </div>
-                <button class="add-btn">Ajouter un Poney</button>
+
+                <button class="add-btn" onclick="afficheCreerPoney()" id="page poney">Ajouter un Poney</button>
 
                 
                 <div class="list" style="overflow:scroll; max-height:500px;">
@@ -74,13 +128,13 @@ if(!isset($_SESSION["connecte"]) OR $_SESSION["connecte"]["role"] !== "admin"){
                         echo '<li>'. $client["usernameClient"].' <a href="../utils/removeClient.php?id='.$client["usernameClient"].'" class="remove-btn">Retirer</a></li>';
                     }
 
-                    ?>
-                
-                    <li>Client 2 <button class="remove-btn">Retirer</button></li>
+                    ?>                
                 </ul>
             </div>
             </section>
             </main>
+        <script src="../assets/script/afficherAdmin.js"></script>
+
         </div>
     </body>
 </html>

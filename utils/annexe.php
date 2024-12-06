@@ -85,3 +85,23 @@ function getClient($bdd){
     $info = $reqUser->fetchAll();
     return $info;
 }
+
+
+function getRace($bdd, $nomRace){
+    $reqUser = $bdd->prepare("SELECT * FROM RACE WHERE nomRace = ?");
+    $reqUser->execute(array($nomRace));
+    $userExist = $reqUser->rowCount();
+    return $userExist == 1;
+    
+}
+
+
+function getIdMax($bdd, $idNom, $table){
+    $reqUser = $bdd->prepare("SELECT MAX($idNom) FROM $table");
+    $reqUser->execute(array());
+    $info = $reqUser->fetch();
+    if(isset($info)){
+        return $info;
+    }
+    return 0;
+}

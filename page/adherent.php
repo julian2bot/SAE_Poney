@@ -7,6 +7,7 @@ require_once "../utils/connexionBD.php";
 require_once "../utils/annexe.php";
 if(!isset($_SESSION["connecte"])){
     header("Location: ../");
+    exit;
 }
 
 

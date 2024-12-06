@@ -106,3 +106,49 @@ header p {
 .add-btn:hover, .remove-btn:hover {
     background-color: #2e552e;
 }
+
+
+
+
+/* */
+
+.creerPoney{
+    position: absolute;
+    width: 50vw;
+    height: 82vh;
+    margin-left: calc(50vw / 2);
+    z-index: 3;
+    background-color: #495B4B;
+    border-radius: 42px;
+    display: none;
+}
+
+.creerPoney > section {
+    padding: 2em;
+    width: calc(50% - 2em* 2);
+    position: absolute;
+    color: #eee;
+}
+
+form > input {
+    width: 100%;
+    padding: 3px;
+    border: none;
+    margin-bottom: 1em;
+    border-bottom: 1px solid #eee;
+    background-color: transparent;
+    caret-color: white;
+    outline: none;
+    color: white;
+}
+
+.creerPoney img{
+    max-width: 50%;
+    height: 100%;
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    border-radius: 42px;
+    object-fit: cover;
+} 
+

@@ -23,14 +23,17 @@
                     switch ($_SESSION["connecte"]["role"]) {
                         case 'client':
                             header("Location: page/adherent.php");
+                            exit;
                             break;
                         case "moniteur":
                         case "admin":
                             header("Location: page/moniteur.php");
+                            exit;
                             break;
                         
                         default:
                             header("Location: page/404.php");
+                            exit;
                             break;
                     }
                 }

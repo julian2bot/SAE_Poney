@@ -2,6 +2,7 @@
 require_once "../utils/connexionBD.php";
 if(!isset($_SESSION["connecte"]) OR $_SESSION["connecte"]["role"] !== "admin"){
     header("Location: ../");
+    exit;
 }
 if($_SESSION["connecte"]["role"] === "admin"){
 
@@ -57,6 +58,13 @@ if($_SESSION["connecte"]["role"] === "admin"){
     }
 }
 
-header("Location: ../page/administration.php");
+if($erreur){
+    header("Location: ../page/administration.php?erreurCreerPoney=$erreur");
+    exit;
+}
+else{
+    header("Location: ../page/administration.php");
+    exit;
+}
     
 ?>

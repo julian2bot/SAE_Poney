@@ -98,8 +98,10 @@ else
 // retourne sur la page index avec l'erreur s'il y en a une 
 if($erreur){
 	header("Location: ../index.php?erreurSignIn=$erreur");
+	exit;
 }
 else{
 	header("Location: ../index.php");
-}
-?>
+	exit;
+
+}?>
