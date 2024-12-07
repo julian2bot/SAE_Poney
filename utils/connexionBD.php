@@ -7,6 +7,7 @@ require_once "annexe.php";
 $host ="localhost";
 $user = 'root'; 
 
+
 $passCsv = fopen( __DIR__ . '/pass.csv', 'r');
 if (!feof($passCsv)) {
     $replace = [";","\n","\r","\r\n"];

@@ -1,6 +1,26 @@
 <?php
- require_once "utils/connexionBD.php";
+require_once "utils/connexionBD.php";
  
+if(isset($_SESSION["connecte"])){
+    switch ($_SESSION["connecte"]["role"]) {
+        case 'client':
+            header("Location: page/adherent.php");
+            exit;
+            break;
+        case "moniteur":
+        case "admin":
+            header("Location: page/moniteur.php");
+            exit;
+            break;
+        
+        default:
+            header("Location: page/404.php");
+            exit;
+            break;
+    }
+}
+
+
 ?>
 
 
@@ -16,31 +36,11 @@
     <body>
         <header>
             <h1>GRAND GALOP</h1>
-            
-            <?php
-                //
-                if(isset($_SESSION["connecte"])){
-                    switch ($_SESSION["connecte"]["role"]) {
-                        case 'client':
-                            header("Location: page/adherent.php");
-                            break;
-                        case "moniteur":
-                        case "admin":
-                            header("Location: page/moniteur.php");
-                            break;
-                        
-                        default:
-                            header("Location: page/404.php");
-                            break;
-                    }
-                }
-                else{
-                    echo '<div class="auth-buttons">
-                        <button class="affichelogin">Login</button>
-                        <button class="afficheSignIn">Sign In</button>
-                    </div>';
-                }
-            ?>
+
+            <div class="auth-buttons">
+                <button class="affichelogin">Login</button>
+                <button class="afficheSignIn">Sign In</button>
+            </div>
         </header>
         
         <main class="container">

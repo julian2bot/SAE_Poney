@@ -1,5 +1,22 @@
 <?php
 
+function estConnecte(){
+
+    if(!isset($_SESSION["connecte"])){
+        header("Location: ../");
+        exit;
+    }
+}
+    
+function estAdmin(){
+    
+    if(!isset($_SESSION["connecte"]) OR $_SESSION["connecte"]["role"] !== "admin"){
+
+        header("Location: ../");
+        exit;
+
+    }
+}
 
 function CrypterMdp($bdd){
 
@@ -20,6 +37,8 @@ function CrypterMdp($bdd){
     }
 }
 
+
+// les getters
 
 function getRole($bdd, $username): string{
     $reqUser = $bdd->prepare("SELECT * FROM MONITEUR WHERE usernameMoniteur = ?");
@@ -81,6 +100,34 @@ function getPoney($bdd){
 
 function getClient($bdd){
     $reqUser = $bdd->prepare("SELECT * FROM CLIENT");
+    $reqUser->execute();
+    $info = $reqUser->fetchAll();
+    return $info;
+}
+
+
+function getRace($bdd, $nomRace){
+    $reqUser = $bdd->prepare("SELECT * FROM RACE WHERE nomRace = ?");
+    $reqUser->execute(array($nomRace));
+    $userExist = $reqUser->rowCount();
+    return $userExist == 1;
+    
+}
+
+
+function getIdMax($bdd, $idNom, $table){
+    $reqUser = $bdd->prepare("SELECT MAX($idNom) FROM $table");
+    $reqUser->execute(array());
+    $info = $reqUser->fetch();
+    if(isset($info)){
+        return $info;
+    }
+    return 0;
+}
+
+
+function getMoniteur($bdd){
+    $reqUser = $bdd->prepare("SELECT * FROM MONITEUR");
     $reqUser->execute();
     $info = $reqUser->fetchAll();
     return $info;

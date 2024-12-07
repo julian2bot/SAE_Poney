@@ -1,33 +1,26 @@
 <?php
 require_once "../utils/connexionBD.php";
-if(!isset($_SESSION["connecte"]) OR $_SESSION["connecte"]["role"] !== "admin"){
-    header("Location: ../");
-}
+require_once "../utils/annexe.php";
+estAdmin();
+
+
 if($_SESSION["connecte"]["role"] === "admin"){
 
     if(isset($_GET["idPoney"]))
     {
+
+        // suppr toute les reservations par rapport a l'id du poney
+        // suppr de client
+        $sql1 = "DELETE FROM RESERVATION WHERE idPoney = :id";
+        $stmt1 = $bdd->prepare($sql1);
+        $stmt1->execute([":id" => $_GET["idPoney"]]);
         
-        $reqUser = $bdd->prepare("SELECT * FROM RESERVATION WHERE idPoney = ? ");
-        $reqUser->execute([$_GET["idPoney"]]);
-        $lesReserv = $reqUser->fetchAll();
-        echo $userExist ;
-        echo "<pre>";
-        foreach ($lesReserv as $reservation) {
-            print_r( $reservation);
-            $sql = "DELETE FROM RESERVATION WHERE idCours = ? and usernameMoniteur = ? and dateCours = ? and heureDebutCours = ? and usernameClient = ? and idPoney = ?";
-            $stmt = $bdd->prepare($sql);
-            $stmt ->execute([$reservation["idCours"], $reservation["usernameMoniteur"], $reservation["dateCours"], $reservation["heureDebutCours"], $reservation["usernameClient"], $reservation["idPoney"]]);
-        }
-        echo "</pre>";
-        
-        // ! reservation a faire
-        $sql = "DELETE FROM PONEY WHERE idPoney= ? ";
-        $stmt = $bdd->prepare($sql);
-        $stmt ->execute([$_GET["idPoney"]]);
-    }
-    
+        $sql2 = "DELETE FROM PONEY WHERE idPoney = :id";
+        $stmt2 = $bdd->prepare($sql2);
+        $stmt2->execute([":id" => $_GET["idPoney"]]);
+    }   
 }
 header("Location: ../page/administration.php");
+exit;
     
 ?>
