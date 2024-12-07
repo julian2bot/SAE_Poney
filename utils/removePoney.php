@@ -11,12 +11,13 @@ if($_SESSION["connecte"]["role"] === "admin"){
 
         // suppr toute les reservations par rapport a l'id du poney
         // suppr de client
-        $sql = "DELETE FROM RESERVATION WHERE idPoney = :id;
-                DELETE FROM PONEY WHERE idPoney = :id;";
-
+        $sql1 = "DELETE FROM RESERVATION WHERE idPoney = :id";
+        $stmt1 = $bdd->prepare($sql1);
+        $stmt1->execute([":id" => $_GET["idPoney"]]);
         
-        $stmt = $bdd->prepare($sql);
-        $stmt ->execute([":id" => $_GET["idPoney"]]);
+        $sql2 = "DELETE FROM PONEY WHERE idPoney = :id";
+        $stmt2 = $bdd->prepare($sql2);
+        $stmt2->execute([":id" => $_GET["idPoney"]]);
     }   
 }
 header("Location: ../page/administration.php");

@@ -1,5 +1,5 @@
 <?php
- require_once "utils/connexionBD.php";
+require_once "utils/connexionBD.php";
  
 if(isset($_SESSION["connecte"])){
     switch ($_SESSION["connecte"]["role"]) {
