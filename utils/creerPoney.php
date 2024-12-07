@@ -18,8 +18,8 @@ if($_SESSION["connecte"]["role"] === "admin"){
         ));    
     }
     else{
-        $erreur = 
-        header("Location: ../page/administration.php");
+        $erreur = "La race du poney n'existe pas";
+        header("Location: ../page/administration.php?erreurCreerPoney=$erreur");
         exit;
 
     }

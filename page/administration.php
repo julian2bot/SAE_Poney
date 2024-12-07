@@ -45,7 +45,7 @@ estAdmin();
 
                 
                 <label for="poidMax">le poid poney</label>
-                <input type="number" name="poidMax" id="poidMax" placeholder="lourd" autocomplete="off" class="form-control-material">
+                <input type="number" name="poidMax" id="poidMax" placeholder="lourd" min="0" max="255" autocomplete="off" class="form-control-material">
                 
                 <label for="photo">photo (chemin acces)</label>
                 <input type="text" name="photo" id="photo" placeholder="blabla.png" autocomplete="off" class="form-control-material">
@@ -56,7 +56,7 @@ estAdmin();
 
                 <?php
                 if(isset($_GET["erreurCreerPoney"])){
-                    echo '<font color="red">'.$_GET["erreurSignIn"]."</font>";
+                    echo '<font color="red">'.$_GET["erreurCreerPoney"]."</font>";
                 }
                 ?>
 
@@ -138,5 +138,15 @@ estAdmin();
         <script src="../assets/script/afficherAdmin.js"></script>
     </div>
     </body>
+
+    <?php
+    // ouvrir le login ou signin s'il y a une erreur 
+    if(isset($_GET["erreurCreerPoney"])){
+        // print_r($_GET);
+        echo '<script type="text/javascript">
+                    afficheCreerPoney();
+              </script>';
+    }
+    ?>
 </html>
 
