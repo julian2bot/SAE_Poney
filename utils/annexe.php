@@ -132,3 +132,111 @@ function getMoniteur($bdd){
     $info = $reqUser->fetchAll();
     return $info;
 }
+
+
+
+// function creerCalendrier(){
+//     $Days = 1;
+    
+//     $date = new DateTime();
+//     echo $date->format('Y-m-d H:i:s');
+//     // $date->setDate(2025, 5, 1); 
+//     // Nombre de jours dans le mois
+//     $nbJourDansMois = $date->format('t'); // 't' retourne le nombre de jours dans le mois
+//     $jourDebutMois = $date->format('N')+1; // Le jour de la semaine du 1er jour du mois (1 = lundi, 7 = dimanche)
+    
+//     // header basique avec les jours
+//     echo '<table border="1">';
+//     echo '<tr>';
+//     echo '<th>Lundi</th>';
+//     echo '<th>Mardi</th>';
+//     echo '<th>Mercredi</th>';
+//     echo '<th>Jeudi</th>';
+//     echo '<th>Vendredi</th>';
+//     echo '<th>Samedi</th>';
+//     echo '<th>Dimanche</th>';
+//     echo '</tr>';
+    
+//     for ($i=0; $i < 6 ; $i++) { 
+//         echo '<tr>';
+        
+        
+//         for($j=1; $j < 8; $j++) { 
+
+//             // if( $j > $jourDebutMois ){
+//             if(($j >= $jourDebutMois && $i===0) OR( $i !== 0 && $Days <= $nbJourDansMois)){
+//                 echo "<td>$Days</td>";
+//                 $Days++;
+//             }else{
+//                 echo "<td></td>";
+//             }
+            
+//         }
+        
+//         echo '</tr>';
+        
+//     }
+// }
+
+
+function creerCalendrier(){
+    $Days = 1;
+    
+    $date = new DateTime();
+    $date->setDate($date->format('Y'), $date->format('m')+1, 1);
+    echo $date->format('Y-m-d H:i:s') . '<br>';
+
+    // Nombre de jours dans le mois
+    $nbJourDansMois = $date->format('t'); // 't' retourne le nombre de jours dans le mois
+    $jourDebutMois = $date->format('N'); // Le jour de la semaine du 1er jour du mois (1 = lundi, 7 = dimanche)
+    
+    // header basique avec les jours
+    echo '<table border="1">';
+    echo '<tr>';
+    echo '<th>Lundi</th>';
+    echo '<th>Mardi</th>';
+    echo '<th>Mercredi</th>';
+    echo '<th>Jeudi</th>';
+    echo '<th>Vendredi</th>';
+    echo '<th>Samedi</th>';
+    echo '<th>Dimanche</th>';
+    echo '</tr>';
+    
+    for ($i=0; $i < 6 ; $i++) { 
+        echo '<tr>';
+        
+        
+        for($j=1; $j < 8;$j++) { 
+
+            // if( $j > $jourDebutMois ){
+            if(($j >= $jourDebutMois && $i===0) OR ($i !== 0 && $Days <= $nbJourDansMois)){
+                echo "<td class='styled-cell'>$Days
+                    <div class='event-box'>
+                        <!-- titre / heure de cours de base -->
+                        <h2 class='event-title'>PONEY 🐴</h2>
+                        <p>Horaires : XX:XX</p>
+                        <!-- les details -->
+                        <div class='event-details'>
+                            <p>Lieu : XX rue du 16</p>
+                            <p>Modalités particudalités</p>
+                        </div>
+                    </div>
+                </td>";
+                $Days++;
+            }else{
+                echo "<td></td>";
+            }
+            if ($Days > $nbJourDansMois) {
+                break;
+            }
+            
+        }
+        echo '</tr>';
+        
+        if ($Days > $nbJourDansMois) {
+            break;
+        }
+    }
+    echo '</table>';
+
+}
