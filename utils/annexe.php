@@ -1,5 +1,22 @@
 <?php
 
+function estConnecte(){
+
+    if(!isset($_SESSION["connecte"])){
+        header("Location: ../");
+        exit;
+    }
+}
+    
+function estAdmin(){
+    
+    if(!isset($_SESSION["connecte"]) OR $_SESSION["connecte"]["role"] !== "admin"){
+
+        header("Location: ../");
+        exit;
+
+    }
+}
 
 function CrypterMdp($bdd){
 
@@ -20,6 +37,8 @@ function CrypterMdp($bdd){
     }
 }
 
+
+// les getters
 
 function getRole($bdd, $username): string{
     $reqUser = $bdd->prepare("SELECT * FROM MONITEUR WHERE usernameMoniteur = ?");
@@ -104,4 +123,12 @@ function getIdMax($bdd, $idNom, $table){
         return $info;
     }
     return 0;
+}
+
+
+function getMoniteur($bdd){
+    $reqUser = $bdd->prepare("SELECT * FROM MONITEUR");
+    $reqUser->execute();
+    $info = $reqUser->fetchAll();
+    return $info;
 }

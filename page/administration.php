@@ -1,12 +1,9 @@
 <?php
 require_once "../utils/connexionBD.php";
 require_once "../utils/annexe.php";
-if(!isset($_SESSION["connecte"]) OR $_SESSION["connecte"]["role"] !== "admin"){
 
-    header("Location: ../");
-    exit;
-
-}
+estConnecte();
+estAdmin();
 
 ?>
 
@@ -37,105 +34,109 @@ if(!isset($_SESSION["connecte"]) OR $_SESSION["connecte"]["role"] !== "admin"){
 
     <div class="creerPoney" id="creerPoney" style="display: none;">
 
-                <img src="../assets/images/SignInImage.jpg" alt=""> 
-                <section>
-                    <h2>creerPoney</h2>
-                    <p>Entrer vos compte pour vous connecter</p>
-                    <form method="POST" action="../utils/creerPoney.php" class="form">
+        <img src="../assets/images/SignInImage.jpg" alt=""> 
+        <section>
+            <h2>creerPoney</h2>
+            <p>Entrer vos compte pour vous connecter</p>
+            <form method="POST" action="../utils/creerPoney.php" class="form">
 
-                        <label for="nomPoney">nom du Poney</label>
-                        <input type="text" name="nomPoney" id="nomPoney" placeholder="gerard" autocomplete="off" class="form-control-material">
+                <label for="nomPoney">nom du Poney</label>
+                <input type="text" name="nomPoney" id="nomPoney" placeholder="gerard" autocomplete="off" class="form-control-material">
 
-                        
-                        <label for="poidMax">le poid poney</label>
-                        <input type="number" name="poidMax" id="poidMax" placeholder="lourd" autocomplete="off" class="form-control-material">
-                        
-                        <label for="photo">photo (chemin acces)</label>
-                        <input type="text" name="photo" id="photo" placeholder="blabla.png" autocomplete="off" class="form-control-material">
+                
+                <label for="poidMax">le poid poney</label>
+                <input type="number" name="poidMax" id="poidMax" placeholder="lourd" autocomplete="off" class="form-control-material">
+                
+                <label for="photo">photo (chemin acces)</label>
+                <input type="text" name="photo" id="photo" placeholder="blabla.png" autocomplete="off" class="form-control-material">
 
-                        <label for="race">race</label>
-                        <input type="text" name="race" id="race" placeholder="licorned" autocomplete="off" class="form-control-material">
+                <label for="race">race</label>
+                <input type="text" name="race" id="race" placeholder="licorned" autocomplete="off" class="form-control-material">
 
-                        <!-- <?php
-                        echo "<pre>";
-                        print_r( getIdMax($bdd, "idPoney", "PONEY")); 
-                        echo "</.pre>";
-                        ?> -->
-<!--    
-nomPoney
-poidsMax
-photo
-nomRace 
--->
 
-                        <?php
-                        if(isset($_GET["erreurCreerPoney"])){
-                            echo '<font color="red">'.$_GET["erreurSignIn"]."</font>";
-                        }
-                        ?>
+                <?php
+                if(isset($_GET["erreurCreerPoney"])){
+                    echo '<font color="red">'.$_GET["erreurSignIn"]."</font>";
+                }
+                ?>
 
-                        <button type="submit" class="btn" name="fromSignIn">
-                            creer poney
-                        </button>
-                    </form>
-                </section>
+                <button type="submit" class="btn" name="fromSignIn">
+                    Creer poney
+                </button>
+            </form>
+        </section>
 
-            </div>
+    </div>
 
 
 
 
 
 
-        <div class="admin-container">
-            <!-- Section des cas d'utilisation -->
-            <header>
+    <div class="admin-container">
+        <!-- Section des cas d'utilisation -->
+        <header>
             <h1>Administration</h1>
             <p>Gestion des tâches administratives</p>
-            </header>
-            <main>
-            
-            <!-- Section des listes -->
+        </header>
+
+        <main>
+        
+        <!-- Section des listes -->
             <section class="lists-section">
                 
                 <h2>Gestion des Poneys & Clients</h2>
                 
                 
-                <!-- PONEY -->
+                <!-- liste des PONEYs -->
                 <div class="list" style="overflow:scroll; max-height:500px;">
                     <h3>Liste des Poneys</h3>
                     
                     <ul id="pony-list">
                         <?php
                         
-                            foreach (getPoney($bdd) as $poney) {
-                                echo '<li>'.$poney["nomPoney"].' <a href="../utils/removePoney.php?idPoney='.$poney["idPoney"].'" class="remove-btn">Retirer</a></li>';
-                            }
-
+                        foreach (getPoney($bdd) as $poney) {
+                            echo '<li>'.$poney["nomPoney"].' <a href="../utils/removePoney.php?idPoney='.$poney["idPoney"].'" class="remove-btn">Retirer</a></li>';
+                        }
+                        
                         ?>
                     </ul>
                 </div>
-
                 <button class="add-btn" onclick="afficheCreerPoney()" id="page poney">Ajouter un Poney</button>
-
-                
-                <div class="list" style="overflow:scroll; max-height:500px;">
-                <h3>Liste des Clients</h3>
-                <ul id="client-list">
-                    <?php
                     
-                    foreach (getClient($bdd) as $client) {
-                        echo '<li>'. $client["usernameClient"].' <a href="../utils/removeClient.php?id='.$client["usernameClient"].'" class="remove-btn">Retirer</a></li>';
-                    }
+                <!-- liste des moniteurs -->
+                <div class="list" style="overflow:scroll; max-height:500px;">
+                    <h3>Liste des Moniteurs</h3>
+                    <ul id="client-list">
+                        <?php
+                        
+                        foreach (getMoniteur($bdd) as $moniteur) {
+                            echo '<li>'. $moniteur["usernameMoniteur"].' <a href="../utils/removeMoniteur.php?id='.$moniteur["usernameMoniteur"].'" class="remove-btn">Retirer</a></li>';
+                        }
 
-                    ?>                
-                </ul>
-            </div>
+                        ?>                
+                    </ul>
+                </div>
+                <button class="add-btn" onclick="afficheCreerMoniteur()" id="page poney">Ajouter un Poney</button>
+
+                <!-- liste des clients -->
+                <div class="list" style="overflow:scroll; max-height:500px;">
+                        <h3>Liste des Clients</h3>
+                    <ul id="client-list">
+                        <?php
+                        
+                        foreach (getClient($bdd) as $client) {
+                            echo '<li>'. $client["usernameClient"].' <a href="../utils/removeClient.php?id='.$client["usernameClient"].'" class="remove-btn">Retirer</a></li>';
+                        }
+
+                        ?>                
+                    </ul>
+                </div>
+
             </section>
-            </main>
+        </main>
         <script src="../assets/script/afficherAdmin.js"></script>
-
-        </div>
+    </div>
     </body>
 </html>
 

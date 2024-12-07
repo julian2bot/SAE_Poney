@@ -1,65 +1,33 @@
 <?php
 require_once "../utils/connexionBD.php";
-if(!isset($_SESSION["connecte"]) OR $_SESSION["connecte"]["role"] !== "admin"){
-    header("Location: ../");
-    exit;
-}
+require_once "../utils/annexe.php";
+estAdmin();
+
+// ? est ce que je laisse la double verif??
 if($_SESSION["connecte"]["role"] === "admin"){
 
+  
+    // suppr toute les factures au nom du client 
+    // suppr toute les factures au nom du client 
+    // suppr toute les reservations au nom du client 
+    // suppr de client
+    // suppr de personne
+ 
     if(isset($_GET["id"]))
-    {
-
+        {
+        // $sql = "DELETE FROM FACTURE_SOLDE WHERE usernameClient = :id;
+        //     DELETE FROM PAYER WHERE usernameClient = :id;
+        //     DELETE FROM RESERVATION WHERE usernameClient = :id;
+        //     DELETE FROM CLIENT WHERE usernameClient = :id;
+        //     DELETE FROM PERSONNE WHERE username = :id;";
         
-        // select et suppr toute les factures au nom du client a supprimer
-        $reqUser = $bdd->prepare("SELECT * FROM FACTURE_SOLDE WHERE usernameClient = ? ");
-        $reqUser->execute([$_GET["id"]]);
-        $lesfactures = $reqUser->fetchAll();
-        foreach ($lesfactures as $fact) {
-            // print_r($fact);
-            $sql = "DELETE FROM FACTURE_SOLDE WHERE usernameClient = ? and idFacture = ?";
-            $stmt = $bdd->prepare($sql);
-            $stmt ->execute([$fact["idCours"], $fact["idFacture"] ]);
-        }
-        
-
-        // select et suppr toute les factures au nom du client a supprimer
-        $reqUser = $bdd->prepare("SELECT * FROM PAYER WHERE usernameClient = ? ");
-        $reqUser->execute([$_GET["id"]]);
-        $lesPayers = $reqUser->fetchAll();
-        foreach ($lesPayers as $payer) {
-            // print_r($payer);
-            $sql = "DELETE FROM PAYER WHERE nomCotisation = ? and periode = ? and usernameClient = ? ";
-            $stmt = $bdd->prepare($sql);
-            $stmt ->execute([$payer["nomCotisation"], $payer["periode"], $payer["usernameClient"]]);
-        }
-
-
-        // select et suppr toute les reservations au nom du client a supprimer
-        $reqUser = $bdd->prepare("SELECT * FROM RESERVATION WHERE usernameClient = ? ");
-        $reqUser->execute([$_GET["id"]]);
-        $lesReserv = $reqUser->fetchAll();
-
-        foreach ($lesReserv as $reservation) {
-            $sql = "DELETE FROM RESERVATION WHERE idCours = ? and usernameMoniteur = ? and dateCours = ? and heureDebutCours = ? and usernameClient = ? and idPoney = ?";
-            $stmt = $bdd->prepare($sql);
-            $stmt ->execute([$reservation["idCours"], $reservation["usernameMoniteur"], $reservation["dateCours"], $reservation["heureDebutCours"], $reservation["usernameClient"], $reservation["idPoney"]]);
-        }
-        
-        
-        // suppr de client
-        $sql = "DELETE FROM CLIENT WHERE usernameClient = ? ";
         $stmt = $bdd->prepare($sql);
-        $stmt ->execute([$_GET["id"]]);
-
-        // suppr de personne
-        $sql = "DELETE FROM PERSONNE WHERE username = ? ";
-        $stmt = $bdd->prepare($sql);
-        $stmt ->execute([$_GET["id"]]);
+        $stmt ->execute([":id" => $_GET["id"]]);
     }
 }
 
 if($erreur){
-    header("Location: ../page/administration.php?erreurCreerPoney=$erreur");
+    header("Location: ../page/administration.php");
     exit;
 }
 else{

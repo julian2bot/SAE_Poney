@@ -1,12 +1,9 @@
 <?php
+require_once "../utils/connexionBD.php";
+require_once "../utils/annexe.php";
+estAdmin();
 
-require_once "./connexionBD.php";
-require_once "./annexe.php";
 
-if(!isset($_SESSION["connecte"]) OR $_SESSION["connecte"]["role"] !== "admin"){
-    header("Location: ../");
-    exit;
-}
 if($_SESSION["connecte"]["role"] === "admin"){
     // requete insert exemple:
     if(getRace($bdd, $_POST["race"])){

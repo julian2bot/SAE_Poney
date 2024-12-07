@@ -9,7 +9,7 @@ if($_SESSION["connecte"]["role"] === "admin"){
     if(isset($_GET["idPoney"]))
     {
 
-        // suppr toute les reservations par rapport a l'id du poney
+        // suppr toute les reservations par rapport au nom du moniteur
         // suppr de client
         $sql = "DELETE FROM RESERVATION WHERE idPoney = :id;
                 DELETE FROM PONEY WHERE idPoney = :id;";
