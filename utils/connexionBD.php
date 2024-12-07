@@ -5,9 +5,16 @@ session_start();
 require_once "annexe.php";
 // session_destroy();
 $host ="localhost";
-$table ="saeponey";
 $user = 'root'; 
-$mdp = 'marques'; // meme si j'oublie de l'enlevé c'est pas le bon mdrrr il est changé haha
+
+
+$passCsv = fopen( __DIR__ . '/pass.csv', 'r');
+if (!feof($passCsv)) {
+    $replace = [";","\n","\r","\r\n"];
+    $table = str_replace($replace,"",fgets($passCsv)) ;
+    $mdp = str_replace($replace,"",fgets($passCsv)) ;
+}
+
 $bdd = new PDO('mysql:host='.$host.';dbname='.$table.'', $user, $mdp);
 
 
