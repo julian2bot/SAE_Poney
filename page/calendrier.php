@@ -82,12 +82,12 @@ td::chr{
 
         }
 
-        .styled-cell:hover {
+        .styled-cell.hover:hover {
             transform: scale(1.6);  
             z-index: 10;  
         }
 
-        .styled-cell:hover .event-details {
+        .styled-cell.hover:hover .event-details {
             display: block;
 
         }
@@ -112,10 +112,41 @@ td::chr{
 <div>
 
 <?php
+require_once "../utils/connexionBD.php";
 require_once "../utils/annexe.php";
-creerCalendrier();
 
- ?>
+
+
+// creerCalendrierV2($bdd, $_SESSION["connecte"]["username"]);
+creerCalendrier($bdd, "client1");
+echo "<pre>";
+print_r($_SESSION);
+
+print_r(
+    
+    getAllInfoByMonth($bdd, "client1","12", "2023")
+
+);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+print_r(getInfoByDate($bdd,"client2", "2023-12-01"));
+echo "</pre>";
+?>
 </div>
 
 

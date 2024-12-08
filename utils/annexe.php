@@ -133,58 +133,50 @@ function getMoniteur($bdd){
     return $info;
 }
 
+// nom du cours, heure du cours(horaire) et activite : a une date donnee 
+function getInfoByDate($bdd,$client, $date){
+    $reqUser = $bdd->prepare("SELECT  heureDebutCours, activite, nomCours, day(dateCours) as day FROM RESERVATION NATURAL JOIN COURS NATURAL JOIN REPRESENTATION WHERE usernameClient = ? and dateCours = ?");
+    $reqUser->execute([$client, $date]);
+    $info = $reqUser->fetchAll();
+    return $info;
+}
 
 
-// function creerCalendrier(){
-//     $Days = 1;
+function getAllInfoByMonth($bdd, $client, $month, $year){
+    $reqUser = $bdd->prepare("SELECT heureDebutCours, activite, nomCours, day(dateCours) as day 
+                              FROM RESERVATION 
+                              NATURAL JOIN COURS 
+                              NATURAL JOIN REPRESENTATION 
+                              WHERE usernameClient = ? 
+                              AND MONTH(dateCours) = ? 
+                              AND YEAR(dateCours) = ?");
+    $reqUser->execute([$client, $month, $year]);
+    $info = $reqUser->fetchAll();
     
-//     $date = new DateTime();
-//     echo $date->format('Y-m-d H:i:s');
-//     // $date->setDate(2025, 5, 1); 
-//     // Nombre de jours dans le mois
-//     $nbJourDansMois = $date->format('t'); // 't' retourne le nombre de jours dans le mois
-//     $jourDebutMois = $date->format('N')+1; // Le jour de la semaine du 1er jour du mois (1 = lundi, 7 = dimanche)
-    
-//     // header basique avec les jours
-//     echo '<table border="1">';
-//     echo '<tr>';
-//     echo '<th>Lundi</th>';
-//     echo '<th>Mardi</th>';
-//     echo '<th>Mercredi</th>';
-//     echo '<th>Jeudi</th>';
-//     echo '<th>Vendredi</th>';
-//     echo '<th>Samedi</th>';
-//     echo '<th>Dimanche</th>';
-//     echo '</tr>';
-    
-//     for ($i=0; $i < 6 ; $i++) { 
-//         echo '<tr>';
-        
-        
-//         for($j=1; $j < 8; $j++) { 
+    $coursesByDay = [];
+    foreach ($info as $cours) {
+        $coursesByDay[$cours['day']][] = $cours;
+    }
+    return $coursesByDay;
+}
 
-//             // if( $j > $jourDebutMois ){
-//             if(($j >= $jourDebutMois && $i===0) OR( $i !== 0 && $Days <= $nbJourDansMois)){
-//                 echo "<td>$Days</td>";
-//                 $Days++;
-//             }else{
-//                 echo "<td></td>";
-//             }
-            
-//         }
-        
-//         echo '</tr>';
-        
-//     }
-// }
+function formatHeure($heureDecimal) {
+    $heure = floor($heureDecimal);  
+    $minute = round(($heureDecimal - $heure) * 60); 
+
+    return sprintf("%02d:%02d", $heure, $minute);
+}
 
 
-function creerCalendrier(){
+function creerCalendrier($bdd, $client){
     $Days = 1;
     
     $date = new DateTime();
-    $date->setDate($date->format('Y'), $date->format('m')+1, 1);
-    echo $date->format('Y-m-d H:i:s') . '<br>';
+    // $date->setDate($date->format('Y'), $date->format('m')+1, 1);
+    $date->setDate("2023","12","1");
+    // echo $date->format('Y-m-d H:i:s') . '<br>';
+    // echo $date->format('Y') . '<br>';
+    // echo $date->format('m') . '<br>';
 
     // Nombre de jours dans le mois
     $nbJourDansMois = $date->format('t'); // 't' retourne le nombre de jours dans le mois
@@ -202,41 +194,43 @@ function creerCalendrier(){
     echo '<th>Dimanche</th>';
     echo '</tr>';
     
-    for ($i=0; $i < 6 ; $i++) { 
-        echo '<tr>';
-        
-        
-        for($j=1; $j < 8;$j++) { 
+    $coursesByDay = getAllInfoByMonth($bdd, $client, $date->format('m'), $date->format('Y'));
 
-            // if( $j > $jourDebutMois ){
-            if(($j >= $jourDebutMois && $i===0) OR ($i !== 0 && $Days <= $nbJourDansMois)){
-                echo "<td class='styled-cell'>$Days
-                    <div class='event-box'>
-                        <!-- titre / heure de cours de base -->
-                        <h2 class='event-title'>PONEY 🐴</h2>
-                        <p>Horaires : XX:XX</p>
-                        <!-- les details -->
-                        <div class='event-details'>
-                            <p>Lieu : XX rue du 16</p>
-                            <p>Modalités particudalités</p>
-                        </div>
-                    </div>
-                </td>";
+    for ($i = 0; $i < 6; $i++) { 
+        echo '<tr>';
+        for ($j = 1; $j <= 7; $j++) {
+            if (($j >= $jourDebutMois && $i === 0) || ($i !== 0 && $Days <= $nbJourDansMois)) {
+                if (isset($coursesByDay[$Days])) {
+                    echo "<td class='styled-cell hover'> $Days";
+                    foreach ($coursesByDay[$Days] as $cours) {
+                        echo "<div class='event-box'>
+                                <h2 class='event-title'>{$cours['nomCours']}</h2>
+                               "."<p>Horaires : " . formatHeure($cours['heureDebutCours']) . "</p>"."
+                                <div class='event-details'>
+                                    "."<p>Horaires : " . formatHeure($cours['heureDebutCours']) . "</p>"."
+                                    <p>Lieu : XX rue du 16</p>
+                                    <p>Modalités particulières</p>
+                                </div>
+                              </div>";
+                    }
+                    echo "</td>";
+                } else {
+                    echo "<td  class='styled-cell'>$Days</td>";
+                }
                 $Days++;
-            }else{
+            } else {
                 echo "<td></td>";
             }
+            
             if ($Days > $nbJourDansMois) {
                 break;
             }
-            
         }
         echo '</tr>';
-        
-        if ($Days > $nbJourDansMois) {
-            break;
-        }
     }
+    
     echo '</table>';
 
 }
+
+
