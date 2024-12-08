@@ -18,7 +18,7 @@ td::chr{
 }
 
 </style> -->
-<style>
+<!-- <style>
 
     /* style a la chatgpt lol car pas envie de le refaire */
         table {
@@ -107,8 +107,8 @@ td::chr{
             background: transparent; 
         }
     </style>
-
-
+ -->
+<link rel="stylesheet" href="../assets/style/calendrier.css">
 <div>
 
 <?php

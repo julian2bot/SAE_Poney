@@ -25,7 +25,10 @@ estConnecte();
     <link rel="stylesheet" href="../assets/style/style.css">
     <link rel="stylesheet" href="../assets/style/header.css">
     <link rel="stylesheet" href="../assets/style/styleSousPage.css">
+    <link rel="stylesheet" href="../assets/style/calendrier.css">
+    
 </head>
+    
     <body>
         <header>
             <h1>GRAND GALOP</h1>
@@ -53,10 +56,14 @@ estConnecte();
             <section id="planning" class="sectionPage">
                 <h2 class="titreSection"> Planning</h2>
                 <section class="gauche-section gauche">
+                <?php
+                    creerCalendrier($bdd, $_SESSION["connecte"]["username"]);
+                ?>
+
                     <!-- ? a faire calendrier -->
-                    <figure class="image-block">
+                    <!-- <figure class="image-block">
                         <img src="../assets/images/cal.png" alt="cal" class="planning">
-                    </figure>
+                    </figure> -->
                 </section>
                 
                 <section class="droite-section droite">

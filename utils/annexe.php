@@ -173,6 +173,8 @@ function creerCalendrier($bdd, $client){
     
     $date = new DateTime();
     // $date->setDate($date->format('Y'), $date->format('m')+1, 1);
+    
+    // TODO: changer la date juste commenté cette instruction pour avoit la date de la journée
     $date->setDate("2023","12","1");
     // echo $date->format('Y-m-d H:i:s') . '<br>';
     // echo $date->format('Y') . '<br>';
@@ -199,6 +201,9 @@ function creerCalendrier($bdd, $client){
     for ($i = 0; $i < 6; $i++) { 
         echo '<tr>';
         for ($j = 1; $j <= 7; $j++) {
+            if ($Days > $nbJourDansMois) {
+                break;
+            }
             if (($j >= $jourDebutMois && $i === 0) || ($i !== 0 && $Days <= $nbJourDansMois)) {
                 if (isset($coursesByDay[$Days])) {
                     echo "<td class='styled-cell hover'> $Days";
@@ -222,9 +227,6 @@ function creerCalendrier($bdd, $client){
                 echo "<td></td>";
             }
             
-            if ($Days > $nbJourDansMois) {
-                break;
-            }
         }
         echo '</tr>';
     }
