@@ -1,17 +1,7 @@
 <?php
-// session_start();
-// echo __DIR__."./../../utils/connexion.php";
 require_once "../utils/connexionBD.php";
 require_once "../utils/annexe.php";
 estConnecte();
-// require_once __DIR__ . "/../../utils/connexion.php";
-
-// require_once "../utils/annexe.php";
-// if(!isset($_SESSION["connecte"])){
-//     header("Location: ../");
-//     exit;
-// }
-
 
 ?>
 
@@ -60,10 +50,6 @@ estConnecte();
                     creerCalendrier($bdd, $_SESSION["connecte"]["username"]);
                 ?>
 
-                    <!-- ? a faire calendrier -->
-                    <!-- <figure class="image-block">
-                        <img src="../assets/images/cal.png" alt="cal" class="planning">
-                    </figure> -->
                 </section>
                 
                 <section class="droite-section droite">
@@ -95,7 +81,6 @@ estConnecte();
                 <h2 class="titreSection"> Gérer mon dossier</h2>
             
                 <section class="gauche-section gauche">
-                    <!-- ? a faire calendrier -->
                     <figure class="image-block">
                         <img src="../assets/images/cal.png" alt="cal" class="planning">
                     </figure>

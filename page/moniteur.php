@@ -49,10 +49,7 @@ estConnecte();
                 <?php
                     creerCalendrier($bdd, $_SESSION["connecte"]["username"]);
                 ?>
-                    <!-- ? a faire calendrier -->
-                    <!-- <figure class="image-block">
-                        <img src="../assets/images/cal.png" alt="cal" class="planning">
-                    </figure> -->
+
                 </section>
                 
                 <section class="droite-section droite">
