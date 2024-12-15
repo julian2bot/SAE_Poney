@@ -13,7 +13,7 @@ if(isset($_POST['fromLogin'])){
 	if(!empty($_POST['Name']) AND !empty($_POST['PassWordLogin'])){
 		
 		
-		$requser = $bdd-> prepare("SELECT * FROM personne WHERE username = ? AND mdp = ? ");
+		$requser = $bdd-> prepare("SELECT * FROM PERSONNE WHERE username = ? AND mdp = ? ");
 		$requser->execute(array($username, $pass2));
 		$userexist = $requser->rowCount();
 		if($userexist == 1)

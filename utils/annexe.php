@@ -20,7 +20,7 @@ function estAdmin(){
 
 function CrypterMdp($bdd){
 
-    $sql = "SELECT username, mdp FROM personne";
+    $sql = "SELECT username, mdp FROM PERSONNE";
     $stmt = $bdd->query($sql);
 
     while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
@@ -29,7 +29,7 @@ function CrypterMdp($bdd){
 
             $mdpCrypte = sha1($mdp);
 
-            $updateSql = "UPDATE personne SET mdp = :mdp WHERE username = :username";
+            $updateSql = "UPDATE PERSONNE SET mdp = :mdp WHERE username = :username";
             $updateStmt = $bdd->prepare($updateSql);
             $updateStmt->execute([':mdp' => $mdpCrypte, ':username' => $username]);
 
