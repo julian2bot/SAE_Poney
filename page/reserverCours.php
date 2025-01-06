@@ -61,7 +61,7 @@ $infoDuCours = getInfoCours($bdd, $_GET["idcours"], $_GET["dateCours"], $_GET["h
             
             <section class="droite-section">
 
-                <form action="../utils/reservationCours.php" method="post">
+                <form action="../utils/reservationCours.php" method="post" class="formReserv">
                     <input type="hidden" required id="idCours" name="idCours"  value="<?php echo $_GET["idcours"]?>" />
                     <input type="hidden" required id="usernameMoniteur" name="usernameMoniteur"  value="<?php echo $infoDuCours["usernameMoniteur"]?>" />
                     <input type="hidden" required id="dateCours" name="dateCours"  value="<?php echo $infoDuCours["dateCours"]?>" />
@@ -70,23 +70,23 @@ $infoDuCours = getInfoCours($bdd, $_GET["idcours"], $_GET["dateCours"], $_GET["h
 
                     
 
-                    <div class="container-carrousel-poney">
-                        <?php 
-                            
-                            foreach (getPoney($bdd) as $poney) {
-                                echo "<div class='poney-item'>
-                                        <input style='display:none;' type='radio' required id='poney{$poney["idPoney"]}' name='poneySelectionne' value='{$poney["idPoney"]}'>
-                                        <label for='poney{$poney["idPoney"]}'>
-                                            <img src='../assets/images/poney/{$poney["photo"]}' alt='Poney {$poney["nomPoney"]}'>
-                                        </label>
-                                    </div>";                            
-                            }
-                            
+                    <div class="container-carrousel-poney" id="carrousel">
+                        <?php foreach (getPoney($bdd) as $poney): ?>
+                            <div class="poney-item">
+                                <input type="radio" required id="poney<?php echo $poney['idPoney']; ?>" name="poneySelectionne" value="<?php echo $poney['idPoney']; ?>">
+                                <label for="poney<?php echo $poney['idPoney']; ?>">
+                                    <p class="nomPoney"><?php echo $poney['nomPoney']; ?></p>
+                                    <p><?php echo $poney['nomRace']; ?></p>
+                                    <img src="../assets/images/poney/<?php echo $poney['photo']; ?>" alt="Poney <?php echo $poney['nomPoney']; ?>">
+                                </label>
+                            </div>
+                            <?php endforeach; ?>
+                        </div>
+                        
+                        <button type="button" id="button-left" class="nav-btn left" onclick="scrollCarousel(-1)">&#10094;</button>
+                        <button type="button" id="button-right" class="nav-btn right" onclick="scrollCarousel(1)">&#10095;</button>
 
-                        ?>
-                    </div>
-
-                    <button type="submit">Reserver</button>
+                    <button id="ReserverValider" type="submit">Reserver</button>
 
                 </form>
 
@@ -94,5 +94,6 @@ $infoDuCours = getInfoCours($bdd, $_GET["idcours"], $_GET["dateCours"], $_GET["h
 
         </main>
     </body>
-
+    
+    <script src="../assets/script/reservationCarrousel.js"></script>
 </html>

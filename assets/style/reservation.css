@@ -2,7 +2,7 @@
     position: absolute;
     bottom: 0;
     left: 0;
-    width: 60vw;
+    /* width: 60vw; */
     height: 60vh;
     z-index: 2;
     padding: 10px;
@@ -14,9 +14,118 @@
 }
 
 
-.container-carrousel-poney{
-    width: 75%;
-    height: 300px;
-    margin-left: calc((60vw - 80%) / 2);
-    background-color: red;
+.droite-section {
+    padding: 0;
+}
+
+
+
+/* Container principal du carrousel */
+.container-carrousel-poney {
+    display: flex;
+    overflow: hidden;
+    width: 100%;
+    position: relative;
+    align-items: center;
+    padding: 10px;
+    border-radius: 20px;
+    background-color: #D9D9D9;
+
+}
+
+/* Liste des poneys */
+.poney-item {
+    flex: 0 0 100%; /* Largeur de chaque élément */
+    margin: 0 10px;
+    text-align: center;
+    transition: transform 0.3s ease-in-out, opacity 0.3s;
+}
+
+/* Image et étiquette */
+.poney-item label {
+    cursor: pointer;
+    display: block;
+}
+
+.poney-item img {
+    max-width: 100%;
+    border: 2px solid transparent;
+    border-radius: 10px;
+    transition: border-color 0.3s ease-in-out;
+    margin: 0;
+}
+
+/* Highlight pour l'image sélectionnée */
+.poney-item input:checked + label img {
+    border-color: green;
+}
+
+/* Boutons de navigation */
+.nav-btn {
+    position: absolute;
+    /* top: 50%;*/
+    /* transform: translateY(-50%);  */
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    border: none;
+    cursor: pointer;
+    padding: 10px;
+    z-index: 10;
+}
+
+.nav-btn.left {
+    left: 30px;
+}
+
+.nav-btn.right {
+    right: 30px;
+}
+
+/* Cacher les inputs radio */
+input[type="radio"] {
+    display: none;
+}
+
+.nomPoney{
+    font-size: 2em;
+    font-weight: bold;
+}
+
+#carrousel p{
+    padding: 10px ;
+}
+
+.formReserv{
+    margin: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+
+
+#ReserverValider {
+    
+	background-color:#95b597;
+	border-radius:28px;
+	border:1px solid #fcfcfc;
+	display:inline-block;
+	cursor:pointer;
+	color:#ffffff;
+	font-family:Arial;
+	font-size:18px;
+	font-weight:bold;
+	padding:15px 31px;
+	text-decoration:none;
+	text-shadow:0px 0px 0px #2f6627;
+
+    margin: 20px;
+}
+
+#ReserverValider:hover {
+	background-color:#82ad84;
+}
+#ReserverValider:active {
+	position:relative;
+	top:1px;
 }
