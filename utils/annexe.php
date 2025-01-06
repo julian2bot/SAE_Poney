@@ -232,3 +232,27 @@ function creerCalendrier($bdd, $client){
 }
 
 
+function getInfoCours($bdd, $idcours, $dateCours, $heureDebutCours){
+    $reqUser = $bdd->prepare("SELECT idCours, usernameMoniteur, nomNiveau, nomCours, duree, prix, nbMax, dateCours, heureDebutCours FROM REPRESENTATION NATURAL JOIN COURS NATURAL JOIN NIVEAU WHERE idCours = ? AND dateCours = ? AND heureDebutCours = ?");
+    $reqUser->execute([$idcours, $dateCours, $heureDebutCours]);
+    return $reqUser->fetch();    
+}
+
+function formatCours($date, $heureDebut, $dureeHeures) {
+    // Convertir la date au format souhaité
+    $dateFormatee = date("d F", strtotime($date));
+
+    // Créer une fonction pour formater l'heure
+    $formatterHeure = function($heure) {
+        $heures = floor($heure);
+        $minutes = ($heure - $heures) * 60;
+        return sprintf("%dh%02d", $heures, $minutes);
+    };
+
+    // Formater l'heure de début et l'heure de fin
+    $heureDebutFormatee = $formatterHeure($heureDebut);
+    $heureFinFormatee = $formatterHeure($heureDebut + $dureeHeures);
+
+    // Retourner le texte final
+    return "Début du cours du $dateFormatee à $heureDebutFormatee et fini à $heureFinFormatee";
+}

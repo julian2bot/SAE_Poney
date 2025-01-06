@@ -1,0 +1,22 @@
+.gauche-section-none {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 60vw;
+    height: 60vh;
+    z-index: 2;
+    padding: 10px;
+    padding-left: 2em;
+}
+.gauche-section-none li{
+    margin-left: 1.5em;
+    list-style: none;
+}
+
+
+.container-carrousel-poney{
+    width: 75%;
+    height: 300px;
+    margin-left: calc((60vw - 80%) / 2);
+    background-color: red;
+}
