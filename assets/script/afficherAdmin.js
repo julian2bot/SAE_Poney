@@ -17,6 +17,13 @@ function closeCreerMoniteur(){
     document.getElementById('creerMoniteur').style.display = "none";
 }
 
+function remplirPoney(nomPoney, poidMax, photo, race){
+    // let div = document.getElementById('creerPoney');
+    document.getElementById("nomPoney").value = nomPoney;
+    document.getElementById("poidMax").value = poidMax;
+    document.getElementById("photo").value = photo;
+    document.getElementById("race").value = race;
+}
 
 document.addEventListener('click', function(event) {
     const creerPoneyDiv = document.getElementById('creerPoney');

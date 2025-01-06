@@ -180,10 +180,11 @@ estAdmin();
     <?php
     // ouvrir le login ou signin s'il y a une erreur 
     if(isset($_GET["erreurCreerPoney"])){
-        // print_r($_GET);
-        echo '<script type="text/javascript">
+        // print_r($_SESSION["erreur"]);
+        echo "<script type='text/javascript'>
+                    remplirPoney('".$_SESSION["erreur"]["nomPoney"]."','".$_SESSION["erreur"]["poidMax"]."','".$_SESSION["erreur"]["photo"]."','".$_SESSION["erreur"]["race"]."');
                     afficheCreerPoney();
-              </script>';
+              </script>";
     }
     if(isset($_GET["erreurCreerMoniteur"])){
         // print_r($_GET);

@@ -23,6 +23,11 @@ if($_SESSION["connecte"]["role"] === "admin" &&
     }
     else{
         $erreur = "La race du poney n'existe pas";
+        $_SESSION["erreur"] = [];
+        $_SESSION["erreur"]["nomPoney"] = $_POST["nomPoney"];
+        $_SESSION["erreur"]["poidMax"] = $_POST["poidMax"];
+        $_SESSION["erreur"]["photo"] = $_POST["photo"];
+        $_SESSION["erreur"]["race"] = $_POST["race"];
         header("Location: ../page/administration.php?erreurCreerPoney=$erreur");
         exit;
 
