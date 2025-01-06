@@ -111,7 +111,13 @@ function getRace($bdd, $nomRace){
     $reqUser->execute(array($nomRace));
     $userExist = $reqUser->rowCount();
     return $userExist == 1;
-    
+}
+
+function getRaces($bdd){
+    $reqUser = $bdd->prepare("SELECT * FROM RACE");
+    $reqUser->execute();
+    $info = $reqUser->fetchAll();
+    return $info;
 }
 
 

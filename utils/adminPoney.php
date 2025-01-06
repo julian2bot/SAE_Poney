@@ -1,3 +1,7 @@
+<?php
+    require_once "../utils/annexe.php";
+?>
+
 <label for="nomPoney">Nom</label>
 <input type="text" name="nomPoney" id="nomPoney" placeholder="gerard" autocomplete="off" class="form-control-material" required>
 
@@ -9,7 +13,15 @@
 <input type="text" name="photo" id="photo" placeholder="blabla.png" autocomplete="off" class="form-control-material" required>
 
 <label for="race">Race</label>
-<input type="text" name="race" id="race" placeholder="licorned" autocomplete="off" class="form-control-material" required>
+
+<select name="race" id="race" required>
+    <?php
+        print_r(getRaces($bdd));
+        foreach(getRaces($bdd) as $race){
+            echo "<option value='$race[nomRace]'>$race[nomRace]</option>";
+        }
+    ?>
+</select>
 
 
 <?php
