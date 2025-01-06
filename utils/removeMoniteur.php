@@ -14,7 +14,8 @@ if($_SESSION["connecte"]["role"] === "admin"){
         $sql = "DELETE FROM DISPONIBILITE WHERE usernameMoniteur = :id;
                 DELETE FROM REPRESENTATION WHERE usernameMoniteur = :id;
                 DELETE FROM RESERVATION WHERE usernameMoniteur = :id;
-                DELETE FROM MONITEUR WHERE usernameMoniteur = :id;";
+                DELETE FROM MONITEUR WHERE usernameMoniteur = :id;
+                DELETE FROM PERSONNE WHERE username = :id;";
 
         
         $stmt1 = $bdd->prepare("DELETE FROM DISPONIBILITE WHERE usernameMoniteur = :id");
@@ -28,6 +29,9 @@ if($_SESSION["connecte"]["role"] === "admin"){
 
         $stmt4 = $bdd->prepare("DELETE FROM MONITEUR WHERE usernameMoniteur = :id");
         $stmt4->execute([":id" => $_GET["id"]]);
+
+        $stmt5 = $bdd->prepare("DELETE FROM PERSONNE WHERE username = :id");
+        $stmt5->execute([":id" => $_GET["id"]]);
 
 
 

@@ -32,6 +32,8 @@
 [ ] html/ css / js / php   
 [X]     ==> page connexion / inscription * 3    
 [ ]     ==> page planing *3
+[X]         ==> creation du calendrier
+[X]         ==> affichage des infos dans le calendrier
 [/]     ==> page accueil * 3  
 [ ]     ==> page resevation client  
 [ ]     ==> page demande cours client
@@ -42,14 +44,17 @@
  
 [ ] divers  
 [ ]     ==> exporter un PDF avec les plannings et les horaires    
+[ ]     ==> posibilitée de refermer les pages de creation poney (repasser le div en display none)
 
 
 
 
 [ ] php  
-[ ]     ==> ajouter Poney admin   
-[ ]     ==> ajouter/creer moniteur admin   
-[ ]     ==> supprimer moniteur admin   
+[X]     ==> ajouter Poney admin   
+[ ]     ==> edit les poneys (/ client?) admin 
+[ ]     ==> afficher moniteur admin   
+[ ]     ==> ajouter/creer moniteur admin 
+[X]     ==> supprimer moniteur admin   
 
 
 [ ] tache  
