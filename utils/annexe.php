@@ -63,7 +63,7 @@ function getRole($bdd, $username): string{
 
 
 function getInfo($bdd, $username){
-    $reqUser = $bdd->prepare("SELECT * FROM MONITEUR NATURAL JOIN PERSONNE WHERE username = ? and usernameMoniteur = ?");
+    $reqUser = $bdd->prepare("SELECT * FROM MONITEUR NATURAL JOIN PERSONNE WHERE username = ? AND usernameMoniteur = ?");
     $reqUser->execute(array($username,$username));
     $userExist = $reqUser->rowCount();
     if($userExist == 1)
@@ -75,7 +75,7 @@ function getInfo($bdd, $username){
         ); 
     }
     else{
-        $reqUser = $bdd->prepare("SELECT * FROM CLIENT NATURAL JOIN PERSONNE WHERE username = ? and usernameClient = ?");
+        $reqUser = $bdd->prepare("SELECT * FROM CLIENT NATURAL JOIN PERSONNE WHERE username = ? AND usernameClient = ?");
         $reqUser->execute(array($username,$username));
         $userExist = $reqUser->rowCount();
         if($userExist == 1)
@@ -116,6 +116,7 @@ function getRace($bdd, $nomRace){
 
 
 function getIdMax($bdd, $idNom, $table){
+    $table = strtoupper($table);
     $reqUser = $bdd->prepare("SELECT MAX($idNom) FROM $table");
     $reqUser->execute(array());
     $info = $reqUser->fetch();
@@ -135,7 +136,7 @@ function getMoniteur($bdd){
 
 // nom du cours, heure du cours(horaire) et activite : a une date donnee 
 function getInfoByDate($bdd,$client, $date){
-    $reqUser = $bdd->prepare("SELECT  heureDebutCours, activite, nomCours, day(dateCours) as day FROM RESERVATION NATURAL JOIN COURS NATURAL JOIN REPRESENTATION WHERE usernameClient = ? and dateCours = ?");
+    $reqUser = $bdd->prepare("SELECT  heureDebutCours, activite, nomCours, day(dateCours) as day FROM RESERVATION NATURAL JOIN COURS NATURAL JOIN REPRESENTATION WHERE usernameClient = ? AND dateCours = ?");
     $reqUser->execute([$client, $date]);
     $info = $reqUser->fetchAll();
     return $info;
