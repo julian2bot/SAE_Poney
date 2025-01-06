@@ -113,7 +113,7 @@ header p {
 /* */
 
 .creerPoney{
-    position: absolute;
+    position: fixed;
     width: 50vw;
     height: 82vh;
     margin-left: calc(50vw / 2);
@@ -121,12 +121,13 @@ header p {
     background-color: #495B4B;
     border-radius: 42px;
     display: none;
+    justify-content: space-between;
 }
 
 .creerPoney > section {
     padding: 2em;
     width: calc(50% - 2em* 2);
-    position: absolute;
+    /* position: fixed; */
     color: #eee;
 }
 
@@ -145,7 +146,7 @@ form > input {
 .creerPoney img{
     max-width: 50%;
     height: 100%;
-    position: absolute;
+    /* position: fixed; */
     right: 0;
     bottom: 0;
     border-radius: 42px;

@@ -34,7 +34,6 @@ estAdmin();
 
     <div class="creerPoney" id="creerPoney" style="display: none;">
 
-        <img src="../assets/images/SignInImage.jpg" alt=""> 
         <section>
             <h2>creerPoney</h2>
             <p>Entrer vos compte pour vous connecter</p>
@@ -65,6 +64,7 @@ estAdmin();
                 </button>
             </form>
         </section>
+        <img src="../assets/images/SignInImage.jpg" alt=""> 
 
     </div>
 
@@ -102,7 +102,8 @@ estAdmin();
                         ?>
                     </ul>
                 </div>
-                <button class="add-btn" onclick="afficheCreerPoney()" id="page poney">Ajouter un Poney</button>
+                <!-- <button class="add-btn" onclick="afficheCreerPoney()" id="page poney">Ajouter un Poney</button> -->
+                <button class="add-btn" id="creation_poney">Ajouter un Poney</button>
                     
                 <!-- liste des moniteurs -->
                 <div class="list" style="overflow:scroll; max-height:500px;">
