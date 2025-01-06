@@ -4,7 +4,11 @@ require_once "../utils/annexe.php";
 estAdmin();
 
 
-if($_SESSION["connecte"]["role"] === "admin"){
+if($_SESSION["connecte"]["role"] === "admin" && 
+    isset($_POST["nomPoney"]) &&
+    isset($_POST["poidMax"]) && 
+    isset($_POST["photo"]) &&
+    isset($_POST["race"])){
     // requete insert exemple:
     if(getRace($bdd, $_POST["race"])){
 
