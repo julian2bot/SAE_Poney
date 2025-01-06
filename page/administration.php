@@ -37,30 +37,10 @@ estAdmin();
         <section>
             <h2>Ajouter un Poney</h2>
             <form method="POST" action="../utils/creerPoney.php" class="form">
-
-                <label for="nomPoney">Nom</label>
-                <input type="text" name="nomPoney" id="nomPoney" placeholder="gerard" autocomplete="off" class="form-control-material" required>
-
-                
-                <label for="poidMax">Poids supportable</label>
-                <input type="number" name="poidMax" id="poidMax" placeholder="lourd" min="0" max="255" autocomplete="off" class="form-control-material" required>
-                
-                <label for="photo">Photo (chemin acces)</label>
-                <input type="text" name="photo" id="photo" placeholder="blabla.png" autocomplete="off" class="form-control-material" required>
-
-                <label for="race">Race</label>
-                <input type="text" name="race" id="race" placeholder="licorned" autocomplete="off" class="form-control-material" required>
-
-
                 <?php
-                if(isset($_GET["erreurCreerPoney"])){
-                    echo '<font color="red">'.$_GET["erreurCreerPoney"]."</font>";
-                }
+                    require_once "../utils/adminPoney.php";
                 ?>
-
-                <button type="submit" class="btn" name="fromSignIn">
-                    Valider
-                </button>
+                <button type="submit" class="btn" name="fromSignIn">Valider</button>
             </form>
         </section>
         <img src="../assets/images/SignInImage.jpg" alt=""> 
@@ -72,34 +52,9 @@ estAdmin();
         <section>
             <h2>Ajouter un moniteur</h2>
             <form method="POST" action="../utils/creerMoniteur.php" class="form">
-                <label for="usernameMoniteur">UserName</label>
-                <input type="text" name="usernameMoniteur" id="usernameMoniteur" placeholder="UserName" autocomplete="off" class="form-control-material" required>
-
-                <label for="nomMoniteur">Nom</label>
-                <input type="text" name="nomMoniteur" id="nomMoniteur" placeholder="nom" autocomplete="off" class="form-control-material" required>
-                
-                <label for="prenomMoniteur">Prenom</label>
-                <input type="text" name="prenomMoniteur" id="prenomMoniteur" placeholder="prenom" autocomplete="off" class="form-control-material" required>
-                
-                <label for="Mail">Mail</label>
-                <input type="email" name="Mail" id="Mail" placeholder="Email" autocomplete="off" class="form-control-material" required>
-
-                <label for="salaire">Salaire</label>
-                <input type="number" name="salaire" id="salaire" placeholder="0" min="0" max="255" autocomplete="off" class="form-control-material" required    >
-                
-                
-                <label for="estAdmin">Droit d'administration</label>
-                <select name="estAdmin" id="estAdmin">
-                    <option value="non" selected>Non</option>
-                    <option value="oui">Oui</option>
-                </select>
-
                 <?php
-                if(isset($_GET["erreurCreerMoniteur"])){
-                    echo '<font color="red">'.$_GET["erreurCreerMoniteur"]."</font>";
-                }
+                    require_once "../utils/adminMoniteur.php";
                 ?>
-
                 <button type="submit" class="btn" name="fromSignIn">
                     Ajouter
                 </button>
