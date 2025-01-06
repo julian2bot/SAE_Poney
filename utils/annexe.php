@@ -134,6 +134,18 @@ function getMoniteur($bdd){
     return $info;
 }
 
+function existMail($bdd, $mail) : bool{
+    $reqMail = $bdd->prepare("SELECT * FROM PERSONNE WHERE mail = ?");
+    $reqMail->execute(array($mail));
+    return $reqMail->rowCount() >=1;
+}
+
+function existUsername($bdd, $username) : bool{
+    $reqMail = $bdd->prepare("SELECT * FROM PERSONNE WHERE username = ?");
+    $reqMail->execute(array($username));
+    return $reqMail->rowCount() >=1;
+}
+
 // nom du cours, heure du cours(horaire) et activite : a une date donnee 
 function getInfoByDate($bdd,$client, $date){
     $reqUser = $bdd->prepare("SELECT  heureDebutCours, activite, nomCours, day(dateCours) as day FROM RESERVATION NATURAL JOIN COURS NATURAL JOIN REPRESENTATION WHERE usernameClient = ? AND dateCours = ?");
