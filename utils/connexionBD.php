@@ -19,7 +19,7 @@ $bdd = new PDO('mysql:host='.$host.';dbname='.$table.'', $user, $mdp);
 
 
 // pour crypter directement toute les mdps de la bd selon le sha1
-// CrypterMdp($bdd);
+//CrypterMdp($bdd);
 
 
 

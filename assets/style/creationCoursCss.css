@@ -1,0 +1,106 @@
+/*  Login & SignIn  */
+h2{
+    font-size:2.5em ;
+    margin-bottom: .5em ;
+}
+
+.login p, .signIn p{
+    margin-bottom: .5em ;   
+}
+
+.login, .signIn{
+    position: absolute;
+    width: 50vw;
+    height: 82vh;
+    margin-left: calc(50vw / 2);
+    z-index: 3;
+    background-color: #495B4B;
+    position: relative;
+    border-radius: 42px;
+    display: none;
+}
+
+.login > img{ 
+    right: 0;
+    box-shadow: rgba(0, 0, 0, 0.225) -11px 0px 4px 0px; /*a faire*/
+}
+
+.signIn > img{
+    left: 0;
+    box-shadow: rgba(0, 0, 0, 0.225) 11px 0px 4px 0px; /*a faire*/
+    margin-left: 0;
+}
+
+.login > img, .signIn > img{
+    max-width: 50%;
+    height: 100%;
+    position: absolute;
+    bottom: 0;
+    border-radius: 42px;
+    /* box-shadow: rgba(0, 0, 0, 0.225) -11px 0px 4px 0px; */
+    object-fit: cover;
+}
+
+.login > section {
+    margin-top: calc((100vh - 70%) / 2 ); /* 10% a changer */
+    left: 0;
+
+}
+.signIn > section {
+    margin-top: calc((100vh - 80%) / 2 ); /* 10% a changer */
+    left: 50%;
+
+}
+.login > section, .signIn > section  {
+    padding: 2em;
+    width: calc(50% - 2em * 2);
+    position: absolute;
+    color: #eee;
+}
+
+form button{
+    margin: 1em;
+    padding: 10px calc(50% - 2em - 1em);
+    background-color: #eee;
+    border: none;
+    cursor: pointer;
+    border-radius: 10px;
+    border: #6e6e6e 1px solid;
+
+}
+form > a{
+    text-decoration: none;
+    color: #b3b2b2;
+}
+form > a:hover{
+    text-decoration: underline #b3b2b2;
+}
+
+form > input {
+    width: 100%;
+    padding: 3px;
+    border: none;
+    margin-bottom: 1em;
+
+    border-bottom: 1px solid #eee;
+    background-color: transparent;
+    caret-color: white;
+    outline: none;
+    color: white;
+}
+
+form > input::placeholder{
+    color: white;
+}
+
+td {
+    padding: 10px;
+    border: 1px solid #ddd;
+    cursor: pointer; /* Change le curseur pour indiquer qu'il est cliquable */
+  }
+
+td:hover {
+    background-color: #f0f0f0; /* Changer de couleur au survol */
+  }
+
+/*  Footer  */
