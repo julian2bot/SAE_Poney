@@ -20,6 +20,7 @@ if($_SESSION["connecte"]["role"] === "admin" &&
             $_POST["photo"],
             $_POST["race"]
         ));    
+        $_SESSION["erreur"] = [];
     }
     else{
         $erreur = "La race du poney n'existe pas";

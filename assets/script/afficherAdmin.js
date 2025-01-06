@@ -18,11 +18,19 @@ function closeCreerMoniteur(){
 }
 
 function remplirPoney(nomPoney, poidMax, photo, race){
-    // let div = document.getElementById('creerPoney');
     document.getElementById("nomPoney").value = nomPoney;
     document.getElementById("poidMax").value = poidMax;
     document.getElementById("photo").value = photo;
     document.getElementById("race").value = race;
+}
+
+function remplirMoniteur(usernameMoniteur, prenomMoniteur, nomMoniteur, Mail,estAdmin,salaire){
+    document.getElementById("usernameMoniteur").value = usernameMoniteur;
+    document.getElementById("prenomMoniteur").value = prenomMoniteur;
+    document.getElementById("nomMoniteur").value = nomMoniteur;
+    document.getElementById("Mail").value = Mail;
+    document.getElementById("estAdmin").value = estAdmin;
+    document.getElementById("salaire").value = salaire;
 }
 
 document.addEventListener('click', function(event) {

@@ -39,17 +39,17 @@ estAdmin();
             <form method="POST" action="../utils/creerPoney.php" class="form">
 
                 <label for="nomPoney">Nom</label>
-                <input type="text" name="nomPoney" id="nomPoney" placeholder="gerard" autocomplete="off" class="form-control-material">
+                <input type="text" name="nomPoney" id="nomPoney" placeholder="gerard" autocomplete="off" class="form-control-material" required>
 
                 
                 <label for="poidMax">Poids supportable</label>
-                <input type="number" name="poidMax" id="poidMax" placeholder="lourd" min="0" max="255" autocomplete="off" class="form-control-material">
+                <input type="number" name="poidMax" id="poidMax" placeholder="lourd" min="0" max="255" autocomplete="off" class="form-control-material" required>
                 
                 <label for="photo">Photo (chemin acces)</label>
-                <input type="text" name="photo" id="photo" placeholder="blabla.png" autocomplete="off" class="form-control-material">
+                <input type="text" name="photo" id="photo" placeholder="blabla.png" autocomplete="off" class="form-control-material" required>
 
                 <label for="race">Race</label>
-                <input type="text" name="race" id="race" placeholder="licorned" autocomplete="off" class="form-control-material">
+                <input type="text" name="race" id="race" placeholder="licorned" autocomplete="off" class="form-control-material" required>
 
 
                 <?php
@@ -73,19 +73,19 @@ estAdmin();
             <h2>Ajouter un moniteur</h2>
             <form method="POST" action="../utils/creerMoniteur.php" class="form">
                 <label for="usernameMoniteur">UserName</label>
-                <input type="text" name="usernameMoniteur" id="usernameMoniteur" placeholder="UserName" autocomplete="off" class="form-control-material">
+                <input type="text" name="usernameMoniteur" id="usernameMoniteur" placeholder="UserName" autocomplete="off" class="form-control-material" required>
 
                 <label for="nomMoniteur">Nom</label>
-                <input type="text" name="nomMoniteur" id="nomMoniteur" placeholder="nom" autocomplete="off" class="form-control-material">
+                <input type="text" name="nomMoniteur" id="nomMoniteur" placeholder="nom" autocomplete="off" class="form-control-material" required>
                 
                 <label for="prenomMoniteur">Prenom</label>
-                <input type="text" name="prenomMoniteur" id="prenomMoniteur" placeholder="prenom" autocomplete="off" class="form-control-material">
+                <input type="text" name="prenomMoniteur" id="prenomMoniteur" placeholder="prenom" autocomplete="off" class="form-control-material" required>
                 
                 <label for="Mail">Mail</label>
-                <input type="email" name="Mail" id="Mail" placeholder="Email" autocomplete="off" class="form-control-material">
+                <input type="email" name="Mail" id="Mail" placeholder="Email" autocomplete="off" class="form-control-material" required>
 
                 <label for="salaire">Salaire</label>
-                <input type="number" name="salaire" id="salaire" placeholder="0" min="0" max="255" autocomplete="off" class="form-control-material">
+                <input type="number" name="salaire" id="salaire" placeholder="0" min="0" max="255" autocomplete="off" class="form-control-material" required    >
                 
                 
                 <label for="estAdmin">Droit d'administration</label>
@@ -188,9 +188,10 @@ estAdmin();
     }
     if(isset($_GET["erreurCreerMoniteur"])){
         // print_r($_GET);
-        echo '<script type="text/javascript">
+        echo "<script type='text/javascript'>
+                    remplirMoniteur('".$_SESSION["erreur"]["usernameMoniteur"]."','".$_SESSION["erreur"]["prenomMoniteur"]."','".$_SESSION["erreur"]["nomMoniteur"]."','".$_SESSION["erreur"]["Mail"]."','".$_SESSION["erreur"]["estAdmin"]."','".$_SESSION["erreur"]["salaire"]."');
                     afficheCreerMoniteur();
-              </script>';
+              </script>";
     }
     ?>
 </html>
