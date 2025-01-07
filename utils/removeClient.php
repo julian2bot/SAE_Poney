@@ -46,7 +46,7 @@ if($_SESSION["connecte"]["role"] === "admin"){
     }
 }
 
-header("Location: ../page/administration.php");
+header("Location: ../page/administration.php#Clients");
 exit;
 
     

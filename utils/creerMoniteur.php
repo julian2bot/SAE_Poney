@@ -24,13 +24,13 @@ if($_SESSION["connecte"]["role"] === "admin" &&
     if(existMail($bdd,$_POST["Mail"])){
         $erreur = "Ce mail est déjà utilisé";
         setErrors();
-        header("Location: ../page/administration.php?erreurCreerMoniteur=$erreur");
+        header("Location: ../page/administration.php?erreurCreerMoniteur=$erreur#Moniteurs");
         exit;
     }
     else if(existUsername($bdd,$_POST["usernameMoniteur"])){
         $erreur = "Ce nom d'utilisateur est déjà utilisé";
         setErrors();
-        header("Location: ../page/administration.php?erreurCreerMoniteur=$erreur");
+        header("Location: ../page/administration.php?erreurCreerMoniteur=$erreur#Moniteurs");
         exit;
     }
     else{
@@ -52,5 +52,5 @@ if($_SESSION["connecte"]["role"] === "admin" &&
         }
 }
 
-header("Location: ../page/administration.php");
+header("Location: ../page/administration.php#Moniteurs");
 exit;

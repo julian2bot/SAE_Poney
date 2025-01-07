@@ -142,7 +142,7 @@ estAdmin();
                 
                 <!-- liste des PONEYs -->
                 <div class="list" style="overflow:scroll; max-height:500px;">
-                    <h3>Liste des Poneys</h3>
+                    <h3 id="Poney">Liste des Poneys</h3>
                     
                     <ul id="pony-list">
                         <?php
@@ -164,7 +164,7 @@ estAdmin();
                     
                 <!-- liste des moniteurs -->
                 <div class="list" style="overflow:scroll; max-height:500px;">
-                    <h3>Liste des Moniteurs</h3>
+                    <h3 id="Moniteurs">Liste des Moniteurs</h3>
                     <ul id="client-list">
                         <?php
                         
@@ -185,7 +185,7 @@ estAdmin();
 
                 <!-- liste des clients -->
                 <div class="list" style="overflow:scroll; max-height:500px;">
-                        <h3>Liste des Clients</h3>
+                        <h3 id="Clients">Liste des Clients</h3>
                     <ul id="client-list">
                         <?php
                         

@@ -52,11 +52,11 @@ if($_SESSION["connecte"]["role"] === "admin" &&
         $_SESSION["erreur"]["poidMax"] = $_POST["poidMax"];
         $_SESSION["erreur"]["photo"] = $_POST["photo"];
         $_SESSION["erreur"]["race"] = $_POST["race"];
-        header("Location: ../page/administration.php?erreurCreerPoney=$erreur");
+        header("Location: ../page/administration.php?erreurCreerPoney=$erreur#Poney");
         exit;
 
     }
 }
 
-header("Location: ../page/administration.php");
+header("Location: ../page/administration.php#Poney");
 exit;

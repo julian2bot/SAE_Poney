@@ -20,7 +20,7 @@ if($_SESSION["connecte"]["role"] === "admin"){
         $stmt2->execute([":id" => $_GET["idPoney"]]);
     }   
 }
-header("Location: ../page/administration.php");
+header("Location: ../page/administration.php#Poney");
 exit;
     
 ?>
