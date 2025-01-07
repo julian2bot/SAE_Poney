@@ -100,7 +100,7 @@ estConnecte();
                         <label for="mail">Adresse mail :</label>
                         <input type="email" id="mail" name="mail" value="<?php echo htmlspecialchars($_SESSION["connecte"]['mail'] ?? ''); ?>" required><br>
 
-                        <button type="submit">Envoyer</button>
+                        <button type="submit">Modifier</button>
                     </form>
 
 
