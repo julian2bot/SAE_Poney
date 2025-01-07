@@ -61,7 +61,13 @@ $_SESSION["connecte"] = array(
 
 // echo "</pre>";
 $_SESSION["succes"] = "Changement effectué avec succes";
-header("Location: ../page/moniteur.php#parametre");
+if($_POST["moniteur"]){
+    
+    header("Location: ../page/moniteur.php#parametre");
+    exit;
+}
+
+header("Location: ../page/adherent.php#parametre");
 exit;
 
 ?>

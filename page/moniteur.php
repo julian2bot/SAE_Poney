@@ -88,6 +88,9 @@ estConnecte();
                 <section class="gauche-section gauche">
                     <h2>Parametre page</h2>
                     <form action="../utils/traitementParametreMoniteur.php" method="post">
+                        <input type="hidden" name="clientmoniteur" value="client">
+                        
+                        
                         <label for="username">Nom d'utilisateur :</label>
                         <input disabled type="text" id="username" name="username" value="<?php echo htmlspecialchars($_SESSION["connecte"]['username'] ?? ''); ?>" required><br>
 
