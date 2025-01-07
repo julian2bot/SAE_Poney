@@ -15,7 +15,9 @@ estAdmin();
     <title>Administration</title>
     <link rel="stylesheet" href="../assets/style/admin.css">
     <link rel="stylesheet" href="../assets/style/header.css">
+    <link rel="stylesheet" href="../assets/style/styleSousPage.css">
     <link rel="stylesheet" href="../assets/style/form.css">
+    <script src="../assets/script/popUpGestionErr.js"></script>
 </head>
     <body style="position: relative;">
     <header class="pageAdmin">
