@@ -43,12 +43,6 @@ estAdmin();
                     require "../utils/adminPoney.php";
                 ?>
                 <button type="submit" class="btn" name="fromSignIn">Valider</button>
-                
-                <?php
-                    if(isset($_GET["erreurCreerPoney"])){
-                        echo '<font color="red">'.$_GET["erreurCreerPoney"]."</font>";
-                    }
-                ?>
             </form>
         </section>
         <img src="../assets/images/SignInImage.jpg" alt=""> 
@@ -66,14 +60,6 @@ estAdmin();
                 <button type="submit" class="btn" name="fromSignIn">
                     Ajouter
                 </button>
-
-                                
-                <?php
-                    if(isset($_GET["erreurCreerMoniteur"])){
-                        echo '<font color="red">'.$_GET["erreurCreerMoniteur"]."</font>";
-                    }
-                ?>
-
             </form>
         </section>
         <img src="../assets/images/SignInImage.jpg" alt=""> 
@@ -90,12 +76,6 @@ estAdmin();
                     require "../utils/adminPoney.php";
                 ?>
                 <button type="submit" class="btn" name="fromSignIn">Valider</button>
-                
-                <?php
-                    if(isset($_GET["erreurModifPoney"])){
-                        echo '<font color="red">'.$_GET["erreurModifPoney"]."</font>";
-                    }
-                ?>
             </form>
         </section>
         <img src="../assets/images/SignInImage.jpg" alt=""> 
@@ -115,11 +95,6 @@ estAdmin();
                 <button type="submit" class="btn" name="fromSignIn">
                     Ajouter
                 </button>
-                <?php
-                    if(isset($_GET["erreurModifMoniteur"])){
-                        echo '<font color="red">'.$_GET["erreurModifMoniteur"]."</font>";
-                    }
-                ?>
             </form>
         </section>
         <img src="../assets/images/SignInImage.jpg" alt=""> 
