@@ -23,7 +23,7 @@ estAdmin();
             <ul>
                 <li>
                     <a href="moniteur.php">
-                        retour
+                        Retour
                     </a>
                 </li>
             
