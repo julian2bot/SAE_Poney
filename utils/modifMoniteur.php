@@ -24,6 +24,10 @@ if($_SESSION["connecte"]["role"] === "admin" &&
     isset($_POST["Mail"]) &&
     isset($_POST["estAdmin"]) &&
     isset($_POST["salaire"])){
+
+    echo "<pre>";
+    print_r($_POST);
+    echo "</pre>";
     // requete insert exemple:
     if($_POST["ancienMail"] != $_POST["Mail"] && existMail($bdd,$_POST["Mail"])){
         $erreur = "Ce mail est déjà utilisé";
@@ -38,20 +42,60 @@ if($_SESSION["connecte"]["role"] === "admin" &&
         exit;
     }
     else{
-        // $insertmbr = $bdd->prepare("INSERT INTO PERSONNE(username, mdp, prenomPersonne, nomPersonne, mail) VALUES(?, ?, ?, ?, ?)");
-        // $insertmbr->execute(array(
-        //     $_POST["usernameMoniteur"],
-        //     $_POST["usernameMoniteur"],
-        //     $_POST["prenomMoniteur"],
-        //     $_POST["nomMoniteur"],
-        //     $_POST["Mail"]));
+        $bdd->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        // Préparer la requête avec des ? pour les paramètres
+        // PARTIE USER
+        $updateSql = "UPDATE PERSONNE 
+                        SET username = ?,
+                            prenomPersonne = ?, 
+                            nomPersonne = ?, 
+                            mail = ? 
+                        WHERE username = ? AND mail = ?";
+    
+        $updateStmt = $bdd->prepare($updateSql);
         
+        // Exécuter la requête avec les paramètres dans le bon ordre
+        $result = $updateStmt->execute([
+            $_POST["usernameMoniteur"], 
+            $_POST["prenomMoniteur"], 
+            $_POST["nomMoniteur"], 
+            $_POST["Mail"], 
+            $_POST["identifiant"], 
+            $_POST["ancienMail"]]
+        );
+    
+        // Vérifier le résultat
+        if ($result) {
+            echo "Mise à jour réussie<br>";
+        } else {
+            $errorInfo = $updateStmt->errorInfo();
+            echo "Erreur SQL : " . $errorInfo[2];
+        }
 
-        // $insertMoniteur = $bdd->prepare("INSERT INTO MONITEUR(usernameMoniteur, salaire, isAdmin) VALUES(?, ?, ?)");
-        // $insertMoniteur->execute(array(
-        //     $_POST["usernameMoniteur"],
-        //     (int)$_POST["salaire"],
-        //     ($_POST["estAdmin"] == "Oui") ? 1:0));
+        // PARTIE MONITEUR
+
+        $updateSql = "UPDATE MONITEUR 
+        SET salaire = ?, 
+            isAdmin = ?
+        WHERE usernameMoniteur = ?";
+
+        $updateStmt = $bdd->prepare($updateSql);
+
+        // Exécuter la requête avec les paramètres dans le bon ordre
+        $result = $updateStmt->execute([
+        $_POST["salaire"], 
+        (($_POST["estAdmin"] == "oui") ? 1 : 0), 
+        $_POST["usernameMoniteur"]]
+        );
+
+        // Vérifier le résultat
+        if ($result) {
+        echo "Mise à jour réussie<br>";
+        } else {
+        $errorInfo = $updateStmt->errorInfo();
+        echo "Erreur SQL : " . $errorInfo[2];
+        }
+        
         $_SESSION["erreur"] = [];
         }
 }

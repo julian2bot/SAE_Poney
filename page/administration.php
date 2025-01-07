@@ -84,7 +84,7 @@ estAdmin();
 
         <section>
             <h2>Modifier un moniteur</h2>
-            <form method="POST" action="" class="form">
+            <form method="POST" action="../utils/modifMoniteur.php" class="form">
                 <input type="hidden" name="identifiant" class="identifiant form-control-material" required>
                 <input type="hidden" name="ancienMail" class="ancienMail form-control-material" required>
                 <?php
