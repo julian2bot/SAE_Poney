@@ -93,6 +93,17 @@ header p {
     align-items: center;
 }
 
+.list .boutons{
+    display: flex;
+    gap: 5px;
+    
+}
+
+.boutons *, .list li a, .list li button{
+    font-size: medium;
+    text-decoration: none;
+}
+
 .add-btn, .remove-btn {
     background-color: #396939;
     color: #fff;

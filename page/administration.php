@@ -38,7 +38,7 @@ estAdmin();
             <h2>Ajouter un Poney</h2>
             <form method="POST" action="../utils/creerPoney.php" class="form">
                 <?php
-                    require_once "../utils/adminPoney.php";
+                    require "../utils/adminPoney.php";
                 ?>
                 <button type="submit" class="btn" name="fromSignIn">Valider</button>
             </form>
@@ -53,7 +53,42 @@ estAdmin();
             <h2>Ajouter un moniteur</h2>
             <form method="POST" action="../utils/creerMoniteur.php" class="form">
                 <?php
-                    require_once "../utils/adminMoniteur.php";
+                    require "../utils/adminMoniteur.php";
+                ?>
+                <button type="submit" class="btn" name="fromSignIn">
+                    Ajouter
+                </button>
+            </form>
+        </section>
+        <img src="../assets/images/SignInImage.jpg" alt=""> 
+
+    </div>
+
+    <div class="creerPoney" id="modifierPoney" style="display: none;">
+
+        <section>
+            <h2>ModifIer un Poney</h2>
+            <form method="POST" action="" class="form">
+                <input type="hidden" name="identifiant" class="identifiant form-control-material" required>
+                <?php
+                    require "../utils/adminPoney.php";
+                ?>
+                <button type="submit" class="btn" name="fromSignIn">Valider</button>
+            </form>
+        </section>
+        <img src="../assets/images/SignInImage.jpg" alt=""> 
+
+    </div>
+
+    <div class="creerPoney" id="modifierMoniteur" style="display: none;">
+
+        <section>
+            <h2>Modifier un moniteur</h2>
+            <form method="POST" action="" class="form">
+                <input type="hidden" name="identifiant" class="identifiant form-control-material" required>
+                <input type="hidden" name="ancienMail" class="ancienMail form-control-material" required>
+                <?php
+                    require "../utils/adminMoniteur.php";
                 ?>
                 <button type="submit" class="btn" name="fromSignIn">
                     Ajouter
@@ -88,7 +123,12 @@ estAdmin();
                         <?php
                         
                         foreach (getPoney($bdd) as $poney) {
-                            echo '<li>'.$poney["nomPoney"].' <a href="../utils/removePoney.php?idPoney='.$poney["idPoney"].'" class="remove-btn">Retirer</a></li>';
+                            echo '<li>'.$poney["nomPoney"].'';
+                            echo "<div class = 'boutons'>";
+                            echo "<button onclick='remplirPoneyModif(\"".$poney["idPoney"]."\",\"".$poney["nomPoney"]."\",\"".$poney["poidsMax"]."\",\"".$poney["photo"]."\",\"".$poney["nomRace"]."\")' class='remove-btn'>Modifier</button>";
+                            echo '<a href="../utils/removePoney.php?idPoney='.$poney["idPoney"].'" class="remove-btn">Retirer</a>';
+                            echo "</div>";
+                            echo "</li>";
                         }
                         
                         ?>
@@ -104,7 +144,13 @@ estAdmin();
                         <?php
                         
                         foreach (getMoniteur($bdd) as $moniteur) {
-                            echo '<li>'. $moniteur["usernameMoniteur"].' <a href="../utils/removeMoniteur.php?id='.$moniteur["usernameMoniteur"].'" class="remove-btn">Retirer</a></li>';
+                            $info = getInfo($bdd,$moniteur["usernameMoniteur"]);
+                            echo '<li>'.$moniteur["usernameMoniteur"].'';
+                            echo "<div class='boutons'>";
+                            echo "<button onclick='remplirMoniteurModif(\"".$info["username"]."\",\"".$info["prenomPersonne"]."\",\"".$info["nomPersonne"]."\",\"".$info["mail"]."\",\"".($info["isAdmin"] == 1 ? "oui" : "non")."\",\"".$info["salaire"]."\")' class='remove-btn'>Modifier</button>";
+                            echo '<a href="../utils/removeMoniteur.php?id='.$moniteur["usernameMoniteur"].'" class="remove-btn">Retirer</a>';
+                            echo "</div>";
+                            echo "</li>";
                         }
 
                         ?>                
@@ -138,14 +184,12 @@ estAdmin();
         // print_r($_SESSION["erreur"]);
         echo "<script type='text/javascript'>
                     remplirPoney('".$_SESSION["erreur"]["nomPoney"]."','".$_SESSION["erreur"]["poidMax"]."','".$_SESSION["erreur"]["photo"]."','".$_SESSION["erreur"]["race"]."');
-                    afficheCreerPoney();
               </script>";
     }
     if(isset($_GET["erreurCreerMoniteur"])){
         // print_r($_GET);
         echo "<script type='text/javascript'>
                     remplirMoniteur('".$_SESSION["erreur"]["usernameMoniteur"]."','".$_SESSION["erreur"]["prenomMoniteur"]."','".$_SESSION["erreur"]["nomMoniteur"]."','".$_SESSION["erreur"]["Mail"]."','".$_SESSION["erreur"]["estAdmin"]."','".$_SESSION["erreur"]["salaire"]."');
-                    afficheCreerMoniteur();
               </script>";
     }
     ?>

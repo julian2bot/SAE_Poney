@@ -66,13 +66,22 @@ function getInfo($bdd, $username){
     $reqUser = $bdd->prepare("SELECT * FROM MONITEUR NATURAL JOIN PERSONNE WHERE username = ? AND usernameMoniteur = ?");
     $reqUser->execute(array($username,$username));
     $userExist = $reqUser->rowCount();
+    $resultat = [];
+    $resultat["username"] = $username;
+    
     if($userExist == 1)
     {
         $info = $reqUser->fetch();
-        return array(
-            "salaire" => $info["salaire"], 
-            "isAdmin" => $info["isAdmin"] 
-        ); 
+        $resultat["prenomPersonne"] = $info["prenomPersonne"];
+        $resultat["nomPersonne"] = $info["nomPersonne"];
+        $resultat["mail"] = $info["mail"];
+        $resultat["salaire"] = $info["salaire"];
+        $resultat["isAdmin"] = $info["isAdmin"];
+        return $resultat;
+        // return array(
+        //     "salaire" => $info["salaire"], 
+        //     "isAdmin" => $info["isAdmin"] 
+        // ); 
     }
     else{
         $reqUser = $bdd->prepare("SELECT * FROM CLIENT NATURAL JOIN PERSONNE WHERE username = ? AND usernameClient = ?");
@@ -80,12 +89,19 @@ function getInfo($bdd, $username){
         $userExist = $reqUser->rowCount();
         if($userExist == 1)
         {
-            $info=$reqUser->fetch();   
-            return array(
-                "dateInscription" => $info["dateInscription"], 
-                "poid" => $info["poidsClient"], 
-                "solde" => $info["solde"]
-            ); 
+            $info=$reqUser->fetch();
+            $resultat["prenomPersonne"] = $info["prenomPersonne"];
+            $resultat["nomPersonne"] = $info["nomPersonne"];
+            $resultat["mail"] = $info["mail"];
+            $resultat["dateInscription"] = $info["dateInscription"];
+            $resultat["poid"] = $info["poidsClient"];
+            $resultat["solde"] = $info["solde"];
+            return $resultat;
+            // return array(
+            //     "dateInscription" => $info["dateInscription"], 
+            //     "poid" => $info["poidsClient"], 
+            //     "solde" => $info["solde"]
+            // ); 
         }                
     }
     return array() ;  
