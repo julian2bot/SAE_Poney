@@ -11,7 +11,7 @@
 <input type="email" name="Mail" placeholder="Email" autocomplete="off" class="Mail form-control-material" required>
 
 <label for="salaire">Salaire</label>
-<input type="number" name="salaire" placeholder="0" min="-99999.99" max="99999.99" autocomplete="off" class="salaire form-control-material" required    >
+<input type="number" name="salaire" placeholder="0" min="-99999.99" max="99999.99" step="0.01" autocomplete="off" class="salaire form-control-material" required    >
 
 
 <label for="estAdmin">Droit d'administration</label>
