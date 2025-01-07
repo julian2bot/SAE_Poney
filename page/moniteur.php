@@ -13,15 +13,16 @@ estConnecte();
 
 <!DOCTYPE html>
 <html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Grand Galop</title>
-    <link rel="stylesheet" href="../assets/style/style.css">
-    <link rel="stylesheet" href="../assets/style/header.css">
-    <link rel="stylesheet" href="../assets/style/styleSousPage.css">
-    <link rel="stylesheet" href="../assets/style/calendrier.css">
-</head>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Grand Galop</title>
+        <link rel="stylesheet" href="../assets/style/style.css">
+        <link rel="stylesheet" href="../assets/style/header.css">
+        <link rel="stylesheet" href="../assets/style/styleSousPage.css">
+        <link rel="stylesheet" href="../assets/style/calendrier.css">
+        <script src="../assets/script/popUpGestionErr.js"></script>
+    </head>
     <body>
         <header>
             <h1>GRAND GALOP</h1>
@@ -117,21 +118,21 @@ estConnecte();
 
 
         <!-- POP UP GESTION ERREUR -->
-        <div id="rien" class="erreur" style="display:none; padding:10px; border-radius:10px; border: solid 2px black; height:20px; background-color:red; position:fixed; top:10px; right: 10px;">
+        <div id="errReservCours" class="erreur">
             <?php 
-            if(isset($_GET["rien"])){
+            if(isset($_GET["errChangementDonnee"])){
                 // print_r($_GET);
-                echo $_GET["rien"];
+                echo $_GET["errChangementDonnee"];
             }
              ?>
         </div>
 
 
-        <div id="succesEditMoniteur" class="succes" style="display:none; padding:10px; border-radius:10px; border: solid 2px black; height:20px; background-color:red; position:fixed; top:10px; right: 10px;">
+        <div id="succesEditMoniteur" class="succes" >
             <?php 
-            if(isset($_GET["errReservCours"])){
+            if(isset($_SESSION["succes"])){
                 // print_r($_GET);
-                echo $_GET["errReservCours"];
+                echo $_SESSION["succes"];
             }
              ?>
         </div>
@@ -140,11 +141,21 @@ estConnecte();
     </body>
     <?php
     // ouvrir le login ou signin s'il y a une erreur 
-    if(isset($_GET["errReservCours"])){
+    if(isset($_GET["errChangementDonnee"])){
         // print_r($_GET);
         echo '<script type="text/javascript">
                 popUpErreur();
             </script>';
+    }
+
+
+
+    if (isset($_SESSION["succes"])) {
+        echo '
+        <script type="text/javascript">
+                popUpSucces();
+            </script>';
+        unset($_SESSION["succes"]); // Supprime la valeur après utilisation
     }
     ?>
 </html>

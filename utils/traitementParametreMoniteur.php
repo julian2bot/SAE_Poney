@@ -60,7 +60,7 @@ $_SESSION["connecte"] = array(
 // print_r($_SESSION);
 
 // echo "</pre>";
-$_SESSION["succes"] = "blabla";
+$_SESSION["succes"] = "Changement effectué avec succes";
 header("Location: ../page/moniteur.php#parametre");
 exit;
 
