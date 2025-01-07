@@ -28,7 +28,6 @@ estConnecte();
             <h1>GRAND GALOP</h1>
             
             <?php
-                //
                 if(isset($_SESSION["connecte"])){
                     echo '<div class="auth-buttons">
                             <p>'.$_SESSION["connecte"]["prenom"].'</p>
@@ -47,6 +46,7 @@ estConnecte();
         </header>
         
         <main class="container">
+            
 
             <section id="planning" class="sectionPage">
                 <h2 class="titreSection"> Planning</h2>
@@ -118,46 +118,21 @@ estConnecte();
 
         </main>
 
-
-
-        <!-- POP UP GESTION ERREUR -->
-        <div id="errReservCours" class="erreur">
-            <?php 
-            if(isset($_GET["errChangementDonnee"])){
-                // print_r($_GET);
-                echo $_GET["errChangementDonnee"];
-            }
-             ?>
-        </div>
-
-
-        <div id="succesEditMoniteur" class="succes" >
-            <?php 
-            if(isset($_SESSION["succes"])){
-                // print_r($_GET);
-                echo $_SESSION["succes"];
-            }
-             ?>
-        </div>
-
-
     </body>
     <?php
     // ouvrir le login ou signin s'il y a une erreur 
     if(isset($_GET["errChangementDonnee"])){
         // print_r($_GET);
-        echo '<script type="text/javascript">
-                popUpErreur();
-            </script>';
+        echo "<script type='text/javascript'>
+                showPopUp(\"$_GET[errChangementDonnee]\",false);
+            </script>";
     }
 
-
-
     if (isset($_SESSION["succes"])) {
-        echo '
-        <script type="text/javascript">
-                popUpSucces();
-            </script>';
+        echo "
+        <script type='text/javascript'>
+                showPopUp(\"$_SESSION[succes]\");
+            </script>";
         unset($_SESSION["succes"]); // Supprime la valeur après utilisation
     }
     ?>

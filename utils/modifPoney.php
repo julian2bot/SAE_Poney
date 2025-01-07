@@ -43,7 +43,9 @@ if($_SESSION["connecte"]["role"] === "admin" &&
         }
 
         $_SESSION["erreur"] = [];
-    }
+        createPopUp("Poney modifié avec succès");
+    }        
+
     else{
         $erreur = "La race du poney n'existe pas";
         $_SESSION["erreur"] = [];
@@ -52,6 +54,7 @@ if($_SESSION["connecte"]["role"] === "admin" &&
         $_SESSION["erreur"]["poidMax"] = $_POST["poidMax"];
         $_SESSION["erreur"]["photo"] = $_POST["photo"];
         $_SESSION["erreur"]["race"] = $_POST["race"];
+        createPopUp($erreur,false);
         header("Location: ../page/administration.php?erreurCreerPoney=$erreur#Poney");
         exit;
 

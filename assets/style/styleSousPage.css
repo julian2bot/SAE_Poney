@@ -32,7 +32,6 @@
 }
 
 .erreur, .succes{
-    display:none; 
     padding:10px; 
     border-radius:10px; 
     border: solid 2px black; 
@@ -40,6 +39,8 @@
     position:fixed; 
     top:10px; 
     right: 10px;
+    display: flex;
+    align-items: center;
 }
 
 .erreur{

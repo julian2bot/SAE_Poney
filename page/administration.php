@@ -15,7 +15,9 @@ estAdmin();
     <title>Administration</title>
     <link rel="stylesheet" href="../assets/style/admin.css">
     <link rel="stylesheet" href="../assets/style/header.css">
+    <link rel="stylesheet" href="../assets/style/styleSousPage.css">
     <link rel="stylesheet" href="../assets/style/form.css">
+    <script src="../assets/script/popUpGestionErr.js"></script>
 </head>
     <body style="position: relative;">
     <header class="pageAdmin">
@@ -41,12 +43,6 @@ estAdmin();
                     require "../utils/adminPoney.php";
                 ?>
                 <button type="submit" class="btn" name="fromSignIn">Valider</button>
-                
-                <?php
-                    if(isset($_GET["erreurCreerPoney"])){
-                        echo '<font color="red">'.$_GET["erreurCreerPoney"]."</font>";
-                    }
-                ?>
             </form>
         </section>
         <img src="../assets/images/SignInImage.jpg" alt=""> 
@@ -64,14 +60,6 @@ estAdmin();
                 <button type="submit" class="btn" name="fromSignIn">
                     Ajouter
                 </button>
-
-                                
-                <?php
-                    if(isset($_GET["erreurCreerMoniteur"])){
-                        echo '<font color="red">'.$_GET["erreurCreerMoniteur"]."</font>";
-                    }
-                ?>
-
             </form>
         </section>
         <img src="../assets/images/SignInImage.jpg" alt=""> 
@@ -88,12 +76,6 @@ estAdmin();
                     require "../utils/adminPoney.php";
                 ?>
                 <button type="submit" class="btn" name="fromSignIn">Valider</button>
-                
-                <?php
-                    if(isset($_GET["erreurModifPoney"])){
-                        echo '<font color="red">'.$_GET["erreurModifPoney"]."</font>";
-                    }
-                ?>
             </form>
         </section>
         <img src="../assets/images/SignInImage.jpg" alt=""> 
@@ -113,11 +95,6 @@ estAdmin();
                 <button type="submit" class="btn" name="fromSignIn">
                     Ajouter
                 </button>
-                <?php
-                    if(isset($_GET["erreurModifMoniteur"])){
-                        echo '<font color="red">'.$_GET["erreurModifMoniteur"]."</font>";
-                    }
-                ?>
             </form>
         </section>
         <img src="../assets/images/SignInImage.jpg" alt=""> 
@@ -228,6 +205,13 @@ estAdmin();
         echo "<script type='text/javascript'>
                     remplirMoniteurModif('".$_SESSION["erreur"]["identifiant"]."','".$_SESSION["erreur"]["ancienMail"]."','".$_SESSION["erreur"]["usernameMoniteur"]."','".$_SESSION["erreur"]["prenomMoniteur"]."','".$_SESSION["erreur"]["nomMoniteur"]."','".$_SESSION["erreur"]["Mail"]."','".$_SESSION["erreur"]["estAdmin"]."','".$_SESSION["erreur"]["salaire"]."');
               </script>";
+    }
+
+    if(isset($_SESSION["popUp"])){
+        echo "<script type='text/javascript'>
+                showPopUp(\"".$_SESSION["popUp"]["message"]."\",".($_SESSION["popUp"]["success"] ? "true" : "false").");
+              </script>";
+        unset($_SESSION["popUp"]);
     }
    
     ?>

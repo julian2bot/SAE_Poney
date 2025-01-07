@@ -34,7 +34,7 @@ if($_SESSION["connecte"]["role"] === "admin"){
         $stmt5->execute([":id" => $_GET["id"]]);
 
 
-
+        createPopUp("Moniteur retiré avec succès");
     }   
 }
 header("Location: ../page/administration.php#Moniteurs");

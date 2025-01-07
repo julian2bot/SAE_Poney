@@ -20,7 +20,6 @@ estConnecte();
     <link rel="stylesheet" href="../assets/style/styleSousPage.css">
     <link rel="stylesheet" href="../assets/style/calendrier.css">
     <script src="../assets/script/popUpGestionErr.js"></script>
-    
 </head>
     
     <body>
@@ -114,26 +113,29 @@ estConnecte();
 
         </main>
 
-
-        <!-- POP UP GESTION ERREUR -->
-        <div id="errReservCours" class="erreur">
-            <?php 
-            if(isset($_GET["errReservCours"])){
-                // print_r($_GET);
-                echo $_GET["errReservCours"];
-            }
-             ?>
-        </div>
-
-
     </body>
     <?php
     // ouvrir le login ou signin s'il y a une erreur 
     if(isset($_GET["errReservCours"])){
         // print_r($_GET);
-        echo '<script type="text/javascript">
-                popUpErreur();
-            </script>';
+        echo "<script type='text/javascript'>
+                popUpErreur(\"$_GET[errReservCours]\", false);
+            </script>";
+    }
+
+    if(isset($_GET["errChangementDonnee"])){
+        // print_r($_GET);
+        echo "<script type='text/javascript'>
+                showPopUp(\"$_GET[errChangementDonnee]\",false);
+            </script>";
+    }
+
+    if (isset($_SESSION["succes"])) {
+        echo "
+        <script type='text/javascript'>
+                showPopUp(\"$_SESSION[succes]\");
+            </script>";
+        unset($_SESSION["succes"]); // Supprime la valeur après utilisation
     }
     ?>
 

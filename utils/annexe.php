@@ -194,6 +194,11 @@ function formatHeure($heureDecimal) {
     return sprintf("%02d:%02d", $heure, $minute);
 }
 
+function createPopUp(string $message, bool $success=true){
+    $_SESSION["popUp"] = [];
+    $_SESSION["popUp"]["success"] = $success;
+    $_SESSION["popUp"]["message"] = $message;
+}
 
 function creerCalendrier($bdd, $client){
     $Days = 1;
