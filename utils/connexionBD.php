@@ -4,8 +4,8 @@
 session_start();
 require_once "annexe.php";
 // session_destroy();
-$host ="localhost";
-$user = 'root'; 
+$host ="servinfo-maria";
+$user = 'marques';
 
 
 $passCsv = fopen( __DIR__ . '/pass.csv', 'r');

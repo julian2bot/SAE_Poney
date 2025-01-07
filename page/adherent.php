@@ -98,7 +98,7 @@ estConnecte();
 
 
         <!-- POP UP GESTION ERREUR -->
-        <div id="errReservCours" style="display:none; padding:10px; border-radius:10px; border: solid 2px black; height:20px; background-color:red; position:fixed; top:10px; right: 10px;">
+        <div id="errReservCours" class="erreur">
             <?php 
             if(isset($_GET["errReservCours"])){
                 // print_r($_GET);

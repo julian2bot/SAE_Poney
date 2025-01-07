@@ -4,6 +4,10 @@ require_once "../utils/connexionBD.php";
 require_once "../utils/annexe.php";
 estConnecte();
 
+// echo "<pre>";
+// print_r($_SESSION);
+// echo "</pre>";
+
 ?>
 
 
@@ -81,10 +85,24 @@ estConnecte();
                 <h2 class="titreSection"> Gérer mon dossier</h2>
             
                 <section class="gauche-section gauche">
-                    <!-- ? a faire calendrier -->
-                    <figure class="image-block">
-                        <img src="../assets/images/cal.png" alt="cal" class="planning">
-                    </figure>
+                    <h2>Parametre page</h2>
+                    <form action="../utils/traitementParametreMoniteur.php" method="post">
+                        <label for="username">Nom d'utilisateur :</label>
+                        <input disabled type="text" id="username" name="username" value="<?php echo htmlspecialchars($_SESSION["connecte"]['username'] ?? ''); ?>" required><br>
+
+                        <label for="prenom">Prénom :</label>
+                        <input type="text" id="prenom" name="prenom" value="<?php echo htmlspecialchars($_SESSION["connecte"]['prenom'] ?? ''); ?>" required><br>
+
+                        <label for="nom">Nom :</label>
+                        <input type="text" id="nom" name="nom" value="<?php echo htmlspecialchars($_SESSION["connecte"]['nom'] ?? ''); ?>" required><br>
+
+                        <label for="mail">Adresse mail :</label>
+                        <input type="email" id="mail" name="mail" value="<?php echo htmlspecialchars($_SESSION["connecte"]['mail'] ?? ''); ?>" required><br>
+
+                        <button type="submit">Envoyer</button>
+                    </form>
+
+
                 </section>
                 
                 <section class="droite-section droite">
@@ -95,6 +113,38 @@ estConnecte();
             </section>
 
         </main>
-    </body>
 
+
+
+        <!-- POP UP GESTION ERREUR -->
+        <div id="rien" class="erreur" style="display:none; padding:10px; border-radius:10px; border: solid 2px black; height:20px; background-color:red; position:fixed; top:10px; right: 10px;">
+            <?php 
+            if(isset($_GET["rien"])){
+                // print_r($_GET);
+                echo $_GET["rien"];
+            }
+             ?>
+        </div>
+
+
+        <div id="succesEditMoniteur" class="succes" style="display:none; padding:10px; border-radius:10px; border: solid 2px black; height:20px; background-color:red; position:fixed; top:10px; right: 10px;">
+            <?php 
+            if(isset($_GET["errReservCours"])){
+                // print_r($_GET);
+                echo $_GET["errReservCours"];
+            }
+             ?>
+        </div>
+
+
+    </body>
+    <?php
+    // ouvrir le login ou signin s'il y a une erreur 
+    if(isset($_GET["errReservCours"])){
+        // print_r($_GET);
+        echo '<script type="text/javascript">
+                popUpErreur();
+            </script>';
+    }
+    ?>
 </html>

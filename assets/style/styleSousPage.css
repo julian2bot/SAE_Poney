@@ -30,3 +30,23 @@
 .sectionPage{
     height: 100vh;
 }
+
+.erreur, .succes{
+    display:none; 
+    padding:10px; 
+    border-radius:10px; 
+    border: solid 2px black; 
+    height:20px; 
+    position:fixed; 
+    top:10px; 
+    right: 10px;
+}
+
+.erreur{
+    background-color:red; 
+}
+
+
+.succes{
+    background-color:greenyellow; 
+}
