@@ -7,7 +7,7 @@
 
 
 <label for="poidMax">Poids supportable</label>
-<input type="number" name="poidMax" placeholder="lourd" min="0" max="255" autocomplete="off" class="poidMax form-control-material" required>
+<input type="number" name="poidMax" placeholder="lourd" min="0" max="127" autocomplete="off" class="poidMax form-control-material" required>
 
 <label for="photo">Photo (chemin acces)</label>
 <input type="text" name="photo" placeholder="blabla.png" autocomplete="off" class="photo form-control-material" required>
