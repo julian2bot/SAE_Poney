@@ -43,6 +43,7 @@ if($_SESSION["connecte"]["role"] === "admin"){
         print_r($_GET);
         print_r(getClient($bdd));
         echo "<pre>";
+        createPopUp("Client retiré avec succès");
     }
 }
 

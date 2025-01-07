@@ -13,6 +13,8 @@ function setErrors(){
     $_SESSION["erreur"]["salaire"] = $_POST["salaire"];
 }
 
+
+
 if($_SESSION["connecte"]["role"] === "admin" && 
     isset($_POST["usernameMoniteur"]) &&
     isset($_POST["prenomMoniteur"]) && 
@@ -24,12 +26,14 @@ if($_SESSION["connecte"]["role"] === "admin" &&
     if(existMail($bdd,$_POST["Mail"])){
         $erreur = "Ce mail est déjà utilisé";
         setErrors();
+        createPopUp($erreur,false);
         header("Location: ../page/administration.php?erreurCreerMoniteur=$erreur#Moniteurs");
         exit;
     }
     else if(existUsername($bdd,$_POST["usernameMoniteur"])){
         $erreur = "Ce nom d'utilisateur est déjà utilisé";
         setErrors();
+        createPopUp($erreur,false);
         header("Location: ../page/administration.php?erreurCreerMoniteur=$erreur#Moniteurs");
         exit;
     }
@@ -49,6 +53,7 @@ if($_SESSION["connecte"]["role"] === "admin" &&
             (int)$_POST["salaire"],
             ($_POST["estAdmin"] == "Oui") ? 1:0));
             $_SESSION["erreur"] = [];
+            createPopUp("Moniteur ajouté avec succès");
         }
 }
 

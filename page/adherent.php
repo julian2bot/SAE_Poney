@@ -20,7 +20,6 @@ estConnecte();
     <link rel="stylesheet" href="../assets/style/styleSousPage.css">
     <link rel="stylesheet" href="../assets/style/calendrier.css">
     <script src="../assets/script/popUpGestionErr.js"></script>
-    
 </head>
     
     <body>
@@ -123,7 +122,7 @@ estConnecte();
                 popUpErreur(\"$_GET[errReservCours]\", false);
             </script>";
     }
-    
+
     if(isset($_GET["errChangementDonnee"])){
         // print_r($_GET);
         echo "<script type='text/javascript'>

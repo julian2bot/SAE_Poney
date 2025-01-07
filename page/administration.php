@@ -231,6 +231,13 @@ estAdmin();
                     remplirMoniteurModif('".$_SESSION["erreur"]["identifiant"]."','".$_SESSION["erreur"]["ancienMail"]."','".$_SESSION["erreur"]["usernameMoniteur"]."','".$_SESSION["erreur"]["prenomMoniteur"]."','".$_SESSION["erreur"]["nomMoniteur"]."','".$_SESSION["erreur"]["Mail"]."','".$_SESSION["erreur"]["estAdmin"]."','".$_SESSION["erreur"]["salaire"]."');
               </script>";
     }
+
+    if(isset($_SESSION["popUp"])){
+        echo "<script type='text/javascript'>
+                showPopUp(\"".$_SESSION["popUp"]["message"]."\",".($_SESSION["popUp"]["success"] ? "true" : "false").");
+              </script>";
+        unset($_SESSION["popUp"]);
+    }
    
     ?>
 </html>

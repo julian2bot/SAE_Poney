@@ -18,6 +18,7 @@ if($_SESSION["connecte"]["role"] === "admin"){
         $sql2 = "DELETE FROM PONEY WHERE idPoney = :id";
         $stmt2 = $bdd->prepare($sql2);
         $stmt2->execute([":id" => $_GET["idPoney"]]);
+        createPopUp("Poney retiré avec succès");
     }   
 }
 header("Location: ../page/administration.php#Poney");
