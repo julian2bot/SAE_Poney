@@ -22,10 +22,3 @@
         }
     ?>
 </select>
-
-
-<?php
-    if(isset($_GET["erreurCreerPoney"])){
-        echo '<font color="red">'.$_GET["erreurCreerPoney"]."</font>";
-    }
-?>

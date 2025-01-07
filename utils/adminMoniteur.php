@@ -19,9 +19,3 @@
     <option value="non" selected>Non</option>
     <option value="oui">Oui</option>
 </select>
-
-<?php
-    if(isset($_GET["erreurCreerMoniteur"])){
-        echo '<font color="red">'.$_GET["erreurCreerMoniteur"]."</font>";
-    }
-?>
