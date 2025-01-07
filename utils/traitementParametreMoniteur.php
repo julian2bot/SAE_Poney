@@ -61,7 +61,7 @@ $_SESSION["connecte"] = array(
 
 // echo "</pre>";
 $_SESSION["succes"] = "Changement effectué avec succes";
-if($_POST["moniteur"]){
+if($_POST["clientmoniteur"] === "moniteur"){
     
     header("Location: ../page/moniteur.php#parametre");
     exit;
