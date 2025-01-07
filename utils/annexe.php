@@ -256,3 +256,37 @@ function formatCours($date, $heureDebut, $dureeHeures) {
     // Retourner le texte final
     return "Début du cours du $dateFormatee à $heureDebutFormatee et fini à $heureFinFormatee";
 }
+
+
+
+
+function updateMoniteur($bdd, $oldUsername, $username ,$prenom ,$nom ,$mail, $role, $info){
+    // Préparer la requête avec des ? pour les paramètres
+    $updateSql = "UPDATE PERSONNE 
+                  SET prenomPersonne = ?, 
+                      nomPersonne = ?, 
+                      mail = ? 
+                  WHERE username = ?";
+
+    $updateStmt = $bdd->prepare($updateSql);
+
+    $result = $updateStmt->execute([$prenom, $nom, $mail, $oldUsername]);
+
+    // Vérifier le résultat
+    if ($result) {
+        echo "Mise à jour réussie<br>";
+    } else {
+        $errorInfo = $updateStmt->errorInfo();
+        echo "Erreur SQL : " . $errorInfo[2];
+    }
+
+    return array(
+        "username" => $oldUsername,  // a voir pour edit ca en plus
+        "prenom" => $prenom,
+        "nom" => $nom,
+        "mail" => $mail,
+        "role" => $role,
+        "info" => $info
+    );
+}
+

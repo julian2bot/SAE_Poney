@@ -30,3 +30,82 @@
 .sectionPage{
     height: 100vh;
 }
+
+.erreur, .succes{
+    display:none; 
+    padding:10px; 
+    border-radius:10px; 
+    border: solid 2px black; 
+    height:20px; 
+    position:fixed; 
+    top:10px; 
+    right: 10px;
+}
+
+.erreur{
+    background-color:red; 
+}
+
+
+.succes{
+    background-color:greenyellow; 
+}
+
+
+
+
+#parametre h2{
+    padding: 10px;
+}
+#parametre input{
+
+    width: 250px;
+    height: 40px;
+    border-radius: 5px;
+    border: 2px solid var(--main-color);
+    background-color: var(--bg-color);
+    box-shadow: 4px 4px var(--main-color);
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--font-color);
+    padding: 5px 10px;
+    outline: none;
+}
+
+#parametre form{
+    --input-focus: #2d8cf0;
+    --font-color: #323232;
+    --font-color-sub: #666;
+    --bg-color: beige;
+    --main-color: black;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    /* gap: 20px; */
+    border-radius: 5px;
+
+}
+
+#parametre button{
+
+    margin: 50px auto 0 auto;
+    width: 120px;
+    height: 40px;
+    border-radius: 5px;
+   
+    font-size: 17px;
+    font-weight: 600;
+    color: var(--font-color);
+    cursor: pointer;
+    transition: .2s;
+}
+#parametre button:hover
+{
+    transform: translate(-4px, -4px);
+    border: 2px solid var(--main-color);
+    background-color: var(--bg-color);
+    box-shadow: 4px 4px var(--main-color);
+
+}
