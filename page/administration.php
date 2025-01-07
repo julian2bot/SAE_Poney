@@ -23,7 +23,7 @@ estAdmin();
             <ul>
                 <li>
                     <a href="moniteur.php">
-                        retour
+                        Retour
                     </a>
                 </li>
             
@@ -34,43 +34,95 @@ estAdmin();
 
     <div class="creerPoney" id="creerPoney" style="display: none;">
 
-        <img src="../assets/images/SignInImage.jpg" alt=""> 
         <section>
-            <h2>creerPoney</h2>
-            <p>Entrer vos compte pour vous connecter</p>
+            <h2>Ajouter un Poney</h2>
             <form method="POST" action="../utils/creerPoney.php" class="form">
-
-                <label for="nomPoney">nom du Poney</label>
-                <input type="text" name="nomPoney" id="nomPoney" placeholder="gerard" autocomplete="off" class="form-control-material">
-
-                
-                <label for="poidMax">le poid poney</label>
-                <input type="number" name="poidMax" id="poidMax" placeholder="lourd" min="0" max="255" autocomplete="off" class="form-control-material">
-                
-                <label for="photo">photo (chemin acces)</label>
-                <input type="text" name="photo" id="photo" placeholder="blabla.png" autocomplete="off" class="form-control-material">
-
-                <label for="race">race</label>
-                <input type="text" name="race" id="race" placeholder="licorned" autocomplete="off" class="form-control-material">
-
-
                 <?php
-                if(isset($_GET["erreurCreerPoney"])){
-                    echo '<font color="red">'.$_GET["erreurCreerPoney"]."</font>";
-                }
+                    require "../utils/adminPoney.php";
                 ?>
-
-                <button type="submit" class="btn" name="fromSignIn">
-                    Creer poney
-                </button>
+                <button type="submit" class="btn" name="fromSignIn">Valider</button>
+                
+                <?php
+                    if(isset($_GET["erreurCreerPoney"])){
+                        echo '<font color="red">'.$_GET["erreurCreerPoney"]."</font>";
+                    }
+                ?>
             </form>
         </section>
+        <img src="../assets/images/SignInImage.jpg" alt=""> 
 
     </div>
 
+    <div class="creerPoney" id="creerMoniteur" style="display: none;">
 
+        <section>
+            <h2>Ajouter un moniteur</h2>
+            <form method="POST" action="../utils/creerMoniteur.php" class="form">
+                <?php
+                    require "../utils/adminMoniteur.php";
+                ?>
+                <button type="submit" class="btn" name="fromSignIn">
+                    Ajouter
+                </button>
 
+                                
+                <?php
+                    if(isset($_GET["erreurCreerMoniteur"])){
+                        echo '<font color="red">'.$_GET["erreurCreerMoniteur"]."</font>";
+                    }
+                ?>
 
+            </form>
+        </section>
+        <img src="../assets/images/SignInImage.jpg" alt=""> 
+
+    </div>
+
+    <div class="creerPoney" id="modifierPoney" style="display: none;">
+
+        <section>
+            <h2>ModifIer un Poney</h2>
+            <form method="POST" action="../utils/modifPoney.php" class="form">
+                <input type="hidden" name="identifiant" class="identifiant form-control-material" required>
+                <?php
+                    require "../utils/adminPoney.php";
+                ?>
+                <button type="submit" class="btn" name="fromSignIn">Valider</button>
+                
+                <?php
+                    if(isset($_GET["erreurModifPoney"])){
+                        echo '<font color="red">'.$_GET["erreurModifPoney"]."</font>";
+                    }
+                ?>
+            </form>
+        </section>
+        <img src="../assets/images/SignInImage.jpg" alt=""> 
+
+    </div>
+
+    <div class="creerPoney" id="modifierMoniteur" style="display: none;">
+
+        <section>
+            <h2>Modifier un moniteur</h2>
+            <form method="POST" action="../utils/modifMoniteur.php" class="form">
+                <input type="hidden" name="identifiant" class="identifiant form-control-material" required>
+                <input type="hidden" name="ancienMail" class="ancienMail form-control-material" required>
+                <?php
+                    require "../utils/adminMoniteur.php";
+                ?>
+                <button type="submit" class="btn" name="fromSignIn">
+                    Ajouter
+                </button>
+                <?php
+                    if(isset($_GET["erreurModifMoniteur"])){
+                        echo '<font color="red">'.$_GET["erreurModifMoniteur"]."</font>";
+                    }
+                ?>
+            </form>
+        </section>
+        <img src="../assets/images/SignInImage.jpg" alt=""> 
+
+    </div>
 
 
     <div class="admin-container">
@@ -90,38 +142,50 @@ estAdmin();
                 
                 <!-- liste des PONEYs -->
                 <div class="list" style="overflow:scroll; max-height:500px;">
-                    <h3>Liste des Poneys</h3>
+                    <h3 id="Poney">Liste des Poneys</h3>
                     
                     <ul id="pony-list">
                         <?php
                         
                         foreach (getPoney($bdd) as $poney) {
-                            echo '<li>'.$poney["nomPoney"].' <a href="../utils/removePoney.php?idPoney='.$poney["idPoney"].'" class="remove-btn">Retirer</a></li>';
+                            echo '<li>'.$poney["nomPoney"].'';
+                            echo "<div class = 'boutons'>";
+                            echo "<button onclick='remplirPoneyModif(\"".$poney["idPoney"]."\",\"".$poney["nomPoney"]."\",\"".$poney["poidsMax"]."\",\"".$poney["photo"]."\",\"".$poney["nomRace"]."\")' class='remove-btn'>Modifier</button>";
+                            echo '<a href="../utils/removePoney.php?idPoney='.$poney["idPoney"].'" class="remove-btn">Retirer</a>';
+                            echo "</div>";
+                            echo "</li>";
                         }
                         
                         ?>
                     </ul>
                 </div>
-                <button class="add-btn" onclick="afficheCreerPoney()" id="page poney">Ajouter un Poney</button>
+                <!-- <button class="add-btn" onclick="afficheCreerPoney()" id="page poney">Ajouter un Poney</button> -->
+                <button class="add-btn" id="creation_poney">Ajouter un Poney</button>
                     
                 <!-- liste des moniteurs -->
                 <div class="list" style="overflow:scroll; max-height:500px;">
-                    <h3>Liste des Moniteurs</h3>
+                    <h3 id="Moniteurs">Liste des Moniteurs</h3>
                     <ul id="client-list">
                         <?php
                         
                         foreach (getMoniteur($bdd) as $moniteur) {
-                            echo '<li>'. $moniteur["usernameMoniteur"].' <a href="../utils/removeMoniteur.php?id='.$moniteur["usernameMoniteur"].'" class="remove-btn">Retirer</a></li>';
+                            $info = getInfo($bdd,$moniteur["usernameMoniteur"]);
+                            echo '<li>'.$moniteur["usernameMoniteur"].'';
+                            echo "<div class='boutons'>";
+                            echo "<button onclick='remplirMoniteurModif(\"".$info["username"]."\",\"".$info["mail"]."\",\"".$info["username"]."\",\"".$info["prenomPersonne"]."\",\"".$info["nomPersonne"]."\",\"".$info["mail"]."\",\"".($info["isAdmin"] == 1 ? "oui" : "non")."\",\"".$info["salaire"]."\")' class='remove-btn'>Modifier</button>";
+                            echo '<a href="../utils/removeMoniteur.php?id='.$moniteur["usernameMoniteur"].'" class="remove-btn">Retirer</a>';
+                            echo "</div>";
+                            echo "</li>";
                         }
 
                         ?>                
                     </ul>
                 </div>
-                <button class="add-btn" onclick="afficheCreerMoniteur()" id="page poney">Ajouter un Poney</button>
+                <button class="add-btn" id="creation_moniteur">Ajouter un moniteur</button>
 
                 <!-- liste des clients -->
                 <div class="list" style="overflow:scroll; max-height:500px;">
-                        <h3>Liste des Clients</h3>
+                        <h3 id="Clients">Liste des Clients</h3>
                     <ul id="client-list">
                         <?php
                         
@@ -142,11 +206,30 @@ estAdmin();
     <?php
     // ouvrir le login ou signin s'il y a une erreur 
     if(isset($_GET["erreurCreerPoney"])){
-        // print_r($_GET);
-        echo '<script type="text/javascript">
-                    afficheCreerPoney();
-              </script>';
+        // print_r($_SESSION["erreur"]);
+        echo "<script type='text/javascript'>
+                    remplirPoney('".$_SESSION["erreur"]["nomPoney"]."','".$_SESSION["erreur"]["poidMax"]."','".$_SESSION["erreur"]["photo"]."','".$_SESSION["erreur"]["race"]."');
+              </script>";
     }
+    if(isset($_GET["erreurCreerMoniteur"])){
+        // print_r($_GET);
+        echo "<script type='text/javascript'>
+                    remplirMoniteur('".$_SESSION["erreur"]["usernameMoniteur"]."','".$_SESSION["erreur"]["prenomMoniteur"]."','".$_SESSION["erreur"]["nomMoniteur"]."','".$_SESSION["erreur"]["Mail"]."','".$_SESSION["erreur"]["estAdmin"]."','".$_SESSION["erreur"]["salaire"]."');
+              </script>";
+    }
+    if(isset($_GET["erreurModifPoney"])){
+        // print_r($_SESSION["erreur"]);
+        echo "<script type='text/javascript'>
+                    remplirPoneyModif('".$_SESSION["erreur"]["identifiant"]."','".$_SESSION["erreur"]["nomPoney"]."','".$_SESSION["erreur"]["poidMax"]."','".$_SESSION["erreur"]["photo"]."','".$_SESSION["erreur"]["race"]."');
+              </script>";
+    }
+    if(isset($_GET["erreurModifMoniteur"])){
+        // print_r($_GET);
+        echo "<script type='text/javascript'>
+                    remplirMoniteurModif('".$_SESSION["erreur"]["identifiant"]."','".$_SESSION["erreur"]["ancienMail"]."','".$_SESSION["erreur"]["usernameMoniteur"]."','".$_SESSION["erreur"]["prenomMoniteur"]."','".$_SESSION["erreur"]["nomMoniteur"]."','".$_SESSION["erreur"]["Mail"]."','".$_SESSION["erreur"]["estAdmin"]."','".$_SESSION["erreur"]["salaire"]."');
+              </script>";
+    }
+   
     ?>
 </html>
 

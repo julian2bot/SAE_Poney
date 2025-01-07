@@ -4,7 +4,11 @@ require_once "../utils/annexe.php";
 estAdmin();
 
 
-if($_SESSION["connecte"]["role"] === "admin"){
+if($_SESSION["connecte"]["role"] === "admin" && 
+    isset($_POST["nomPoney"]) &&
+    isset($_POST["poidMax"]) && 
+    isset($_POST["photo"]) &&
+    isset($_POST["race"])){
     // requete insert exemple:
     if(getRace($bdd, $_POST["race"])){
 
@@ -16,16 +20,22 @@ if($_SESSION["connecte"]["role"] === "admin"){
             $_POST["photo"],
             $_POST["race"]
         ));    
+        $_SESSION["erreur"] = [];
     }
     else{
         $erreur = "La race du poney n'existe pas";
-        header("Location: ../page/administration.php?erreurCreerPoney=$erreur");
+        $_SESSION["erreur"] = [];
+        $_SESSION["erreur"]["nomPoney"] = $_POST["nomPoney"];
+        $_SESSION["erreur"]["poidMax"] = $_POST["poidMax"];
+        $_SESSION["erreur"]["photo"] = $_POST["photo"];
+        $_SESSION["erreur"]["race"] = $_POST["race"];
+        header("Location: ../page/administration.php?erreurCreerPoney=$erreur#Poney");
         exit;
 
     }
 }
 
-header("Location: ../page/administration.php");
+header("Location: ../page/administration.php#Poney");
 exit;
 
 

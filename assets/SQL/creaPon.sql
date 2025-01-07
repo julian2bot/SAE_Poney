@@ -22,20 +22,27 @@ CREATE TABLE CLIENT(
     poidsClient TINYINT NOT NULL, 
     solde INT NOT NULL DEFAULT 0,
     
-    PRIMARY KEY (usernameClient),
-    
-    FOREIGN KEY (usernameClient) REFERENCES PERSONNE(username)
+    PRIMARY KEY (usernameClient)
 );
+
+ALTER TABLE CLIENT
+ADD CONSTRAINT usernameClient_fk FOREIGN KEY (usernameClient)
+REFERENCES PERSONNE(username)
+ON UPDATE CASCADE;
 
 CREATE TABLE MONITEUR(
     usernameMoniteur VARCHAR(32), -- cle etrangere ==> username
     salaire DECIMAL(7,2) NOT NULL DEFAULT 0,
     isAdmin BOOLEAN NOT NULL DEFAULT FALSE,
     
-    PRIMARY KEY (usernameMoniteur),
-    
-    FOREIGN KEY (usernameMoniteur) REFERENCES PERSONNE(username)
+    PRIMARY KEY (usernameMoniteur)
 );
+
+ALTER TABLE MONITEUR
+ADD CONSTRAINT usernameMoniteur_fk FOREIGN KEY (usernameMoniteur)
+REFERENCES PERSONNE(username)
+ON UPDATE CASCADE;
+
 
 CREATE TABLE NIVEAU(
     idNiveau TINYINT,
@@ -61,10 +68,14 @@ CREATE TABLE DISPONIBILITE(
     dateDispo DATE,
     heureFinDispo DECIMAL(4,1) NOT NULL CHECK (heureDebutDispo BETWEEN 1 AND 24 AND heureDebutDispo < heureFinDispo),
     
-    PRIMARY KEY (usernameMoniteur, heureDebutDispo, dateDispo),
-    
-    FOREIGN KEY (usernameMoniteur) REFERENCES MONITEUR(usernameMoniteur)
+    PRIMARY KEY (usernameMoniteur, heureDebutDispo, dateDispo)
 );
+
+ALTER TABLE DISPONIBILITE
+ADD CONSTRAINT usernameMoniteurDisponibilite_fk FOREIGN KEY (usernameMoniteur)
+REFERENCES MONITEUR(usernameMoniteur)
+ON UPDATE CASCADE;
+
 
 CREATE TABLE FACTURE_SOLDE(
     usernameClient VARCHAR(32), -- cle etrangere ==> username
@@ -72,10 +83,14 @@ CREATE TABLE FACTURE_SOLDE(
     dateFacture DATE NOT NULL,
     montant SMALLINT NOT NULL DEFAULT 1 CHECK (montant > 0),
     
-    PRIMARY KEY (usernameClient, idFacture),
-    
-    FOREIGN KEY (usernameClient) REFERENCES CLIENT(usernameClient)
+    PRIMARY KEY (usernameClient, idFacture)
+
 );
+
+ALTER TABLE FACTURE_SOLDE
+ADD CONSTRAINT usernameClientSolde_fk FOREIGN KEY (usernameClient)
+REFERENCES CLIENT(usernameClient)
+ON UPDATE CASCADE;
 
 CREATE TABLE COTISATION(
     
@@ -93,9 +108,13 @@ CREATE TABLE PAYER(
     
     PRIMARY KEY (nomCotisation, periode, usernameClient),
     
-    FOREIGN KEY (nomCotisation, periode) REFERENCES COTISATION(nomCotisation, periode),
-    FOREIGN KEY (usernameClient) REFERENCES CLIENT(usernameClient)
+    FOREIGN KEY (nomCotisation, periode) REFERENCES COTISATION(nomCotisation, periode)
 );
+
+ALTER TABLE PAYER
+ADD CONSTRAINT usernameClientPayer_fk FOREIGN KEY (usernameClient)
+REFERENCES CLIENT(usernameClient)
+ON UPDATE CASCADE;
 
 CREATE TABLE RACE(
     nomRace VARCHAR(50),
@@ -136,27 +155,37 @@ CREATE TABLE REPRESENTATION(
     activite VARCHAR(30),
 
     PRIMARY KEY (idCours, usernameMoniteur, dateCours, heureDebutCours),
-    FOREIGN KEY (idCours) REFERENCES COURS(idCours),
-    FOREIGN KEY (usernameMoniteur) REFERENCES MONITEUR(usernameMoniteur)
+    FOREIGN KEY (idCours) REFERENCES COURS(idCours)
 );
+
+ALTER TABLE REPRESENTATION
+ADD CONSTRAINT usernameMoniteurRepresentation_fk FOREIGN KEY (usernameMoniteur)
+REFERENCES MONITEUR(usernameMoniteur)
+ON UPDATE CASCADE;
+
 
 CREATE TABLE RESERVATION(
     idCours INT, -- cle etrangere ==> idCours
     usernameMoniteur VARCHAR(32), -- cle etrangere ==> usernameMoniteur
     dateCours DATE, -- cle etrangere ==> dateCours,
-    heureDebutCours DECIMAL(3,1) CHECK (heureDebutCours BETWEEN 1 AND 24), -- cle etrangere ==> heureDebutCours,
+    heureDebutCours DECIMAL(3,1), -- cle etrangere ==> heureDebutCours,
     usernameClient VARCHAR(32), -- cle etrangere ==> usernameClient,
     idPoney INT, -- cle etrangere ==> idPoney,
     
     PRIMARY KEY (idCours, usernameMoniteur, dateCours, heureDebutCours, usernameClient, idPoney),
 
-    FOREIGN KEY (idCours, usernameMoniteur, dateCours, heureDebutCours) 
-    REFERENCES REPRESENTATION(idCours, usernameMoniteur, dateCours, heureDebutCours 
-    ),
-
-    FOREIGN KEY (usernameClient) REFERENCES CLIENT(usernameClient),
     FOREIGN KEY (idPoney) REFERENCES PONEY(idPoney)
 );
+
+ALTER TABLE RESERVATION
+ADD CONSTRAINT reservationRepresentation_fk FOREIGN KEY (idCours, usernameMoniteur, dateCours, heureDebutCours)
+REFERENCES REPRESENTATION(idCours, usernameMoniteur, dateCours, heureDebutCours)
+ON UPDATE CASCADE;
+
+ALTER TABLE RESERVATION
+ADD CONSTRAINT usernameClientReservation_fk FOREIGN KEY (usernameClient)
+REFERENCES CLIENT(usernameClient)
+ON UPDATE CASCADE;
 
 
 --  pour debug

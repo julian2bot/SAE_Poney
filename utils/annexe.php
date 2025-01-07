@@ -63,32 +63,40 @@ function getRole($bdd, $username): string{
 
 
 function getInfo($bdd, $username){
-    $reqUser = $bdd->prepare("SELECT * FROM MONITEUR NATURAL JOIN PERSONNE WHERE username = ? AND usernameMoniteur = ?");
-    $reqUser->execute(array($username,$username));
+    // $reqUser = $bdd->prepare("SELECT * FROM MONITEUR NATURAL JOIN PERSONNE WHERE username = ? AND usernameMoniteur = ?");
+    $reqUser = $bdd->prepare("SELECT * FROM MONITEUR JOIN PERSONNE ON MONITEUR.usernameMoniteur = PERSONNE.username WHERE usernameMoniteur = ?");
+    $reqUser->execute(array($username));
     $userExist = $reqUser->rowCount();
+    $resultat = [];
+    $resultat["username"] = $username;
+    
     if($userExist == 1)
     {
         $info = $reqUser->fetch();
-        return array(
-            "salaire" => $info["salaire"], 
-            "isAdmin" => $info["isAdmin"] 
-        ); 
+        $resultat["prenomPersonne"] = $info["prenomPersonne"];
+        $resultat["nomPersonne"] = $info["nomPersonne"];
+        $resultat["mail"] = $info["mail"];
+        $resultat["salaire"] = $info["salaire"];
+        $resultat["isAdmin"] = $info["isAdmin"];
+        return $resultat;
     }
     else{
-        $reqUser = $bdd->prepare("SELECT * FROM CLIENT NATURAL JOIN PERSONNE WHERE username = ? AND usernameClient = ?");
-        $reqUser->execute(array($username,$username));
+        $reqUser = $bdd->prepare("SELECT * FROM CLIENT JOIN PERSONNE ON CLIENT.usernameClient = PERSONNE.username WHERE usernameClient = ?");
+        $reqUser->execute(array($username));
         $userExist = $reqUser->rowCount();
         if($userExist == 1)
         {
-            $info=$reqUser->fetch();   
-            return array(
-                "dateInscription" => $info["dateInscription"], 
-                "poid" => $info["poidsClient"], 
-                "solde" => $info["solde"]
-            ); 
+            $info=$reqUser->fetch();
+            $resultat["prenomPersonne"] = $info["prenomPersonne"];
+            $resultat["nomPersonne"] = $info["nomPersonne"];
+            $resultat["mail"] = $info["mail"];
+            $resultat["dateInscription"] = $info["dateInscription"];
+            $resultat["poid"] = $info["poidsClient"];
+            $resultat["solde"] = $info["solde"];
+            return $resultat;
         }                
     }
-    return array() ;  
+    return array();
 }
 
 function getPoney($bdd){
@@ -111,7 +119,13 @@ function getRace($bdd, $nomRace){
     $reqUser->execute(array($nomRace));
     $userExist = $reqUser->rowCount();
     return $userExist == 1;
-    
+}
+
+function getRaces($bdd){
+    $reqUser = $bdd->prepare("SELECT * FROM RACE");
+    $reqUser->execute();
+    $info = $reqUser->fetchAll();
+    return $info;
 }
 
 
@@ -132,6 +146,18 @@ function getMoniteur($bdd){
     $reqUser->execute();
     $info = $reqUser->fetchAll();
     return $info;
+}
+
+function existMail($bdd, $mail) : bool{
+    $reqMail = $bdd->prepare("SELECT * FROM PERSONNE WHERE mail = ?");
+    $reqMail->execute(array($mail));
+    return $reqMail->rowCount() >=1;
+}
+
+function existUsername($bdd, $username) : bool{
+    $reqMail = $bdd->prepare("SELECT * FROM PERSONNE WHERE username = ?");
+    $reqMail->execute(array($username));
+    return $reqMail->rowCount() >=1;
 }
 
 // nom du cours, heure du cours(horaire) et activite : a une date donnee 
