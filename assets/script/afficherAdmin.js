@@ -65,14 +65,14 @@ function remplirMoniteur(usernameMoniteur, prenomMoniteur, nomMoniteur, Mail,est
     afficheCreerMoniteur();
 }
 
-function remplirMoniteurModif(usernameMoniteur, prenomMoniteur, nomMoniteur, Mail,estAdmin,salaire){
+function remplirMoniteurModif(ancienUsernameMoniteur,ancienMail, usernameMoniteur, prenomMoniteur, nomMoniteur, Mail,estAdmin,salaire){
     let div = document.getElementById("modifierMoniteur");
-    div.getElementsByClassName("identifiant")[0].value = usernameMoniteur;
+    div.getElementsByClassName("identifiant")[0].value = ancienUsernameMoniteur;
     div.getElementsByClassName("usernameMoniteur")[0].value = usernameMoniteur;
     div.getElementsByClassName("prenomMoniteur")[0].value = prenomMoniteur;
     div.getElementsByClassName("nomMoniteur")[0].value = nomMoniteur;
     div.getElementsByClassName("Mail")[0].value = Mail;
-    div.getElementsByClassName("ancienMail")[0].value = Mail;
+    div.getElementsByClassName("ancienMail")[0].value = ancienMail;
     div.getElementsByClassName("estAdmin")[0].value = estAdmin;
     div.getElementsByClassName("salaire")[0].value = salaire;
     afficheModifMoniteur();

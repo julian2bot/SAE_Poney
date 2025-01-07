@@ -68,7 +68,7 @@ estAdmin();
 
         <section>
             <h2>ModifIer un Poney</h2>
-            <form method="POST" action="" class="form">
+            <form method="POST" action="../utils/modifPoney.php" class="form">
                 <input type="hidden" name="identifiant" class="identifiant form-control-material" required>
                 <?php
                     require "../utils/adminPoney.php";
@@ -147,7 +147,7 @@ estAdmin();
                             $info = getInfo($bdd,$moniteur["usernameMoniteur"]);
                             echo '<li>'.$moniteur["usernameMoniteur"].'';
                             echo "<div class='boutons'>";
-                            echo "<button onclick='remplirMoniteurModif(\"".$info["username"]."\",\"".$info["prenomPersonne"]."\",\"".$info["nomPersonne"]."\",\"".$info["mail"]."\",\"".($info["isAdmin"] == 1 ? "oui" : "non")."\",\"".$info["salaire"]."\")' class='remove-btn'>Modifier</button>";
+                            echo "<button onclick='remplirMoniteurModif(\"".$info["username"]."\",\"".$info["mail"]."\",\"".$info["username"]."\",\"".$info["prenomPersonne"]."\",\"".$info["nomPersonne"]."\",\"".$info["mail"]."\",\"".($info["isAdmin"] == 1 ? "oui" : "non")."\",\"".$info["salaire"]."\")' class='remove-btn'>Modifier</button>";
                             echo '<a href="../utils/removeMoniteur.php?id='.$moniteur["usernameMoniteur"].'" class="remove-btn">Retirer</a>';
                             echo "</div>";
                             echo "</li>";
@@ -192,6 +192,19 @@ estAdmin();
                     remplirMoniteur('".$_SESSION["erreur"]["usernameMoniteur"]."','".$_SESSION["erreur"]["prenomMoniteur"]."','".$_SESSION["erreur"]["nomMoniteur"]."','".$_SESSION["erreur"]["Mail"]."','".$_SESSION["erreur"]["estAdmin"]."','".$_SESSION["erreur"]["salaire"]."');
               </script>";
     }
+    if(isset($_GET["erreurModifPoney"])){
+        // print_r($_SESSION["erreur"]);
+        echo "<script type='text/javascript'>
+                    remplirPoneyModif('".$_SESSION["erreur"]["identifiant"]."','".$_SESSION["erreur"]["nomPoney"]."','".$_SESSION["erreur"]["poidMax"]."','".$_SESSION["erreur"]["photo"]."','".$_SESSION["erreur"]["race"]."');
+              </script>";
+    }
+    if(isset($_GET["erreurModifMoniteur"])){
+        // print_r($_GET);
+        echo "<script type='text/javascript'>
+                    remplirMoniteurModif('".$_SESSION["erreur"]["identifiant"]."','".$_SESSION["erreur"]["ancienMail"]."','".$_SESSION["erreur"]["usernameMoniteur"]."','".$_SESSION["erreur"]["prenomMoniteur"]."','".$_SESSION["erreur"]["nomMoniteur"]."','".$_SESSION["erreur"]["Mail"]."','".$_SESSION["erreur"]["estAdmin"]."','".$_SESSION["erreur"]["salaire"]."');
+              </script>";
+    }
+   
     ?>
 </html>
 
