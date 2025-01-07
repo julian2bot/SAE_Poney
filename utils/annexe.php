@@ -63,8 +63,9 @@ function getRole($bdd, $username): string{
 
 
 function getInfo($bdd, $username){
-    $reqUser = $bdd->prepare("SELECT * FROM MONITEUR NATURAL JOIN PERSONNE WHERE username = ? AND usernameMoniteur = ?");
-    $reqUser->execute(array($username,$username));
+    // $reqUser = $bdd->prepare("SELECT * FROM MONITEUR NATURAL JOIN PERSONNE WHERE username = ? AND usernameMoniteur = ?");
+    $reqUser = $bdd->prepare("SELECT * FROM MONITEUR JOIN PERSONNE ON MONITEUR.usernameMoniteur = PERSONNE.username WHERE usernameMoniteur = ?");
+    $reqUser->execute(array($username));
     $userExist = $reqUser->rowCount();
     $resultat = [];
     $resultat["username"] = $username;
@@ -78,14 +79,10 @@ function getInfo($bdd, $username){
         $resultat["salaire"] = $info["salaire"];
         $resultat["isAdmin"] = $info["isAdmin"];
         return $resultat;
-        // return array(
-        //     "salaire" => $info["salaire"], 
-        //     "isAdmin" => $info["isAdmin"] 
-        // ); 
     }
     else{
-        $reqUser = $bdd->prepare("SELECT * FROM CLIENT NATURAL JOIN PERSONNE WHERE username = ? AND usernameClient = ?");
-        $reqUser->execute(array($username,$username));
+        $reqUser = $bdd->prepare("SELECT * FROM CLIENT JOIN PERSONNE ON CLIENT.usernameClient = PERSONNE.username WHERE usernameClient = ?");
+        $reqUser->execute(array($username));
         $userExist = $reqUser->rowCount();
         if($userExist == 1)
         {
@@ -97,14 +94,9 @@ function getInfo($bdd, $username){
             $resultat["poid"] = $info["poidsClient"];
             $resultat["solde"] = $info["solde"];
             return $resultat;
-            // return array(
-            //     "dateInscription" => $info["dateInscription"], 
-            //     "poid" => $info["poidsClient"], 
-            //     "solde" => $info["solde"]
-            // ); 
         }                
     }
-    return array() ;  
+    return array();
 }
 
 function getPoney($bdd){
