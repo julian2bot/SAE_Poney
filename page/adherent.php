@@ -19,6 +19,7 @@ estConnecte();
     <link rel="stylesheet" href="../assets/style/header.css">
     <link rel="stylesheet" href="../assets/style/styleSousPage.css">
     <link rel="stylesheet" href="../assets/style/calendrier.css">
+    <link rel="stylesheet" href="../assets/style/coursCalendrier.css">
     <script src="../assets/script/popUpGestionErr.js"></script>
     
 </head>
@@ -68,9 +69,20 @@ estConnecte();
             
                 <section class="gauche-section gauche">
                     <!-- ? a faire calendrier -->
-                    <figure class="image-block">
-                        <img src="../assets/images/cal.png" alt="cal" class="planning">
-                    </figure>
+                    <h2 id="month-display"></h2>
+                    
+                    <div id="calendar-container">
+                        <button id="prev-month">Mois Précédent</button>
+                        <button id="next-month">Mois Suivant</button>
+                        <div class="container-info-cal">
+                            <div id="infoCours">
+                                <p>
+                                    fdsfsd
+                                </p>
+                            </div>
+                            <table id="calendrier"></table>
+                        </div>
+                    </div>
                 </section>
                 
                 <section class="droite-section droite">
@@ -111,6 +123,8 @@ estConnecte();
                     </figure>
                 </section>
             </section>
+
+        <script src="../assets/script/coursCalendrier.js"></script>
 
         </main>
 

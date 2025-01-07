@@ -201,8 +201,9 @@ function creerCalendrier($bdd, $client){
     $date = new DateTime();
     
     // TODO: changer la date juste commenté cette instruction pour avoit la date de la journée
-    $date->setDate("2023","12","1");
- 
+    // $date->setDate("2023","12","1");
+    $date->setDate($date->format('Y'), $date->format('m'), 1);
+
     $nbJourDansMois = $date->format('t'); // 't' retourne le nombre de jours dans le mois
     $jourDebutMois = $date->format('N'); // Le jour de la semaine du 1er jour du mois (1 = lundi, 7 = dimanche)
     
