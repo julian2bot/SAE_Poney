@@ -29,10 +29,15 @@ require_once "../utils/functioncours.php";
 
             <section class="gauche-section">
                 <figure class="image-block">
-                    <p>SELECTION DATE DE LA DATES </p>
-                    <?= creerCalendrierCours($bdd, "client1") ?>
-                    <!-- <figcaption>Chevaux dans la nature</figcaption> -->
                 </figure>
+                <p>Selectionner la date</p>
+                <?php  genererCalendrier(02, 2005); ?>
+                
+
+
+                </script>
+
+
             </section>
             
             <section class="droite-section">
@@ -42,11 +47,14 @@ require_once "../utils/functioncours.php";
                     <label>NOM</label>
                     <input name="nom" id="nom" type="text" />
                     <label>NIVEAU</label>
-                    <input name="niveau" id="niveau" type="text" /></p>
+                    <input name="niveau" id="niveau" type="text" />
                     <label>PRIX</label>
-                    <input name="prix" id="prix" type="number" /></p>
+                    <input name="prix" id="prix" type="number" />
                     <label>NBMAX</label>
-                    <input name="nbmax" id="nbmax" type="number" /></p>
+                    <input name="nbmax" id="nbmax" type="number" />
+                    <input name="datevalider" id="nbmax" hidden type="number" />
+                    <?php creerCalendrierCours($bdd, $client); ?>
+                    <script src="../assets/script/jsCreationCours.js"></script>
                     
 
                     <button type="submit">Valider</button>
