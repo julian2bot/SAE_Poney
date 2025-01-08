@@ -3,7 +3,7 @@ require_once "../utils/connexionBD.php";
 
 require_once "../utils/annexe.php";
 estConnecte();
-
+estMoniteur();
 // echo "<pre>";
 // print_r($_SESSION);
 // echo "</pre>";
@@ -100,7 +100,7 @@ estConnecte();
             
                 <section class="gauche-section gauche">
                     <h2>Parametre page</h2>
-                    <form action="../utils/traitementParametreMoniteur.php" method="post">
+                    <form action="../utils/traitementParametre.php" method="post">
                         <input type="hidden" id="clientmoniteur" name="clientmoniteur" value="moniteur">
                         
                         <label for="username">Nom d'utilisateur :</label>

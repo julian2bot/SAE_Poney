@@ -1,3 +1,5 @@
+// gestion des labels dans le formulaires d'accueil (pour ne pas avoir de label et quand on clique sur l'input le label pop pendant que le placeholder disparait)
+
 function afficheLabel(name){    
     document.querySelector('label[for="'+name+'"]').style.visibility = "visible";;
 }

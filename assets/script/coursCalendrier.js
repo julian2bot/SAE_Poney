@@ -1,3 +1,6 @@
+// dans le fichier il y a toute la gestion des calendriers (affichage + gestion serveur client)
+
+
 function requestClientCours(date) {
     const xhr = new XMLHttpRequest();
     
@@ -298,7 +301,6 @@ function createCalendar(month, year){
                     .then(result => {
                         if (!result) {
                             day.classList.add("PastiCours");
-                            console.log("FDPNIQUE TES MORTS");
                         } 
                         // else {
                         // }
