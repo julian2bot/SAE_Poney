@@ -4,20 +4,49 @@ table {
     border-collapse: collapse;
     border: none;
     margin-left: calc((60vw - 80px * 7 - 20px) / 2);
+
 }
 
 td {
     border: 1px solid #ddd;
-    width: 80px;
     height: 80px;
+    width: 80px;
     position: relative; 
     text-align: left;
     vertical-align: top;
     padding: 5px;
     transition: transform 0.3s ease, z-index 0.3s ease; 
+    text-align: center;
+}
+#calendrier{
+    border-collapse: collapse;
+    border: none;
+}
+#calendrier     td {
+    border: none;
+
+    height: inherit;
+    width: inherit;
+    position: relative; /* Nécessaire pour positionner la pastille */
+    text-align: left;
+    vertical-align: top;
+    padding: 10px; /* Ajoute de l'espace autour du texte */
+    transition: transform 0.3s ease, z-index 0.3s ease;
+    text-align: center;
 }
 
-
+.PastiCours::before {
+    content: ''; /* Crée un élément virtuel */
+    position: absolute; /* Positionne la pastille relativement au `td` */
+    top: 50%; /* Centre verticalement */
+    left: 50%; /* Centre horizontalement */
+    transform: translate(-50%, -50%); /* Centre exact */
+    width: 2em; /* Taille de la pastille */
+    height: 2em;
+    background-color: #347429; /* Couleur de la pastille */
+    border-radius: 50%; /* Forme circulaire */
+    z-index: -1; /* Place la pastille derrière le texte */
+}
 .styled-cell {
     background-color: #e0f7fa; 
     position: relative; 
