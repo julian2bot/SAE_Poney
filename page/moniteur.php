@@ -94,6 +94,35 @@ estConnecte();
                 </section>
             </section>
 
+            <section id="gestionDisponibilite" class="sectionPage">
+                <h2 class="titreSection">Gérer mes disponibilité</h2>
+            
+                <section class="gauche-section gauche">
+                    <!-- ? a faire calendrier -->
+                    <h2 id="month-display-disponibilite"></h2>
+                    
+                    <div id="calendar-container-disponibilite">
+                        <button id="prev-month-disponibilite">Mois Précédent</button>
+                        <button id="next-month-disponibilite">Mois Suivant</button>
+                        <div class="container-info-cal">
+                            <div id="info-disponibilite">
+                                <p >
+                                    Aucune disponibilité
+                                </p>
+                            </div>
+                            <table id="calendrier-disponibilite"></table>
+                        </div>
+                    </div>
+
+                </section>
+                
+                <section class="droite-section droite">
+                    <figure class="image-block">
+                            <img src="../assets/images/cheval2.png" alt="Cheval" class="cheval-image-droite">
+                    </figure>
+                </section>
+            </section>
+
                                 
             <section id="parametre" class="sectionPage">
                 <h2 class="titreSection"> Gérer mon dossier</h2>
@@ -130,6 +159,7 @@ estConnecte();
 
         </main>
         <script src="../assets/script/coursCalendrier.js"></script>
+        <script src="../assets/script/disponibiliteCalendrier.js"></script>
 
     </body>
     <?php
