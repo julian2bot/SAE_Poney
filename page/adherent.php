@@ -75,8 +75,8 @@ estConnecte();
                         <button id="next-month">Mois Suivant</button>
                         <div class="container-info-cal">
                             <div id="infoCours">
-                                <p>
-                                    fdsfsd
+                                <p >
+                                    Pas de cours
                                 </p>
                             </div>
                             <table id="calendrier"></table>

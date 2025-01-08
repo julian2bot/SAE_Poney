@@ -112,3 +112,20 @@ img {
 
 
 
+
+*::-webkit-scrollbar {
+    width: 6px; 
+    height: 6px; 
+}
+
+
+*::-webkit-scrollbar-track {
+    background-color: #F8F3D8; 
+}
+
+
+*::-webkit-scrollbar-thumb {
+    background-color: #347429; 
+    border-radius: 30px; 
+    border: 1px solid #F8F3D8; 
+}
