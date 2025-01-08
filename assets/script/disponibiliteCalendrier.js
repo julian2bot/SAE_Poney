@@ -27,6 +27,16 @@ function addDisponibiliteInfo(date) {
                 lesInfos.appendChild(dateDeDispo);
             }
 
+            let aCreerDispoDiv = document.createElement("div");
+            aCreerDispoDiv.classList.add("addCoursDiv");
+            let aCreerDispo = document.createElement("a");
+            aCreerDispo.classList.add("addCours");
+            aCreerDispo.innerHTML= '+';
+            aCreerDispo.href= `../page/disponibilite.php?date=${date.getFullYear()+'-'+(date.getMonth()+1)+'-'+date.getDate()}`; // TODO
+
+            aCreerDispoDiv.appendChild(aCreerDispo);
+            lesInfos.appendChild(aCreerDispoDiv);
+
 
             response.forEach(uneDispo => {
                 let divInfo = document.createElement("div");
@@ -43,15 +53,7 @@ function addDisponibiliteInfo(date) {
 
             });
             
-            // let aCreerCoursDIv = document.createElement("div");
-            // aCreerCoursDIv.classList.add("addCoursDiv");
-            // let aCreerCours = document.createElement("a");
-            // aCreerCours.classList.add("addCours");
-            // aCreerCours.innerHTML= '+';
-            // aCreerCours.href= `creerCours.php?date=${date.getFullYear()+'-'+(date.getMonth()+1)+'-'+date.getDate()}`; // TODO
-
-            // aCreerCoursDIv.appendChild(aCreerCours);
-            // lesInfos.appendChild(aCreerCoursDIv);
+            
         }
     };
     

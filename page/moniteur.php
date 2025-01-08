@@ -73,13 +73,11 @@ estConnecte();
                     <h2 id="month-display"></h2>
                     
                     <div id="calendar-container">
-                        <button id="prev-month">Mois Précédent</button>
-                        <button id="next-month">Mois Suivant</button>
+                        <button class="boutonsCalendrier" id="prev-month">Mois Précédent</button>
+                        <button class="boutonsCalendrier" id="next-month">Mois Suivant</button>
                         <div class="container-info-cal">
                             <div id="infoCours">
-                                <p >
-                                    Pas de cours
-                                </p>
+                                <p>Pas de cours</p>
                             </div>
                             <table id="calendrier"></table>
                         </div>
@@ -102,18 +100,18 @@ estConnecte();
                     <h2 id="month-display-disponibilite"></h2>
                     
                     <div id="calendar-container-disponibilite">
-                        <button id="prev-month-disponibilite">Mois Précédent</button>
-                        <button id="next-month-disponibilite">Mois Suivant</button>
+                        <button class="boutonsCalendrier" id="prev-month-disponibilite">Mois Précédent</button>
+                        <button class="boutonsCalendrier" id="next-month-disponibilite">Mois Suivant</button>
                         <div class="container-info-cal">
                             <div id="info-disponibilite">
-                                <p >
-                                    Aucune disponibilité
-                                </p>
+                                <p>Aucune disponibilité</p>
                             </div>
                             <table id="calendrier-disponibilite"></table>
                         </div>
                     </div>
-
+                    <form action="../page/disponibilite.php">
+                        <input class="boutonsCalendrier" type="submit" value="Ajouter une disponibilité" />
+                    </form>
                 </section>
                 
                 <section class="droite-section droite">
