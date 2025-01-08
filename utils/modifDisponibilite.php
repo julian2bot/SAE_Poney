@@ -12,7 +12,7 @@ if(($_SESSION["connecte"]["role"] === "moniteur" || $_SESSION["connecte"]["role"
     isset($_POST["heureFin"])){
     if($_POST["heureDebut"] >= $_POST["heureFin"]){
         createPopUp("L'heure de fin ne peut pas être avant l'heure de début",false);
-        header("Location: ../page/modifierDisponibilite.php");
+        header("Location: ../page/moniteur.php#gestionDisponibilitep");
         exit;
     }
     // else if(existDateDispoDay($bdd,$_SESSION["connecte"]["username"], $_POST["dateDispo"])){
@@ -21,12 +21,6 @@ if(($_SESSION["connecte"]["role"] === "moniteur" || $_SESSION["connecte"]["role"
     //     exit;
     // }
     else{
-        // echo "<pre>";
-        // print_r($_POST);
-        // echo convertTimeToFloat($_POST["heureDebut"])."<br>";
-        // echo convertTimeToFloat($_POST["heureFin"]);
-        // echo "</pre>";
-
         $heureDebut = convertTimeToFloat($_POST["heureDebut"]);
         $heureFin = convertTimeToFloat($_POST["heureFin"]);
         $heureDebutPrevious = convertTimeToFloat($_POST["previousTime"]);
@@ -49,18 +43,6 @@ if(($_SESSION["connecte"]["role"] === "moniteur" || $_SESSION["connecte"]["role"
             $_POST["previousDate"]]
         );
 
-        echo "<pre>";
-        print_r([
-            $heureDebut, 
-            $_POST["dateDispo"], 
-            $heureFin,
-            $_SESSION["connecte"]["username"], 
-            $heureDebutPrevious, 
-            $_POST["previousDate"]]);
-        echo "</pre>";
-
-        echo $result;
-
         // Vérifier le résultat
         if ($result) {
             echo "Mise à jour réussie<br>";
@@ -74,5 +56,5 @@ if(($_SESSION["connecte"]["role"] === "moniteur" || $_SESSION["connecte"]["role"
     }
 }
 
-// header("Location: ../page/modifierDisponibilite.php");
-// exit;
+header("Location: ../page/moniteur.php#gestionDisponibilite");
+exit;

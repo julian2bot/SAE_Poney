@@ -1,3 +1,13 @@
+function convertFloatToTime(time) {
+    let whole = Math.floor(time).toString();
+    let fraction = time - Math.floor(time);
+
+    if (whole.length < 2) {
+        whole = whole.padStart(2, "0");
+    }
+
+    return `${whole}:${fraction === 0.5 ? "30" : "00"}`;
+}
 
 function addDisponibiliteInfo(date) {
     const xhr = new XMLHttpRequest();
@@ -23,7 +33,7 @@ function addDisponibiliteInfo(date) {
                 dateDeDispo.innerHTML = response[0].dateDispo;
                 lesInfos.appendChild(dateDeDispo);
             }else{
-                dateDeDispo.innerHTML = "Pas de cours";
+                dateDeDispo.innerHTML = "Pas de disponibilité";
                 lesInfos.appendChild(dateDeDispo);
             }
 
@@ -37,24 +47,22 @@ function addDisponibiliteInfo(date) {
             aCreerDispoDiv.appendChild(aCreerDispo);
             lesInfos.appendChild(aCreerDispoDiv);
 
-
             response.forEach(uneDispo => {
                 let divInfo = document.createElement("div");
                 divInfo.classList.add("infoDivCours");
 
                 let heureDebutDispo = document.createElement("p");
-                heureDebutDispo.innerHTML = uneDispo.heureDebutDispo +' - '+ uneDispo.heureFinDispo; 
+                let strHeureDeb = convertFloatToTime(uneDispo.heureDebutDispo);
+                let strHeureFin = convertFloatToTime(uneDispo.heureFinDispo);
+                heureDebutDispo.innerHTML = strHeureDeb +' - '+ strHeureFin; 
                 divInfo.appendChild(heureDebutDispo);
                 lesInfos.appendChild(divInfo);
                 
                 divInfo.addEventListener("click", function() {
-                    alert(`Vous avez cliqué sur la dispo du ${uneDispo.dateDispo} de ${uneDispo.heureDebutDispo} a ${uneDispo.heureFinDispo}`);
+                    alert(`Vous avez cliqué sur la dispo du ${uneDispo.dateDispo} de ${strHeureDeb} a ${strHeureFin}`);
                     window.location.href = `../page/modifierDisponibilite.php?dateDispo=${date.getFullYear()+'-'+(date.getMonth()+1)+'-'+date.getDate()}&debutDispo=${uneDispo.heureDebutDispo}`;
                 });
-
             });
-            
-            
         }
     };
     

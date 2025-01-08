@@ -176,5 +176,14 @@ estConnecte();
             </script>";
         unset($_SESSION["succes"]); // Supprime la valeur après utilisation
     }
+
+    
+    if(isset($_SESSION["popUp"])){
+        echo "<script type='text/javascript'>
+                showPopUp(\"".$_SESSION["popUp"]["message"]."\",".($_SESSION["popUp"]["success"] ? "true" : "false").");
+              </script>";
+        unset($_SESSION["popUp"]);
+    }
+   
     ?>
 </html>

@@ -67,6 +67,17 @@
                     ?>
                     <input type="submit" value="Modifier">
                 </form>
+                <form method="POST" action="../utils/removeDisponibilite.php">
+                    <?php
+                        $timeStart = convertFloatToTime((float)$_GET["debutDispo"]);
+                        $timeFinish = convertFloatToTime($infoDate["heureFinDispo"]);
+
+                        echo "<input type='hidden' name='previousDate' value=$_GET[dateDispo]>";
+                        echo "<input type='hidden' name='previousTime' value=$timeStart>";
+                        
+                    ?>
+                    <input type="submit" value="Retirer disponibilité">
+                </form>
             </section>
             
             <section class="droite-section disponible">
