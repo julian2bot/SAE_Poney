@@ -270,9 +270,23 @@ function existUsername(PDO $bdd, string $username) : bool{
     return $reqMail->rowCount() >=1;
 }
 
+/**
+  * verifie l'existance d'une dispo
+  *
+  * @param PDO la base de donnée, 
+  * @param string usrname nom client 
+  * @param string $day date  
+  *
+  * @return bool si la dispo existe renvoie true, false sinon
+  */  
+function existDateDispoDay($bdd,$username, $day):bool{
+    $reqMail = $bdd->prepare("SELECT * FROM DISPONIBILITE WHERE usernameMoniteur = ? AND dateDispo = ?");
+    $reqMail->execute(array($username,$day));
+    return $reqMail->rowCount() >=1;
+}
 
 /**
-  * get information d'une reservation pour une date donnée
+  * get verifie l'exis d'une reservation pour une date donnée
   *
   * @param PDO la base de donnée, 
   * @param string $client nom client 
