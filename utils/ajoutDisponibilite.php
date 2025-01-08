@@ -11,12 +11,12 @@ if(($_SESSION["connecte"]["role"] === "moniteur" || $_SESSION["connecte"]["role"
     isset($_POST["dateDispo"]) &&
     isset($_POST["heureDebut"]) && 
     isset($_POST["heureFin"])){
-    if(existDateDispoDay($bdd,$_SESSION["connecte"]["username"], $_POST["dateDispo"])){
-        createPopUp("Dispo pour ce jour déjà défini",false);
-        header("Location: ../page/disponibilite.php");
-        exit;
-    }
-    else{
+    // if(existDateDispoDay($bdd,$_SESSION["connecte"]["username"], $_POST["dateDispo"])){
+    //     createPopUp("Dispo pour ce jour déjà défini",false);
+    //     header("Location: ../page/disponibilite.php");
+    //     exit;
+    // }
+    // else{
         // echo "<pre>";
         // print_r($_POST);
         // echo convertTimeToFloat($_POST["heureDebut"])."<br>";
@@ -33,7 +33,7 @@ if(($_SESSION["connecte"]["role"] === "moniteur" || $_SESSION["connecte"]["role"
             $_POST["dateDispo"],
             $heureFin,));
         createPopUp("Disponibilité ajoutée avec succès");
-    }
+    // }
 }
 
 header("Location: ../page/disponibilite.php");
