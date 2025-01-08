@@ -11,7 +11,7 @@ if($_SESSION["connecte"]["role"] === "admin" &&
     isset($_POST["photo"]) &&
     isset($_POST["race"])){
     // requete insert exemple:
-    if(getRace($bdd, $_POST["race"])){
+    if(getRaceExist($bdd, $_POST["race"])){
 
         $bdd->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         // Préparer la requête avec des ? pour les paramètres

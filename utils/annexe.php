@@ -1,14 +1,25 @@
 <?php
 
-function estConnecte(){
+/**
+  * regarde si l'utilisateur est connecté s'il l'est pas il est envoyer sur la page d'accueil
+  *
+  * @return void
+  */
+function estConnecte():void{
 
     if(!isset($_SESSION["connecte"])){
         header("Location: ../");
         exit;
     }
 }
-    
-function estAdmin(){
+
+
+/**
+  * regarde si l'utilisateur est admin s'il l'est pas il est envoyer sur la page d'accueil
+  *
+  * @return void
+  */  
+function estAdmin():void{
     
     if(!isset($_SESSION["connecte"]) OR $_SESSION["connecte"]["role"] !== "admin"){
 
@@ -18,7 +29,14 @@ function estAdmin(){
     }
 }
 
-function CrypterMdp($bdd){
+/**
+  * mets a jout la BD en cryptant les mdps
+  *
+  * @param PDO $bdd la base de donnée
+  *
+  * @return void
+  */  
+function CrypterMdp(PDO $bdd):void{
 
     $sql = "SELECT username, mdp FROM PERSONNE";
     $stmt = $bdd->query($sql);
@@ -40,7 +58,15 @@ function CrypterMdp($bdd){
 
 // les getters
 
-function getRole($bdd, $username): string{
+/**
+  * get le role d'un utilisateur
+  *
+  * @param PDO la base de donnée, 
+  * @param string $username nom user 
+  *
+  * @return string le role
+  */  
+function getRole(PDO $bdd, string $username): string{
     $reqUser = $bdd->prepare("SELECT * FROM MONITEUR WHERE usernameMoniteur = ?");
     $reqUser->execute(array($username));
     $userExist = $reqUser->rowCount();
@@ -62,7 +88,15 @@ function getRole($bdd, $username): string{
 }
 
 
-function getInfo($bdd, $username){
+/**
+  * get le role d'un utilisateur
+  *
+  * @param PDO la base de donnée, 
+  * @param string $username nom user 
+  *
+  * @return array les infos de l'user
+  */  
+function getInfo(PDO $bdd, string $username): array{
     // $reqUser = $bdd->prepare("SELECT * FROM MONITEUR NATURAL JOIN PERSONNE WHERE username = ? AND usernameMoniteur = ?");
     $reqUser = $bdd->prepare("SELECT * FROM MONITEUR JOIN PERSONNE ON MONITEUR.usernameMoniteur = PERSONNE.username WHERE usernameMoniteur = ?");
     $reqUser->execute(array($username));
@@ -99,14 +133,28 @@ function getInfo($bdd, $username){
     return array();
 }
 
-function getPoney($bdd){
+/**
+  * get les poneys de la bd
+  *
+  * @param PDO la base de donnée, 
+  *
+  * @return array les poneys
+  */  
+function getPoney(PDO $bdd): array{
     $reqUser = $bdd->prepare("SELECT * FROM PONEY");
     $reqUser->execute();
     $info = $reqUser->fetchAll();
     return $info;
 }
 
-function getClient($bdd){
+/**
+  * get les clients de la bd
+  *
+  * @param PDO la base de donnée
+  *
+  * @return array les clients
+  */  
+function getClient(PDO $bdd):array{
     $reqUser = $bdd->prepare("SELECT * FROM CLIENT");
     $reqUser->execute();
     $info = $reqUser->fetchAll();
@@ -114,14 +162,30 @@ function getClient($bdd){
 }
 
 
-function getRace($bdd, $nomRace){
+/**
+  * get si la race du poney existe 
+  *
+  * @param PDO la base de donnée, 
+  * @param string $nomRace nom de la race voulu 
+  *
+  * @return bool true s'il exite false sinon
+  */  
+function getRaceExistgetRace(PDO $bdd, string $nomRace):bool{
     $reqUser = $bdd->prepare("SELECT * FROM RACE WHERE nomRace = ?");
     $reqUser->execute(array($nomRace));
     $userExist = $reqUser->rowCount();
     return $userExist == 1;
 }
 
-function getRaces($bdd){
+
+/**
+  * get les races de la bd
+  *
+  * @param PDO la base de donnée
+  *
+  * @return array toutes les races de poney de la bd
+  */  
+function getRaces(PDO $bdd):array{
     $reqUser = $bdd->prepare("SELECT * FROM RACE");
     $reqUser->execute();
     $info = $reqUser->fetchAll();
@@ -129,7 +193,16 @@ function getRaces($bdd){
 }
 
 
-function getIdMax($bdd, $idNom, $table){
+/**
+  * get id maximun de la bd pour une table donnée
+  *
+  * @param PDO la base de donnée, 
+  * @param string $idNom nom dans la table l'elements voulu 
+  * @param string $table nom de la table voulu 
+  *
+  * @return int id maximal de la bd pour une table donnée
+  */  
+function getIdMax(PDO $bdd, string $idNom, string $table):int{
     $table = strtoupper($table);
     $reqUser = $bdd->prepare("SELECT MAX($idNom) FROM $table");
     $reqUser->execute(array());
@@ -141,35 +214,77 @@ function getIdMax($bdd, $idNom, $table){
 }
 
 
-function getMoniteur($bdd){
+/**
+  * get les moniteurs de la bd
+  *
+  * @param PDO la base de donnée
+  *
+  * @return array liste des moniteurs de la bd
+  */  
+function getMoniteur(PDO $bdd):array{
     $reqUser = $bdd->prepare("SELECT * FROM MONITEUR");
     $reqUser->execute();
     $info = $reqUser->fetchAll();
     return $info;
 }
 
-function existMail($bdd, $mail) : bool{
+/**
+  * verifie l'existance du mail de la bd
+  *
+  * @param PDO la base de donnée, 
+  * @param string $mail mail a vérifier 
+  *
+  * @return bool si le mail existe renvoie true, false sinon
+  */  
+function existMail(PDO $bdd, string $mail) : bool{
     $reqMail = $bdd->prepare("SELECT * FROM PERSONNE WHERE mail = ?");
     $reqMail->execute(array($mail));
     return $reqMail->rowCount() >=1;
 }
 
-function existUsername($bdd, $username) : bool{
+/**
+  * verifie l'existance du user de la bd
+  *
+  * @param PDO la base de donnée, 
+  * @param string $user mail a vérifier 
+  *
+  * @return bool si l'user existe renvoie true, false sinon
+  */  
+function existUsername(PDO $bdd, string $username) : bool{
     $reqMail = $bdd->prepare("SELECT * FROM PERSONNE WHERE username = ?");
     $reqMail->execute(array($username));
     return $reqMail->rowCount() >=1;
 }
 
+
+/**
+  * get information d'une reservation pour une date donnée
+  *
+  * @param PDO la base de donnée, 
+  * @param string $client nom client 
+  * @param string $date date  
+  *
+  * @return array information a une date et un utilisateur donnée
+  */  
 // nom du cours, heure du cours(horaire) et activite : a une date donnee 
-function getInfoByDate($bdd,$client, $date){
+function getInfoByDate(PDO $bdd, string $client, string $date):array{
     $reqUser = $bdd->prepare("SELECT  heureDebutCours, activite, nomCours, day(dateCours) as day FROM RESERVATION NATURAL JOIN COURS NATURAL JOIN REPRESENTATION WHERE usernameClient = ? AND dateCours = ?");
     $reqUser->execute([$client, $date]);
     $info = $reqUser->fetchAll();
     return $info;
 }
 
-
-function getAllInfoByMonth($bdd, $client, $month, $year){
+/**
+  * get toutes les informations pour un mois donnée
+  *
+  * @param PDO la base de donnée, 
+  * @param string $client nom client
+  * @param string $month le mois 
+  * @param string $year l'année 
+  *
+  * @return array liste information sur le mois 
+  */  
+function getAllInfoByMonth(PDO $bdd, string $client, string $month, string $year):array{
     $reqUser = $bdd->prepare("SELECT heureDebutCours, activite, nomCours, day(dateCours) as day 
                               FROM RESERVATION 
                               NATURAL JOIN COURS 
@@ -187,20 +302,43 @@ function getAllInfoByMonth($bdd, $client, $month, $year){
     return $coursesByDay;
 }
 
-function formatHeure($heureDecimal) {
+/**
+  * format une heure decimal
+  *
+  * @param float $heureDecimal l'heure 
+  *
+  * @return string heure formaté
+  */  
+function formatHeure(float $heureDecimal):string {
     $heure = floor($heureDecimal);  
     $minute = round(($heureDecimal - $heure) * 60); 
 
     return sprintf("%02d:%02d", $heure, $minute);
 }
 
-function createPopUp(string $message, bool $success=true){
+/**
+  * creer une pop up
+  *
+  * @param string $message le message de la pop up 
+  * @param float $succes si la pop up est un succes ou err
+  *
+  * @return void
+  */ 
+function createPopUp(string $message, bool $success=true):void{
     $_SESSION["popUp"] = [];
     $_SESSION["popUp"]["success"] = $success;
     $_SESSION["popUp"]["message"] = $message;
 }
 
-function creerCalendrier($bdd, $client){
+/**
+  * creer un calendrier avec toute les informations des cours dans les cases correspondantes
+  *
+  * @param PDO la base de donnée, 
+  * @param string $client l'username du client 
+  *
+  * @return void 
+  */  
+function creerCalendrier(PDO $bdd, string $client):void{
     $Days = 1;
     
     $date = new DateTime();
@@ -263,14 +401,34 @@ function creerCalendrier($bdd, $client){
 
 }
 
-
-function getInfoCours($bdd, $idcours, $dateCours, $heureDebutCours){
+/**
+  * get les informations d'un cours dans la bd
+  *
+  * @param PDO la base de donnée, 
+  * @param int $idcours id d'un cours 
+  * @param string $dateCours la date du cours 
+  * @param float $heureDebutCours l'heure cours 
+  *
+  * @return array les informations sur un cours a une date / id donnée
+  */  
+function getInfoCours(PDO $bdd, int $idcours, string $dateCours, float $heureDebutCours):array{
     $reqUser = $bdd->prepare("SELECT idCours, usernameMoniteur, nomNiveau, nomCours, duree, prix, nbMax, dateCours, heureDebutCours FROM REPRESENTATION NATURAL JOIN COURS NATURAL JOIN NIVEAU WHERE idCours = ? AND dateCours = ? AND heureDebutCours = ?");
     $reqUser->execute([$idcours, $dateCours, $heureDebutCours]);
     return $reqUser->fetch();    
 }
 
-function formatCours($date, $heureDebut, $dureeHeures) {
+
+/**
+  * formater un cours
+  *
+  * @param PDO la base de donnée, 
+  * @param string $date la date du cours
+  * @param float $heureDebut le debut du cours (l'heure)
+  * @param float $dureeHeures la duree 
+  *
+  * @return string chaine de caractere formaté pour un cours a une date / heure debut et fin donnée 
+  */  
+function formatCours(string $date, float $heureDebut, float $dureeHeures):string {
     // Convertir la date au format souhaité
     $dateFormatee = date("d F", strtotime($date));
 
@@ -291,8 +449,21 @@ function formatCours($date, $heureDebut, $dureeHeures) {
 
 
 
-
-function updateMoniteur($bdd, $oldUsername, $username ,$prenom ,$nom ,$mail, $role, $info){
+/**
+  * upDate le moniteur et client dans la BD et dans le $_SESSION
+  *
+  * @param PDO la base de donnée, 
+  * @param string $oldUsername username du client non changé
+  * @param string $username username du client possiblement changé
+  * @param string $prenom prenom client
+  * @param string $nom nom client
+  * @param string $mail email du client
+  * @param string $role role du client (admin client moniteur)
+  * @param array $info les infos du client non edit mets qu'on remets dans les informations 
+  *
+  * @return array retourne se qui va etre dans le $_SESSION
+  */  
+function updateMoniteur(PDO $bdd, string $oldUsername, string $username ,string $prenom , string $nom , string $mail, string $role, array $info):array{
     // Préparer la requête avec des ? pour les paramètres
     $updateSql = "UPDATE PERSONNE 
                   SET prenomPersonne = ?, 
