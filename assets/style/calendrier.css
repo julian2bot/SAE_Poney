@@ -22,7 +22,7 @@ td {
     border-collapse: collapse;
     border: none;
 }
-#calendrier     td {
+#calendrier td {
     border: none;
 
     height: inherit;
@@ -35,17 +35,25 @@ td {
     text-align: center;
 }
 
+#calendrier *{
+    padding:15px;
+}
+
 .PastiCours::before {
     content: ''; /* Crée un élément virtuel */
     position: absolute; /* Positionne la pastille relativement au `td` */
-    top: 50%; /* Centre verticalement */
-    left: 50%; /* Centre horizontalement */
-    transform: translate(-50%, -50%); /* Centre exact */
-    width: 2em; /* Taille de la pastille */
-    height: 2em;
+    /* top: 50%;  */
+    /* left: 50%;  */
+    top: 15px;
+    left: 15px;
+    transform: translate(-10px, -12px); /* Centre exact */
+    /* width: 2em;  */
+    /* height: 2em; */
+    width: 15px; 
+    height: 15px;
     background-color: #347429; /* Couleur de la pastille */
     border-radius: 50%; /* Forme circulaire */
-    z-index: -1; /* Place la pastille derrière le texte */
+    z-index: 0; /* Place la pastille derrière le texte */
 }
 .styled-cell {
     background-color: #e0f7fa; 
