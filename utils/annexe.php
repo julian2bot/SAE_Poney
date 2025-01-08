@@ -160,6 +160,12 @@ function existUsername($bdd, $username) : bool{
     return $reqMail->rowCount() >=1;
 }
 
+function existDateDispoDay($bdd,$username, $day):bool{
+    $reqMail = $bdd->prepare("SELECT * FROM DISPONIBILITE WHERE usernameMoniteur = ? AND dateDispo = ?");
+    $reqMail->execute(array($username,$day));
+    return $reqMail->rowCount() >=1;
+}
+
 // nom du cours, heure du cours(horaire) et activite : a une date donnee 
 function getInfoByDate($bdd,$client, $date){
     $reqUser = $bdd->prepare("SELECT  heureDebutCours, activite, nomCours, day(dateCours) as day FROM RESERVATION NATURAL JOIN COURS NATURAL JOIN REPRESENTATION WHERE usernameClient = ? AND dateCours = ?");
