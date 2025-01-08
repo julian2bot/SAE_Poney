@@ -1,4 +1,4 @@
-function sendAJAXRequest(date) {
+function requestClientCours(date) {
     const xhr = new XMLHttpRequest();
     
     // Configurer la requête GET
@@ -82,6 +82,117 @@ function sendAJAXRequest(date) {
 
     console.log(date.getFullYear()+'-'+(date.getMonth()+1)+'-'+date.getDate());
     
+}
+
+function requestMiniteurCours(date) {
+    const xhr = new XMLHttpRequest();
+    
+    // Configurer la requête GET
+    xhr.open('GET', `../utils/getCoursByDate.php?date=${date.getFullYear()+'-'+(date.getMonth()+1)+'-'+date.getDate()}`, true);
+    
+    // Définir une fonction de callback pour gérer la réponse
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState === 4 && xhr.status === 200) {
+            // Manipuler les données de la réponse (par exemple, afficher les résultats)
+            const response = JSON.parse(xhr.responseText);
+            console.log(response); // Affiche les résultats dans la console
+            // Par exemple, mettre à jour un élément HTML avec les résultats
+            const lesInfos = document.getElementById("infoCours"); 
+
+            while (lesInfos.firstChild) {
+                lesInfos.removeChild(lesInfos.firstChild);
+            }
+            let dateDuCours = document.createElement("p");
+            if(response[0]){
+                
+                dateDuCours.innerHTML = response[0].dateCours;
+                lesInfos.appendChild(dateDuCours);
+            }else{
+                dateDuCours.innerHTML = "Pas de cours";
+                lesInfos.appendChild(dateDuCours);
+            }
+
+
+
+
+            
+            
+            response.forEach(unCours => {
+
+                let divInfo = document.createElement("div");
+                divInfo.classList.add("infoDivCours");
+
+                let heureDebutCours = document.createElement("p");
+                let nomCoursP = document.createElement("p");
+                heureDebutCours.innerHTML = unCours.heureDebutCours +' - '+ (unCours.heureDebutCours + unCours.duree); 
+                nomCoursP.innerHTML = unCours.nomCours ? unCours.nomCours : "Cours poney"; 
+                divInfo.appendChild(heureDebutCours);
+                lesInfos.appendChild(divInfo);
+
+                
+                divInfo.appendChild(nomCoursP);
+                
+                divInfo.addEventListener("click", function() {
+                    alert(`Vous avez cliqué sur le cours du ${unCours.dateCours} à ${unCours.heureDebutCours} avec le moniteur: ${unCours.heureDebutCours} le cours dur ${unCours.duree}h `);
+                    // location.href = `./reserverCours.php?idcours=${unCours.idCours}&dateCours=${unCours.dateCours}&heureCours=${unCours.heureDebutCours}`
+                });
+
+
+                
+                console.log(unCours);
+            });
+            
+            let aCreerCoursDIv = document.createElement("div");
+            aCreerCoursDIv.classList.add("addCoursDiv");
+            let aCreerCours = document.createElement("a");
+            aCreerCours.classList.add("addCours");
+            aCreerCours.innerHTML= '+';
+            aCreerCours.href= `creerCours.php?date=${date.getFullYear()+'-'+(date.getMonth()+1)+'-'+date.getDate()}`; // TODO
+
+            aCreerCoursDIv.appendChild(aCreerCours);
+            lesInfos.appendChild(aCreerCoursDIv);
+        }
+    };
+    
+    // Envoyer la requête
+    xhr.send();
+
+    console.log(date.getFullYear()+'-'+(date.getMonth()+1)+'-'+date.getDate());
+    
+}
+
+function getMoniteurACoursOuPas(date){
+    return new Promise((resolve, reject) => {
+        const xhr = new XMLHttpRequest();
+        
+        const username = document.getElementById("username");
+        console.log(username.value);
+        // Configurer la requête GET
+        xhr.open('GET', `../utils/getMoniteurACoursOuPas.php?date=${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}&username=${username.value}`, true);
+        
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState === 4) {
+                if (xhr.status === 200) {
+                    const response = JSON.parse(xhr.responseText);
+
+                    if (response.length === 0) {
+                        console.log("Pas de cours le " + date);
+                        resolve(true);
+                    } else {
+                        console.log("Cours prévu le " + date);
+                        resolve(false);
+                    }
+                } else {
+                    reject(`Erreur : ${xhr.status}`);
+                }
+            }
+        };
+
+        
+        // Envoyer la requête
+        xhr.send();
+        console.log(date.getFullYear()+'-'+(date.getMonth()+1)+'-'+date.getDate());
+    });
 }
 
 function getYaUnCoursOuPas(date) {
@@ -182,24 +293,44 @@ function createCalendar(month, year){
                 day.innerHTML = date;
                 // yaCours = getYaUnCoursOuPas(new Date(year, month, day.innerHTML));
                 // console.log(yaCours);
-                
-                getYaUnCoursOuPas(new Date(year, month, day.innerHTML))
-                .then(result => {
-                    if (!result) {
-                        day.classList.add("PastiCours");
-                        // console.log("Pas de cours");
-                    } 
-                    // else {
-                    // }
-                })
-                .catch(error => console.error(error));
-            
+                if(document.getElementById("clientmoniteur").value === "moniteur"){
+                    getMoniteurACoursOuPas(new Date(year, month, day.innerHTML))
+                    .then(result => {
+                        if (!result) {
+                            day.classList.add("PastiCours");
+                            console.log("FDPNIQUE TES MORTS");
+                        } 
+                        // else {
+                        // }
+                    })
+                    .catch(error => console.error(error));
+                    
+                    day.addEventListener("click", function() {
+                        // alert(`Vous avez cliqué sur le ${day.innerHTML}`);
+                        // requestClientCours(new Date(year, month, day.innerHTML));
+                        // TODO
+                        requestMiniteurCours(new Date(year, month, day.innerHTML));
 
+                    });
+                }
+                else{
 
-                day.addEventListener("click", function() {
-                    // alert(`Vous avez cliqué sur le ${day.innerHTML}`);
-                    sendAJAXRequest(new Date(year, month, day.innerHTML));
-                });
+                    getYaUnCoursOuPas(new Date(year, month, day.innerHTML))
+                    .then(result => {
+                        if (!result) {
+                            day.classList.add("PastiCours");
+                            // console.log("Pas de cours");
+                        } 
+                        // else {
+                        // }
+                    })
+                    .catch(error => console.error(error));
+
+                    day.addEventListener("click", function() {
+                        // alert(`Vous avez cliqué sur le ${day.innerHTML}`);
+                        requestClientCours(new Date(year, month, day.innerHTML));
+                    });
+                }
                 week.appendChild(day);
                 date++
             }

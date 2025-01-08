@@ -20,7 +20,8 @@ estConnecte();
         <link rel="stylesheet" href="../assets/style/style.css">
         <link rel="stylesheet" href="../assets/style/header.css">
         <link rel="stylesheet" href="../assets/style/styleSousPage.css">
-        <link rel="stylesheet" href="../assets/style/calendrier.css">
+    <link rel="stylesheet" href="../assets/style/coursCalendrier.css">
+    <link rel="stylesheet" href="../assets/style/calendrier.css">
         <script src="../assets/script/popUpGestionErr.js"></script>
     </head>
     <body>
@@ -69,9 +70,21 @@ estConnecte();
             
                 <section class="gauche-section gauche">
                     <!-- ? a faire calendrier -->
-                    <figure class="image-block">
-                        <img src="../assets/images/cal.png" alt="cal" class="planning">
-                    </figure>
+                    <h2 id="month-display"></h2>
+                    
+                    <div id="calendar-container">
+                        <button id="prev-month">Mois Précédent</button>
+                        <button id="next-month">Mois Suivant</button>
+                        <div class="container-info-cal">
+                            <div id="infoCours">
+                                <p >
+                                    Pas de cours
+                                </p>
+                            </div>
+                            <table id="calendrier"></table>
+                        </div>
+                    </div>
+
                 </section>
                 
                 <section class="droite-section droite">
@@ -88,8 +101,7 @@ estConnecte();
                 <section class="gauche-section gauche">
                     <h2>Parametre page</h2>
                     <form action="../utils/traitementParametreMoniteur.php" method="post">
-                        <input type="hidden" name="clientmoniteur" value="moniteur">
-                        
+                        <input type="hidden" id="clientmoniteur" name="clientmoniteur" value="moniteur">
                         
                         <label for="username">Nom d'utilisateur :</label>
                         <input disabled type="text" id="username" name="username" value="<?php echo htmlspecialchars($_SESSION["connecte"]['username'] ?? ''); ?>" required><br>
@@ -117,6 +129,7 @@ estConnecte();
             </section>
 
         </main>
+        <script src="../assets/script/coursCalendrier.js"></script>
 
     </body>
     <?php
