@@ -47,7 +47,7 @@ $result = $updateStmt->execute([$_POST["prenom"] ,$_POST["nom"] ,$_POST["mail"],
 
 
 $_SESSION["connecte"] = array(
-    "username" => $oldUsername,  // a voir pour edit ca en plus
+    "username" => $username,  // a voir pour edit ca en plus
     "prenom" => $_POST["prenom"],
     "nom" => $_POST["nom"],
     "mail" => $_POST["mail"],

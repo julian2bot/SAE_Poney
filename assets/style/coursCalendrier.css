@@ -32,13 +32,18 @@
 }
 #infoCours{
     overflow: auto;
-    height: 250px;
+    max-height: 250px;
+    display: flex
+;
+    flex-direction: column;
+    justify-content: start;
+    align-items: center;
 }
 .infoDivCours{
     display: flex;
     padding: 10px;
     background-color: #ffffff78;
-    width: min-content;
+    width: 100%;
     gap: 40px;
     margin: 10px;
     max-width: 250px;
@@ -77,4 +82,22 @@
 #next-month:active ,  #prev-month:active{
     position:relative;
     top:1px;
+}
+
+
+.addCours{
+    color: #F8F3D8;
+    font-size: 2em;
+    font-weight: bold;
+    text-decoration: none;
+    
+}
+.addCoursDiv{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #347429;
+    width: 3em;
+    height: 3em;
+    border-radius: 50%;
 }
