@@ -13,13 +13,27 @@ function estConnecte():void{
     }
 }
 
+/**
+  * regarde si l'utilisateur est moniteur s'il l'est pas il est envoyer sur la page d'accueil
+  *
+  * @return void
+  */  
+  function estMoniteur():void{
+    
+    if(!isset($_SESSION["connecte"]) OR $_SESSION["connecte"]["role"] !== "admin" OR $_SESSION["connecte"]["role"] !== "moniteur"){
+
+        header("Location: ../");
+        exit;
+
+    }
+}
 
 /**
   * regarde si l'utilisateur est admin s'il l'est pas il est envoyer sur la page d'accueil
   *
   * @return void
   */  
-function estAdmin():void{
+  function estAdmin():void{
     
     if(!isset($_SESSION["connecte"]) OR $_SESSION["connecte"]["role"] !== "admin"){
 

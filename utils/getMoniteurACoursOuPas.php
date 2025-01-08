@@ -3,6 +3,7 @@
 
 require_once "connexionBD.php";
 
+estConnecte();
 
 
 
