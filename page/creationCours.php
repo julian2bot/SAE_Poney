@@ -31,11 +31,8 @@ require_once "../utils/functioncours.php";
                 <figure class="image-block">
                 </figure>
                 <p>Selectionner la date</p>
-                <?php  genererCalendrier(02, 2005); ?>
+                <h1>Calendrier Dynamique</h1>
                 
-
-
-                </script>
 
 
             </section>
@@ -53,11 +50,9 @@ require_once "../utils/functioncours.php";
                     <label>NBMAX</label>
                     <input name="nbmax" id="nbmax" type="number" />
                     <input name="datevalider" id="nbmax" hidden type="number" />
-                    <?php creerCalendrierCours($bdd, $client); ?>
-                    <script src="../assets/script/jsCreationCours.js"></script>
-                    
-
                     <button type="submit">Valider</button>
+
+
                 </form>
 
                 </article>
