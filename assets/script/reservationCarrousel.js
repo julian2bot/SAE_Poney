@@ -1,3 +1,5 @@
+// carrousel du Choix d'un cours pour choisir un poney
+
 
 const carrousel = document.getElementById('carrousel');
 let currentIndex = 0;

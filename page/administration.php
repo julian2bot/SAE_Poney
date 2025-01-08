@@ -40,7 +40,7 @@ estAdmin();
             <h2>Ajouter un Poney</h2>
             <form method="POST" action="../utils/creerPoney.php" class="form">
                 <?php
-                    require "../utils/adminPoney.php";
+                    require "../assets/affichage/adminPoney.php";
                 ?>
                 <button type="submit" class="btn" name="fromSignIn">Valider</button>
             </form>
@@ -55,7 +55,7 @@ estAdmin();
             <h2>Ajouter un moniteur</h2>
             <form method="POST" action="../utils/creerMoniteur.php" class="form">
                 <?php
-                    require "../utils/adminMoniteur.php";
+                    require "../assets/affichage/adminMoniteur.php";
                 ?>
                 <button type="submit" class="btn" name="fromSignIn">
                     Ajouter
@@ -73,7 +73,7 @@ estAdmin();
             <form method="POST" action="../utils/modifPoney.php" class="form">
                 <input type="hidden" name="identifiant" class="identifiant form-control-material" required>
                 <?php
-                    require "../utils/adminPoney.php";
+                    require "../assets/affichage/adminPoney.php";
                 ?>
                 <button type="submit" class="btn" name="fromSignIn">Valider</button>
             </form>
@@ -90,7 +90,7 @@ estAdmin();
                 <input type="hidden" name="identifiant" class="identifiant form-control-material" required>
                 <input type="hidden" name="ancienMail" class="ancienMail form-control-material" required>
                 <?php
-                    require "../utils/adminMoniteur.php";
+                    require "../assets/affichage/adminMoniteur.php";
                 ?>
                 <button type="submit" class="btn" name="fromSignIn">
                     Ajouter

@@ -1,9 +1,15 @@
 <?php
+// code pour creer un moniteur et l'ajouter a la bd
 require_once "../utils/connexionBD.php";
 require_once "../utils/annexe.php";
 estAdmin();
 
-function setErrors(){
+/**
+  * mets tout les erreurs dans la session
+  *
+  * @return void 
+  */  
+function setErrors():void{
     $_SESSION["erreur"] = [];
     $_SESSION["erreur"]["usernameMoniteur"] = $_POST["usernameMoniteur"];
     $_SESSION["erreur"]["nomMoniteur"] = $_POST["nomMoniteur"];

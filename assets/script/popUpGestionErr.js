@@ -1,3 +1,4 @@
+// affichage des pop up
 function showPopUp(message, success=true){
     let popUp = document.createElement("div");
     let texte = document.createElement("p");

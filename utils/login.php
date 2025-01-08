@@ -1,4 +1,5 @@
 <?php
+// code pour se login verifier s'il est bien dans la BD et mettre toute les valeurs dans le $_SESSION
 
 require_once "./connexionBD.php";
 require_once "./annexe.php";
