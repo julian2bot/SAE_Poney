@@ -2,10 +2,7 @@
 require_once "../utils/connexionBD.php";
 require_once "../utils/annexe.php";
 
-function convertTimeToFloat(string $time):float{
-    $timeList = explode(':', $time);
-    return (int)$timeList[0] + ($timeList[1] == "30" ? 0.5 : 0);
-}
+
 
 if(($_SESSION["connecte"]["role"] === "moniteur" || $_SESSION["connecte"]["role"] === "admin") && 
     isset($_POST["dateDispo"]) &&

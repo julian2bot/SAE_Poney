@@ -33,6 +33,7 @@ td {
     padding: 10px; /* Ajoute de l'espace autour du texte */
     transition: transform 0.3s ease, z-index 0.3s ease;
     text-align: center;
+    cursor: pointer;
 }
 
 #calendrier *, #calendrier-disponibilite *{

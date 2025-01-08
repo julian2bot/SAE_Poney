@@ -82,6 +82,10 @@ h1 {
     flex-direction: column;
 }
 
+.navDispo{
+    text-align: left;
+}
+
 img {
     width: 75%;
     height: 80%;

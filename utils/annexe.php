@@ -148,7 +148,14 @@ function getMoniteur($bdd){
     return $info;
 }
 
-function existMail($bdd, $mail) : bool{
+function getDispo($bdd, string $username, string $day, string $startTime){
+    $reqUser = $bdd->prepare("SELECT * FROM DISPONIBILITE WHERE usernameMoniteur = ? AND dateDispo = ? AND heureDebutDispo = ?");
+    $reqUser->execute([$username,$day, $startTime]);
+    $info = $reqUser->fetchAll();
+    return $info;
+}
+
+function existMail($bdd, string $mail) : bool{
     $reqMail = $bdd->prepare("SELECT * FROM PERSONNE WHERE mail = ?");
     $reqMail->execute(array($mail));
     return $reqMail->rowCount() >=1;
@@ -164,6 +171,21 @@ function existDateDispoDay($bdd,$username, $day):bool{
     $reqMail = $bdd->prepare("SELECT * FROM DISPONIBILITE WHERE usernameMoniteur = ? AND dateDispo = ?");
     $reqMail->execute(array($username,$day));
     return $reqMail->rowCount() >=1;
+}
+
+
+function convertTimeToFloat(string $time):float{
+    $timeList = explode(':', $time);
+    return (int)$timeList[0] + ($timeList[1] == "30" ? 0.5 : 0);
+}
+
+function convertFloatToTime(float $time):string{
+    $whole = (string)floor($time); 
+    $fraction = $time - $whole;
+    if(strlen($whole)<2){
+        $whole = str_pad($whole,2,"0",STR_PAD_LEFT);
+    }
+    return implode(array($whole, ":", ($fraction == 0.5 ? "30" : "00")));
 }
 
 // nom du cours, heure du cours(horaire) et activite : a une date donnee 

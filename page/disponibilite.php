@@ -20,7 +20,8 @@ estConnecte();
     <body>
         <header>
             <h1>GRAND GALOP</h1>
-            <nav>
+            <h2>Ajouter une disponibilité</h2>
+            <nav class="navDispo">
             <ul>
                 <li>
                     <a href="moniteur.php">Retour</a>
@@ -37,7 +38,6 @@ estConnecte();
                         if(isset($_GET["date"])){
                             $date = new DateTime();
                             $resultMin = $date->format('Y-m-d');
-                            $dateInfo = explode('-', $_GET["date"]);
                             $date = date_create_from_format("Y-m-d",$_GET["date"]);
                             $result = $date->format('Y-m-d');
                             if ($result < $resultMin){

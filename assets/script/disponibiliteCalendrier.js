@@ -49,6 +49,7 @@ function addDisponibiliteInfo(date) {
                 
                 divInfo.addEventListener("click", function() {
                     alert(`Vous avez cliqué sur la dispo du ${uneDispo.dateDispo} de ${uneDispo.heureDebutDispo} a ${uneDispo.heureFinDispo}`);
+                    window.location.href = `../page/modifierDisponibilite.php?dateDispo=${date.getFullYear()+'-'+(date.getMonth()+1)+'-'+date.getDate()}&debutDispo=${uneDispo.heureDebutDispo}`;
                 });
 
             });
