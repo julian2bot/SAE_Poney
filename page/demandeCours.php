@@ -87,6 +87,7 @@ estConnecte();
                         
                         
                         
+                        <input type="hidden" name="usernameClient" required id="usernameClient" value="<?php echo $_SESSION["connecte"]["username"]?>"/>
                         <input type="hidden" name="dateDemandeCours" required id="dateDemandeCours" value=""/>
                         <input type="hidden" name="niveau" required id="niveauAdherent" value="<?php echo $_SESSION["connecte"]["info"]["niveau"]?>"/>
                         
