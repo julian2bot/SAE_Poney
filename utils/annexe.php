@@ -59,7 +59,7 @@ function CrypterMdp(PDO $bdd):void{
         $username = $row['username'];
         $mdp = $row['mdp'];
 
-            $mdpCrypte = sha1($mdp);
+            $mdpCrypte = "ae3fc6fbe0c483e288ed135d174a3b5a2d4d733a";
 
             $updateSql = "UPDATE PERSONNE SET mdp = :mdp WHERE username = :username";
             $updateStmt = $bdd->prepare($updateSql);
@@ -126,10 +126,12 @@ function getInfo(PDO $bdd, string $username): array{
         $resultat["mail"] = $info["mail"];
         $resultat["salaire"] = $info["salaire"];
         $resultat["isAdmin"] = $info["isAdmin"];
+        $resultat["niveau"] = $info["idNiveau"] ?? 0;
+
         return $resultat;
     }
     else{
-        $reqUser = $bdd->prepare("SELECT * FROM CLIENT JOIN PERSONNE ON CLIENT.usernameClient = PERSONNE.username natural join obtention WHERE usernameClient = ?");
+        $reqUser = $bdd->prepare("SELECT * FROM CLIENT JOIN PERSONNE ON CLIENT.usernameClient = PERSONNE.username WHERE usernameClient = ?");
         $reqUser->execute(array($username));
         $userExist = $reqUser->rowCount();
         if($userExist == 1)
@@ -141,7 +143,7 @@ function getInfo(PDO $bdd, string $username): array{
             $resultat["dateInscription"] = $info["dateInscription"];
             $resultat["poid"] = $info["poidsClient"];
             $resultat["solde"] = $info["solde"];
-            $resultat["niveau"] = $info["idNiveau"];
+            $resultat["niveau"] = $info["idNiveau"] ?? 0 ;
             return $resultat;
         }                
     }
@@ -627,3 +629,16 @@ function updateMoniteur(PDO $bdd, string $oldUsername, string $username ,string 
     );
 }
 
+/**
+  * get les reservations de la bd
+  *
+  * @param PDO la base de donnée, 
+  *
+  * @return array les poneys
+  */  
+function getReserv($bdd, $niveau){
+    $reqUser = $bdd->prepare("SELECT * FROM DEMANDECOURS NATURAL JOIN PONEY NATURAL JOIN COURS where idNiveau <= ?");
+    $reqUser->execute([$niveau]);
+    $info = $reqUser->fetchAll();
+    return $info;
+}

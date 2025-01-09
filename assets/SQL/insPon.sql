@@ -234,3 +234,10 @@ INSERT INTO OBTENTION (username, idNiveau, dateObtention) VALUES
 -- select poneyDispo(1,1, 'moniteur1', '2023-12-01', 20.0, 1); 
 -- select poneyDispo(1,1, 'moniteur1', '2023-12-01', 22.0, 1); 
 -- select poneyDispo(1,1, 'moniteur1', '2023-12-01', 23.0, 1); 
+
+
+INSERT INTO DEMANDECOURS (usernameClient, idCours, idPoney, dateCours, heureDebutCours, demande) VALUES (
+    "client1", 2, 1, "2024-12-01", 17,"faire du poney nan?",
+    "client2", 2, 1, "2024-12-01", 20.5,"faire du poney nan?"
+
+)
