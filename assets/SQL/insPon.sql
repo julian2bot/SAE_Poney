@@ -178,6 +178,28 @@ INSERT INTO RESERVATION (idCours, usernameMoniteur, dateCours, heureDebutCours, 
 (10, 'moniteur1', '2023-12-10', 18.0, 'client10', 10);
 
 
+
+INSERT INTO OBTENTION (username, idNiveau, dateObtention) VALUES
+('client1', 1, '2025-01-01'),
+('client2', 2, '2025-01-02'),
+('client3', 3, '2025-01-03'),
+('client4', 1, '2025-01-04'),
+('client5', 2, '2025-01-05'),
+('client6', 3, '2025-01-06'),
+('client7', 1, '2025-01-07'),
+('client8', 2, '2025-01-08'),
+('client9', 3, '2025-01-09'),
+('client10', 1, '2025-01-10'),
+('client11', 2, '2025-01-11'),
+('client12', 3, '2025-01-12'),
+('client13', 1, '2025-01-13'),
+('client14', 2, '2025-01-14'),
+('client15', 3, '2025-01-15'),
+('julian', 1, '2025-01-16'),
+('moniteur1', 2, '2025-01-17'),
+('moniteur3', 3, '2025-01-18');
+
+
 -- idPoneyF idCours usernameMoniteur dateCoursF heureDebutCoursF dureeCours
 -- select poneyDispo(1,3, 'moniteur1', '2023-12-01', 8.0, 2); 
 -- select poneyDispo(1,1, 'moniteur1', '2023-12-01', 10.0, 1); 

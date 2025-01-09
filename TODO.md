@@ -31,14 +31,19 @@
 
 [ ] html/ css / js / php   
 [X]     ==> page connexion / inscription * 3    
-[ ]     ==> page planing *3
+[X]     ==> page planing *3
 [X]         ==> creation du calendrier
 [X]         ==> affichage des infos dans le calendrier
 [/]     ==> page accueil * 3  
 [X]     ==> page resevation client  
-[ ]     ==> page demande cours client
-[/]     ==> page creation cours moniteur 
-[ ]     ==> page disponibilité moniteur 
+[/]     ==> page demande cours client
+[ ]         ==> envoie email au client pour dire d'attendre comfirmation
+[ ]         ==> ajoute demande de cours a la bd
+[ ]         ==> page moniteur avec les demandes de cours (accepte)
+[ ]         ==> moniteur + client recoi un email pour la validation du cours
+[ ]         ==> moniteur + client recoi un email pour la validation du cours
+[/]     ==> page creation cours moniteur (clement)
+[X]     ==> page disponibilité moniteur 
 [x]     ==> page 404 
 [?]     ==> page deniedAcces ?mais est ce vraiment utile avec le mode actuelle ?? 
  
@@ -55,6 +60,7 @@
 [X]     ==> afficher moniteur admin   
 [X]     ==> ajouter/creer moniteur admin 
 [X]     ==> supprimer moniteur admin   
+[X]     ==> gestion des soldes du clients
 
 
 [ ] tache  
