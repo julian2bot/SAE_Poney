@@ -13,11 +13,11 @@ if(($_SESSION["connecte"]["role"] === "moniteur" || $_SESSION["connecte"]["role"
         header("Location: ../page/disponibilite.php");
         exit;
     }
-    // else if(existDateDispoDay($bdd,$_SESSION["connecte"]["username"], $_POST["dateDispo"])){
-    //     createPopUp("Dispo pour ce jour déjà défini",false);
-    //     header("Location: ../page/disponibilite.php");
-    //     exit;
-    // }
+    else if(existDateDispoConflit($bdd,$_SESSION["connecte"]["username"], $_POST["dateDispo"],$_POST["heureDebut"],$_POST["heureFin"])){
+        createPopUp("Un conflit existe avec les disponibilités déjà entrée, veuillez les modifier",false);
+        header("Location: ../page/disponibilite.php");
+        exit;
+    }
     else{
         // echo "<pre>";
         // print_r($_POST);

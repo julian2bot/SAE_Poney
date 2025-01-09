@@ -9,12 +9,15 @@
         exit;
     }
 
-    $info = getDispo($bdd,$_SESSION["connecte"]["username"],$_GET["dateDispo"],(float)$_GET["debutDispo"]);
-    if (!isset($info[0])){
+    $infoDate = getDispo($bdd,$_SESSION["connecte"]["username"],$_GET["dateDispo"],(float)$_GET["debutDispo"]);
+    if (!isset($infoDate)){
         header("Location: ../page/disponibilite.php");
         exit;
     }
-    $infoDate = $info[0];
+
+    echo "<pre>";
+    print_r(getDispoDay($bdd,$_SESSION["connecte"]["username"],$_GET["dateDispo"]));
+    echo "</pre>";
 ?>
 
 

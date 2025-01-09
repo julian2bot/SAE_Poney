@@ -151,6 +151,13 @@ function getMoniteur($bdd){
 function getDispo($bdd, string $username, string $day, string $startTime){
     $reqUser = $bdd->prepare("SELECT * FROM DISPONIBILITE WHERE usernameMoniteur = ? AND dateDispo = ? AND heureDebutDispo = ?");
     $reqUser->execute([$username,$day, $startTime]);
+    $info = $reqUser->fetch();
+    return $info;
+}
+
+function getDispoDay($bdd, string $username, string $day){
+    $reqUser = $bdd->prepare("SELECT * FROM DISPONIBILITE WHERE usernameMoniteur = ? AND dateDispo = ?");
+    $reqUser->execute([$username,$day]);
     $info = $reqUser->fetchAll();
     return $info;
 }
@@ -171,6 +178,25 @@ function existDateDispoDay($bdd,$username, $day):bool{
     $reqMail = $bdd->prepare("SELECT * FROM DISPONIBILITE WHERE usernameMoniteur = ? AND dateDispo = ?");
     $reqMail->execute(array($username,$day));
     return $reqMail->rowCount() >=1;
+}
+
+function chevauchementHeure($heureDebut, $heureFin, $heureDebut2, $heureFin2): bool {
+    $debut1 = strtotime($heureDebut);
+    $fin1 = strtotime($heureFin);
+    $debut2 = strtotime($heureDebut2);
+    $fin2 = strtotime($heureFin2);
+
+    return $debut1 <= $fin2 && $debut2 <= $fin1;
+}
+
+function existDateDispoConflit($bdd,$username, $day, $heureDebut, $heureFin){
+    $dispoDay = getDispoDay($bdd,$username, $day);
+    foreach ($dispoDay as $dispo) {
+        if(chevauchementHeure($heureDebut, $heureFin, $dispo["heureDebutDispo"], $dispo["heureFinDispo"])){
+            return true;
+        }
+    }
+    return false;
 }
 
 
@@ -195,7 +221,6 @@ function getInfoByDate($bdd,$client, $date){
     $info = $reqUser->fetchAll();
     return $info;
 }
-
 
 function getAllInfoByMonth($bdd, $client, $month, $year){
     $reqUser = $bdd->prepare("SELECT heureDebutCours, activite, nomCours, day(dateCours) as day 
