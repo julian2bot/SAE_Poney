@@ -1,5 +1,5 @@
 <?php
-
+// detruire la session de l'utilisateur, tout suppr puis le deconnecter
 session_unset(); 
 session_destroy();
 

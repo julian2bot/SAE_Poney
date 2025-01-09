@@ -1,4 +1,6 @@
 <?php
+// code pour creer un moniteur et l'ajouter a la bd
+
 require_once "../utils/connexionBD.php";
 require_once "../utils/annexe.php";
 estAdmin();
@@ -10,7 +12,7 @@ if($_SESSION["connecte"]["role"] === "admin" &&
     isset($_POST["photo"]) &&
     isset($_POST["race"])){
     // requete insert exemple:
-    if(getRace($bdd, $_POST["race"])){
+    if(getRaceExist($bdd, $_POST["race"])){
 
         $insertmbr = $bdd->prepare("INSERT INTO PONEY (idPoney, nomPoney, poidsMax, photo, nomRace) VALUES(?, ?, ?, ?, ?)");
         $insertmbr->execute(array(

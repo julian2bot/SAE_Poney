@@ -1,9 +1,15 @@
 <?php
+// code pour modifier le moniteur dans la page admin
 require_once "../utils/connexionBD.php";
 require_once "../utils/annexe.php";
 estAdmin();
 
-function setErrors(){
+/**
+  * mets tout les erreurs dans la session
+  *
+  * @return void 
+  */  
+function setErrors():void{
     $_SESSION["erreur"] = [];
     $_SESSION["erreur"]["identifiant"] = $_POST["identifiant"];
     $_SESSION["erreur"]["usernameMoniteur"] = $_POST["usernameMoniteur"];

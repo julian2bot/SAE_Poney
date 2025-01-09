@@ -1,4 +1,4 @@
-
+//  dans la page d'administration affiché / retirer les pop Up pour edit / creer des poneys ou moniteur
 function afficheCreerPoney(){
     document.getElementById('creerPoney').style.display = "flex";
 }

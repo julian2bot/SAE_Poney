@@ -1,7 +1,8 @@
 <?php
+// get les cours a une date donnée (utilisé avec ajax)
 require_once "connexionBD.php";
 
-
+estConnecte();
 
 
 
