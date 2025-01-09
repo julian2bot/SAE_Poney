@@ -20,7 +20,7 @@ function estConnecte():void{
   */  
   function estMoniteur():void{
     
-    if(!isset($_SESSION["connecte"]) OR $_SESSION["connecte"]["role"] !== "admin" OR $_SESSION["connecte"]["role"] !== "moniteur"){
+    if(!isset($_SESSION["connecte"]) || ($_SESSION["connecte"]["role"] !== "admin" && $_SESSION["connecte"]["role"] !== "moniteur")){
 
         header("Location: ../");
         exit;
