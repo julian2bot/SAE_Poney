@@ -52,7 +52,7 @@ estConnecte();
         
         <main class="container">
 
-            <section class="gauche-section">
+            <section class="gauche-section" style="width:auto;">
             <h2 id="month-display"></h2>
 
                 <div id="calendrierSelect">
@@ -91,8 +91,9 @@ estConnecte();
                         
                         <label for="heureCours">Heure debut du cours</label>
                         <input type="time" required name="heureCours" id="heureCoursReserv"  min='01:00' max='23:00' step='1800' >
-
-                        <select name="race" class="race" required>
+                        
+                        <label for="heure">Nombre d'heure pour le cours:</label>
+                        <select name="heure" class="heure" required>
 
                             <option value="1">1h</option>
                             <option value="2">2h</option>
