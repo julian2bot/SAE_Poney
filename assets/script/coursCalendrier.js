@@ -15,7 +15,6 @@ function requestClientCours(year, month, day) {
 
     
     const xhr = new XMLHttpRequest();
-    // console.log(`${year+'-'+month+'-'+day}`);
     // Configurer la requête GET
     xhr.open('GET', `../utils/getCoursByDateEntiere.php?date=${year+'-'+month+'-'+day}`, true);
     
@@ -24,8 +23,7 @@ function requestClientCours(year, month, day) {
         if (xhr.readyState === 4 && xhr.status === 200) {
             // Manipuler les données de la réponse (par exemple, afficher les résultats)
             const response = JSON.parse(xhr.responseText);
-            // console.log(response); // Affiche les résultats dans la console
-            // Par exemple, mettre à jour un élément HTML avec les résultats
+
             const lesInfos = document.getElementById("infoCours"); 
 
             while (lesInfos.firstChild) {
@@ -86,7 +84,6 @@ function requestClientCours(year, month, day) {
                 });
 
 
-                console.log(unCours);
             });
 
         }
@@ -95,7 +92,6 @@ function requestClientCours(year, month, day) {
     // Envoyer la requête
     xhr.send();
 
-    // console.log(date.getFullYear()+'-'+(date.getMonth())+'-'+date.getDate());
     
 }
 
@@ -120,7 +116,7 @@ function requestMoniteurCours(year, month, day) {
         if (xhr.readyState === 4 && xhr.status === 200) {
             // Manipuler les données de la réponse (par exemple, afficher les résultats)
             const response = JSON.parse(xhr.responseText);
-            console.log(response); // Affiche les résultats dans la console
+
 
             const lesInfos = document.getElementById("infoCours"); 
 
@@ -158,7 +154,6 @@ function requestMoniteurCours(year, month, day) {
 
 
                 
-                console.log(unCours);
             });
             
             let aCreerCoursDIv = document.createElement("div");
@@ -192,7 +187,6 @@ function getMoniteurACoursOuPas(date) {
         const xhr = new XMLHttpRequest();
         const username = document.getElementById("username");
 
-        console.log(`year=${date.getFullYear()}&month=${date.getMonth()+1}&username=${username.value}`)
         // Configurer la requête GET
         xhr.open('GET', `../utils/getCoursByDateMoniteur.php?year=${date.getFullYear()}&month=${date.getMonth()+1}&username=${username.value}`, true);
 
@@ -200,7 +194,6 @@ function getMoniteurACoursOuPas(date) {
             if (xhr.readyState === 4) {
                 if (xhr.status === 200) {
                     const response = JSON.parse(xhr.responseText);
-                    console.log(response)
                     if (Array.isArray(response)) {
                         resolve(response);
                     } else {
@@ -239,7 +232,6 @@ function getCoursClientByDate(date) {
             if (xhr.readyState === 4) {
                 if (xhr.status === 200) {
                     const response = JSON.parse(xhr.responseText);
-                    console.log(response)
                     if (Array.isArray(response)) {
                         resolve(response);
                     } else {
@@ -305,7 +297,6 @@ function createCalendar(month, year){
     if(document.getElementById("clientmoniteur").value === "moniteur"){
         
         // partie moniteur
-        console.log('getMoniteurACoursOuPas(new Date('+year, month, 1)
         getMoniteurACoursOuPas(new Date(year, month, 1))
         .then((coursDuMois) => {
 
@@ -314,42 +305,9 @@ function createCalendar(month, year){
                 const date = new Date(cours.dateCours).getDate();
                 coursMap.set(date, cours);
             });
-            console.log(coursDuMois, coursMap)
-            console.log(year, month+1, date)
 
-            for (let i = 0; i < 6; i++) {
+            calendrierGraphiqueCreation(calendrier, year, month, date, daysInMonth, coursMap, "moniteur");
 
-                let week = document.createElement("tr");
-                
-                for (let j = 0; j < 7; j++) {
-        
-                    if (date > daysInMonth) {
-                        break;
-                    }
-        
-                    if(i === 0 && j < new Date(year, month, 1).getDay()-1 || date > daysInMonth){
-                        let day = document.createElement('td');
-                        day.innerHTML = "-";
-        
-                        week.appendChild(day);
-                    }
-                    else{
-                        let day = document.createElement('td');
-                        day.innerHTML = date;
-                        if (coursMap.has(date)) {
-                            day.classList.add("PastiCours");
-                        
-                        }
-                        day.addEventListener("click", () => {
-
-                            requestMoniteurCours(year, month+1, day.innerHTML);
-                        });
-                        week.appendChild(day);
-                        date++
-                    }
-                }
-                calendrier.appendChild(week);
-            }
         
 
 
@@ -366,44 +324,8 @@ function createCalendar(month, year){
                 const date = new Date(cours.dateCours).getDate();
                 coursMap.set(date, cours);
             });
-            console.log(coursMap)
-            console.log(year, month+1, date)
-
-            for (let i = 0; i < 6; i++) {
-
-                let week = document.createElement("tr");
-                
-                for (let j = 0; j < 7; j++) {
-        
-                    if (date > daysInMonth) {
-                        break;
-                    }
-        
-                    if(i === 0 && j < new Date(year, month, 1).getDay()-1 || date > daysInMonth){
-                        let day = document.createElement('td');
-                        day.innerHTML = "-";
-        
-                        week.appendChild(day);
-                    }
-                    else{
-                        let day = document.createElement('td');
-                        day.innerHTML = date;
-                        if (coursMap.has(date)) {
-                            day.classList.add("PastiCours");
-                            
-                            day.addEventListener("click", () => {
-                                console.log("requestClientCours", year, month+1, day.innerHTML)
-
-                                // requestClientCours(new Date(year, month+1, date));
-                                requestClientCours(year, month+1, day.innerHTML);
-                            });
-                        }
-                        week.appendChild(day);
-                        date++
-                    }
-                }
-                calendrier.appendChild(week);
-            }
+            calendrierGraphiqueCreation(calendrier, year, month, date, daysInMonth, coursMap, "adherent");
+            
 
 
         })
@@ -411,7 +333,51 @@ function createCalendar(month, year){
 
     }
 }
+function calendrierGraphiqueCreation(calendrier, year, month, date,daysInMonth, coursMap, typeClient){
 
+
+    for (let i = 0; i < 6; i++) {
+
+        let week = document.createElement("tr");
+        
+        for (let j = 0; j < 7; j++) {
+
+            if (date > daysInMonth) {
+                break;
+            }
+
+            if(i === 0 && j < new Date(year, month, 1).getDay()-1 || date > daysInMonth){
+                let day = document.createElement('td');
+                day.innerHTML = "-";
+
+                week.appendChild(day);
+            }
+            else{
+                let day = document.createElement('td');
+                day.innerHTML = date;
+                if(typeClient==="moniteur"){    
+                    day.addEventListener("click", () => {
+
+                        requestMoniteurCours(year, month+1, day.innerHTML);
+                    });                }
+                if (coursMap.has(date)) {
+                    day.classList.add("PastiCours");
+                    
+                    if(typeClient==="adherent"){    
+                        day.addEventListener("click", () => {
+                            // requestClientCours(new Date(year, month+1, date));
+                            requestClientCours(year, month+1, day.innerHTML);
+                        });
+                    }
+                }
+
+                week.appendChild(day);
+                date++
+            }
+        }
+        calendrier.appendChild(week);
+    }
+}
 const currentDate = new Date();
 createCalendar(currentDate.getMonth(), currentDate.getFullYear());
 
