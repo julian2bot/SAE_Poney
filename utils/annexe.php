@@ -129,7 +129,7 @@ function getInfo(PDO $bdd, string $username): array{
         return $resultat;
     }
     else{
-        $reqUser = $bdd->prepare("SELECT * FROM CLIENT JOIN PERSONNE ON CLIENT.usernameClient = PERSONNE.username WHERE usernameClient = ?");
+        $reqUser = $bdd->prepare("SELECT * FROM CLIENT JOIN PERSONNE ON CLIENT.usernameClient = PERSONNE.username natural join obtention WHERE usernameClient = ?");
         $reqUser->execute(array($username));
         $userExist = $reqUser->rowCount();
         if($userExist == 1)
@@ -141,6 +141,7 @@ function getInfo(PDO $bdd, string $username): array{
             $resultat["dateInscription"] = $info["dateInscription"];
             $resultat["poid"] = $info["poidsClient"];
             $resultat["solde"] = $info["solde"];
+            $resultat["niveau"] = $info["idNiveau"];
             return $resultat;
         }                
     }

@@ -88,17 +88,19 @@ estConnecte();
                         
                         
                         <input type="hidden" name="dateDemandeCours" required id="dateDemandeCours" value=""/>
+                        <input type="hidden" name="niveau" required id="niveauAdherent" value="<?php echo $_SESSION["connecte"]["info"]["niveau"]?>"/>
                         
                         <label for="heureCours">Heure debut du cours</label>
                         <input type="time" required name="heureCours" id="heureCoursReserv"  min='01:00' max='23:00' step='1800' >
                         
                         <label for="heure">Nombre d'heure pour le cours:</label>
                         <select name="heure" class="heure" required>
-
+                            
                             <option value="1">1h</option>
                             <option value="2">2h</option>
                         </select>
-
+                        
+                        <textarea name="activiteDuCours" placeholder="J'aimerais faire un cours pour réviser ....." maxlength="200"></textarea>
 
                     <button id="ReserverValider" type="submit">Reserver</button>
 
@@ -112,3 +114,4 @@ estConnecte();
     <script src="../assets/script/reservationCarrousel.js"></script>
     <script src="../assets/script/demandeCours.js"></script>
 </html>
+
