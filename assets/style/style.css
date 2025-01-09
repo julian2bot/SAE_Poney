@@ -158,3 +158,9 @@ img {
     border-radius: 30px; 
     border: 1px solid #F8F3D8; 
 }
+
+
+
+td{
+    cursor: pointer;
+}

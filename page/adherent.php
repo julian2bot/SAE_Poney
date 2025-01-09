@@ -20,6 +20,7 @@ estConnecte();
     <link rel="stylesheet" href="../assets/style/styleSousPage.css">
     <link rel="stylesheet" href="../assets/style/calendrier.css">
     <link rel="stylesheet" href="../assets/style/coursCalendrier.css">
+    <link rel="stylesheet" href="../assets/style/calendrier.css">
     <script src="../assets/script/popUpGestionErr.js"></script>
 </head>
     
@@ -71,8 +72,8 @@ estConnecte();
                     <h2 id="month-display"></h2>
                     
                     <div id="calendar-container">
-                        <button id="prev-month">Mois Précédent</button>
-                        <button id="next-month">Mois Suivant</button>
+                        <button class="boutonsCalendrier" id="prev-month">Mois Précédent</button>
+                        <button class="boutonsCalendrier" id="next-month">Mois Suivant</button>
                         <div class="container-info-cal">
                             <div id="infoCours">
                                 <p >
@@ -82,6 +83,7 @@ estConnecte();
                             <table id="calendrier"></table>
                         </div>
                     </div>
+                    <a class="boutonsCalendrier" href="demandeCours.php">Demande de cours</a>
                 </section>
                 
                 <section class="droite-section droite">
