@@ -104,16 +104,40 @@ INSERT INTO PAYER (nomCotisation, periode, usernameClient) VALUES
 
 -- Insertion pour la table COURS
 INSERT INTO COURS (idCours, idNiveau, nomCours, duree, prix, nbMax) VALUES
-(1, 5, 'Initiation Galop 1', 1, 30, 10),
-(2, 6, 'Initiation Galop 2', 1, 35, 10),
-(3, 7, 'Perfectionnement Galop 3', 2, 40, 1),
-(4, 8, 'Stage Galop 4', 2, 45, 10),
-(5, 9, 'Cours Galop 5', 2, 50, 1),
-(6, 10, 'Cours Galop 6', 2, 60, 1),
-(7, 11, 'Cours Galop 7', 2, 70, 1),
-(8, 1, 'Cours Débutant', 1, 20, 10),
-(9, 3, 'Cours Confirmé', 1, 30, 10),
-(10, 4, 'Cours Avancé', 1, 35, 10);
+(1, 1, 'Cours perso niveau 1, 1h', 1, 30, 1),
+(2, 2, 'Cours perso niveau 2, 1h', 1, 30, 1),
+(3, 3, 'Cours perso niveau 3, 1h', 1, 30, 1),
+(4, 4, 'Cours perso niveau 4, 1h', 1, 30, 1),
+(5, 5, 'Cours perso niveau 5, 1h', 1, 30, 1),
+(6, 6, 'Cours perso niveau 6, 1h', 1, 30, 1),
+(7, 7, 'Cours perso niveau 7, 1h', 1, 30, 1),
+(8, 8, 'Cours perso niveau 8, 1h', 1, 30, 1),
+(9, 9, 'Cours perso niveau 9, 1h', 1, 30, 1),
+(10, 10, 'Cours perso niveau 10, 1h', 1, 30, 1),
+(11, 11, 'Cours perso niveau 11, 1h', 1, 30, 1),
+
+(12, 1, 'Cours perso niveau 1, 2h', 2, 60, 1),
+(13, 2, 'Cours perso niveau 2, 2h', 2, 60, 1),
+(14, 3, 'Cours perso niveau 3, 2h', 2, 60, 1),
+(15, 4, 'Cours perso niveau 4, 2h', 2, 60, 1),
+(16, 5, 'Cours perso niveau 5, 2h', 2, 60, 1),
+(17, 6, 'Cours perso niveau 6, 2h', 2, 60, 1),
+(18, 7, 'Cours perso niveau 7, 2h', 2, 60, 1),
+(19, 8, 'Cours perso niveau 8, 2h', 2, 60, 1),
+(20, 9, 'Cours perso niveau 9, 2h', 2, 60, 1),
+(21, 10, 'Cours perso niveau 10, 2h', 2, 60, 1),
+(22, 11, 'Cours perso niveau 11, 2h', 2, 60, 1),
+
+(23, 5, 'Initiation Galop 1', 1, 30, 10), -- 1
+(24, 6, 'Initiation Galop 2', 1, 35, 10), -- 2
+(25, 7, 'Perfectionnement Galop 3', 2, 40, 1), -- 3
+(26, 8, 'Stage Galop 4', 2, 45, 10), -- 4
+(27, 9, 'Cours Galop 5', 2, 50, 1), -- 5
+(28, 10, 'Cours Galop 6', 2, 60, 1), -- 6
+(29, 11, 'Cours Galop 7', 2, 70, 1), -- 7
+(30, 1, 'Cours Débutant', 1, 20, 10), -- 8
+(31, 3, 'Cours Confirmé', 1, 30, 10), -- 9
+(32, 4, 'Cours Avancé', 1, 35, 10); -- 10
 
 -- Insertion pour la table PONEY
 INSERT INTO PONEY (idPoney, nomPoney, poidsMax, photo, nomRace) VALUES
@@ -143,39 +167,39 @@ INSERT INTO DISPONIBILITE (usernameMoniteur, heureDebutDispo, dateDispo, heureFi
 
 -- Insertion dans la table REPRESENTATION
 INSERT INTO REPRESENTATION (idCours, usernameMoniteur, dateCours, heureDebutCours) VALUES
-(1, 'moniteur1', '2023-12-01', 10.0),
-(1, 'moniteur1', '2023-12-01', 11.0),
-(3, 'moniteur1', '2023-12-01', 14.0),
-(3, 'moniteur1', '2023-12-01', 18.0),
-(3, 'moniteur1', '2023-12-01', 21.0),
+(23, 'moniteur1', '2023-12-01', 10.0),
+(23, 'moniteur1', '2023-12-01', 11.0),
+(25, 'moniteur1', '2023-12-01', 14.0),
+(25, 'moniteur1', '2023-12-01', 18.0),
+(25, 'moniteur1', '2023-12-01', 21.0),
 
-(2, 'moniteur1', '2023-12-02', 11.0),
-(3, 'moniteur2', '2023-12-03', 9.5),
-(4, 'moniteur2', '2023-12-04', 10.5),
-(5, 'moniteur3', '2023-12-05', 11.0),
-(6, 'moniteur3', '2023-12-06', 14.0),
-(7, 'moniteur1', '2023-12-07', 15.0),
-(8, 'moniteur2', '2023-12-08', 16.0),
-(9, 'moniteur3', '2023-12-09', 17.0),
-(10, 'moniteur1', '2023-12-10', 18.0);
+(24, 'moniteur1', '2023-12-02', 11.0),
+(25, 'moniteur2', '2023-12-03', 9.5),
+(26, 'moniteur2', '2023-12-04', 10.5),
+(27, 'moniteur3', '2023-12-05', 11.0),
+(28, 'moniteur3', '2023-12-06', 14.0),
+(29, 'moniteur1', '2023-12-07', 15.0),
+(30, 'moniteur2', '2023-12-08', 16.0),
+(31, 'moniteur3', '2023-12-09', 17.0),
+(32, 'moniteur1', '2023-12-10', 18.0);
 
 -- Insertion dans la table RESERVATION
 INSERT INTO RESERVATION (idCours, usernameMoniteur, dateCours, heureDebutCours, usernameClient, idPoney) VALUES
-(1, 'moniteur1', '2023-12-01', 10.0, 'client1', 1),
-(1, 'moniteur1', '2023-12-01', 11.0, 'client1', 1),
-(3, 'moniteur1', '2023-12-01', 14.0, 'client1', 1),
-(3, 'moniteur1', '2023-12-01', 18.0, 'client1', 1),
+(23, 'moniteur1', '2023-12-01', 10.0, 'client1', 1),
+(23, 'moniteur1', '2023-12-01', 11.0, 'client1', 1),
+(25, 'moniteur1', '2023-12-01', 14.0, 'client1', 1),
+(25, 'moniteur1', '2023-12-01', 18.0, 'client1', 1),
 -- (3, 'moniteur1', '2023-12-01', 21.0, 'client1', 1), Censé passé
 
-(2, 'moniteur1', '2023-12-02', 11.0, 'client2', 2),
-(3, 'moniteur2', '2023-12-03', 9.5, 'client3', 3),
-(4, 'moniteur2', '2023-12-04', 10.5, 'client4', 4),
-(5, 'moniteur3', '2023-12-05', 11.0, 'client5', 5),
-(6, 'moniteur3', '2023-12-06', 14.0, 'client6', 6),
-(7, 'moniteur1', '2023-12-07', 15.0, 'client7', 7),
-(8, 'moniteur2', '2023-12-08', 16.0, 'client8', 8),
-(9, 'moniteur3', '2023-12-09', 17.0, 'client9', 9),
-(10, 'moniteur1', '2023-12-10', 18.0, 'client10', 10);
+(24, 'moniteur1', '2023-12-02', 11.0, 'client2', 2),
+(25, 'moniteur2', '2023-12-03', 9.5, 'client3', 3),
+(26, 'moniteur2', '2023-12-04', 10.5, 'client4', 4),
+(27, 'moniteur3', '2023-12-05', 11.0, 'client5', 5),
+(28, 'moniteur3', '2023-12-06', 14.0, 'client6', 6),
+(29, 'moniteur1', '2023-12-07', 15.0, 'client7', 7),
+(30, 'moniteur2', '2023-12-08', 16.0, 'client8', 8),
+(31, 'moniteur3', '2023-12-09', 17.0, 'client9', 9),
+(32, 'moniteur1', '2023-12-10', 18.0, 'client10', 10);
 
 
 
