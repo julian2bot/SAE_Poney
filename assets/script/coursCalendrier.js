@@ -1,19 +1,29 @@
 // dans le fichier il y a toute la gestion des calendriers (affichage + gestion serveur client)
+let abortControllerClient = null;
+let abortControllerMoniteur = null;
 
 
-function requestClientCours(date) {
-    const xhr = new XMLHttpRequest();
+
+function requestClientCours(year, month, day) {
+    if (abortControllerClient) {
+        abortControllerClient.abort();
+    }
+    // Créer un nouveau contrôleur pour la nouvelle requête
+    abortControllerClient = new AbortController();
+
+    const signal = abortControllerClient.signal;
+
     
+    const xhr = new XMLHttpRequest();
     // Configurer la requête GET
-    xhr.open('GET', `../utils/getCoursByDate.php?date=${date.getFullYear()+'-'+(date.getMonth()+1)+'-'+date.getDate()}`, true);
+    xhr.open('GET', `../utils/getCoursByDateEntiere.php?date=${year+'-'+month+'-'+day}`, true);
     
     // Définir une fonction de callback pour gérer la réponse
     xhr.onreadystatechange = function() {
         if (xhr.readyState === 4 && xhr.status === 200) {
             // Manipuler les données de la réponse (par exemple, afficher les résultats)
             const response = JSON.parse(xhr.responseText);
-            console.log(response); // Affiche les résultats dans la console
-            // Par exemple, mettre à jour un élément HTML avec les résultats
+
             const lesInfos = document.getElementById("infoCours"); 
 
             while (lesInfos.firstChild) {
@@ -62,7 +72,7 @@ function requestClientCours(date) {
                 let nomCoursP = document.createElement("p");
                 heureDebutCours.innerHTML = unCours.heureDebutCours +' - '+ (unCours.heureDebutCours + unCours.duree); 
                 nomCoursP.innerHTML = unCours.nomCours ? unCours.nomCours : "Cours poney"; 
-                divInfo.appendChild(heureDebutCours);
+                divInfo.appendChild(heureDebutCours); 
                 lesInfos.appendChild(divInfo);
 
                 
@@ -74,7 +84,6 @@ function requestClientCours(date) {
                 });
 
 
-                console.log(unCours);
             });
 
         }
@@ -83,23 +92,32 @@ function requestClientCours(date) {
     // Envoyer la requête
     xhr.send();
 
-    console.log(date.getFullYear()+'-'+(date.getMonth()+1)+'-'+date.getDate());
     
 }
 
-function requestMiniteurCours(date) {
+function requestMoniteurCours(year, month, day) {
+
+    if (abortControllerMoniteur) {
+        abortControllerMoniteur.abort();
+    }
+    // Créer un nouveau contrôleur pour la nouvelle requête
+    abortControllerMoniteur = new AbortController();
+
+    const signal = abortControllerMoniteur.signal;
+
+    
     const xhr = new XMLHttpRequest();
     
     // Configurer la requête GET
-    xhr.open('GET', `../utils/getCoursByDate.php?date=${date.getFullYear()+'-'+(date.getMonth()+1)+'-'+date.getDate()}`, true);
-    
+    xhr.open('GET', `../utils/getMoniteurACoursOuPas.php?date=${year+'-'+month+'-'+day}&username=${username.value}`, true);
+
     // Définir une fonction de callback pour gérer la réponse
     xhr.onreadystatechange = function() {
         if (xhr.readyState === 4 && xhr.status === 200) {
             // Manipuler les données de la réponse (par exemple, afficher les résultats)
             const response = JSON.parse(xhr.responseText);
-            console.log(response); // Affiche les résultats dans la console
-            // Par exemple, mettre à jour un élément HTML avec les résultats
+
+
             const lesInfos = document.getElementById("infoCours"); 
 
             while (lesInfos.firstChild) {
@@ -115,11 +133,6 @@ function requestMiniteurCours(date) {
                 lesInfos.appendChild(dateDuCours);
             }
 
-
-
-
-            
-            
             response.forEach(unCours => {
 
                 let divInfo = document.createElement("div");
@@ -137,12 +150,10 @@ function requestMiniteurCours(date) {
                 
                 divInfo.addEventListener("click", function() {
                     alert(`Vous avez cliqué sur le cours du ${unCours.dateCours} à ${unCours.heureDebutCours} avec le moniteur: ${unCours.heureDebutCours} le cours dur ${unCours.duree}h `);
-                    // location.href = `./reserverCours.php?idcours=${unCours.idCours}&dateCours=${unCours.dateCours}&heureCours=${unCours.heureDebutCours}`
                 });
 
 
                 
-                console.log(unCours);
             });
             
             let aCreerCoursDIv = document.createElement("div");
@@ -150,7 +161,7 @@ function requestMiniteurCours(date) {
             let aCreerCours = document.createElement("a");
             aCreerCours.classList.add("addCours");
             aCreerCours.innerHTML= '+';
-            aCreerCours.href= `creerCours.php?date=${date.getFullYear()+'-'+(date.getMonth()+1)+'-'+date.getDate()}`; // TODO
+            aCreerCours.href= `creerCours.php?date=${year+'-'+month+'-'+day}`; // TODO
 
             aCreerCoursDIv.appendChild(aCreerCours);
             lesInfos.appendChild(aCreerCoursDIv);
@@ -160,31 +171,35 @@ function requestMiniteurCours(date) {
     // Envoyer la requête
     xhr.send();
 
-    console.log(date.getFullYear()+'-'+(date.getMonth()+1)+'-'+date.getDate());
     
 }
 
-function getMoniteurACoursOuPas(date){
+function getMoniteurACoursOuPas(date) {
+    if (abortControllerMoniteur) {
+        abortControllerMoniteur.abort();
+    }
+
+    // Créer un nouveau contrôleur
+    abortControllerMoniteur = new AbortController();
+    const signal = abortControllerMoniteur.signal;
+
     return new Promise((resolve, reject) => {
         const xhr = new XMLHttpRequest();
-        
         const username = document.getElementById("username");
-        console.log(username.value);
+
         // Configurer la requête GET
-        xhr.open('GET', `../utils/getMoniteurACoursOuPas.php?date=${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}&username=${username.value}`, true);
-        
+        xhr.open('GET', `../utils/getCoursByDateMoniteur.php?year=${date.getFullYear()}&month=${date.getMonth()+1}&username=${username.value}`, true);
+
         xhr.onreadystatechange = function() {
             if (xhr.readyState === 4) {
                 if (xhr.status === 200) {
                     const response = JSON.parse(xhr.responseText);
-
-                    if (response.length === 0) {
-                        console.log("Pas de cours le " + date);
-                        resolve(true);
+                    if (Array.isArray(response)) {
+                        resolve(response);
                     } else {
-                        console.log("Cours prévu le " + date);
-                        resolve(false);
+                        reject("Réponse inattendue du serveur : " + JSON.stringify(response));
                     }
+
                 } else {
                     reject(`Erreur : ${xhr.status}`);
                 }
@@ -194,29 +209,35 @@ function getMoniteurACoursOuPas(date){
         
         // Envoyer la requête
         xhr.send();
-        console.log(date.getFullYear()+'-'+(date.getMonth()+1)+'-'+date.getDate());
     });
+    
 }
 
-function getYaUnCoursOuPas(date) {
+function getCoursClientByDate(date) {
+    if (abortControllerClient) {
+        abortControllerClient.abort();
+    }
+
+    // Créer un nouveau contrôleur
+    abortControllerClient = new AbortController();
+    const signal = abortControllerClient.signal;
+
     return new Promise((resolve, reject) => {
         const xhr = new XMLHttpRequest();
         
         // Configurer la requête GET
-        xhr.open('GET', `../utils/getCoursByDate.php?date=${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`, true);
+        xhr.open('GET', `../utils/getCoursByDate.php?year=${date.getFullYear()}&month=${date.getMonth() + 1}`, true);
         
         xhr.onreadystatechange = function() {
             if (xhr.readyState === 4) {
                 if (xhr.status === 200) {
                     const response = JSON.parse(xhr.responseText);
-
-                    if (response.length === 0) {
-                        console.log("Pas de cours le " + date);
-                        resolve(true);
+                    if (Array.isArray(response)) {
+                        resolve(response);
                     } else {
-                        console.log("Cours prévu le " + date);
-                        resolve(false);
+                        reject("Réponse inattendue du serveur : " + JSON.stringify(response));
                     }
+
                 } else {
                     reject(`Erreur : ${xhr.status}`);
                 }
@@ -226,7 +247,6 @@ function getYaUnCoursOuPas(date) {
         
         // Envoyer la requête
         xhr.send();
-        console.log(date.getFullYear()+'-'+(date.getMonth()+1)+'-'+date.getDate());
     });
     
 }
@@ -249,6 +269,7 @@ function getMonthName(month) {
 
 
 function createCalendar(month, year){
+
     const calendrier = document.getElementById("calendrier");
     const monthDisplay = document.getElementById("month-display");
 
@@ -273,8 +294,48 @@ function createCalendar(month, year){
     header.appendChild(headerRow);
     calendrier.appendChild(header);
     
-    let yaCours = false;
-    
+    if(document.getElementById("clientmoniteur").value === "moniteur"){
+        
+        // partie moniteur
+        getMoniteurACoursOuPas(new Date(year, month, 1))
+        .then((coursDuMois) => {
+
+            const coursMap = new Map();
+            coursDuMois.forEach(cours => {
+                const date = new Date(cours.dateCours).getDate();
+                coursMap.set(date, cours);
+            });
+
+            calendrierGraphiqueCreation(calendrier, year, month, date, daysInMonth, coursMap, "moniteur");
+
+        
+
+
+        })
+        .catch(error => console.error(error));
+    }
+
+    else{
+        // partie client
+        getCoursClientByDate(new Date(year, month, 1))
+        .then((coursDuMois) => {
+            const coursMap = new Map();
+            coursDuMois.forEach(cours => {
+                const date = new Date(cours.dateCours).getDate();
+                coursMap.set(date, cours);
+            });
+            calendrierGraphiqueCreation(calendrier, year, month, date, daysInMonth, coursMap, "adherent");
+            
+
+
+        })
+        .catch(error => console.error(error));
+
+    }
+}
+function calendrierGraphiqueCreation(calendrier, year, month, date,daysInMonth, coursMap, typeClient){
+
+
     for (let i = 0; i < 6; i++) {
 
         let week = document.createElement("tr");
@@ -294,45 +355,22 @@ function createCalendar(month, year){
             else{
                 let day = document.createElement('td');
                 day.innerHTML = date;
-                // yaCours = getYaUnCoursOuPas(new Date(year, month, day.innerHTML));
-                // console.log(yaCours);
-                if(document.getElementById("clientmoniteur").value === "moniteur"){
-                    getMoniteurACoursOuPas(new Date(year, month, day.innerHTML))
-                    .then(result => {
-                        if (!result) {
-                            day.classList.add("PastiCours");
-                        } 
-                        // else {
-                        // }
-                    })
-                    .catch(error => console.error(error));
+                if(typeClient==="moniteur"){    
+                    day.addEventListener("click", () => {
+
+                        requestMoniteurCours(year, month+1, day.innerHTML);
+                    });                }
+                if (coursMap.has(date)) {
+                    day.classList.add("PastiCours");
                     
-                    day.addEventListener("click", function() {
-                        // alert(`Vous avez cliqué sur le ${day.innerHTML}`);
-                        // requestClientCours(new Date(year, month, day.innerHTML));
-                        // TODO
-                        requestMiniteurCours(new Date(year, month, day.innerHTML));
-
-                    });
+                    if(typeClient==="adherent"){    
+                        day.addEventListener("click", () => {
+                            // requestClientCours(new Date(year, month+1, date));
+                            requestClientCours(year, month+1, day.innerHTML);
+                        });
+                    }
                 }
-                else{
 
-                    getYaUnCoursOuPas(new Date(year, month, day.innerHTML))
-                    .then(result => {
-                        if (!result) {
-                            day.classList.add("PastiCours");
-                            // console.log("Pas de cours");
-                        } 
-                        // else {
-                        // }
-                    })
-                    .catch(error => console.error(error));
-
-                    day.addEventListener("click", function() {
-                        // alert(`Vous avez cliqué sur le ${day.innerHTML}`);
-                        requestClientCours(new Date(year, month, day.innerHTML));
-                    });
-                }
                 week.appendChild(day);
                 date++
             }
@@ -340,7 +378,6 @@ function createCalendar(month, year){
         calendrier.appendChild(week);
     }
 }
-
 const currentDate = new Date();
 createCalendar(currentDate.getMonth(), currentDate.getFullYear());
 
@@ -348,6 +385,9 @@ currentMonth = currentDate.getMonth();
 currentYear = currentDate.getFullYear();
 
 document.getElementById("prev-month").addEventListener("click", function() {
+    if (abortControllerClient) abortControllerClient.abort();
+    if (abortControllerMoniteur) abortControllerMoniteur.abort();
+
     if (currentMonth === 0) {
         currentMonth = 11; // Décembre
         currentYear--;
@@ -358,6 +398,9 @@ document.getElementById("prev-month").addEventListener("click", function() {
 });
 
 document.getElementById("next-month").addEventListener("click", function() {
+    if (abortControllerClient) abortControllerClient.abort();
+    if (abortControllerMoniteur) abortControllerMoniteur.abort();
+
     if (currentMonth === 11) {
         currentMonth = 0; // Janvier
         currentYear++;
