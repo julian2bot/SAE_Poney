@@ -18,11 +18,11 @@ td {
     transition: transform 0.3s ease, z-index 0.3s ease; 
     text-align: center;
 }
-#calendrier{
+#calendrier, #calendrier-disponibilite{
     border-collapse: collapse;
     border: none;
 }
-#calendrier td {
+#calendrier td , #calendrier-disponibilite td{
     border: none;
 
     height: inherit;
@@ -33,9 +33,10 @@ td {
     padding: 10px; /* Ajoute de l'espace autour du texte */
     transition: transform 0.3s ease, z-index 0.3s ease;
     text-align: center;
+    cursor: pointer;
 }
 
-#calendrier *{
+#calendrier *, #calendrier-disponibilite *{
     padding:15px;
 }
 

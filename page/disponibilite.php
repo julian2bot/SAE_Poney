@@ -20,7 +20,8 @@ estConnecte();
     <body>
         <header>
             <h1>GRAND GALOP</h1>
-            <nav>
+            <h2>Ajouter une disponibilité</h2>
+            <nav class="navDispo">
             <ul>
                 <li>
                     <a href="moniteur.php">Retour</a>
@@ -34,9 +35,21 @@ estConnecte();
             <section class="gauche-section disponible">
                 <form method="POST" action="../utils/ajoutDisponibilite.php">
                     <?php
-                        $date = new DateTime();
-                        $result = $date->format('Y-m-d');
-                        echo "<input type='date' value=$result min=$result name='dateDispo' id='dateDispo' required>"
+                        if(isset($_GET["date"])){
+                            $date = new DateTime();
+                            $resultMin = $date->format('Y-m-d');
+                            $date = date_create_from_format("Y-m-d",$_GET["date"]);
+                            $result = $date->format('Y-m-d');
+                            if ($result < $resultMin){
+                                $result = $resultMin;
+                            }
+                        }
+                        else{
+                            $date = new DateTime();
+                            $result = $date->format('Y-m-d');
+                            $resultMin = $date->format('Y-m-d');
+                        }
+                        echo "<input type='date' value=$result min=$resultMin name='dateDispo' id='dateDispo' required>"
                     ?>
                     <input type="time" min="01:00" max="23:00" step="1800" name="heureDebut" id="heureDebut" required>
                     <input type="time" min="01:00" max="23:00" step="1800" name="heureFin" id="heureFin" required>

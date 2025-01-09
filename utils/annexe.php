@@ -243,6 +243,38 @@ function getMoniteur(PDO $bdd):array{
 }
 
 /**
+  * Renvoie une dispo particulière
+  *
+  * @param PDO la base de donnée, 
+  * @param string usrname nom moniteur 
+  * @param string $day date  
+  * @param string startTime heure de début dispo  
+  *
+  * @return array la dispo
+  */
+function getDispo(PDO $bdd, string $username, string $day, string $startTime):array{
+    $reqUser = $bdd->prepare("SELECT * FROM DISPONIBILITE WHERE usernameMoniteur = ? AND dateDispo = ? AND heureDebutDispo = ?");
+    $reqUser->execute([$username,$day, $startTime]);
+    $info = $reqUser->fetch();
+    return $info;
+}
+
+/**
+  * Renvoie les dispo pour une journée
+  *
+  * @param PDO la base de donnée, 
+  * @param string usrname nom moniteur 
+  * @param string $day date  
+  *
+  * @return array les dispos
+  */  
+function getDispoDay(PDO $bdd, string $username, string $day):array{
+    $reqUser = $bdd->prepare("SELECT * FROM DISPONIBILITE WHERE usernameMoniteur = ? AND dateDispo = ?");
+    $reqUser->execute([$username,$day]);
+    $info = $reqUser->fetchAll();
+    return $info;
+}
+/**
   * verifie l'existance du mail de la bd
   *
   * @param PDO la base de donnée, 
@@ -251,6 +283,7 @@ function getMoniteur(PDO $bdd):array{
   * @return bool si le mail existe renvoie true, false sinon
   */  
 function existMail(PDO $bdd, string $mail) : bool{
+
     $reqMail = $bdd->prepare("SELECT * FROM PERSONNE WHERE mail = ?");
     $reqMail->execute(array($mail));
     return $reqMail->rowCount() >=1;
@@ -274,15 +307,87 @@ function existUsername(PDO $bdd, string $username) : bool{
   * verifie l'existance d'une dispo
   *
   * @param PDO la base de donnée, 
-  * @param string usrname nom client 
+  * @param string usrname nom moniteur 
   * @param string $day date  
   *
   * @return bool si la dispo existe renvoie true, false sinon
   */  
-function existDateDispoDay($bdd,$username, $day):bool{
+function existDateDispoDay(PDO $bdd,string $username,string  $day):bool{
     $reqMail = $bdd->prepare("SELECT * FROM DISPONIBILITE WHERE usernameMoniteur = ? AND dateDispo = ?");
     $reqMail->execute(array($username,$day));
     return $reqMail->rowCount() >=1;
+}
+
+
+/**
+  * Renvoie si il y a un chevauchement entre deux période horaire
+  *
+  * @param PDO la base de donnée, 
+  * @param string $heureDebut heure de début période 1 
+  * @param string $heureFin heure de fin période 1   
+  * @param string $heureDebut2 heure de début période 2
+  * @param string $heureFin2 heure de fin période 2
+  *
+  * @return bool chevauchement
+  */  
+function chevauchementHeure(PDO $heureDebut,string $heureFin,string $heureDebut2,string $heureFin2): bool {
+    $debut1 = strtotime($heureDebut);
+    $fin1 = strtotime($heureFin);
+    $debut2 = strtotime($heureDebut2);
+    $fin2 = strtotime($heureFin2);
+
+    return $debut1 <= $fin2 && $debut2 <= $fin1;
+}
+
+/**
+  * verifie si la dispo donné entre en conflit avec celles existantes
+  *
+  * @param PDO la base de donnée, 
+  * @param string usrname nom moniteur 
+  * @param string $day date  
+  * @param string $heureDebut heure de début période
+  * @param string $heureFin heure de fin période
+  * @param string $heureDebutEviter heure de début à éviter (pour la modification)
+  *
+  * @return bool si la dispo donné entre en conflit avec celles existantes
+  */  
+function existDateDispoConflit(PDO $bdd,string $username,string $day,string $heureDebut,string $heureFin,string $heureDebutEviter = ""){
+    $dispoDay = getDispoDay($bdd,$username, $day);
+    foreach ($dispoDay as $dispo) {
+        if(($heureDebutEviter == "" || $heureDebutEviter != $dispo["heureDebutDispo"]) && chevauchementHeure($heureDebut, $heureFin, $dispo["heureDebutDispo"], $dispo["heureFinDispo"])){
+            echo $heureDebutEviter, $dispo["heureDebutDispo"], "<br>";
+            return true;
+        }
+    }
+    return false;
+}
+
+/**
+  * Transforme les heures au format "00:00" en float 0.0
+  *
+  * @param string heure au format "00:00", 
+  *
+  * @return float la version float
+  */  
+function convertTimeToFloat(string $time):float{
+    $timeList = explode(':', $time);
+    return (int)$timeList[0] + ($timeList[1] == "30" ? 0.5 : 0);
+}
+
+/**
+  * Transforme les float 0.0 au format "00:00" 
+  *
+  * @param float temps 
+  *
+  * @return string heure au format "00:00"
+  */  
+function convertFloatToTime(float $time):string{
+    $whole = (string)floor($time); 
+    $fraction = $time - $whole;
+    if(strlen($whole)<2){
+        $whole = str_pad($whole,2,"0",STR_PAD_LEFT);
+    }
+    return implode(array($whole, ":", ($fraction == 0.5 ? "30" : "00")));
 }
 
 /**
