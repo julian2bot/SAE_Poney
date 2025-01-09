@@ -187,6 +187,23 @@ ADD CONSTRAINT usernameClientReservation_fk FOREIGN KEY (usernameClient)
 REFERENCES CLIENT(usernameClient)
 ON UPDATE CASCADE;
 
+CREATE TABLE DEMANDECOURS(
+    usernameClient VARCHAR(32), -- cle etrangere ==> username
+    idCours INT, -- cle etrangere ==> cours
+    idPoney INT, -- cle etrangere ==> cours
+    dateCours DATE,
+    heureDebutCours DECIMAL(3,1),
+    demande VARCHAR(200),
+
+    PRIMARY KEY (usernameClient,idCours,dateCours,heureDebutCours),
+    FOREIGN KEY (idCours) REFERENCES COURS (idCours),
+    FOREIGN KEY (idPoney) REFERENCES PONEY (idPoney)
+);
+
+ALTER TABLE DEMANDECOURS
+ADD CONSTRAINT usernameClientDEmande_fk FOREIGN KEY (usernameClient)
+REFERENCES CLIENT(usernameClient)
+ON UPDATE CASCADE;
 
 --  pour debug
 
