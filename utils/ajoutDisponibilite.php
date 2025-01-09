@@ -19,11 +19,6 @@ if(($_SESSION["connecte"]["role"] === "moniteur" || $_SESSION["connecte"]["role"
         exit;
     }
     else{
-        // echo "<pre>";
-        // print_r($_POST);
-        // echo convertTimeToFloat($_POST["heureDebut"])."<br>";
-        // echo convertTimeToFloat($_POST["heureFin"]);
-        // echo "</pre>";
 
         $heureDebut = convertTimeToFloat($_POST["heureDebut"]);
         $heureFin = convertTimeToFloat($_POST["heureFin"]);

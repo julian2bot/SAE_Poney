@@ -189,16 +189,16 @@ function chevauchementHeure($heureDebut, $heureFin, $heureDebut2, $heureFin2): b
     return $debut1 <= $fin2 && $debut2 <= $fin1;
 }
 
-function existDateDispoConflit($bdd,$username, $day, $heureDebut, $heureFin){
+function existDateDispoConflit($bdd,$username, $day, $heureDebut, $heureFin, $heureDebutEviter = ""){
     $dispoDay = getDispoDay($bdd,$username, $day);
     foreach ($dispoDay as $dispo) {
-        if(chevauchementHeure($heureDebut, $heureFin, $dispo["heureDebutDispo"], $dispo["heureFinDispo"])){
+        if(($heureDebutEviter == "" || $heureDebutEviter != $dispo["heureDebutDispo"]) && chevauchementHeure($heureDebut, $heureFin, $dispo["heureDebutDispo"], $dispo["heureFinDispo"])){
+            echo $heureDebutEviter, $dispo["heureDebutDispo"], "<br>";
             return true;
         }
     }
     return false;
 }
-
 
 function convertTimeToFloat(string $time):float{
     $timeList = explode(':', $time);
