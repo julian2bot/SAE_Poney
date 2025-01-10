@@ -34,6 +34,8 @@ estConnecte();
     
     <link rel="stylesheet" href="../assets/style/coursCalendrier.css">
     <link rel="stylesheet" href="../assets/style/calendrier.css">
+    <link rel="stylesheet" href="../assets/style/styleSousPage.css">
+    <script src="../assets/script/popUpGestionErr.js"></script>
 </head>
     <body>
         <header>
@@ -108,8 +110,18 @@ estConnecte();
 
         </main>
     </body>
+    <?php
+    if(isset($_SESSION["popUp"])){
+        echo "<script type='text/javascript'>
+                showPopUp(\"".$_SESSION["popUp"]["message"]."\",".($_SESSION["popUp"]["success"] ? "true" : "false").");
+              </script>";
+        unset($_SESSION["popUp"]);
+    }
+    ?>
     
     <script src="../assets/script/reservationCarrousel.js"></script>
     <script src="../assets/script/demandeCours.js"></script>
+
+    
 </html>
 
