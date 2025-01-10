@@ -130,4 +130,18 @@ document.getElementById("ReserverValider").addEventListener("click", function(ev
         alert("Veuillez remplir la date.");
         event.preventDefault(); // Empêche la soumission du formulaire
     }
+    else if(!checkRadioSelected()){
+        alert("Veuillez sélectionner un poney.");
+        event.preventDefault(); // Empêche la soumission du formulaire
+    }
 });
+
+function checkRadioSelected(){
+    let lesRadios = document.getElementsByName("poneySelectionne");
+    for (const rad of lesRadios) {
+        if(rad.checked){
+            return true;
+        }
+    }
+    return false;
+}
