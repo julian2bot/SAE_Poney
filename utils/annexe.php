@@ -124,6 +124,12 @@ function getMail(PDO $bdd, string $username):string{
 	return $reqUser->fetch()["mail"];
 }
 
+function getPersonne(PDO $bdd, string $username):array{
+    $reqUser = $bdd->prepare("SELECT * FROM PERSONNE WHERE username = ?");
+	$reqUser->execute(array($username));
+	return $reqUser->fetch();
+}
+
 /**
  * get le role d'un utilisateur
  *
@@ -268,6 +274,13 @@ function getCoursPerso(PDO $bdd, string $idNiveau, string $duree): array
 {
 	$reqUser = $bdd->prepare("SELECT * FROM COURS WHERE idNiveau = ? AND duree = ? AND nomCours LIKE ?");
 	$reqUser->execute(array($idNiveau, $duree, "Cours perso%"));
+	$info = $reqUser->fetch();
+	return $info;
+}
+
+function getCours(PDO $bdd, int $idCours):array{
+    $reqUser = $bdd->prepare("SELECT * FROM COURS WHERE idCours = ?");
+	$reqUser->execute(array($idCours));
 	$info = $reqUser->fetch();
 	return $info;
 }
@@ -759,12 +772,6 @@ require __DIR__ . '/../PHPMailer/src/SMTP.php';
  * @return bool true si le mail est envoyer, false sinon
  */
 function mailClientDemandeCours($sendingEmail, $email, $username, $object, $dateDemandeCours, $heureCours, $dureeCours, $activiteDuCours):bool{
-    $mdp = fopen( __DIR__ . '/passMail.csv', 'r');
-    if (!feof($mdp)) {
-        $ligne = fgets($mdp);
-    }
-    fclose($mdp);
-
     $mail = new PHPMailer(true);
     try {
         // Paramètres du serveur
@@ -902,12 +909,6 @@ function mailClientDemandeCours($sendingEmail, $email, $username, $object, $date
  * @return bool true si le mail est envoyer, false sinon
  */
 function mailClientDemandeCoursConfirme( $sendingEmail, $email, $username, $object, $dateDemandeCours, $heureCours, $dureeCours, $activiteDuCours):bool{
-    $mdp = fopen( __DIR__ . '/passMail.csv', 'r');
-    if (!feof($mdp)) {
-        $ligne = fgets($mdp);
-    }
-    fclose($mdp);
-
     $mail = new PHPMailer(true);
     try {
         // Paramètres du serveur
@@ -929,7 +930,7 @@ function mailClientDemandeCoursConfirme( $sendingEmail, $email, $username, $obje
         $mail->addAddress($email);
         
         // Contenu
-        $mail->addEmbeddedImage('../assets/images/poney/flocon.jpg', 'image_cid');
+        // $mail->addEmbeddedImage('../assets/images/poney/flocon.jpg', 'image_cid');
 
         $mail->isHTML(true);            
         $mail->CharSet = 'UTF-8';           
@@ -1021,10 +1022,10 @@ function mailClientDemandeCoursConfirme( $sendingEmail, $email, $username, $obje
         return true;
     } catch (Exception $e) {
         // echo "<pre>";
-        // print_r($e);
-        // echo "</pre>";
+        print_r($e);
+        echo "</pre>";
 
-        // echo "Erreur lors de l'envoi du mail : ", $mail->ErrorInfo;
+        echo "Erreur lors de l'envoi du mail : ", $mail->ErrorInfo;
 
         return false;
 
@@ -1041,12 +1042,6 @@ function mailClientDemandeCoursConfirme( $sendingEmail, $email, $username, $obje
  * @return bool true si le mail est envoyer, false sinon
  */
 function mailMoniteurDemandeCoursConfirme($sendingEmail, $email, $moniteurName, $username, $object, $dateDemandeCours, $heureCours, $dureeCours, $activiteDuCours):bool{
-    $mdp = fopen( __DIR__ . '/passMail.csv', 'r');
-    if (!feof($mdp)) {
-        $ligne = fgets($mdp);
-    }
-    fclose($mdp);
-
     $mail = new PHPMailer(true);
     try {
         // Paramètres du serveur
@@ -1119,7 +1114,7 @@ function mailMoniteurDemandeCoursConfirme($sendingEmail, $email, $moniteurName, 
                         <div class='content'>
                             <p>Bonjour $moniteurName,</p>
                             <p>
-                                Une demande de cours a été confirmée et est assignée à vous. Voici les détails :
+                                Une demande de cours a été confirmée et vous est assignée. Voici les détails :
                             </p>
                             <ul>
                                 <li><strong>Date :</strong> ".$dateDemandeCours."</li>

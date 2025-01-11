@@ -58,10 +58,11 @@ isset($_POST["heure"])){
     // Envoyer mail
     
     // $email = "marquesjulian26@gmail.com";
-    $email = getMail($bdd,$_POST["usernameClient"]);
+    $leClient = getPersonne($bdd, $_POST["usernameClient"]);
+    $email = $leClient["mail"];
     $object = "[SAE PONEY] Cours du ".$_POST["dateDemandeCours"]." à ".$_POST["heureCours"]."h";
 
-    $username= $_POST["usernameClient"];
+    $username= strtoupper($leClient["nomPersonne"])." ".$leClient["prenomPersonne"];
     $dateDemandeCours= $_POST["dateDemandeCours"];
     $heureCours= $_POST["heureCours"];
     $dureeCours= $_POST["heure"];

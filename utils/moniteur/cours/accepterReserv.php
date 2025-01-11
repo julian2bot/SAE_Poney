@@ -55,8 +55,28 @@ isset($_GET["usernameMoniteur"])){
 
     // Mails
 
-    if(mailClientDemandeCoursConfirme(SENDINGEMAIL, $email, $username, $objectConfirmation, $dateDemandeCours, $heureCours, $dureeCours, $activiteDuCours)
-        && mailMoniteurDemandeCoursConfirme(SENDINGEMAIL, $email, $moniteurName, $username, $objectConfirmationMoniteur, $dateDemandeCours, $heureCours, $dureeCours, $activiteDuCours)){
+    $leCours = getCours($bdd,(int)$_GET["idCours"]);
+
+    $leClient = getPersonne($bdd, $_GET["userClient"]);
+    $leMoniteur = getPersonne($bdd, $_GET["usernameMoniteur"]);
+
+    // $object = "[SAE PONEY] Cours du ".$_POST["dateDemandeCours"]." à ".$_POST["heureCours"]."h";
+    $objectConfirmation = "[SAE PONEY] Votre demande de cours a été accepté";
+    $objectConfirmationMoniteur = "[SAE PONEY] Vous avez bien validé une demande de cours";
+    $emailClient = getMail($bdd, $_GET["userClient"]);
+    $emailMoniteur = getMail($bdd, $_GET["usernameMoniteur"]);
+    // $emailClient = "slyjack999@gmail.com";
+    // $emailMoniteur = "mathevet.chris@gmail.com";
+    $nomMoniteur = strtoupper($leMoniteur["nomPersonne"])." ".$leMoniteur["prenomPersonne"];
+    $nomClient = strtoupper($leClient["nomPersonne"])." ".$leClient["prenomPersonne"];
+
+    $dateDemandeCours= $_GET["dateCours"];
+    $heureCours= convertFloatToTime((float)$_GET["heureDebutCours"]);
+    $dureeCours= $leCours["duree"];
+    $activiteDuCours= "Cours personnel : $cours[demande]";
+
+    if(mailClientDemandeCoursConfirme(SENDINGEMAIL, $emailClient, $nomClient, $objectConfirmation, $dateDemandeCours, $heureCours, $dureeCours, $activiteDuCours)
+        && mailMoniteurDemandeCoursConfirme(SENDINGEMAIL, $emailMoniteur, $nomMoniteur, $_GET["usernameMoniteur"], $objectConfirmationMoniteur, $dateDemandeCours, $heureCours, $dureeCours, $activiteDuCours)){
         echo "mail confirme envoyer";
         createPopUp("La demande de cours a bien était accepté, mails de comfirmation envoyées");
     }
@@ -65,6 +85,6 @@ isset($_GET["usernameMoniteur"])){
     }
     
 }
-header("Location: ../../../page/gestionReserv.php");
-exit;
+// header("Location: ../../../page/gestionReserv.php");
+// exit;
 ?>
