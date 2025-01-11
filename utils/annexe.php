@@ -721,10 +721,11 @@ function updateMoniteur(PDO $bdd, string $oldUsername, string $username, string 
  * get les reservations de la bd
  *
  * @param PDO la base de donnée, 
+ * @param int $niveau du cours
  *
  * @return array les poneys
  */
-function getReserv($bdd, $niveau)
+function getReserv(PDO $bdd, int $niveau): array
 {
 	$reqUser = $bdd->prepare("SELECT * FROM DEMANDECOURS NATURAL JOIN PONEY NATURAL JOIN COURS where idNiveau <= ?");
 	$reqUser->execute([$niveau]);
@@ -743,7 +744,14 @@ require __DIR__ . '/../PHPMailer/src/PHPMailer.php';
 require __DIR__ . '/../PHPMailer/src/SMTP.php';
 
 
-
+/**
+ * envoie un email au client
+ *
+ * @param string ..... info du client 
+ * TODO
+ *
+ * @return bool true si le mail est envoyer, false sinon
+ */
 function mailClientDemandeCours($sendingEmail, $email, $username, $object, $dateDemandeCours, $heureCours, $dureeCours, $activiteDuCours):bool{
     $mdp = fopen( __DIR__ . '/passMail.csv', 'r');
     if (!feof($mdp)) {
@@ -879,7 +887,14 @@ function mailClientDemandeCours($sendingEmail, $email, $username, $object, $date
 
 
 
-
+/**
+ * envoie un email au client
+ *
+ * @param string ..... info du client 
+ * TODO
+ *
+ * @return bool true si le mail est envoyer, false sinon
+ */
 function mailClientDemandeCoursConfirme( $sendingEmail, $email, $username, $object, $dateDemandeCours, $heureCours, $dureeCours, $activiteDuCours):bool{
     $mdp = fopen( __DIR__ . '/passMail.csv', 'r');
     if (!feof($mdp)) {
@@ -1011,7 +1026,14 @@ function mailClientDemandeCoursConfirme( $sendingEmail, $email, $username, $obje
 }
 
 
-
+/**
+ * envoie un email au client
+ *
+ * @param string ..... info du client 
+ * TODO
+ *
+ * @return bool true si le mail est envoyer, false sinon
+ */
 function mailMoniteurDemandeCoursConfirme($sendingEmail, $email, $moniteurName, $username, $object, $dateDemandeCours, $heureCours, $dureeCours, $activiteDuCours):bool{
     $mdp = fopen( __DIR__ . '/passMail.csv', 'r');
     if (!feof($mdp)) {
@@ -1135,7 +1157,10 @@ function mailMoniteurDemandeCoursConfirme($sendingEmail, $email, $moniteurName, 
 /**
  * Get le solde du client 
  * 
+ * @param PDO $bdd base de donnée
+ * @param string $client username client
  * 
+ * @return int la valeur du solde du client
  * 
  */
 function getSoldeClient(PDO $bdd, string $client): int
@@ -1149,10 +1174,14 @@ function getSoldeClient(PDO $bdd, string $client): int
 /**
  * mets a jour le solde du client 
  * 
+ * @param PDO $bdd base de donnée
+ * @param string $usernameClient username du client
+ * @param int decrSolde le sole a soustraire
  * 
- * @return le solde du client actuelle
+ * 
+ * @return le solde du client actuelle, -1 s'il y a une erreur (le solde se decremente seulement si le final est au dessus de 0)
  */
-function updateDecrSoldeCLient($bdd, $usernameClient, $decrSolde) : int{
+function updateDecrSoldeCLient(PDO $bdd, string $usernameClient, int $decrSolde) : int{
     $soldeClient = getSoldeClient($bdd, $usernameClient);
     
     if(($soldeClient - $decrSolde) >= 0){

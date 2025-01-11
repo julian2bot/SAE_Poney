@@ -38,7 +38,7 @@ isset($_POST["heure"])){
 
     // Insertion dans la BD
 
-    $soldeCourant = updateDecrSoldeCLient($bdd, $_SESSION["connecte"]["username"], (int)$_POST["prix"]);
+    $soldeCourant = updateDecrSoldeCLient($bdd, $_SESSION["connecte"]["username"], $coursPerso["prix"]);
     if($soldeCourant === -1){
         $err ="Votre solde n'est pas assez élevé";
         // header("Location: ../../../page/adherent.php?errReservCours=".$err);
