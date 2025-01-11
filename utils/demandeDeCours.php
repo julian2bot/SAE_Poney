@@ -1,4 +1,9 @@
 <?php
+require_once "../utils/connexionBD.php";
+require_once "../utils/annexe.php";
+require_once "../utils/constante.php";
+
+estConnecte();
 // TODO
 
 require_once "../utils/connexionBD.php";
@@ -44,8 +49,32 @@ isset($_POST["heure"])){
     createPopUp("Demande de cours envoyée avec succès, vous recevrez un mail quand votre demande sera accepté");
 
     // Envoyer mail
+    
+    $email = "marquesjulian26@gmail.com";
+    $object = "[SAE PONEY] Cours du ".$_POST["dateDemandeCours"]." à ".$_POST["heureCours"]."h";
+
+    $username= $_POST["usernameClient"];
+    $dateDemandeCours= $_POST["dateDemandeCours"];
+    $heureCours= $_POST["heureCours"];
+    $dureeCours= $_POST["heure"];
+    $activiteDuCours= $_POST["activiteDuCours"];
+
+    // Envoyer mail
+    
+    if(mailClientDemandeCours(SENDINGEMAIL,$email, $username, $object, $dateDemandeCours, $heureCours, $dureeCours, $activiteDuCours)){
+        echo "mail envoyer";
+    }
+    else{
+        echo "mail non envoyer";
+    }
+
 
 }
 header("Location: ../page/demandeCours.php");
 exit;
+
+
+
+
+
 ?>

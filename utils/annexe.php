@@ -731,3 +731,401 @@ function getReserv($bdd, $niveau)
 	$info = $reqUser->fetchAll();
 	return $info;
 }
+
+
+
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+
+// Inclure les fichiers de PHPMailer
+require __DIR__ . '/../PHPMailer/src/Exception.php';
+require __DIR__ . '/../PHPMailer/src/PHPMailer.php';
+require __DIR__ . '/../PHPMailer/src/SMTP.php';
+
+
+
+function mailClientDemandeCours($sendingEmail, $email, $username, $object, $dateDemandeCours, $heureCours, $dureeCours, $activiteDuCours):bool{
+    $mdp = fopen( __DIR__ . '/passMail.csv', 'r');
+    if (!feof($mdp)) {
+        $ligne = fgets($mdp);
+    }
+    fclose($mdp);
+
+    $mail = new PHPMailer(true);
+    try {
+        // Paramètres du serveur
+        $mail->SMTPDebug = 0;                      
+        $mail->isSMTP();                           
+        $mail->Host = 'smtp.gmail.com';
+        $mail->SMTPAuth = true;                   
+        $mail->Username = $sendingEmail; 
+        // $mail->Password = $ligne;
+        $mail->Password = "tnlfxcttheyncjyv";
+
+        $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;  
+        $mail->Port = 587;
+        // $mail->SMTPDebug = 2; 
+        $mail->SMTPOptions = [];
+
+        // Destinataires
+        $mail->setFrom($sendingEmail, 'SAE PONEY GRAND GALOP');
+        $mail->addAddress($email);
+        
+        // Contenu
+        $mail->addEmbeddedImage('../assets/images/poney/flocon.jpg', 'image_cid');
+
+        $mail->isHTML(true);            
+        $mail->CharSet = 'UTF-8';           
+        $mail->Subject = $object;
+        $mail->Body = "
+          <html>
+              <head>
+                  <style>
+                      body {
+                          font-family: Arial, sans-serif;
+                          margin: 0;
+                          padding: 0;
+                          background-color: #f9f9f9;
+                      }
+                      .container {
+                          max-width: 600px;
+                          margin: 20px auto;
+                          background: #ffffff;
+                          border: 1px solid #ccc;
+                          border-radius: 8px;
+                          padding: 20px;
+                          box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+                      }
+                      .header {
+                          font-weight: bold;
+                          font-size: 18px;
+                          color: #333333;
+                          margin-bottom: 10px;
+                      }
+                      .content {
+                          font-size: 14px;
+                          color: #555555;
+                          line-height: 1.5;
+                          margin-bottom: 20px;
+                      }
+                      .footer {
+                          font-size: 12px;
+                          color: #888888;
+                          text-align: center;
+                          margin-top: 20px;
+                      }
+                      .image-container {
+                          text-align: center;
+                          margin-bottom: 20px;
+                      }
+                      .image-container img {
+                          max-width: 100%;
+                          height: auto;
+                          border-radius: 8px;
+                      }
+                  </style>
+              </head>
+              <body>
+                  <div class='container'>
+                      <div class='header'>
+                          Votre demande de cours a bien été enregistrée !
+                      </div>
+                      <div class='content'>
+                          <p>Bonjour $username,</p>
+                          <p>
+                              Votre demande de cours pour le <strong>".$dateDemandeCours."</strong> 
+                              à <strong>".$heureCours."</strong> et durant <strong>".$dureeCours."</strong>h 
+                              pour l'activité suivante : <strong>".$activiteDuCours."</strong>, 
+                              a bien été prise en compte.
+                          </p>
+                          <p>
+                              Vous recevrez un message lors de la validation de celle-ci.
+                          </p>
+                          <p>
+                              Merci de nous avoir fait confiance. Nous restons à votre disposition
+                              pour toute question supplémentaire.
+                          </p>
+                      </div>
+  
+
+                      <!-- <div class='image-container'>
+                          <img src='https://via.placeholder.com/500x300?text=GRAND+GALOP' alt='GRAND GALOP Logo'>
+                      </div> -->
+                      <div class='footer'>
+                          Cordialement,<br>
+                          GRAND GALOP
+                      </div>
+                  </div>
+              </body>
+          </html>
+
+        "; 
+        $mail->AltBody = "Votre demande de contact à bien été envoyé\nJ";
+
+        $mail->send();
+        return true;
+    } catch (Exception $e) {
+        // echo "<pre>";
+        // print_r($e);
+        // echo "</pre>";
+
+        // echo "Erreur lors de l'envoi du mail : ", $mail->ErrorInfo;
+
+        return false;
+
+    }
+}
+
+
+
+
+
+function mailClientDemandeCoursConfirme( $sendingEmail, $email, $username, $object, $dateDemandeCours, $heureCours, $dureeCours, $activiteDuCours):bool{
+    $mdp = fopen( __DIR__ . '/passMail.csv', 'r');
+    if (!feof($mdp)) {
+        $ligne = fgets($mdp);
+    }
+    fclose($mdp);
+
+    $mail = new PHPMailer(true);
+    try {
+        // Paramètres du serveur
+        $mail->SMTPDebug = 0;                      
+        $mail->isSMTP();                           
+        $mail->Host = 'smtp.gmail.com';
+        $mail->SMTPAuth = true;                   
+        $mail->Username = $sendingEmail; 
+        // $mail->Password = $ligne;
+        $mail->Password = "tnlfxcttheyncjyv";
+
+        $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;  
+        $mail->Port = 587;
+        // $mail->SMTPDebug = 2; 
+        $mail->SMTPOptions = [];
+
+        // Destinataires
+        $mail->setFrom($sendingEmail, 'SAE PONEY GRAND GALOP');
+        $mail->addAddress($email);
+        
+        // Contenu
+        $mail->addEmbeddedImage('../assets/images/poney/flocon.jpg', 'image_cid');
+
+        $mail->isHTML(true);            
+        $mail->CharSet = 'UTF-8';           
+        $mail->Subject = $object;
+        $mail->Body = "
+                    <html>
+                <head>
+                    <style>
+                        body {
+                            font-family: Arial, sans-serif;
+                            margin: 0;
+                            padding: 0;
+                            background-color: #f9f9f9;
+                        }
+                        .container {
+                            max-width: 600px;
+                            margin: 20px auto;
+                            background: #ffffff;
+                            border: 1px solid #ccc;
+                            border-radius: 8px;
+                            padding: 20px;
+                            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+                        }
+                        .header {
+                            font-weight: bold;
+                            font-size: 18px;
+                            color: #333333;
+                            margin-bottom: 10px;
+                        }
+                        .content {
+                            font-size: 14px;
+                            color: #555555;
+                            line-height: 1.5;
+                            margin-bottom: 20px;
+                        }
+                        .footer {
+                            font-size: 12px;
+                            color: #888888;
+                            text-align: center;
+                            margin-top: 20px;
+                        }
+                        .image-container {
+                            text-align: center;
+                            margin-bottom: 20px;
+                        }
+                        .image-container img {
+                            max-width: 100%;
+                            height: auto;
+                            border-radius: 8px;
+                        }
+                    </style>
+                </head>
+                <body>
+                    <div class='container'>
+                        <div class='header'>
+                            Votre demande de cours a été confirmée !
+                        </div>
+                        <div class='content'>
+                            <p>Bonjour $username,</p>
+                            <p>
+                                Nous sommes ravis de vous informer que votre demande de cours pour le <strong>".$dateDemandeCours."</strong> 
+                                à <strong>".$heureCours."</strong> et durant <strong>".$dureeCours."</strong>h 
+                                pour l'activité suivante : <strong>".$activiteDuCours."</strong>, 
+                                a été confirmée avec succès.
+                            </p>
+                            <p>
+                                Nous vous remercions pour votre confiance et nous vous souhaitons une excellente expérience.
+                            </p>
+                            <p>
+                                N'hésitez pas à nous contacter pour toute question ou information supplémentaire.
+                            </p>
+                        </div>
+
+                        <!-- <div class='image-container'>
+                            <img src='https://via.placeholder.com/500x300?text=GRAND+GALOP' alt='GRAND GALOP Logo'>
+                        </div> -->
+                        <div class='footer'>
+                            Cordialement,<br>
+                            GRAND GALOP
+                        </div>
+                    </div>
+                </body>
+            </html>
+
+        "; 
+        $mail->AltBody = "Votre demande de contact à bien été envoyé\nJ";
+
+        $mail->send();
+        return true;
+    } catch (Exception $e) {
+        // echo "<pre>";
+        // print_r($e);
+        // echo "</pre>";
+
+        // echo "Erreur lors de l'envoi du mail : ", $mail->ErrorInfo;
+
+        return false;
+
+    }
+}
+
+
+
+function mailMoniteurDemandeCoursConfirme($sendingEmail, $email, $moniteurName, $username, $object, $dateDemandeCours, $heureCours, $dureeCours, $activiteDuCours):bool{
+    $mdp = fopen( __DIR__ . '/passMail.csv', 'r');
+    if (!feof($mdp)) {
+        $ligne = fgets($mdp);
+    }
+    fclose($mdp);
+
+    $mail = new PHPMailer(true);
+    try {
+        // Paramètres du serveur
+        $mail->SMTPDebug = 0;                      
+        $mail->isSMTP();                           
+        $mail->Host = 'smtp.gmail.com';
+        $mail->SMTPAuth = true;                   
+        $mail->Username = $sendingEmail; 
+        // $mail->Password = $ligne;
+        $mail->Password = "tnlfxcttheyncjyv";
+
+        $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;  
+        $mail->Port = 587;
+        // $mail->SMTPDebug = 2; 
+        $mail->SMTPOptions = [];
+
+        // Destinataires
+        $mail->setFrom($sendingEmail, 'SAE PONEY GRAND GALOP');
+        $mail->addAddress($email);
+        
+        // Contenu
+        // $mail->addEmbeddedImage('../assets/images/poney/flocon.jpg', 'image_cid');
+
+        $mail->isHTML(true);            
+        $mail->CharSet = 'UTF-8';           
+        $mail->Subject = $object;
+        $mail->Body = "<html>
+                <head>
+                    <style>
+                        body {
+                            font-family: Arial, sans-serif;
+                            margin: 0;
+                            padding: 0;
+                            background-color: #f9f9f9;
+                        }
+                        .container {
+                            max-width: 600px;
+                            margin: 20px auto;
+                            background: #ffffff;
+                            border: 1px solid #ccc;
+                            border-radius: 8px;
+                            padding: 20px;
+                            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+                        }
+                        .header {
+                            font-weight: bold;
+                            font-size: 18px;
+                            color: #333333;
+                            margin-bottom: 10px;
+                        }
+                        .content {
+                            font-size: 14px;
+                            color: #555555;
+                            line-height: 1.5;
+                            margin-bottom: 20px;
+                        }
+                        .footer {
+                            font-size: 12px;
+                            color: #888888;
+                            text-align: center;
+                            margin-top: 20px;
+                        }
+                    </style>
+                </head>
+                <body>
+                    <div class='container'>
+                        <div class='header'>
+                            Une demande de cours a été confirmée !
+                        </div>
+                        <div class='content'>
+                            <p>Bonjour $moniteurName,</p>
+                            <p>
+                                Une demande de cours a été confirmée et est assignée à vous. Voici les détails :
+                            </p>
+                            <ul>
+                                <li><strong>Date :</strong> ".$dateDemandeCours."</li>
+                                <li><strong>Heure :</strong> ".$heureCours."</li>
+                                <li><strong>Durée :</strong> ".$dureeCours." heures</li>
+                                <li><strong>Activité :</strong> ".$activiteDuCours."</li>
+                                <li><strong>Utilisateur :</strong> $username</li>
+                            </ul>
+                            <p>
+                                Merci de bien vouloir vous préparer pour ce cours et de nous informer en cas de problème ou de question.
+                            </p>
+                        </div>
+                        <div class='footer'>
+                            Cordialement,<br>
+                            GRAND GALOP
+                        </div>
+                    </div>
+                </body>
+            </html>
+
+
+        "; 
+        $mail->AltBody = "Votre demande de contact à bien été envoyé\nJ";
+
+        $mail->send();
+        return true;
+    } catch (Exception $e) {
+        // echo "<pre>";
+        // print_r($e);
+        // echo "</pre>";
+
+        // echo "Erreur lors de l'envoi du mail : ", $mail->ErrorInfo;
+
+        return false;
+
+    }
+}
