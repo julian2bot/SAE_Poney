@@ -58,22 +58,79 @@ require_once "../utils/connexionBD.php";
                 <article class="text-block">
 
                 <form action="action.php" method="post">
-                    <label>NOM</label>
-                    <input name="nom" id="nom" type="text" required />
-                    <label>NIVEAU</label>
-                    <input name="niveau" id="niveau" type="text" required />
-                    <label>PRIX</label>
-                    <input name="prix" id="prix" type="number" required />
-                    <label>NBMAX</label>
-                    <input name="nbmax" id="nbmax" type="number" required />
+                    <section>
+                        <label>NOM DU COURS</label>
+                        <input name="nom" id="nom" type="text" required />
+                    </section>
 
-                    <label>DATE</label>
-                    <p id=montrerdate>non selectionner</p>
-                    <input name="datevalider" value="" id="datevalider" hidden type="date" required />
+                    <section>
+                        <label>NIVEAU DU COURS</label>
+                        <script src="../assets/script/jsCreationCours.js"></script>
+                        <label for="combobox">Choisissez une option :</label>
+                        <select id="combobox" onchange="Combobox()" >
+                            <option value=1 >NIVEAU 1</option>
+                            <option value=2 >NIVEAU 2</option>
+                            <option value=3 >NIVEAU 3</option>
+                            <option value=4 >NIVEAU 4</option>
+                            <option value=5 >NIVEAU 5</option>
+                            <option value=6 >NIVEAU 6</option>
+                            <option value=7 >NIVEAU 7</option>
+                            <option value=8 >NIVEAU 8</option>
+                            <option value=9 >NIVEAU 9</option>
+                            <option value=10 >NIVEAU 10</option>
+                        </select>
+                        
+                        <input name="niveau" id="niveau" type="text" value=1 placeholder="La valeur apparaît ici" required />
 
-                    <label>HEUR</label>
+                    </section>
 
-                    <input type="time" id="appt" name="appt" min="09:00" max="18:00" required />
+
+
+                    <section>
+                        <label>PRIX DU COURS</label>
+                        <input name="prix" id="prix" type="number" required />
+                    </section>
+
+                    <section>
+                        <label>NOMBRE MAXIMUM DE PERSONNE</label>
+                        <fieldset>
+                            <div>
+                                <input type="radio" id="nbmax1" name="nbmax" value=1 checked />
+                                <label for="nbmax1">1</label>
+                            </div>
+                            <div>
+                                <input type="radio" id="nbmax10" name="nbmax" value=10 />
+                                <label for="choix2h">10</label>
+                            </div>
+                        </fieldset>
+                    </section>
+                    
+                    <section>
+                        <label>DATE DU COURS</label>
+                        <p id=montrerdate>non selectionner</p>
+                        <input name="datevalider" value="" id="datevalider" hidden type="date" required />
+                    </section>
+
+                    <section>
+                        <label>HEUR DU COURS</label>
+                        <input type="time" id="appt" name="appt" min="09:00" max="22:00" required />
+                    </section>
+
+                    <section>
+                        <label>DUREE DU COURS</label>
+                        <fieldset>
+                            <div>
+                                <input type="radio" id="choix1h" name="choixheure" value=1 checked />
+                                <label for="choix1h">1h</label>
+                            </div>
+                            <div>
+                                <input type="radio" id="choix2h" name="choixheure" value=2 />
+                                <label for="choix2h">2h</label>
+                            </div>
+                        </fieldset>
+                    </section>
+
+
 
 
                     <button type="submit">Valider</button>

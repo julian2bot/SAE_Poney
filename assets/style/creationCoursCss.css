@@ -66,31 +66,44 @@ form button{
     cursor: pointer;
     border-radius: 10px;
     border: #6e6e6e 1px solid;
+    
 
 }
-form > a{
-    text-decoration: none;
-    color: #b3b2b2;
-}
+
+
 form > a:hover{
     text-decoration: underline #b3b2b2;
 }
 
-form > input {
-    width: 100%;
-    padding: 3px;
-    border: none;
-    margin-bottom: 1em;
+form >section>label {
 
-    border-bottom: 1px solid #eee;
-    background-color: transparent;
-    caret-color: white;
-    outline: none;
+    
+
     color: white;
 }
 
+form >section>input {
+    width: 30%;
+    padding: 3px;
+    border: none;
+    border-bottom: 1px solid #eee;
+    caret-color: white;
+    color: black;
+}
+
+form>section
+{
+  margin-left: 1em;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1em;
+  width: 100%;
+}
+
 form > input::placeholder{
+    
     color: white;
+    
 }
 
 td {
@@ -101,7 +114,7 @@ td {
 
 
   th, td { padding: 10px; text-align: center; /*! border: 1px solid #ddd; */ }
-  th { background-color: #f2f2f2; color: #333;}
+  th { background-color: #f2f2f2; color: #ffff;}
   td:hover { background-color: #ADD8E6; cursor: pointer; }
 
   .current-day { background-color: #ffdd57; font-weight: bold; }
@@ -128,7 +141,7 @@ td {
   }
 
   th {
-      background-color: #929292;
+      background-color: #347429;
   }
   .navigation {
       margin: 20px;
@@ -151,4 +164,35 @@ td {
 
 td{
      background-color: #f3f3f3f3;
+}
+
+.text-block
+{
+   text-align: left;
+}
+
+fieldset
+{
+    display: flex;
+    justify-content: space-between
+    text-align: center;
+
+    width: 100px;
+    
+    flex-grow: 0;
+
+}
+
+fieldset>div
+{
+    text-align: center;
+    padding-left: 20px;
+    padding-right:20px;
+    width: 100px;
+}
+
+fieldset>div>input
+{
+transform: scale(1.5); /* Augmenter la taille du bouton radio de 1.5x */
+
 }

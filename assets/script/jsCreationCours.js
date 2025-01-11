@@ -1,10 +1,13 @@
-
+// Appel initial pour synchroniser la valeur par défaut
+document.addEventListener('DOMContentLoaded', () => {
+    Combobox();
+});
 
 function getDate(month,year){
-// Récupérer un élément par son ID
+
+
 const titres = document.querySelectorAll('.jourpossible');
 
-// Ajout d'un gestionnaire à chaque élément
 titres.forEach((element) => {
     element.addEventListener("click", ()=> {
 
@@ -32,5 +35,16 @@ function changerTexte(valeur,month,year) {
 
 }
 
+function Combobox()
+{
+    // Récupération des éléments
+    const combobox = document.getElementById('combobox');
+    const inputField = document.getElementById('niveau');
 
+    // Événement lorsque l'utilisateur sélectionne une option
+    combobox.addEventListener('change', () => {
+        // Mettre à jour la valeur de l'input avec la valeur sélectionnée
+        inputField.value = combobox.value;
+    });
+}
 
