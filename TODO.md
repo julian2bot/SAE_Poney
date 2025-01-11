@@ -76,3 +76,7 @@
 
 [ ] moniteur  
 [ ]     ==> disponibilité a revoir  
+[ ] client
+[ ]     ==> solde  
+[ ]     ==> cotisation  
+
