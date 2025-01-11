@@ -293,7 +293,7 @@ function getDemandeExistDay(PDO $bdd, string $username, string $day): bool
  *
  * @return array la demande de cours
  */
-function getDemandeDeCours(PDO $bdd, string $username, string $day, int $idCours, float $heure): bool
+function getDemandeDeCours(PDO $bdd, string $username, string $day, int $idCours, float $heure): array
 {
 	$reqUser = $bdd->prepare("SELECT * FROM DEMANDECOURS WHERE usernameClient = ? AND dateCours = ? AND idCours = ? AND heureDebutCours = ?");
 	$reqUser->execute(array($username, $day,$idCours, $heure));

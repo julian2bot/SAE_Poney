@@ -19,6 +19,8 @@ estMoniteur();
     <title>Administration</title>
     <link rel="stylesheet" href="../assets/style/admin.css">
     <link rel="stylesheet" href="../assets/style/header.css">
+    <link rel="stylesheet" href="../assets/style/styleSousPage.css">
+    <script src="../assets/script/popUpGestionErr.js"></script>
 </head>
     <body style="position: relative;">
     <header class="pageAdmin">
@@ -83,7 +85,14 @@ estMoniteur();
         </main>
     </div>
 </body>
-
+<?php
+    if(isset($_SESSION["popUp"])){
+        echo "<script type='text/javascript'>
+                showPopUp(\"".$_SESSION["popUp"]["message"]."\",".($_SESSION["popUp"]["success"] ? "true" : "false").");
+              </script>";
+        unset($_SESSION["popUp"]);
+    }
+?>
   
 </html>
 
