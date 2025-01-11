@@ -113,9 +113,11 @@ estConnecte();
 
                         <label for="mail">Adresse mail :</label>
                         <input type="email" id="mail" name="mail" value="<?php echo htmlspecialchars($_SESSION["connecte"]['mail'] ?? ''); ?>" required><br>
-
+                        
                         <button type="submit">Modifier</button>
                     </form>
+                    <button onclick='add100ToSolde("<?php echo htmlspecialchars($_SESSION["connecte"]["username"]) ?>")'>Add 100€</button>
+
                 </section>
                 
                 <section class="droite-section droite">
@@ -126,6 +128,7 @@ estConnecte();
             </section>
 
         <script src="../assets/script/coursCalendrier.js"></script>
+        <script src="../assets/script/soldeClient.js"></script>
 
         </main>
 

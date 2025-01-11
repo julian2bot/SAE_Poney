@@ -1,6 +1,7 @@
 <?php
 require_once "../utils/BDD/connexionBD.php";
 require_once "../utils/annexe.php";
+require_once "../utils/constante.php";
 
 estConnecte();
 
@@ -87,7 +88,7 @@ estConnecte();
                     <button type="button" id="button-left" class="nav-btn left" onclick="scrollCarousel(-1)">&#10094;</button>
                     <button type="button" id="button-right" class="nav-btn right" onclick="scrollCarousel(1)">&#10095;</button>
                     
-                        <input type="hidden" name="usernameClient" required id="usernameClient" value="<?php echo $_SESSION["connecte"]["username"]?>"/>
+                    <input type="hidden" name="usernameClient" required id="usernameClient" value="<?php echo $_SESSION["connecte"]["username"]?>"/>
                     <input type="hidden" name="dateDemandeCours" required id="dateDemandeCours" value=""/>
                     <input type="hidden" name="niveau" required id="niveauAdherent" value="<?php echo $_SESSION["connecte"]["info"]["niveau"]??0?>"/>
                     

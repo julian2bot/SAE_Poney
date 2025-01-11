@@ -6,7 +6,7 @@ require_once __DIR__."/../../annexe.php";
 
 estConnecte();
 
-print_r($_POST);
+// print_r($_POST);
 
 if(
         !isset($_POST["idCours"]) 
@@ -15,6 +15,7 @@ if(
     AND !isset($_POST["heureDebutCours"]) 
     AND !isset($_POST["userclient"]) 
     AND !isset($_POST["poneySelectionne"])
+    AND !isset($_POST["prix"])
 ){
     header("Location: ../../../");
     exit;
@@ -22,7 +23,17 @@ if(
 
 $dateCours = $_POST["dateCours"];
 
+print_r(getSoldeClient($bdd, $_POST["userclient"]));
+
 try {
+
+    $soldeCourant = updateDecrSoldeCLient($bdd, $_POST["userclient"], (int)$_POST["prix"]);
+    if($soldeCourant === -1){
+        $err ="Votre solde n'est pas assez élevé";
+        // header("Location: ../../../page/adherent.php?errReservCours=".$err);
+        // exit;
+    }
+
     $insertReservation = $bdd->prepare("INSERT INTO RESERVATION (idCours, usernameMoniteur, dateCours, heureDebutCours, usernameClient, idPoney) VALUES(?, ?, ?, ?, ?, ?)");
     $insertReservation->execute(array(
         
@@ -33,13 +44,14 @@ try {
         ,$_POST["userclient"]
         ,(int)$_POST["poneySelectionne"]    
     ));
-    header("Location: ../../../");
+
+    // header("Location: ../../../");
     exit;
 
 } catch (PDOException $e) {
     echo "Erreur lors de l'insertion dans la base de données : " . $e->getMessage();
     $err ="erreur lors de la reservation du cours";
-    header("Location: ../../../page/adherent.php?errReservCours=".$err);
+    // header("Location: ../../../page/adherent.php?errReservCours=".$err);
     exit;
 }
 
