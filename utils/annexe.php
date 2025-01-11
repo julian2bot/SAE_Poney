@@ -249,12 +249,37 @@ function getIdMax(PDO $bdd, string $idNom, string $table): int
 	return 0;
 }
 
+/**
+ * get le cours personalisé selon le niveau et la duree
+ *
+ * @param PDO la base de donnée
+ * @param string niveau
+ * @param string duree
+ *
+ * @return array cours perso
+ */
 function getCoursPerso(PDO $bdd, string $idNiveau, string $duree): array
 {
 	$reqUser = $bdd->prepare("SELECT * FROM COURS WHERE idNiveau = ? AND duree = ? AND nomCours LIKE ?");
 	$reqUser->execute(array($idNiveau, $duree, "Cours perso%"));
 	$info = $reqUser->fetch();
 	return $info;
+}
+
+/**
+ * Renvoie si une demande de cours existe pour un jour
+ *
+ * @param PDO la base de donnée
+ * @param string username
+ * @param string jour
+ *
+ * @return bool si la demande existe pour le jour donnée
+ */
+function getDemandeExistDay(PDO $bdd, string $username, string $day): bool
+{
+	$reqUser = $bdd->prepare("SELECT * FROM DEMANDECOURS WHERE usernameClient = ? AND dateCours = ?");
+	$reqUser->execute(array($username, $day));
+	return $reqUser->rowCount() >= 1;
 }
 
 
