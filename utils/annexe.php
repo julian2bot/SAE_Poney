@@ -118,6 +118,12 @@ function getMaxNiveau(PDO $bdd, string $username): int
 	return $reqUser->fetch()["maxNiv"] ?? 0;
 }
 
+function getMail(PDO $bdd, string $username):string{
+    $reqUser = $bdd->prepare("SELECT mail FROM PERSONNE WHERE username = ?");
+	$reqUser->execute(array($username));
+	return $reqUser->fetch()["mail"];
+}
+
 /**
  * get le role d'un utilisateur
  *

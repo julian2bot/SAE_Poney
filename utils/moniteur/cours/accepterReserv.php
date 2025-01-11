@@ -1,6 +1,7 @@
 <?php
 require_once __DIR__."/../../BDD/connexionBD.php";
 require_once __DIR__."/../../annexe.php";
+require_once __DIR__."/../../constante.php";
 
 estConnecte();
 estMoniteur();
@@ -51,9 +52,18 @@ isset($_GET["usernameMoniteur"])){
     $deleteDemande = $bdd->prepare("DELETE FROM DEMANDECOURS WHERE usernameClient = ? AND idCours = ? AND dateCours = ? AND heureDebutCours = ?");
     $deleteDemande->execute(array($cours["usernameClient"], $cours["idCours"], $cours["dateCours"], $cours["heureDebutCours"]));
 
-    createPopUp("La demande de cours a bien était accepté");
 
     // Mails
+
+    if(mailClientDemandeCoursConfirme(SENDINGEMAIL, $email, $username, $objectConfirmation, $dateDemandeCours, $heureCours, $dureeCours, $activiteDuCours)
+        && mailMoniteurDemandeCoursConfirme(SENDINGEMAIL, $email, $moniteurName, $username, $objectConfirmationMoniteur, $dateDemandeCours, $heureCours, $dureeCours, $activiteDuCours)){
+        echo "mail confirme envoyer";
+        createPopUp("La demande de cours a bien était accepté, mails de comfirmation envoyées");
+    }
+    else{
+        createPopUp("La demande de cours a bien était accepté, mails de comfirmation non envoyées" , false);
+    }
+    
 }
 header("Location: ../../../page/gestionReserv.php");
 exit;
