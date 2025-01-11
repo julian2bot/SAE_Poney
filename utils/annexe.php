@@ -282,6 +282,24 @@ function getDemandeExistDay(PDO $bdd, string $username, string $day): bool
 	return $reqUser->rowCount() >= 1;
 }
 
+/**
+ * Renvoie une demande de cours
+ *
+ * @param PDO la base de donnée
+ * @param string usernameClient
+ * @param string jour
+ * @param int idCours
+ * @param float heureDebut
+ *
+ * @return array la demande de cours
+ */
+function getDemandeDeCours(PDO $bdd, string $username, string $day, int $idCours, float $heure): bool
+{
+	$reqUser = $bdd->prepare("SELECT * FROM DEMANDECOURS WHERE usernameClient = ? AND dateCours = ? AND idCours = ? AND heureDebutCours = ?");
+	$reqUser->execute(array($username, $day,$idCours, $heure));
+	return $reqUser->fetch();
+}
+
 
 /**
  * get les moniteurs de la bd
