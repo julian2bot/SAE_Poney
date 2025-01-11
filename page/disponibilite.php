@@ -1,5 +1,5 @@
 <?php
-require_once "../utils/connexionBD.php";
+require_once "../utils/BDD/connexionBD.php";
 require_once "../utils/annexe.php";
 
 estConnecte();
@@ -33,7 +33,7 @@ estConnecte();
         <main class="container">
 
             <section class="gauche-section disponible">
-                <form method="POST" action="../utils/ajoutDisponibilite.php">
+                <form method="POST" action="../utils/moniteur/add/ajoutDisponibilite.php">
                     <?php
                         if(isset($_GET["date"])){
                             $date = new DateTime();

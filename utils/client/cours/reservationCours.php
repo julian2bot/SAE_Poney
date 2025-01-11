@@ -1,8 +1,8 @@
 <?php
 // code pour reserver un cours et l'ajouter a la BD
 
-require_once "./connexionBD.php";
-require_once "./annexe.php";
+require_once __DIR__."/../../BDD/connexionBD.php";
+require_once __DIR__."/../../annexe.php";
 
 estConnecte();
 
@@ -16,7 +16,7 @@ if(
     AND !isset($_POST["userclient"]) 
     AND !isset($_POST["poneySelectionne"])
 ){
-    header("Location: ../");
+    header("Location: ../../../");
     exit;
 }
 
@@ -33,13 +33,13 @@ try {
         ,$_POST["userclient"]
         ,(int)$_POST["poneySelectionne"]    
     ));
-    header("Location: ../");
+    header("Location: ../../../");
     exit;
 
 } catch (PDOException $e) {
     echo "Erreur lors de l'insertion dans la base de données : " . $e->getMessage();
     $err ="erreur lors de la reservation du cours";
-    header("Location: ../page/adherent.php?errReservCours=".$err);
+    header("Location: ../../../page/adherent.php?errReservCours=".$err);
     exit;
 }
 

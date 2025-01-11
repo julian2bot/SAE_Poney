@@ -1,8 +1,8 @@
 <?php
 // code pour creer un moniteur et l'ajouter a la bd
 
-require_once "../utils/connexionBD.php";
-require_once "../utils/annexe.php";
+require_once __DIR__."/../../BDD/connexionBD.php";
+require_once __DIR__."/../../annexe.php";
 estAdmin();
 
 
@@ -33,13 +33,13 @@ if($_SESSION["connecte"]["role"] === "admin" &&
         $_SESSION["erreur"]["photo"] = $_POST["photo"];
         $_SESSION["erreur"]["race"] = $_POST["race"];
         createPopUp($erreur, false);
-        header("Location: ../page/administration.php?erreurCreerPoney=$erreur#Poney");
+        header("Location: ../../../page/administration.php?erreurCreerPoney=$erreur#Poney");
         exit;
 
     }
 }
 
-header("Location: ../page/administration.php#Poney");
+header("Location: ../../../page/administration.php#Poney");
 exit;
 
 

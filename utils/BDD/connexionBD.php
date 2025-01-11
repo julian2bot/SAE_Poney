@@ -2,7 +2,8 @@
 // base de base 
 // code de connexion a une base de donnée
 session_start();
-require_once "annexe.php";
+require_once __DIR__."/../annexe.php";
+// require_once "../../utils/annexe.php";
 // session_destroy();
 $host ="servinfo-maria";
 $user = 'marques';

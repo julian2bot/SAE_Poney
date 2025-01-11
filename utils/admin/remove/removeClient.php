@@ -1,7 +1,7 @@
 <?php
 // code pour supprimé un client dans la BD
-require_once "../utils/connexionBD.php";
-require_once "../utils/annexe.php";
+require_once __DIR__."/../../BDD/connexionBD.php";
+require_once __DIR__."/../../annexe.php";
 estAdmin();
 
 // ? est ce que je laisse la double verif??
@@ -48,7 +48,7 @@ if($_SESSION["connecte"]["role"] === "admin"){
     }
 }
 
-header("Location: ../page/administration.php#Clients");
+header("Location: ../../../page/administration.php#Clients");
 exit;
 
     

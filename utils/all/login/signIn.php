@@ -1,7 +1,7 @@
 <?php
 // code pour s'inscrire sur le site et ajouter les informations dans une BD
-require_once "./connexionBD.php";
-require_once "./annexe.php";
+require_once __DIR__."/../../BDD/connexionBD.php";
+require_once __DIR__."/../../annexe.php";
 
 if(isset($_POST['fromSignIn']))
 {
@@ -97,11 +97,11 @@ else
 
 // retourne sur la page index avec l'erreur s'il y en a une 
 if($erreur){
-	header("Location: ../index.php?erreurSignIn=$erreur");
+	header("Location: ../../../index.php?erreurSignIn=$erreur");
 	exit;
 }
 else{
-	header("Location: ../index.php");
+	header("Location: ../../../index.php");
 	exit;
 
 }?>

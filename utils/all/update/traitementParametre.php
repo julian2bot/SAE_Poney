@@ -1,7 +1,7 @@
 <?php
 // code pour gerer les parametres d'un clients/moniteur
-require_once "connexionBD.php";
-require_once "annexe.php";
+require_once __DIR__."/../../BDD/connexionBD.php";
+require_once __DIR__."/../../annexe.php";
 estConnecte();
 
 echo "<pre>";
@@ -21,7 +21,7 @@ if(
     !$bdd
 ){
     $err = "erreur changement information personnel";
-    header("Location: ../page/moniteur.php?errChangementDonnee=" . urlencode($err));
+    header("Location: ../../../page/moniteur.php?errChangementDonnee=" . urlencode($err));
     exit;
 }
 
@@ -64,11 +64,11 @@ $_SESSION["connecte"] = array(
 $_SESSION["succes"] = "Changement effectué avec succes";
 if($_POST["clientmoniteur"] === "moniteur"){
     
-    header("Location: ../page/moniteur.php#parametre");
+    header("Location: ../../../page/moniteur.php#parametre");
     exit;
 }
 
-header("Location: ../page/adherent.php#parametre");
+header("Location: ../../../page/adherent.php#parametre");
 exit;
 
 ?>

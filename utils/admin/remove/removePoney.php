@@ -1,8 +1,8 @@
 <?php
 // code pour supprimé un poney dans la BD
 
-require_once "../utils/connexionBD.php";
-require_once "../utils/annexe.php";
+require_once __DIR__."/../../BDD/connexionBD.php";
+require_once __DIR__."/../../annexe.php";
 estAdmin();
 
 
@@ -23,7 +23,7 @@ if($_SESSION["connecte"]["role"] === "admin"){
         createPopUp("Poney retiré avec succès");
     }   
 }
-header("Location: ../page/administration.php#Poney");
+header("Location: ../../../page/administration.php#Poney");
 exit;
     
 ?>

@@ -66,3 +66,13 @@
 [ ] tache  
 [ ]     ==> sous tache  
 [ ]         ==> sous sous tache  
+
+
+[ ] admin  
+[ ]     ==> cascade pour suppr les moniteurs/ poney et client  
+        >>> remove / modifier une disponibilité, faudrait que je regarde s'il n'a pas de cours avant de modif/supp
+[ ] reserver  
+[ ]     ==> nb place restant  
+
+[ ] moniteur  
+[ ]     ==> disponibilité a revoir  

@@ -1,5 +1,5 @@
 <?php
-require_once "../utils/connexionBD.php";
+require_once "../utils/BDD/connexionBD.php";
 require_once "../utils/annexe.php";
 
 estConnecte();
@@ -38,7 +38,7 @@ estAdmin();
 
         <section>
             <h2>Ajouter un Poney</h2>
-            <form method="POST" action="../utils/creerPoney.php" class="form">
+            <form method="POST" action="../utils/admin/add/creerPoney.php" class="form">
                 <?php
                     require "../assets/affichage/adminPoney.php";
                 ?>
@@ -53,7 +53,7 @@ estAdmin();
 
         <section>
             <h2>Ajouter un moniteur</h2>
-            <form method="POST" action="../utils/creerMoniteur.php" class="form">
+            <form method="POST" action="../utils/admin/add/creerMoniteur.php" class="form">
                 <?php
                     require "../assets/affichage/adminMoniteur.php";
                 ?>
@@ -128,7 +128,7 @@ estAdmin();
                             echo '<li>'.$poney["nomPoney"].'';
                             echo "<div class = 'boutons'>";
                             echo "<button onclick='remplirPoneyModif(\"".$poney["idPoney"]."\",\"".$poney["nomPoney"]."\",\"".$poney["poidsMax"]."\",\"".$poney["photo"]."\",\"".$poney["nomRace"]."\")' class='remove-btn'>Modifier</button>";
-                            echo '<a href="../utils/removePoney.php?idPoney='.$poney["idPoney"].'" class="remove-btn">Retirer</a>';
+                            echo '<a href="../utils/admin/remove/removePoney.php?idPoney='.$poney["idPoney"].'" class="remove-btn">Retirer</a>';
                             echo "</div>";
                             echo "</li>";
                         }
@@ -149,8 +149,11 @@ estAdmin();
                             $info = getInfo($bdd,$moniteur["usernameMoniteur"]);
                             echo '<li>'.$moniteur["usernameMoniteur"].'';
                             echo "<div class='boutons'>";
-                            echo "<button onclick='remplirMoniteurModif(\"".$info["username"]."\",\"".$info["mail"]."\",\"".$info["username"]."\",\"".$info["prenomPersonne"]."\",\"".$info["nomPersonne"]."\",\"".$info["mail"]."\",\"".($info["isAdmin"] == 1 ? "oui" : "non")."\",\"".$info["salaire"]."\")' class='remove-btn'>Modifier</button>";
-                            echo '<a href="../utils/removeMoniteur.php?id='.$moniteur["usernameMoniteur"].'" class="remove-btn">Retirer</a>';
+                            // echo "<button onclick='remplirMoniteurModif(\"".$info["prenomPersonne"]."\",\"".$info["mail"]."\",\"".$info["username"]."\",\"".$info["prenomPersonne"]."\",\"".$info["nomPersonne"]."\",\"".$info["mail"]."\",\"".($info["isAdmin"] == 1 ? "oui" : "non")."\",\"".$info["salaire"]."\")' class='remove-btn'>Modifier</button>";
+                            
+                            echo "<button onclick='remplirMoniteurModif(\"".($info["username"] ?? "")."\",\"".($info["mail"] ?? "")."\",\"".($info["username"] ?? "")."\",\"".($info["prenomPersonne"] ?? "")."\",\"".($info["nomPersonne"] ?? "")."\",\"".($info["mail"] ?? "")."\",\"".(($info["isAdmin"] ?? 0) == 1 ? "oui" : "non")."\",\"".($info["salaire"] ?? "")."\")' class='remove-btn'>Modifier</button>";
+
+                            echo '<a href="../utils/admin/remove/removeMoniteur.php?id='.$moniteur["usernameMoniteur"].'" class="remove-btn">Retirer</a>';
                             echo "</div>";
                             echo "</li>";
                         }
@@ -167,7 +170,7 @@ estAdmin();
                         <?php
                         
                         foreach (getClient($bdd) as $client) {
-                            echo '<li>'. $client["usernameClient"].' <a href="../utils/removeClient.php?id='.$client["usernameClient"].'" class="remove-btn">Retirer</a></li>';
+                            echo '<li>'. $client["usernameClient"].' <a href="../utils/admin/remove/removeClient.php?id='.$client["usernameClient"].'" class="remove-btn">Retirer</a></li>';
                         }
 
                         ?>                

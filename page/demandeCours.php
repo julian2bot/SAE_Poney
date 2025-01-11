@@ -1,5 +1,5 @@
 <?php
-require_once "../utils/connexionBD.php";
+require_once "../utils/BDD/connexionBD.php";
 require_once "../utils/annexe.php";
 
 estConnecte();
@@ -68,7 +68,7 @@ estConnecte();
             
             <section class="droite-section">
 
-                <form method="POST" action="../utils/demandeDeCours.php" class="formReserv" id="formDemandeCours">
+                <form method="POST" action="../utils/client/cours/demandeDeCours.php" class="formReserv" id="formDemandeCours">
                     <div class="container-carrousel-poney" id="carrousel">
                         <?php $cpt=0;?>
                         <?php foreach (getPoney($bdd) as $poney): ?>
@@ -89,7 +89,7 @@ estConnecte();
                     
                         <input type="hidden" name="usernameClient" required id="usernameClient" value="<?php echo $_SESSION["connecte"]["username"]?>"/>
                     <input type="hidden" name="dateDemandeCours" required id="dateDemandeCours" value=""/>
-                    <input type="hidden" name="niveau" required id="niveauAdherent" value="<?php echo $_SESSION["connecte"]["info"]["niveau"]?>"/>
+                    <input type="hidden" name="niveau" required id="niveauAdherent" value="<?php echo $_SESSION["connecte"]["info"]["niveau"]??0?>"/>
                     
                     <label for="heureCours">Heure debut du cours</label>
                     <input type="time" required name="heureCours" id="heureCoursReserv"  min='01:00' max='23:00' step='1800' >

@@ -8,5 +8,5 @@ if (ini_get("session.use_cookies")) {
     setcookie(session_name(), '', 0, $params["path"], $params["domain"], $params["secure"], $params["httponly"]);
 }
 
-header("Location: ../index.php");
+header("Location: ../../../index.php");
 exit();

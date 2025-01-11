@@ -1,5 +1,5 @@
 <?php
-require_once "../utils/connexionBD.php";
+require_once "../utils/BDD/connexionBD.php";
 
 require_once "../utils/annexe.php";
 estConnecte();
@@ -33,7 +33,7 @@ estMoniteur();
                     echo '<div class="auth-buttons">
                             <p>'.$_SESSION["connecte"]["prenom"].'</p>
                     
-                            <button onclick="location.href=\'../utils/logout.php\';" class="affichelogin">Logout</button>
+                            <button onclick="location.href=\'../utils/all/login/logout.php\';" class="affichelogin">Logout</button>
                         </div>';
                     include "../assets/affichage/header.php";
                 }
@@ -127,7 +127,7 @@ estMoniteur();
             
                 <section class="gauche-section gauche">
                     <h2>Parametre page</h2>
-                    <form action="../utils/traitementParametre.php" method="post">
+                    <form action="../utils/all/update/traitementParametre.php" method="post">
                         <input type="hidden" id="clientmoniteur" name="clientmoniteur" value="moniteur">
                         
                         <label for="username">Nom d'utilisateur :</label>
