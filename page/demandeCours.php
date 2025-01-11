@@ -15,7 +15,7 @@ estConnecte();
 
 
 // echo "<pre>";
-// print_r($infoDuCours);
+// print_r($_SESSION);
 // echo "</pre>";
 
 
@@ -34,6 +34,8 @@ estConnecte();
     
     <link rel="stylesheet" href="../assets/style/coursCalendrier.css">
     <link rel="stylesheet" href="../assets/style/calendrier.css">
+    <link rel="stylesheet" href="../assets/style/styleSousPage.css">
+    <script src="../assets/script/popUpGestionErr.js"></script>
 </head>
     <body>
         <header>
@@ -66,42 +68,40 @@ estConnecte();
             
             <section class="droite-section">
 
-                <form action="../utils/demandeDeCours.php" method="post" class="formReserv">
-
-
+                <form method="POST" action="../utils/demandeDeCours.php" class="formReserv" id="formDemandeCours">
                     <div class="container-carrousel-poney" id="carrousel">
+                        <?php $cpt=0;?>
                         <?php foreach (getPoney($bdd) as $poney): ?>
                             <div class="poney-item">
-                                <input type="radio" required id="poney<?php echo $poney['idPoney']; ?>" name="poneySelectionne" value="<?php echo $poney['idPoney']; ?>">
+                                <input type="radio" <?php if($cpt == 0) echo 'required'?>  id="poney<?php echo $poney['idPoney']; ?>" name="poneySelectionne" value="<?php echo $poney['idPoney']; ?>">
                                 <label for="poney<?php echo $poney['idPoney']; ?>">
                                     <p class="nomPoney"><?php echo $poney['nomPoney']; ?></p>
                                     <p><?php echo $poney['nomRace']; ?></p>
                                     <img src="../assets/images/poney/<?php echo $poney['photo']; ?>" alt="Poney <?php echo $poney['nomPoney']; ?>">
                                 </label>
                             </div>
-                            <?php endforeach; ?>
-                        </div>
-                        
-                        <button type="button" id="button-left" class="nav-btn left" onclick="scrollCarousel(-1)">&#10094;</button>
-                        <button type="button" id="button-right" class="nav-btn right" onclick="scrollCarousel(1)">&#10095;</button>
-                        
-                        
-                        
+                            <?php $cpt++?>
+                        <?php endforeach; ?>
+                    </div>
+                    
+                    <button type="button" id="button-left" class="nav-btn left" onclick="scrollCarousel(-1)">&#10094;</button>
+                    <button type="button" id="button-right" class="nav-btn right" onclick="scrollCarousel(1)">&#10095;</button>
+                    
                         <input type="hidden" name="usernameClient" required id="usernameClient" value="<?php echo $_SESSION["connecte"]["username"]?>"/>
-                        <input type="hidden" name="dateDemandeCours" required id="dateDemandeCours" value=""/>
-                        <input type="hidden" name="niveau" required id="niveauAdherent" value="<?php echo $_SESSION["connecte"]["info"]["niveau"]?>"/>
+                    <input type="hidden" name="dateDemandeCours" required id="dateDemandeCours" value=""/>
+                    <input type="hidden" name="niveau" required id="niveauAdherent" value="<?php echo $_SESSION["connecte"]["info"]["niveau"]?>"/>
+                    
+                    <label for="heureCours">Heure debut du cours</label>
+                    <input type="time" required name="heureCours" id="heureCoursReserv"  min='01:00' max='23:00' step='1800' >
+                    
+                    <label for="heure">Nombre d'heure pour le cours:</label>
+                    <select name="heure" class="heure" required>
                         
-                        <label for="heureCours">Heure debut du cours</label>
-                        <input type="time" required name="heureCours" id="heureCoursReserv"  min='01:00' max='23:00' step='1800' >
-                        
-                        <label for="heure">Nombre d'heure pour le cours:</label>
-                        <select name="heure" class="heure" required>
-                            
-                            <option value="1">1h</option>
-                            <option value="2">2h</option>
-                        </select>
-                        
-                        <textarea name="activiteDuCours" placeholder="J'aimerais faire un cours pour réviser ....." maxlength="200"></textarea>
+                        <option value="1">1h</option>
+                        <option value="2">2h</option>
+                    </select>
+                    
+                    <textarea name="activiteDuCours" placeholder="J'aimerais faire un cours pour réviser ....." maxlength="200"></textarea>
 
                     <button id="ReserverValider" type="submit">Reserver</button>
 
@@ -111,8 +111,18 @@ estConnecte();
 
         </main>
     </body>
+    <?php
+    if(isset($_SESSION["popUp"])){
+        echo "<script type='text/javascript'>
+                showPopUp(\"".$_SESSION["popUp"]["message"]."\",".($_SESSION["popUp"]["success"] ? "true" : "false").");
+              </script>";
+        unset($_SESSION["popUp"]);
+    }
+    ?>
     
     <script src="../assets/script/reservationCarrousel.js"></script>
     <script src="../assets/script/demandeCours.js"></script>
+
+    
 </html>
 
