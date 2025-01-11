@@ -1,6 +1,6 @@
 <?php
 // code pour s'inscrire sur le site et ajouter les informations dans une BD
-require_once "./connexionBD.php";
+require_once "./BDD/connexionBD.php";
 require_once "./annexe.php";
 
 if(isset($_POST['fromSignIn']))

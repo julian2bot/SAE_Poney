@@ -1,7 +1,7 @@
 <?php
 // code pour supprimé un poney dans la BD
 
-require_once "../utils/connexionBD.php";
+require_once "../utils/BDD/connexionBD.php";
 require_once "../utils/annexe.php";
 estAdmin();
 

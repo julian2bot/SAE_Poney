@@ -1,5 +1,5 @@
 <?php
-require_once "./connexionBD.php";
+require_once "./BDD/connexionBD.php";
 require_once "./annexe.php";
 
 estConnecte();

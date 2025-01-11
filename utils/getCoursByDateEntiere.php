@@ -1,6 +1,6 @@
 <?php
 // get les cours a une date donnée (utilisé avec ajax)
-require_once "connexionBD.php";
+require_once "./BDD/connexionBD.php";
 
 estConnecte();
 

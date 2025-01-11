@@ -1,12 +1,12 @@
 <?php
-require_once "../utils/connexionBD.php";
+require_once "../utils/BDD/connexionBD.php";
 require_once "../utils/annexe.php";
 require_once "../utils/constante.php";
 
 estConnecte();
 // TODO
 
-require_once "../utils/connexionBD.php";
+require_once "../utils/BDD/connexionBD.php";
 require_once "../utils/annexe.php";
 
 

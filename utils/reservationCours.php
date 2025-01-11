@@ -1,7 +1,7 @@
 <?php
 // code pour reserver un cours et l'ajouter a la BD
 
-require_once "./connexionBD.php";
+require_once "./BDD/connexionBD.php";
 require_once "./annexe.php";
 
 estConnecte();

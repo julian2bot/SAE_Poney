@@ -1,7 +1,7 @@
 <?php
 // code pour se login verifier s'il est bien dans la BD et mettre toute les valeurs dans le $_SESSION
 
-require_once "./connexionBD.php";
+require_once "./BDD/connexionBD.php";
 require_once "./annexe.php";
 
 
@@ -46,12 +46,12 @@ if(isset($_POST['fromLogin'])){
 
 
 // retourne sur la page index avec l'erreur s'il y en a une 
-if($erreur){
-	header("Location: ../index.php?erreurLogin=$erreur");
-	exit;
-}
-else{
-	header("Location: ../index.php");
-	exit;
-}
+// if($erreur){
+// 	header("Location: ../index.php?erreurLogin=$erreur");
+// 	exit;
+// }
+// else{
+// 	header("Location: ../index.php");
+// 	exit;
+// }
 ?>

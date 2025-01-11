@@ -1,6 +1,6 @@
 <?php
 // code pour creer un moniteur et l'ajouter a la bd
-require_once "../utils/connexionBD.php";
+require_once "../utils/BDD/connexionBD.php";
 require_once "../utils/annexe.php";
 estAdmin();
 

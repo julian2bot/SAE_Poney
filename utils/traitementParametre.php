@@ -1,6 +1,6 @@
 <?php
 // code pour gerer les parametres d'un clients/moniteur
-require_once "connexionBD.php";
+require_once "./BDD/connexionBD.php";
 require_once "annexe.php";
 estConnecte();
 
