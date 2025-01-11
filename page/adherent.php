@@ -2,9 +2,9 @@
 require_once "../utils/BDD/connexionBD.php";
 require_once "../utils/annexe.php";
 estConnecte();
-echo "<pre>";
-print_r($_SESSION);
-echo "</pre>";
+// echo "<pre>";
+// print_r($_SESSION);
+// echo "</pre>";
 
 ?>
 
@@ -99,7 +99,7 @@ echo "</pre>";
             
                 <section class="gauche-section gauche">
                 <h2>Parametre page</h2>
-                    <form action="../utils/traitementParametre.php" method="post">
+                    <form action="../utils/all/update/traitementParametre.php" method="post">
                         <input type="hidden" id="clientmoniteur" name="clientmoniteur" value="client">
 
                         <label for="username">Nom d'utilisateur :</label>

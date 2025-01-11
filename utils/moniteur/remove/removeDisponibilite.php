@@ -1,6 +1,6 @@
 <?php
-require_once "../utils/BDD/connexionBD.php";
-require_once "../utils/annexe.php";
+require_once __DIR__."/../../BDD/connexionBD.php";
+require_once __DIR__."/../../annexe.php";
 
 if(($_SESSION["connecte"]["role"] === "moniteur" || $_SESSION["connecte"]["role"] === "admin") && 
     isset($_POST["previousDate"]) &&
@@ -24,7 +24,7 @@ if(($_SESSION["connecte"]["role"] === "moniteur" || $_SESSION["connecte"]["role"
 }
  
 
-header("Location: ../page/moniteur.php#gestionDisponibilite");
+header("Location: ../../../page/moniteur.php#gestionDisponibilite");
 exit;
 
 ?>

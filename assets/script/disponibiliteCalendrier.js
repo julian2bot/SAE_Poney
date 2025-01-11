@@ -13,7 +13,7 @@ function addDisponibiliteInfo(date) {
     const xhr = new XMLHttpRequest();
     
     // Configurer la requête GET
-    xhr.open('GET', `../utils/getMoniteurDisponibiliteDate.php?date=${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}&username=${username.value}`, true);
+    xhr.open('GET', `../utils/moniteur/getter/getMoniteurDisponibiliteDate.php?date=${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}&username=${username.value}`, true);
     
     // Définir une fonction de callback pour gérer la réponse
     xhr.onreadystatechange = function() {
@@ -79,7 +79,7 @@ function getDisponibilte(date){
         const username = document.getElementById("username");
         console.log(username.value);
         // Configurer la requête GET
-        xhr.open('GET', `../utils/getMoniteurDisponibiliteDate.php?date=${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}&username=${username.value}`, true);
+        xhr.open('GET', `../utils/moniteur/getter/getMoniteurDisponibiliteDate.php?date=${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}&username=${username.value}`, true);
         
         xhr.onreadystatechange = function() {
             if (xhr.readyState === 4) {

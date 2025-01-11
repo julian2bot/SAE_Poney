@@ -109,7 +109,7 @@ function requestMoniteurCours(year, month, day) {
     const xhr = new XMLHttpRequest();
     
     // Configurer la requête GET
-    xhr.open('GET', `../utils/getMoniteurACoursOuPas.php?date=${year+'-'+month+'-'+day}&username=${username.value}`, true);
+    xhr.open('GET', `../utils/moniteur/getter/getMoniteurACoursOuPas.php?date=${year+'-'+month+'-'+day}&username=${username.value}`, true);
 
     // Définir une fonction de callback pour gérer la réponse
     xhr.onreadystatechange = function() {
@@ -188,7 +188,7 @@ function getMoniteurACoursOuPas(date) {
         const username = document.getElementById("username");
 
         // Configurer la requête GET
-        xhr.open('GET', `../utils/getCoursByDateMoniteur.php?year=${date.getFullYear()}&month=${date.getMonth()+1}&username=${username.value}`, true);
+        xhr.open('GET', `../utils/moniteur/getter/getCoursByDateMoniteur.php?year=${date.getFullYear()}&month=${date.getMonth()+1}&username=${username.value}`, true);
 
         xhr.onreadystatechange = function() {
             if (xhr.readyState === 4) {

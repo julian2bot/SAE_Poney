@@ -203,7 +203,7 @@ function getClient(PDO $bdd): array
  *
  * @return bool true s'il exite false sinon
  */
-function getRaceExistgetRace(PDO $bdd, string $nomRace): bool
+function getRaceExist(PDO $bdd, string $nomRace): bool
 {
 	$reqUser = $bdd->prepare("SELECT * FROM RACE WHERE nomRace = ?");
 	$reqUser->execute(array($nomRace));
@@ -237,7 +237,7 @@ function getRaces(PDO $bdd): array
  *
  * @return int id maximal de la bd pour une table donnée
  */
-function getIdMax(PDO $bdd, string $idNom, string $table): int
+function getIdMax(PDO $bdd, string $idNom, string $table): array
 {
 	$table = strtoupper($table);
 	$reqUser = $bdd->prepare("SELECT MAX($idNom) FROM $table");
@@ -246,7 +246,7 @@ function getIdMax(PDO $bdd, string $idNom, string $table): int
 	if (isset($info)) {
 		return $info;
 	}
-	return 0;
+	return array();
 }
 
 /**

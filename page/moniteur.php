@@ -127,7 +127,7 @@ estMoniteur();
             
                 <section class="gauche-section gauche">
                     <h2>Parametre page</h2>
-                    <form action="../utils/traitementParametre.php" method="post">
+                    <form action="../utils/all/update/traitementParametre.php" method="post">
                         <input type="hidden" id="clientmoniteur" name="clientmoniteur" value="moniteur">
                         
                         <label for="username">Nom d'utilisateur :</label>

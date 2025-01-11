@@ -51,7 +51,7 @@
         <main class="container">
 
             <section class="gauche-section disponible">
-                <form method="POST" action="../utils/modifDisponibilite.php">
+                <form method="POST" action="../utils/moniteur/update/modifDisponibilite.php">
                     <?php
                         $timeStart = convertFloatToTime((float)$_GET["debutDispo"]);
                         $timeFinish = convertFloatToTime($infoDate["heureFinDispo"]);
@@ -73,7 +73,7 @@
                     ?>
                     <input type="submit" value="Modifier">
                 </form>
-                <form method="POST" action="../utils/removeDisponibilite.php">
+                <form method="POST" action="../utils/moniteur/remove/removeDisponibilite.php">
                     <?php
                         $timeStart = convertFloatToTime((float)$_GET["debutDispo"]);
                         $timeFinish = convertFloatToTime($infoDate["heureFinDispo"]);

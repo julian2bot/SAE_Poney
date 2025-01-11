@@ -1,6 +1,6 @@
 <?php
-require_once "../utils/BDD/connexionBD.php";
-require_once "../utils/annexe.php";
+require_once __DIR__."/../../BDD/connexionBD.php";
+require_once __DIR__."/../../annexe.php";
 
 
 
@@ -13,19 +13,19 @@ if(($_SESSION["connecte"]["role"] === "moniteur" || $_SESSION["connecte"]["role"
     $heureDebutPrevious = convertTimeToFloat($_POST["previousTime"]);
     if($_POST["heureDebut"] >= $_POST["heureFin"]){
         createPopUp("L'heure de fin ne peut pas être avant l'heure de début",false);
-        header("Location: ../page/moniteur.php#gestionDisponibilitep");
+        header("Location: ../../../page/moniteur.php#gestionDisponibilitep");
         exit;
     }
     else if((new DateTime($_POST["dateDispo"]) == new DateTime($_POST["previousDate"]))){
         if(existDateDispoConflit($bdd,$_SESSION["connecte"]["username"], $_POST["dateDispo"],$_POST["heureDebut"],$_POST["heureFin"],$heureDebutPrevious)){
             createPopUp("Un conflit existe avec les disponibilités déjà entrée, veuillez les modifier",false);
-            header("Location: ../page/modifierDisponibilite.php?dateDispo=$_POST[previousDate]&debutDispo=$heureDebutPrevious");
+            header("Location: ../../../page/modifierDisponibilite.php?dateDispo=$_POST[previousDate]&debutDispo=$heureDebutPrevious");
             exit;
         }
     }
     else if(existDateDispoConflit($bdd,$_SESSION["connecte"]["username"], $_POST["dateDispo"],$_POST["heureDebut"],$_POST["heureFin"])){
         createPopUp("Un conflit existe avec les disponibilités déjà entrée, veuillez les modifier",false);
-        header("Location: ../page/modifierDisponibilite.php?dateDispo=$_POST[previousDate]&debutDispo=$heureDebutPrevious");
+        header("Location: ../../../page/modifierDisponibilite.php?dateDispo=$_POST[previousDate]&debutDispo=$heureDebutPrevious");
         exit;
     }
     else{
@@ -63,5 +63,5 @@ if(($_SESSION["connecte"]["role"] === "moniteur" || $_SESSION["connecte"]["role"
     }
 }
 
-header("Location: ../page/moniteur.php#gestionDisponibilite");
+header("Location: ../../../page/moniteur.php#gestionDisponibilite");
 exit;

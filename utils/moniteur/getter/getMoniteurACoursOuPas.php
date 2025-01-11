@@ -1,7 +1,7 @@
 <?php
 // get les cours a une date donnée pour un moniteur (utilisé avec ajax)
 
-require_once "./BDD/connexionBD.php";
+require_once __DIR__."/../../BDD/connexionBD.php";
 
 estConnecte();
 
