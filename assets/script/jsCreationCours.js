@@ -6,7 +6,8 @@ document.addEventListener('DOMContentLoaded', () => {
 function getDate(month,year){
 
 
-const titres = document.querySelectorAll('.jourpossible');
+let titres = document.querySelectorAll('.jourpossible');
+let aujourdhui = document.querySelectorAll('.today');
 
 titres.forEach((element) => {
     element.addEventListener("click", ()=> {
@@ -16,6 +17,15 @@ titres.forEach((element) => {
         
     });
   });
+
+aujourdhui.forEach((element) => {
+    element.addEventListener("click", ()=> {
+
+    let valeur =element.id;
+    changerTexte(valeur,month,year);
+    
+});
+});
 
 }
 

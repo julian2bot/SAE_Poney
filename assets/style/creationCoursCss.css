@@ -82,7 +82,7 @@ form >section>label {
     color: white;
 }
 
-form >section>input {
+form >section>input  , select{
     width: 30%;
     padding: 3px;
     border: none;
@@ -196,3 +196,26 @@ fieldset>div>input
 transform: scale(1.5); /* Augmenter la taille du bouton radio de 1.5x */
 
 }
+
+
+
+input:invalid + span::after {
+  content: "✖";
+  padding-left: 5px;
+}
+
+input:valid + span::after {
+  content: "✓";
+  padding-left: 5px;
+}
+
+.heure{
+    width: 8%;
+    
+    padding: 3px;
+    border: none;
+    border-bottom: 1px solid #eee;
+    caret-color: white;
+    color: black;
+}
+

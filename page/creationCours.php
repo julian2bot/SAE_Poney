@@ -61,6 +61,7 @@ require_once "../utils/connexionBD.php";
                     <section>
                         <label>NOM DU COURS</label>
                         <input name="nom" id="nom" type="text" required />
+                        <span class="validity"></span>
                     </section>
 
                     <section>
@@ -80,7 +81,7 @@ require_once "../utils/connexionBD.php";
                             <option value=10 >NIVEAU 10</option>
                         </select>
                         
-                        <input name="niveau" id="niveau" type="text" value=1 placeholder="La valeur apparaît ici" required />
+                        <input name="niveau" id="niveau" type="text" value=1 placeholder="La valeur apparaît ici" hidden required />
 
                     </section>
 
@@ -88,7 +89,16 @@ require_once "../utils/connexionBD.php";
 
                     <section>
                         <label>PRIX DU COURS</label>
-                        <input name="prix" id="prix" type="number" required />
+                        <input name="prix" id="prix" type="number"  min="1" max="2500" list="defaultNumbers" required  value=0 />
+                        <span class="validity"></span>
+
+                        <datalist id="defaultNumbers">
+                            <option value="400"></option>
+                            <option value="200"></option>
+                            <option value="350"></option>
+                            <option value="10"></option>
+                            <option value="99"></option>
+                        </datalist>
                     </section>
 
                     <section>
@@ -109,11 +119,13 @@ require_once "../utils/connexionBD.php";
                         <label>DATE DU COURS</label>
                         <p id=montrerdate>non selectionner</p>
                         <input name="datevalider" value="" id="datevalider" hidden type="date" required />
+                        <span class="validity"></span>
                     </section>
 
                     <section>
                         <label>HEUR DU COURS</label>
-                        <input type="time" id="appt" name="appt" min="09:00" max="22:00" required />
+                        <input class=heure type="time" id="appt" name="appt" min="06:00" max="22:00" required />
+                        <span class="validity"></span>
                     </section>
 
                     <section>
@@ -128,6 +140,7 @@ require_once "../utils/connexionBD.php";
                                 <label for="choix2h">2h</label>
                             </div>
                         </fieldset>
+                       
                     </section>
 
 
