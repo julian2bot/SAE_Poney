@@ -1,8 +1,5 @@
 <?php
 require_once "../utils/connexionBD.php";
-require_once "../utils/functioncours.php";
-
-
 ?>
 
 
@@ -31,7 +28,27 @@ require_once "../utils/functioncours.php";
                 <figure class="image-block">
                 </figure>
                 <p>Selectionner la date</p>
-                <h1>Calendrier Dynamique</h1>
+
+                
+                <?php include '../utils/functioncours.php'; ?>
+                <h1>Calendrier - <?php echo $months[$month] . ' ' . $year; ?></h1>
+
+                <div class="navigation">
+                    <a href="?month=<?php echo $prevMonth; ?>&year=<?php echo $prevYear; ?>">&laquo; Mois précédent</a>
+                    <a href="?month=<?php echo $nextMonth; ?>&year=<?php echo $nextYear; ?>">Mois suivant &raquo;</a>
+                </div>
+
+                <table>
+                    <tr>
+                        <?php foreach ($daysOfWeek as $day): ?>
+                            <th><?php echo $day; ?></th>
+                        <?php endforeach; ?>
+                    </tr>
+
+                    <tr>
+                    <?php generercase($firstDayOfWeek,$daysInMonth,$month,$year) ?>
+                    </tr>
+                </table>
                 
 
 
@@ -42,14 +59,23 @@ require_once "../utils/functioncours.php";
 
                 <form action="action.php" method="post">
                     <label>NOM</label>
-                    <input name="nom" id="nom" type="text" />
+                    <input name="nom" id="nom" type="text" required />
                     <label>NIVEAU</label>
-                    <input name="niveau" id="niveau" type="text" />
+                    <input name="niveau" id="niveau" type="text" required />
                     <label>PRIX</label>
-                    <input name="prix" id="prix" type="number" />
+                    <input name="prix" id="prix" type="number" required />
                     <label>NBMAX</label>
-                    <input name="nbmax" id="nbmax" type="number" />
-                    <input name="datevalider" id="nbmax" hidden type="number" />
+                    <input name="nbmax" id="nbmax" type="number" required />
+
+                    <label>DATE</label>
+                    <p id=montrerdate>non selectionner</p>
+                    <input name="datevalider" value="" id="datevalider" hidden type="date" required />
+
+                    <label>HEUR</label>
+
+                    <input type="time" id="appt" name="appt" min="09:00" max="18:00" required />
+
+
                     <button type="submit">Valider</button>
 
 

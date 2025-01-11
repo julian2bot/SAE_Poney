@@ -100,8 +100,55 @@ td {
   }
 
 
-  th, td { padding: 10px; text-align: center; border: 1px solid #ddd; }
-  th { background-color: #f2f2f2; color: #333; }
-  td:hover { background-color: #f9f9f9; cursor: pointer; }
+  th, td { padding: 10px; text-align: center; /*! border: 1px solid #ddd; */ }
+  th { background-color: #f2f2f2; color: #333;}
+  td:hover { background-color: #ADD8E6; cursor: pointer; }
+
   .current-day { background-color: #ffdd57; font-weight: bold; }
   button { margin: 10px; padding: 10px 20px; }
+
+  .passer { background-color: grey;pointer-events: none; }
+  button { margin: 10px; padding: 10px 20px; }
+
+
+
+
+
+
+  body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin: 20px;
+  }
+  table {
+      margin: 0 auto;
+      border-collapse: collapse;
+      width: 90%;
+      max-width: 600px;
+  }
+
+  th {
+      background-color: #929292;
+  }
+  .navigation {
+      margin: 20px;
+  }
+  .navigation a {
+      margin: 0 10px;
+      text-decoration: none;
+      color: red;
+      font-weight: bold;
+  }
+  .navigation a:hover {
+      text-decoration: underline;
+  }
+  .empty {
+      background-color: #f9f9f9;
+  }
+  .today {
+      background-color: #FFD700;
+  }
+
+td{
+     background-color: #f3f3f3f3;
+}
