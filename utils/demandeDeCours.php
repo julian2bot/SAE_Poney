@@ -25,6 +25,11 @@ isset($_POST["heure"])){
         header("Location: ../page/demandeCours.php");
         exit;
     }
+    else if(getDemandeExistDay($bdd,$_SESSION["connecte"]["username"],$_POST["dateDemandeCours"])){
+        createPopUp("Vous avez déjà réalisé une demande de cours pour ce jour",false);
+        header("Location: ../page/demandeCours.php");
+        exit;
+    }
 
     // Insertion dans la BD
 
