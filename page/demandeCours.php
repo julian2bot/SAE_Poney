@@ -68,7 +68,7 @@ estConnecte();
             
             <section class="droite-section">
 
-                <form method="POST" action="../utils/demandeDeCours.php" class="formReserv" id="formDemandeCours">
+                <form method="POST" action="../utils/client/cours/demandeDeCours.php" class="formReserv" id="formDemandeCours">
                     <div class="container-carrousel-poney" id="carrousel">
                         <?php $cpt=0;?>
                         <?php foreach (getPoney($bdd) as $poney): ?>

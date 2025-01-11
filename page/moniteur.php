@@ -33,7 +33,7 @@ estMoniteur();
                     echo '<div class="auth-buttons">
                             <p>'.$_SESSION["connecte"]["prenom"].'</p>
                     
-                            <button onclick="location.href=\'../utils/logout.php\';" class="affichelogin">Logout</button>
+                            <button onclick="location.href=\'../utils/all/login/logout.php\';" class="affichelogin">Logout</button>
                         </div>';
                     include "../assets/affichage/header.php";
                 }

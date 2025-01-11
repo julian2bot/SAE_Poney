@@ -1,6 +1,6 @@
 <?php
-require_once "./BDD/connexionBD.php";
-require_once "./annexe.php";
+require_once __DIR__."/../../BDD/connexionBD.php";
+require_once __DIR__."/../../annexe.php";
 
 estConnecte();
 estMoniteur();

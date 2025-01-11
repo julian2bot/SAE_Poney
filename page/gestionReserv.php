@@ -69,7 +69,7 @@ estMoniteur();
                             
                             .'';
                             echo "<div class = 'boutons'>";
-                            echo '<a href="../utils/accepterReserv.php?userClient='.$reserv["usernameClient"]."&idCours=".$reserv["idCours"]."&dateCours=".$reserv["dateCours"]."&heureDebutCours=".$reserv["heureDebutCours"]."&usernameMoniteur=".$_SESSION["connecte"]["username"].'" class="remove-btn">Accepter</a>';
+                            echo '<a href="../utils/moniteur/cours/accepterReserv.php?userClient='.$reserv["usernameClient"]."&idCours=".$reserv["idCours"]."&dateCours=".$reserv["dateCours"]."&heureDebutCours=".$reserv["heureDebutCours"]."&usernameMoniteur=".$_SESSION["connecte"]["username"].'" class="remove-btn">Accepter</a>';
                             echo "</div>";
                             echo "</li>";
                         }

@@ -65,7 +65,7 @@ if(isset($_SESSION["connecte"])){
                 <section>
                     <h2>Login</h2>
                     <p>Entrer vos compte pour vous connecter</p>
-                    <form method="POST" action ="utils/login.php" class="form">
+                    <form method="POST" action ="utils/all/login/login.php" class="form">
 
                         <label for="Name">UserName</label>
                         <input type="text" name="Name" id="Name" placeholder="UserName" autocomplete="off" class="form-control-material">
@@ -95,7 +95,7 @@ if(isset($_SESSION["connecte"])){
                 <section>
                     <h2>SignIn</h2>
                     <p>Entrer vos compte pour vous connecter</p>
-                    <form method="POST" action="utils/signIn.php" class="form">
+                    <form method="POST" action="utils/all/login/signIn.php" class="form">
 
                         <label for="NameSignIn">UserName</label>
                         <input type="text" name="NameSignIn" id="NameSignIn" placeholder="UserName" autocomplete="off" class="form-control-material">

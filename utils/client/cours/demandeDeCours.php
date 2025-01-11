@@ -1,13 +1,13 @@
 <?php
-require_once "../utils/BDD/connexionBD.php";
-require_once "../utils/annexe.php";
-require_once "../utils/constante.php";
+require_once __DIR__."/../../BDD/connexionBD.php";
+require_once __DIR__."/../../annexe.php";
+require_once __DIR__."/../../constante.php";
 
 estConnecte();
 // TODO
 
-require_once "../utils/BDD/connexionBD.php";
-require_once "../utils/annexe.php";
+// require_once __DIR__."/../../BDD/connexionBD.php";
+// require_once __DIR__."/../../annexe.php";
 
 
 echo "<pre>";
@@ -27,12 +27,12 @@ isset($_POST["heure"])){
 
     if(!isset($coursPerso["idCours"])){
         createPopUp("Problème pour trouver un cours adéquat",false);
-        header("Location: ../page/demandeCours.php");
+        header("Location: ../../../page/demandeCours.php");
         exit;
     }
     else if(getDemandeExistDay($bdd,$_SESSION["connecte"]["username"],$_POST["dateDemandeCours"])){
         createPopUp("Vous avez déjà réalisé une demande de cours pour ce jour",false);
-        header("Location: ../page/demandeCours.php");
+        header("Location: ../../../page/demandeCours.php");
         exit;
     }
 
@@ -70,7 +70,7 @@ isset($_POST["heure"])){
 
 
 }
-header("Location: ../page/demandeCours.php");
+header("Location: ../../../page/demandeCours.php");
 exit;
 
 

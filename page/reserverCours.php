@@ -61,7 +61,7 @@ $infoDuCours = getInfoCours($bdd, $_GET["idcours"], $_GET["dateCours"], $_GET["h
             
             <section class="droite-section">
 
-                <form action="../utils/reservationCours.php" method="post" class="formReserv">
+                <form action="../utils/client/cours/reservationCours.php" method="post" class="formReserv">
                     <input type="hidden" required id="idCours" name="idCours"  value="<?php echo $_GET["idcours"]?>" />
                     <input type="hidden" required id="usernameMoniteur" name="usernameMoniteur"  value="<?php echo $infoDuCours["usernameMoniteur"]?>" />
                     <input type="hidden" required id="dateCours" name="dateCours"  value="<?php echo $infoDuCours["dateCours"]?>" />
