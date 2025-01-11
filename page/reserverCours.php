@@ -67,6 +67,7 @@ $infoDuCours = getInfoCours($bdd, $_GET["idcours"], $_GET["dateCours"], $_GET["h
                     <input type="hidden" required id="dateCours" name="dateCours"  value="<?php echo $infoDuCours["dateCours"]?>" />
                     <input type="hidden" required id="heureDebutCours" name="heureDebutCours"  value="<?php echo $infoDuCours["heureDebutCours"]?>" />
                     <input type="hidden" required id="userclient" name="userclient"  value="<?php echo $_SESSION["connecte"]["username"]?>" />
+                    <input type="hidden" required id="prix" name="prix"  value="<?php echo $infoDuCours["prix"] ?>" />
 
                     
 

@@ -1129,3 +1129,48 @@ function mailMoniteurDemandeCoursConfirme($sendingEmail, $email, $moniteurName, 
 
     }
 }
+
+
+
+/**
+ * Get le solde du client 
+ * 
+ * 
+ * 
+ */
+function getSoldeClient(PDO $bdd, string $client): int
+{
+	$reqUser = $bdd->prepare("SELECT solde FROM CLIENT WHERE usernameClient = ?");
+	$reqUser->execute([$client]);
+	$info = $reqUser->fetch();
+	return $info["solde"] ?? 0;
+}
+
+/**
+ * mets a jour le solde du client 
+ * 
+ * 
+ * @return le solde du client actuelle
+ */
+function updateDecrSoldeCLient($bdd, $usernameClient, $decrSolde) : int{
+    $soldeClient = getSoldeClient($bdd, $usernameClient);
+    
+    if(($soldeClient - $decrSolde) >= 0){
+        try {
+            // Préparer la requête sécurisée
+            $sql = "UPDATE CLIENT SET solde = solde - $decrSolde WHERE usernameClient = :username";
+            $stmt = $bdd->prepare($sql);
+            $stmt->bindParam(':username', $usernameClient, PDO::PARAM_STR);
+    
+            // Exécuter la requête
+            if ($stmt->execute()) {
+                echo "Solde mis à jour avec succès.";
+                return $soldeClient - $decrSolde; 
+            } 
+        } catch (PDOException $e) {
+            echo "Erreur : " . $e->getMessage();
+            return -1; 
+        }
+    }
+    return -1; 
+}
