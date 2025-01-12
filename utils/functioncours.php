@@ -31,6 +31,11 @@ $months = [
     
 ];
 
+// Vérifier si le formulaire est soumis
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    validerchoix();
+}
+
 
 
 function generercase($firstDayOfWeek,$daysInMonth,$month,$year){
@@ -86,5 +91,35 @@ for ($i = 0; $i < $remainingDays; $i++) {
 }
 }
 
-?>
 
+/*
+function validerchoix()
+{
+
+// Récupérer les données
+
+$idCours = "Select max(idCours) FROM COURS"
+$idNiveau = $_POST['niveau'];
+$nomCours = $_POST['nom'];
+$duree = $_POST['choixheure'];
+$prix = $_POST['prix'];
+$nbMax = $_POST['nbmax'];
+
+
+$datevalider = $_POST['datevalider'];
+$temp = $_POST['temp'];
+
+$insertionCOURS = "INSERT INTO COURS(idCours,idNiveau,nomCours,duree,prix,nbMax)
+VALUES ('.$idCours.','.$idNiveau.','.$nomCours.','.$duree.','.$prix.','.$nbMax.')";
+
+$insertionCOURS = "INSERT INTO COURS(idCours,idNiveau,nomCours,duree,prix,nbMax)
+VALUES ('.$idCours.','.$idNiveau.','.$nomCours.','.$duree.','.$prix.','.$nbMax.')";
+
+
+// Redirection vers une autre page
+header("Location: ../page/moniteur.php");
+exit;
+
+}
+*/
+?>

@@ -57,7 +57,7 @@ require_once "../utils/connexionBD.php";
             <section class="droite-section">
                 <article class="text-block">
 
-                <form action="action.php" method="post">
+                <form action="../utils/functioncours.php" method="post">
                     <section>
                         <label>NOM DU COURS</label>
                         <input name="nom" id="nom" type="text" required />
@@ -67,7 +67,7 @@ require_once "../utils/connexionBD.php";
                     <section>
                         <label>NIVEAU DU COURS</label>
                         <script src="../assets/script/jsCreationCours.js"></script>
-                        <label for="combobox">Choisissez une option :</label>
+                        <label for="combobox">Choisissez une option:</label>
                         <select id="combobox" onchange="Combobox()" >
                             <option value=1 >NIVEAU 1</option>
                             <option value=2 >NIVEAU 2</option>
@@ -124,7 +124,7 @@ require_once "../utils/connexionBD.php";
 
                     <section>
                         <label>HEUR DU COURS</label>
-                        <input class=heure type="time" id="appt" name="appt" min="06:00" max="22:00" required />
+                        <input class=heure type="time" id="temp" name="temp" min="06:00" max="22:00" required />
                         <span class="validity"></span>
                     </section>
 
@@ -143,8 +143,46 @@ require_once "../utils/connexionBD.php";
                        
                     </section>
 
+                    <section>
+                        <label>DESCRIPTION</label>
+                        <input type="text" id="description" name="description" min=0 max=30 placeholder="ajouter une description" value="" list="liste description automatique" required />
+                        <span class="validity"></span>
 
+                        <datalist id="liste description automatique">
+                            <option value="Apprentissage des bases."></option>
+                            <option value="Promenade à poney/cheval."></option>
+                            <option value="Jeux équestres simples:"></option>
+                            <option value="Découverte des soins:"></option>
+                            <option value="Cours collectifs:"></option>
+                            <option value="Cours particuliers:"></option>
+                            <option value="Stages équestres:"></option>
+                            <option value="Préparation aux galops:"></option>
+                            <option value="Balades et randonnées:"></option>
+                            <option value="Bivouacs ou randonnées sur plusieurs jours:"></option>
+                            <option value="Dressage:"></option>
+                            <option value="Saut d'obstacles (CSO):"></option>
+                            <option value="Cross:"></option>
+                            <option value="Voltige:"></option>
+                            <option value="TREC (Techniques de Randonnée Équestre de Compétition):"></option>
+                            
+                            <option value="Longues rênes:"></option>
+                            <option value="Longe:"></option>
+                            <option value="Éducation éthologique:"></option>
+                            <option value="Liberté:"></option>
+                            
+                            <option value="Ateliers de pansage:"></option>
+                            <option value="Toilettage et tressage:"></option>
+                            <option value="Alimentation:"></option>
+                            <option value="Découverte de la maréchalerie:"></option>
+                            <option value="Balnéothérapie:"></option>
+                            <option value="Massage équin et stretching:"></option>
 
+                            <option value="Préparation aux concours:"></option>
+                            <option value="Perfectionnement technique:"></option>
+                            <option value="Randonnées sportives:"></option>
+                            <option value="Approche du travail de jeunes chevaux:"></option>
+                        </datalist>
+                    </section>
 
                     <button type="submit">Valider</button>
 
