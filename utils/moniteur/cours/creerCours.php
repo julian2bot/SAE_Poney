@@ -22,12 +22,21 @@ isset($_POST["temp"])){
     $usernameMoniteur = $_SESSION["connecte"]["username"];
     $activite = $_POST['description'];
     $dateCours = $_POST['datevalider'];
-    $temp = ($_POST['temp']);
-    
-    // Séparer l'heure et les minutes
-    list($heures, $minutes) = explode(":", $temp);
-    // Convertir en une valeur décimale
-    $temp = $heures + ($minutes / 60);
+    $temp = convertTimeToFloat($_POST['temp']);
+
+    echo $_POST['temp']," ",convertFloatToTime($temp + $duree);
+
+    $estDisponible = moniteurEstDispo($bdd,$usernameMoniteur,$dateCours,$_POST['temp'],convertFloatToTime($temp + $duree));
+    if($estDisponible==0){
+        createPopUp("Vous avez déjà un cours qui rentre en conflit avec celui ci",false);
+        header("Location: ../../../page/creerCours.php");
+        exit;
+    }
+    else if($estDisponible == -1){
+        createPopUp("Vous n'avez pas de disponibilité matchant avec ce cours",false);
+        header("Location: ../../../page/creerCours.php");
+        exit;
+    }
     
     try {
         // Récupérer les données
@@ -66,7 +75,7 @@ isset($_POST["temp"])){
     
         // // Redirection vers moniteur
         createPopUp("Cours crée avec succès");
-        header("Location: ../../../page/creerCours.php");
+        header("Location: ../../../page/moniteur.php#creerCours");
         exit;
     }
     
