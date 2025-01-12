@@ -1,6 +1,7 @@
 // Appel initial pour synchroniser la valeur par défaut
 document.addEventListener('DOMContentLoaded', () => {
     Combobox();
+    Comboboxpersonne();
 });
 
 function getDate(month,year){
@@ -58,3 +59,29 @@ function Combobox()
     });
 }
 
+function Comboboxpersonne()
+{
+    // Récupération des éléments
+    const combobox = document.getElementById('comboboxpersonne');
+    const inputField = document.getElementById('niveau');
+
+    // Événement lorsque l'utilisateur sélectionne une option
+    combobox.addEventListener('change', () => {
+        // Mettre à jour la valeur de l'input avec la valeur sélectionnée
+        inputField.value = combobox.value;
+    });
+}
+
+
+function comboboxduree()
+{
+    // Récupération des éléments
+    const combobox = document.getElementById('comboboxduree');
+    const inputField = document.getElementById('choixheure');
+
+    // Événement lorsque l'utilisateur sélectionne une option
+    combobox.addEventListener('change', () => {
+        // Mettre à jour la valeur de l'input avec la valeur sélectionnée
+        inputField.value = combobox.value;
+    });
+}

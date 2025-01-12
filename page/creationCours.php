@@ -67,7 +67,6 @@ require_once "../utils/connexionBD.php";
                     <section>
                         <label>NIVEAU DU COURS</label>
                         <script src="../assets/script/jsCreationCours.js"></script>
-                        <label for="combobox">Choisissez une option:</label>
                         <select id="combobox" onchange="Combobox()" >
                             <option value=1 >NIVEAU 1</option>
                             <option value=2 >NIVEAU 2</option>
@@ -101,18 +100,17 @@ require_once "../utils/connexionBD.php";
                         </datalist>
                     </section>
 
+
+
                     <section>
                         <label>NOMBRE MAXIMUM DE PERSONNE</label>
-                        <fieldset>
-                            <div>
-                                <input type="radio" id="nbmax1" name="nbmax" value=1 checked />
-                                <label for="nbmax1">1</label>
-                            </div>
-                            <div>
-                                <input type="radio" id="nbmax10" name="nbmax" value=10 />
-                                <label for="choix2h">10</label>
-                            </div>
-                        </fieldset>
+                        <script src="../assets/script/jsCreationCours.js"></script>
+                        <select id="comboboxpersonne" onchange="Comboboxpersonne()" >
+                            <option value=1 checked>1 PERSONNE</option>
+                            <option value=10 >10 PERSONNE</option>
+                        </select>
+                        
+                        <input name="nbmax" id="niveau" type="int" value=1 hidden required />
                     </section>
                     
                     <section>
@@ -128,19 +126,16 @@ require_once "../utils/connexionBD.php";
                         <span class="validity"></span>
                     </section>
 
+
                     <section>
                         <label>DUREE DU COURS</label>
-                        <fieldset>
-                            <div>
-                                <input type="radio" id="choix1h" name="choixheure" value=1 checked />
-                                <label for="choix1h">1h</label>
-                            </div>
-                            <div>
-                                <input type="radio" id="choix2h" name="choixheure" value=2 />
-                                <label for="choix2h">2h</label>
-                            </div>
-                        </fieldset>
-                       
+                        <script src="../assets/script/jsCreationCours.js"></script>
+                        <select id="comboboxduree" onchange="comboboxduree()" >
+                            <option value=1 checked>1h</option>
+                            <option value=2 >2h</option>
+                        </select>
+                        
+                        <input name="choixheure" id="choixheure" type="int" value=1 hidden required />
                     </section>
 
                     <section>

@@ -96,7 +96,7 @@ form>section
   margin-left: 1em;
   display: flex;
   flex-direction: column;
-  margin-bottom: 1em;
+  margin-bottom: 0;
   width: 100%;
 }
 
