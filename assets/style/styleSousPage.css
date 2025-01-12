@@ -50,27 +50,6 @@ main{
 }
 
 
-.erreur, .succes{
-    padding:10px; 
-    border-radius:10px; 
-    border: solid 2px black; 
-    height:20px; 
-    position:fixed; 
-    top:10px; 
-    right: 10px;
-    display: flex;
-    align-items: center;
-}
-
-.erreur{
-    background-color:red; 
-}
-
-
-.succes{
-    background-color:greenyellow; 
-}
-
 
 
 

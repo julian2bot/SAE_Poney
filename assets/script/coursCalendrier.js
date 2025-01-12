@@ -216,7 +216,8 @@ function requestMoniteurCours(year, month, day) {
             let aCreerCours = document.createElement("a");
             aCreerCours.classList.add("addCours");
             aCreerCours.innerHTML= '+';
-            aCreerCours.href= `creerCours.php?date=${year+'-'+month+'-'+day}`; // TODO
+            // aCreerCours.href= `creerCours.php?date=${year+'-'+month+'-'+day}`; // TODO
+            aCreerCours.href= `creerCours.php?month=${month}&year=${year}&day=${day}`;
 
             aCreerCoursDIv.appendChild(aCreerCours);
             lesInfos.appendChild(aCreerCoursDIv);

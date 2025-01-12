@@ -28,6 +28,7 @@ if( !clientAPayerCotisation($bdd, $_SESSION["connecte"]["username"])){
     <link rel="stylesheet" href="../assets/style/coursCalendrier.css">
     <link rel="stylesheet" href="../assets/style/calendrier.css">
     <link rel="stylesheet" href="../assets/style/styleSousPage.css">
+    <link rel="stylesheet" href="../assets/style/popUp.css">
     <script src="../assets/script/popUpGestionErr.js"></script>
 </head>
     <body>

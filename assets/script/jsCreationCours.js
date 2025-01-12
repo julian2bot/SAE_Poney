@@ -1,37 +1,13 @@
-// Appel initial pour synchroniser la valeur par défaut
-document.addEventListener('DOMContentLoaded', () => {
-    Combobox();
-    Comboboxpersonne();
-    comboboxduree();
+function getDate(event,month,year){
+    const element = event.target;
+
+    console.log("yes");
     
-});
-
-function getDate(month,year){
-
-
-let titres = document.querySelectorAll('.jourpossible');
-let aujourdhui = document.querySelectorAll('.today');
-
-titres.forEach((element) => {
-    element.addEventListener("click", ()=> {
-
-        let valeur =element.id;
-        changerTexte(valeur,month,year);
-        
-    });
-  });
-
-aujourdhui.forEach((element) => {
-    element.addEventListener("click", ()=> {
 
     let valeur =element.id;
     changerTexte(valeur,month,year);
-    
-});
-});
-
-}
-
+        
+};
 
 function changerTexte(valeur,month,year) {
     month  = month < 10 ? '0' + month : month;
@@ -44,46 +20,11 @@ function changerTexte(valeur,month,year) {
     dateimput.value = year+"-"+month+"-"+valeur;
 
     console.log(dateimput.value);
-    console.log(dateimput.valueAsNumber)
+    console.log(dateimput.valueAsNumber);
 
-}
-
-function Combobox()
-{
-    // Récupération des éléments
-    const combobox = document.getElementById('combobox');
-    const inputField = document.getElementById('niveau');
-
-    // Événement lorsque l'utilisateur sélectionne une option
-    combobox.addEventListener('change', () => {
-        // Mettre à jour la valeur de l'input avec la valeur sélectionnée
-        inputField.value = combobox.value;
-    });
-}
-
-function Comboboxpersonne()
-{
-    // Récupération des éléments
-    const combobox = document.getElementById('comboboxpersonne');
-    const inputField = document.getElementById('niveau');
-
-    // Événement lorsque l'utilisateur sélectionne une option
-    combobox.addEventListener('change', () => {
-        // Mettre à jour la valeur de l'input avec la valeur sélectionnée
-        inputField.value = combobox.value;
-    });
-}
-
-
-function comboboxduree()
-{
-    // Récupération des éléments
-    const combobox = document.getElementById('comboboxduree');
-    const inputField = document.getElementById('choixheure');
-
-    // Événement lorsque l'utilisateur sélectionne une option
-    combobox.addEventListener('change', () => {
-        // Mettre à jour la valeur de l'input avec la valeur sélectionnée
-        inputField.value = combobox.value;
-    });
+    let selected = document.getElementsByClassName("selected")[0];
+    if(selected){
+        selected.classList.remove("selected");
+    }
+    document.getElementById(valeur).classList.add("selected");
 }

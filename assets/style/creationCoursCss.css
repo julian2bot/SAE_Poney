@@ -1,61 +1,19 @@
-/*  Login & SignIn  */
-h2{
-    font-size:2.5em ;
-    margin-bottom: .5em ;
+.droite-section{
+    width: 50%;
+    padding-right: 0;
 }
 
-.login p, .signIn p{
-    margin-bottom: .5em ;   
+.gauche-section{
+    width: 50%;
 }
 
-.login, .signIn{
-    position: absolute;
-    width: 50vw;
-    height: 82vh;
-    margin-left: calc(50vw / 2);
-    z-index: 3;
-    background-color: #495B4B;
-    position: relative;
-    border-radius: 42px;
-    display: none;
-}
-
-.login > img{ 
-    right: 0;
-    box-shadow: rgba(0, 0, 0, 0.225) -11px 0px 4px 0px; /*a faire*/
-}
-
-.signIn > img{
-    left: 0;
-    box-shadow: rgba(0, 0, 0, 0.225) 11px 0px 4px 0px; /*a faire*/
-    margin-left: 0;
-}
-
-.login > img, .signIn > img{
-    max-width: 50%;
-    height: 100%;
-    position: absolute;
-    bottom: 0;
-    border-radius: 42px;
-    /* box-shadow: rgba(0, 0, 0, 0.225) -11px 0px 4px 0px; */
-    object-fit: cover;
-}
-
-.login > section {
-    margin-top: calc((100vh - 70%) / 2 ); /* 10% a changer */
-    left: 0;
-
-}
-.signIn > section {
-    margin-top: calc((100vh - 80%) / 2 ); /* 10% a changer */
-    left: 50%;
-
-}
-.login > section, .signIn > section  {
-    padding: 2em;
-    width: calc(50% - 2em * 2);
-    position: absolute;
-    color: #eee;
+form{
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 2vh;
 }
 
 form button{
@@ -66,24 +24,13 @@ form button{
     cursor: pointer;
     border-radius: 10px;
     border: #6e6e6e 1px solid;
-    
-
 }
-
 
 form > a:hover{
     text-decoration: underline #b3b2b2;
 }
 
-form >section>label {
-
-    
-
-    color: white;
-}
-
-form >section>input  , select{
-    width: 30%;
+form >div>input , select{
     padding: 3px;
     border: none;
     border-bottom: 1px solid #eee;
@@ -91,13 +38,12 @@ form >section>input  , select{
     color: black;
 }
 
-form>section
+form>div
 {
-  margin-left: 1em;
   display: flex;
   flex-direction: column;
   margin-bottom: 0;
-  width: 100%;
+  width: 45%;
 }
 
 form > input::placeholder{
@@ -110,65 +56,71 @@ td {
     padding: 10px;
     border: 1px solid #ddd;
     cursor: pointer; /* Change le curseur pour indiquer qu'il est cliquable */
-  }
+}
 
 
-  th, td { padding: 10px; text-align: center; /*! border: 1px solid #ddd; */ }
-  th { background-color: #f2f2f2; color: #ffff;}
-  td:hover { background-color: #ADD8E6; cursor: pointer; }
+th, td { padding: 10px; text-align: center; /*! border: 1px solid #ddd; */ }
+th { background-color: #f2f2f2; color: #ffff;}
+td:hover { background-color: #ADD8E6; cursor: pointer; }
 
-  .current-day { background-color: #ffdd57; font-weight: bold; }
-  button { margin: 10px; padding: 10px 20px; }
+.current-day { background-color: #ffdd57; font-weight: bold; }
+button { margin: 10px; padding: 10px 20px; }
 
-  .passer { background-color: grey;pointer-events: none; }
-  button { margin: 10px; padding: 10px 20px; }
-
-
-
+.passer { background-color: grey;pointer-events: none; }
+button { margin: 10px; padding: 10px 20px; }
 
 
 
-  body {
-      font-family: Arial, sans-serif;
-      text-align: center;
-      margin: 20px;
-  }
-  table {
-      margin: 0 auto;
-      border-collapse: collapse;
-      width: 90%;
-      max-width: 600px;
-  }
 
-  th {
-      background-color: #347429;
-  }
-  .navigation {
-      margin: 20px;
-  }
-  .navigation a {
-      margin: 0 10px;
-      text-decoration: none;
-      color: red;
-      font-weight: bold;
-  }
-  .navigation a:hover {
-      text-decoration: underline;
-  }
-  .empty {
-      background-color: #f9f9f9;
-  }
-  .today {
-      background-color: #FFD700;
+
+
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    margin: 20px;
+}
+table {
+    margin: 0 auto;
+    border-collapse: collapse;
+    width: 90%;
+    max-width: 600px;
+}
+
+th {
+    background-color: #347429;
+}
+.navigation {
+    margin: 20px;
+}
+.navigation a {
+    margin: 0 10px;
+    text-decoration: none;
+    color: red;
+    font-weight: bold;
+}
+.navigation a:hover {
+    text-decoration: underline;
+}
+.empty {
+    background-color: #f9f9f9;
+}
+.selected {
+    background-color: #FFD700;
   }
 
 td{
      background-color: #f3f3f3f3;
 }
 
-.text-block
+/* .text-block
 {
    text-align: left;
+} */
+
+.sectionFormCours{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 fieldset
@@ -196,26 +148,3 @@ fieldset>div>input
 transform: scale(1.5); /* Augmenter la taille du bouton radio de 1.5x */
 
 }
-
-
-
-input:invalid + span::after {
-  content: "✖";
-  padding-left: 5px;
-}
-
-input:valid + span::after {
-  content: "✓";
-  padding-left: 5px;
-}
-
-.heure{
-    width: 8%;
-    
-    padding: 3px;
-    border: none;
-    border-bottom: 1px solid #eee;
-    caret-color: white;
-    color: black;
-}
-

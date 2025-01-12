@@ -285,6 +285,13 @@ function getCours(PDO $bdd, int $idCours):array{
 	return $info;
 }
 
+function getNiveau(PDO $bdd):array{
+    $reqUser = $bdd->prepare("SELECT * FROM NIVEAU");
+	$reqUser->execute(array());
+	$info = $reqUser->fetchAll();
+	return $info;
+}
+
 
 function getRepresentation(PDO $bdd, int $idCours, string $usernameMoniteur, string $dateCours, float $heureDebut):array{
     $reqRepr = $bdd->prepare("SELECT * FROM REPRESENTATION NATURAL JOIN COURS WHERE idCours = ? AND usernameMoniteur = ? AND dateCours = ? AND heureDebutCours = ?");
@@ -1411,3 +1418,60 @@ function updateDecrSoldeCLient(PDO $bdd, string $usernameClient, int $decrSolde)
 //                               WHERE usernameClient = "client1" 
 //                               AND MONTH(dateCours) = "01" 
 //                               AND YEAR(dateCours) = "2025";
+
+
+function generercase($firstDayOfWeek,$daysInMonth,$month,$year):array{
+    $result = [];
+    // Cases vides avant le premier jour du mois
+    for ($i = 0; $i < $firstDayOfWeek; $i++) {
+        echo '<td class="passer"></td>';
+    }
+    
+    // Affichage des jours du mois
+    for ($day = 1; $day <= $daysInMonth; $day++) {
+        $classes = '';
+        $id =0;
+    
+        if ($day < date('j') && $month <= date('n') || $year < date('Y') ) {
+            $classes = 'passer';
+        }
+    
+        else{
+            $classes = 'jourpossible';
+            $id =$day;
+        }
+    
+        if ($day == date('j') && $month == date('n') && $year == date('Y')) {
+            $classes = 'jourpossible selected';
+            $id =$day;
+            $result["jour"] = $day;
+            $result["mois"] = $month;
+            $result["annee"] = $year;
+        }
+    
+        if ($classes == 'passer')
+        {
+            echo '<td class="' . $classes .'"id='.$id.'>' . $day . '</td>';
+        }
+    
+        else
+        {
+            echo '<td class="' . $classes .'"id='.$id.' onclick="getDate(event,'.$month.','.$year.')" >' . $day . '</td>';
+        }
+        
+        // Retour à la ligne chaque dimanche
+        if (($firstDayOfWeek + $day) % 7 == 0) {
+            echo '</tr><tr>';
+        }
+    }
+    
+    
+    
+    // Cases vides après le dernier jour du mois
+    $remainingDays = (7 - (($firstDayOfWeek + $daysInMonth) % 7)) % 7;
+    for ($i = 0; $i < $remainingDays; $i++) {
+        echo '<td class="passer"></td>';
+    }
+
+    return $result;
+}
