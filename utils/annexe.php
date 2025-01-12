@@ -510,28 +510,28 @@ function existDateDispoConflit(PDO $bdd, string $username, string $day, string $
  * @param string $heureDebut heure de début période
  * @param string $heureFin heure de fin période
  *
- * @return bool Si le moniteur est disponible
+ * @return int 1 - Si le moniteur est disponible // 0 - Si le moniteur a déjà un cours à ce moment // -1 - S'il n'est pas disponible (disponibilités)
  */
-function moniteurEstDispo(PDO $bdd, string $username, string $day, string $heureDebut, string $heureFin):bool
+function moniteurEstDispo(PDO $bdd, string $username, string $day, string $heureDebut, string $heureFin):int
 {
-    // Faut vérifier en plus qu'il n'a déjà cours
 	$dispoDay = getDispoDay($bdd, $username, $day);
     $lesRepresentation = getRepresentationDay($bdd, $username, $day);
 	foreach ($dispoDay as $dispo) {
         $heureDebutDispo = convertFloatToTime($dispo["heureDebutDispo"]);
         $heureFinDispo = convertFloatToTime($dispo["heureFinDispo"]);
 		if (heureDedans($heureDebut, $heureFin, $heureDebutDispo, $heureFinDispo)) {
-			return true;
+			return 1;
 		}
 	}
     foreach ($lesRepresentation as $representation) {
-        $heureDebut = convertFloatToTime((string)$representation["heureDebutCours"]);
-        $heureFinRep = convertFloatToTime ((string)($representation["heureDebutCours"] + $representation["duree"]));
-		if (heureDedans($heureDebut, $heureFin, $heureDebut, $heureFinRep)) {
-			return true;
+        $heureDebutRep = convertFloatToTime($representation["heureDebutCours"]);
+        $heureFinRep = convertFloatToTime (($representation["heureDebutCours"] + $representation["duree"]));
+        echo $heureDebut, " " ,$heureFin, "<br>",$heureDebutRep, " ", $heureFinRep;
+		if (chevauchementHeure($heureDebut, $heureFin, $heureDebutRep, $heureFinRep)) {
+			return 0;
 		}
 	}
-	return false;
+	return -1;
 }
 
 /**

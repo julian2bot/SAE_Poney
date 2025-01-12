@@ -64,5 +64,5 @@ if(($_SESSION["connecte"]["role"] === "moniteur" || $_SESSION["connecte"]["role"
 
 }
 
-// header("Location: ../../../page/moniteur.php#gestionDisponibilite");
-// exit;
+header("Location: ../../../page/moniteur.php#gestionDisponibilite");
+exit;

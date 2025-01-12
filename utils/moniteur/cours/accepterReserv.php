@@ -18,13 +18,27 @@ isset($_GET["usernameMoniteur"])){
 
     // Get la demande de cours
     $cours = getDemandeDeCours($bdd, $_GET["userClient"], $_GET["dateCours"], (int)$_GET["idCours"], (float)$_GET["heureDebutCours"]);
+    $leCours = getCours($bdd,(int)$_GET["idCours"]);
     if(! isset($cours["idCours"])){
         createPopUp("Problème pour trouver la demande de cours",false);
         header("Location: ../../../page/gestionReserv.php");
         exit;
     }
 
-    echo "uiii";
+    // Vérifier les disponibilités
+    $heureFinCours = convertFloatToTime($cours["heureDebutCours"] + $leCours["duree"]);
+    $estDisponible = moniteurEstDispo($bdd,$_GET["usernameMoniteur"],$_GET["dateCours"],convertFloatToTime((float)$_GET["heureDebutCours"]),$heureFinCours);
+    if($estDisponible==0){
+        createPopUp("Vous avez déjà un cours qui rentre en conflit avec celui ci",false);
+        header("Location: ../../../page/gestionReserv.php");
+        exit;
+    }
+    else if($estDisponible == -1){
+        createPopUp("Vous n'avez pas de disponibilité matchant avec ce cours",false);
+        header("Location: ../../../page/gestionReserv.php");
+        exit;
+    }
+
     // Insérer une représentation
 
     $insertRepresentation = $bdd->prepare("INSERT INTO REPRESENTATION (idCours, usernameMoniteur, dateCours, heureDebutCours, activite) VALUES (?, ?, ?, ?, ?)");
@@ -55,7 +69,6 @@ isset($_GET["usernameMoniteur"])){
 
     // Mails
 
-    $leCours = getCours($bdd,(int)$_GET["idCours"]);
 
     $leClient = getPersonne($bdd, $_GET["userClient"]);
     $leMoniteur = getPersonne($bdd, $_GET["usernameMoniteur"]);
@@ -85,6 +98,6 @@ isset($_GET["usernameMoniteur"])){
     }
     
 }
-// header("Location: ../../../page/gestionReserv.php");
-// exit;
+header("Location: ../../../page/gestionReserv.php");
+exit;
 ?>
