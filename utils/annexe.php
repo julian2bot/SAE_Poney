@@ -113,7 +113,7 @@ function getRole(PDO $bdd, string $username): string
  */
 function getMaxNiveau(PDO $bdd, string $username): int
 {
-	$reqUser = $bdd->prepare("SELECT MAX(idNiveau) AS maxNiv FROM PERSONNE NATURAL JOIN OBTENTION WHERE username = ?");
+	$reqUser = $bdd->prepare("SELECT IFNULL(MAX(idNiveau),0) AS maxNiv FROM PERSONNE NATURAL LEFT JOIN OBTENTION WHERE username = ?");
 	$reqUser->execute(array($username));
 	return $reqUser->fetch()["maxNiv"] ?? 0;
 }
@@ -141,7 +141,7 @@ function getPersonne(PDO $bdd, string $username):array{
 function getInfo(PDO $bdd, string $username): array
 {
 	// $reqUser = $bdd->prepare("SELECT * FROM MONITEUR NATURAL JOIN PERSONNE WHERE username = ? AND usernameMoniteur = ?");
-	$reqUser = $bdd->prepare("SELECT * FROM PERSONNE NATURAL JOIN OBTENTION JOIN MONITEUR ON MONITEUR.usernameMoniteur = PERSONNE.username WHERE usernameMoniteur = ?");
+	$reqUser = $bdd->prepare("SELECT * FROM PERSONNE NATURAL LEFT JOIN OBTENTION JOIN MONITEUR ON MONITEUR.usernameMoniteur = PERSONNE.username WHERE usernameMoniteur = ?");
 	$reqUser->execute(array($username));
 	$userExist = $reqUser->rowCount();
 	$resultat = [];
@@ -158,7 +158,7 @@ function getInfo(PDO $bdd, string $username): array
 
 		return $resultat;
 	} else {
-		$reqUser = $bdd->prepare("SELECT * FROM PERSONNE NATURAL JOIN OBTENTION JOIN CLIENT ON CLIENT.usernameClient = PERSONNE.username WHERE usernameClient = ?");
+		$reqUser = $bdd->prepare("SELECT * FROM PERSONNE NATURAL LEFT JOIN OBTENTION JOIN CLIENT ON CLIENT.usernameClient = PERSONNE.username WHERE usernameClient = ?");
 		$reqUser->execute(array($username));
 		$userExist = $reqUser->rowCount();
 		if ($userExist == 1) {

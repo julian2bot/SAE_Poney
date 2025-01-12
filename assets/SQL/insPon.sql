@@ -84,6 +84,25 @@ INSERT INTO CLIENT (usernameClient, dateInscription, poidsClient, solde) VALUES
 ('client14', '2023-03-30', 62, 120),
 ('client15', '2022-02-25', 55, 60);
 
+INSERT INTO OBTENTION (username, idNiveau, dateObtention) VALUES
+('client1', 1, '2025-01-01'),
+('client2', 2, '2025-01-02'),
+('client3', 3, '2025-01-03'),
+('client4', 1, '2025-01-04'),
+('client5', 2, '2025-01-05'),
+('client6', 3, '2025-01-06'),
+('client7', 1, '2025-01-07'),
+('client8', 2, '2025-01-08'),
+('client9', 3, '2025-01-09'),
+('client10', 1, '2025-01-10'),
+('client11', 2, '2025-01-11'),
+('client12', 3, '2025-01-12'),
+('client13', 1, '2025-01-13'),
+('client14', 2, '2025-01-14'),
+('client15', 3, '2025-01-15'),
+('moniteur1', 2, '2025-01-17'),
+('moniteur3', 3, '2025-01-18');
+
 INSERT INTO PAYER (nomCotisation, periode, usernameClient) VALUES 
 ('Cotisation A', '2024-2025', 'client1'),
 ('Cotisation B', '2024-2025', 'client2'),
@@ -200,28 +219,6 @@ INSERT INTO RESERVATION (idCours, usernameMoniteur, dateCours, heureDebutCours, 
 (30, 'moniteur2', '2023-12-08', 16.0, 'client8', 8),
 (31, 'moniteur3', '2023-12-09', 17.0, 'client9', 9),
 (32, 'moniteur1', '2023-12-10', 18.0, 'client10', 10);
-
-
-
-INSERT INTO OBTENTION (username, idNiveau, dateObtention) VALUES
-('client1', 1, '2025-01-01'),
-('client2', 2, '2025-01-02'),
-('client3', 3, '2025-01-03'),
-('client4', 1, '2025-01-04'),
-('client5', 2, '2025-01-05'),
-('client6', 3, '2025-01-06'),
-('client7', 1, '2025-01-07'),
-('client8', 2, '2025-01-08'),
-('client9', 3, '2025-01-09'),
-('client10', 1, '2025-01-10'),
-('client11', 2, '2025-01-11'),
-('client12', 3, '2025-01-12'),
-('client13', 1, '2025-01-13'),
-('client14', 2, '2025-01-14'),
-('client15', 3, '2025-01-15'),
-('moniteur1', 2, '2025-01-17'),
-('moniteur3', 3, '2025-01-18');
-
 
 -- idPoneyF idCours usernameMoniteur dateCoursF heureDebutCoursF dureeCours
 -- select poneyDispo(1,3, 'moniteur1', '2023-12-01', 8.0, 2); 
