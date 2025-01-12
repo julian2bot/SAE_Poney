@@ -113,9 +113,21 @@ function getRole(PDO $bdd, string $username): string
  */
 function getMaxNiveau(PDO $bdd, string $username): int
 {
-	$reqUser = $bdd->prepare("SELECT MAX(idNiveau) AS maxNiv FROM PERSONNE NATURAL JOIN OBTENTION WHERE username = ?");
+	$reqUser = $bdd->prepare("SELECT IFNULL(MAX(idNiveau),0) AS maxNiv FROM PERSONNE NATURAL LEFT JOIN OBTENTION WHERE username = ?");
 	$reqUser->execute(array($username));
 	return $reqUser->fetch()["maxNiv"] ?? 0;
+}
+
+function getMail(PDO $bdd, string $username):string{
+    $reqUser = $bdd->prepare("SELECT mail FROM PERSONNE WHERE username = ?");
+	$reqUser->execute(array($username));
+	return $reqUser->fetch()["mail"];
+}
+
+function getPersonne(PDO $bdd, string $username):array{
+    $reqUser = $bdd->prepare("SELECT * FROM PERSONNE WHERE username = ?");
+	$reqUser->execute(array($username));
+	return $reqUser->fetch();
 }
 
 /**
@@ -129,7 +141,7 @@ function getMaxNiveau(PDO $bdd, string $username): int
 function getInfo(PDO $bdd, string $username): array
 {
 	// $reqUser = $bdd->prepare("SELECT * FROM MONITEUR NATURAL JOIN PERSONNE WHERE username = ? AND usernameMoniteur = ?");
-	$reqUser = $bdd->prepare("SELECT * FROM PERSONNE NATURAL JOIN OBTENTION JOIN MONITEUR ON MONITEUR.usernameMoniteur = PERSONNE.username WHERE usernameMoniteur = ?");
+	$reqUser = $bdd->prepare("SELECT * FROM PERSONNE NATURAL LEFT JOIN OBTENTION JOIN MONITEUR ON MONITEUR.usernameMoniteur = PERSONNE.username WHERE usernameMoniteur = ?");
 	$reqUser->execute(array($username));
 	$userExist = $reqUser->rowCount();
 	$resultat = [];
@@ -146,7 +158,7 @@ function getInfo(PDO $bdd, string $username): array
 
 		return $resultat;
 	} else {
-		$reqUser = $bdd->prepare("SELECT * FROM PERSONNE NATURAL JOIN OBTENTION JOIN CLIENT ON CLIENT.usernameClient = PERSONNE.username WHERE usernameClient = ?");
+		$reqUser = $bdd->prepare("SELECT * FROM PERSONNE NATURAL LEFT JOIN OBTENTION JOIN CLIENT ON CLIENT.usernameClient = PERSONNE.username WHERE usernameClient = ?");
 		$reqUser->execute(array($username));
 		$userExist = $reqUser->rowCount();
 		if ($userExist == 1) {
@@ -266,6 +278,13 @@ function getCoursPerso(PDO $bdd, string $idNiveau, string $duree): array
 	return $info;
 }
 
+function getCours(PDO $bdd, int $idCours):array{
+    $reqUser = $bdd->prepare("SELECT * FROM COURS WHERE idCours = ?");
+	$reqUser->execute(array($idCours));
+	$info = $reqUser->fetch();
+	return $info;
+}
+
 /**
  * Renvoie si une demande de cours existe pour un jour
  *
@@ -350,6 +369,24 @@ function getDispoDay(PDO $bdd, string $username, string $day): array
 	$info = $reqUser->fetchAll();
 	return $info;
 }
+
+/**
+ * Renvoie les représentation d'un moniteur pour la journée
+ *
+ * @param PDO la base de donnée, 
+ * @param string usrname nom moniteur 
+ * @param string $day date  
+ *
+ * @return array les représentation
+ */
+function getRepresentationDay(PDO $bdd, string $username, string $day): array
+{
+	$reqUser = $bdd->prepare("SELECT * FROM REPRESENTATION NATURAL JOIN COURS WHERE usernameMoniteur = ? AND dateCours = ?");
+	$reqUser->execute([$username, $day]);
+	$info = $reqUser->fetchAll();
+	return $info;
+}
+
 /**
  * verifie l'existance du mail de la bd
  *
@@ -401,7 +438,6 @@ function existDateDispoDay(PDO $bdd, string $username, string $day): bool
 /**
  * Renvoie si il y a un chevauchement entre deux période horaire
  *
- * @param PDO la base de donnée, 
  * @param string $heureDebut heure de début période 1 
  * @param string $heureFin heure de fin période 1   
  * @param string $heureDebut2 heure de début période 2
@@ -409,7 +445,7 @@ function existDateDispoDay(PDO $bdd, string $username, string $day): bool
  *
  * @return bool chevauchement
  */
-function chevauchementHeure(PDO $heureDebut, string $heureFin, string $heureDebut2, string $heureFin2): bool
+function chevauchementHeure(string $heureDebut, string $heureFin, string $heureDebut2, string $heureFin2): bool
 {
 	$debut1 = strtotime($heureDebut);
 	$fin1 = strtotime($heureFin);
@@ -417,6 +453,26 @@ function chevauchementHeure(PDO $heureDebut, string $heureFin, string $heureDebu
 	$fin2 = strtotime($heureFin2);
 
 	return $debut1 <= $fin2 && $debut2 <= $fin1;
+}
+
+/**
+ * Renvoie si la période 1 se trouve dans la période 2
+ *
+ * @param string $heureDebut heure de début période 1 
+ * @param string $heureFin heure de fin période 1   
+ * @param string $heureDebut2 heure de début période 2
+ * @param string $heureFin2 heure de fin période 2
+ *
+ * @return bool chevauchement
+ */
+function heureDedans(string $heureDebut, string $heureFin, string $heureDebut2, string $heureFin2): bool
+{
+	$debut1 = strtotime($heureDebut);
+	$fin1 = strtotime($heureFin);
+	$debut2 = strtotime($heureDebut2);
+	$fin2 = strtotime($heureFin2);
+
+	return $debut1 <= $fin2 && $fin1 <= $fin2 && $debut2 <= $fin1 && $debut2 <= $debut1;
 }
 
 /**
@@ -431,16 +487,51 @@ function chevauchementHeure(PDO $heureDebut, string $heureFin, string $heureDebu
  *
  * @return bool si la dispo donné entre en conflit avec celles existantes
  */
-function existDateDispoConflit(PDO $bdd, string $username, string $day, string $heureDebut, string $heureFin, string $heureDebutEviter = "")
+function existDateDispoConflit(PDO $bdd, string $username, string $day, string $heureDebut, string $heureFin, string $heureDebutEviter = ""):bool
 {
 	$dispoDay = getDispoDay($bdd, $username, $day);
 	foreach ($dispoDay as $dispo) {
-		if (($heureDebutEviter == "" || $heureDebutEviter != $dispo["heureDebutDispo"]) && chevauchementHeure($heureDebut, $heureFin, $dispo["heureDebutDispo"], $dispo["heureFinDispo"])) {
-			echo $heureDebutEviter, $dispo["heureDebutDispo"], "<br>";
+        $heureDebutDispo = convertFloatToTime($dispo["heureDebutDispo"]);
+        $heureFinDispo = convertFloatToTime($dispo["heureFinDispo"]);
+		if (($heureDebutEviter == "" || $heureDebutEviter != $heureDebutDispo) && chevauchementHeure($heureDebut, $heureFin, $heureDebutDispo, $heureFinDispo)) {
+			echo $heureDebutEviter,"<br>", $heureDebutEviter, "<br>";
 			return true;
 		}
 	}
 	return false;
+}
+
+/**
+ * Vérifie si le moniteur est disponible pour le cours donnée
+ *
+ * @param PDO la base de donnée, 
+ * @param string usrname nom moniteur 
+ * @param string $day date  
+ * @param string $heureDebut heure de début période
+ * @param string $heureFin heure de fin période
+ *
+ * @return int 1 - Si le moniteur est disponible // 0 - Si le moniteur a déjà un cours à ce moment // -1 - S'il n'est pas disponible (disponibilités)
+ */
+function moniteurEstDispo(PDO $bdd, string $username, string $day, string $heureDebut, string $heureFin):int
+{
+	$dispoDay = getDispoDay($bdd, $username, $day);
+    $lesRepresentation = getRepresentationDay($bdd, $username, $day);
+	foreach ($dispoDay as $dispo) {
+        $heureDebutDispo = convertFloatToTime($dispo["heureDebutDispo"]);
+        $heureFinDispo = convertFloatToTime($dispo["heureFinDispo"]);
+		if (heureDedans($heureDebut, $heureFin, $heureDebutDispo, $heureFinDispo)) {
+			return 1;
+		}
+	}
+    foreach ($lesRepresentation as $representation) {
+        $heureDebutRep = convertFloatToTime($representation["heureDebutCours"]);
+        $heureFinRep = convertFloatToTime (($representation["heureDebutCours"] + $representation["duree"]));
+        echo $heureDebut, " " ,$heureFin, "<br>",$heureDebutRep, " ", $heureFinRep;
+		if (chevauchementHeure($heureDebut, $heureFin, $heureDebutRep, $heureFinRep)) {
+			return 0;
+		}
+	}
+	return -1;
 }
 
 /**
@@ -727,7 +818,7 @@ function updateMoniteur(PDO $bdd, string $oldUsername, string $username, string 
  */
 function getReserv(PDO $bdd, int $niveau): array
 {
-	$reqUser = $bdd->prepare("SELECT * FROM DEMANDECOURS NATURAL JOIN PONEY NATURAL JOIN COURS where idNiveau <= ?");
+	$reqUser = $bdd->prepare("SELECT * FROM DEMANDECOURS NATURAL JOIN PONEY NATURAL JOIN COURS NATURAL JOIN NIVEAU where idNiveau <= ? ORDER BY dateCours DESC");
 	$reqUser->execute([$niveau]);
 	$info = $reqUser->fetchAll();
 	return $info;
@@ -753,12 +844,6 @@ require __DIR__ . '/../PHPMailer/src/SMTP.php';
  * @return bool true si le mail est envoyer, false sinon
  */
 function mailClientDemandeCours($sendingEmail, $email, $username, $object, $dateDemandeCours, $heureCours, $dureeCours, $activiteDuCours):bool{
-    $mdp = fopen( __DIR__ . '/passMail.csv', 'r');
-    if (!feof($mdp)) {
-        $ligne = fgets($mdp);
-    }
-    fclose($mdp);
-
     $mail = new PHPMailer(true);
     try {
         // Paramètres du serveur
@@ -896,12 +981,6 @@ function mailClientDemandeCours($sendingEmail, $email, $username, $object, $date
  * @return bool true si le mail est envoyer, false sinon
  */
 function mailClientDemandeCoursConfirme( $sendingEmail, $email, $username, $object, $dateDemandeCours, $heureCours, $dureeCours, $activiteDuCours):bool{
-    $mdp = fopen( __DIR__ . '/passMail.csv', 'r');
-    if (!feof($mdp)) {
-        $ligne = fgets($mdp);
-    }
-    fclose($mdp);
-
     $mail = new PHPMailer(true);
     try {
         // Paramètres du serveur
@@ -923,7 +1002,7 @@ function mailClientDemandeCoursConfirme( $sendingEmail, $email, $username, $obje
         $mail->addAddress($email);
         
         // Contenu
-        $mail->addEmbeddedImage('../assets/images/poney/flocon.jpg', 'image_cid');
+        // $mail->addEmbeddedImage('../assets/images/poney/flocon.jpg', 'image_cid');
 
         $mail->isHTML(true);            
         $mail->CharSet = 'UTF-8';           
@@ -1015,10 +1094,10 @@ function mailClientDemandeCoursConfirme( $sendingEmail, $email, $username, $obje
         return true;
     } catch (Exception $e) {
         // echo "<pre>";
-        // print_r($e);
-        // echo "</pre>";
+        print_r($e);
+        echo "</pre>";
 
-        // echo "Erreur lors de l'envoi du mail : ", $mail->ErrorInfo;
+        echo "Erreur lors de l'envoi du mail : ", $mail->ErrorInfo;
 
         return false;
 
@@ -1035,12 +1114,6 @@ function mailClientDemandeCoursConfirme( $sendingEmail, $email, $username, $obje
  * @return bool true si le mail est envoyer, false sinon
  */
 function mailMoniteurDemandeCoursConfirme($sendingEmail, $email, $moniteurName, $username, $object, $dateDemandeCours, $heureCours, $dureeCours, $activiteDuCours):bool{
-    $mdp = fopen( __DIR__ . '/passMail.csv', 'r');
-    if (!feof($mdp)) {
-        $ligne = fgets($mdp);
-    }
-    fclose($mdp);
-
     $mail = new PHPMailer(true);
     try {
         // Paramètres du serveur
@@ -1113,7 +1186,7 @@ function mailMoniteurDemandeCoursConfirme($sendingEmail, $email, $moniteurName, 
                         <div class='content'>
                             <p>Bonjour $moniteurName,</p>
                             <p>
-                                Une demande de cours a été confirmée et est assignée à vous. Voici les détails :
+                                Une demande de cours a été confirmée et vous est assignée. Voici les détails :
                             </p>
                             <ul>
                                 <li><strong>Date :</strong> ".$dateDemandeCours."</li>

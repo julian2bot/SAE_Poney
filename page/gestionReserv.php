@@ -61,13 +61,14 @@ estMoniteur();
                         // echo "<pre>";
                         // print_r(getReserv($bdd,2));
                         // echo "</pre>";
-                        foreach (getReserv($bdd,2) as $reserv) {
-                        // foreach (getReserv($bdd, $_SESSION["connecte"]["info"]["niveau"]) as $reserv) {
+                        // foreach (getReserv($bdd,2) as $reserv) {
+                        foreach (getReserv($bdd, $_SESSION["connecte"]["info"]["niveau"]) as $reserv) {
                             echo '<li> Demande de ' . 
                                 $reserv["usernameClient"].", Cours le ".
                                 $reserv["dateCours"]." à ".
                                 convertFloatToTime($reserv["heureDebutCours"]).", avec le poney ".
-                                $reserv["nomPoney"]
+                                $reserv["nomPoney"].", niveau : ".
+                                $reserv["nomNiveau"]
                             
                             .'';
                             echo "<div class = 'boutons'>";

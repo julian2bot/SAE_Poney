@@ -2,7 +2,9 @@
 require_once __DIR__."/../../BDD/connexionBD.php";
 require_once __DIR__."/../../annexe.php";
 
-
+echo "<pre>";
+print_r($_POST);
+echo "</pre>";
 
 if(($_SESSION["connecte"]["role"] === "moniteur" || $_SESSION["connecte"]["role"] === "admin") && 
     isset($_POST["previousDate"]) &&
@@ -16,8 +18,8 @@ if(($_SESSION["connecte"]["role"] === "moniteur" || $_SESSION["connecte"]["role"
         header("Location: ../../../page/moniteur.php#gestionDisponibilitep");
         exit;
     }
-    else if((new DateTime($_POST["dateDispo"]) == new DateTime($_POST["previousDate"]))){
-        if(existDateDispoConflit($bdd,$_SESSION["connecte"]["username"], $_POST["dateDispo"],$_POST["heureDebut"],$_POST["heureFin"],$heureDebutPrevious)){
+    if((new DateTime($_POST["dateDispo"]) == new DateTime($_POST["previousDate"]))){
+        if(existDateDispoConflit($bdd,$_SESSION["connecte"]["username"], $_POST["dateDispo"],$_POST["heureDebut"],$_POST["heureFin"],$_POST["previousTime"])){
             createPopUp("Un conflit existe avec les disponibilités déjà entrée, veuillez les modifier",false);
             header("Location: ../../../page/modifierDisponibilite.php?dateDispo=$_POST[previousDate]&debutDispo=$heureDebutPrevious");
             exit;
@@ -28,39 +30,38 @@ if(($_SESSION["connecte"]["role"] === "moniteur" || $_SESSION["connecte"]["role"
         header("Location: ../../../page/modifierDisponibilite.php?dateDispo=$_POST[previousDate]&debutDispo=$heureDebutPrevious");
         exit;
     }
-    else{
-        $heureDebut = convertTimeToFloat($_POST["heureDebut"]);
-        $heureFin = convertTimeToFloat($_POST["heureFin"]);
+    
+    $heureDebut = convertTimeToFloat($_POST["heureDebut"]);
+    $heureFin = convertTimeToFloat($_POST["heureFin"]);
 
-        $updateSql = "UPDATE DISPONIBILITE
-        SET heureDebutDispo = ?,
-            dateDispo = ?, 
-            heureFinDispo = ?
-        WHERE usernameMoniteur = ? AND heureDebutDispo = ? AND dateDispo = ?";
+    $updateSql = "UPDATE DISPONIBILITE
+    SET heureDebutDispo = ?,
+        dateDispo = ?, 
+        heureFinDispo = ?
+    WHERE usernameMoniteur = ? AND heureDebutDispo = ? AND dateDispo = ?";
 
-        $updateStmt = $bdd->prepare($updateSql);
+    $updateStmt = $bdd->prepare($updateSql);
 
-        // Exécuter la requête avec les paramètres dans le bon ordre
-        $result = $updateStmt->execute([
-            $heureDebut, 
-            $_POST["dateDispo"], 
-            $heureFin,
-            $_SESSION["connecte"]["username"], 
-            $heureDebutPrevious, 
-            $_POST["previousDate"]]
-        );
+    // Exécuter la requête avec les paramètres dans le bon ordre
+    $result = $updateStmt->execute([
+        $heureDebut, 
+        $_POST["dateDispo"], 
+        $heureFin,
+        $_SESSION["connecte"]["username"], 
+        $heureDebutPrevious, 
+        $_POST["previousDate"]]
+    );
 
-        // Vérifier le résultat
-        if ($result) {
-            echo "Mise à jour réussie<br>";
-            createPopUp("Disponibilité modifiée avec succès");
-        } else {
-            $errorInfo = $updateStmt->errorInfo();
-            echo "Erreur SQL : " . $errorInfo[2];
-            createPopUp("Erreur SQL : " . $errorInfo[2],false);
-        }
-
+    // Vérifier le résultat
+    if ($result) {
+        echo "Mise à jour réussie<br>";
+        createPopUp("Disponibilité modifiée avec succès");
+    } else {
+        $errorInfo = $updateStmt->errorInfo();
+        echo "Erreur SQL : " . $errorInfo[2];
+        createPopUp("Erreur SQL : " . $errorInfo[2],false);
     }
+
 }
 
 header("Location: ../../../page/moniteur.php#gestionDisponibilite");
