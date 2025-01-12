@@ -31,6 +31,7 @@
     height: min-content;
     overflow: auto;
     margin-top: 10px;
+    justify-content: space-evenly;
 }
 #infoCours, #info-disponibilite{
     overflow: auto;
