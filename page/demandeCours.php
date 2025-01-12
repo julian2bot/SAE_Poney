@@ -33,11 +33,12 @@ if( !clientAPayerCotisation($bdd, $_SESSION["connecte"]["username"])){
     <body>
         <header>
             <h1>GRAND GALOP</h1>
+            <h2>Demander un cours</h2>
             <nav>
             <ul>
                 <li>
-                    <a href="moniteur.php" >
-                        retour
+                    <a href="adherent.php" >
+                        Retour
                     </a>
                 </li>
             

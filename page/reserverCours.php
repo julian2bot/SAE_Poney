@@ -20,10 +20,7 @@ $infoDuCours = getInfoCours($bdd, $_GET["idcours"], $_GET["dateCours"], $_GET["h
 
 $placesRestantes = getNbRestantCours($bdd,$infoDuCours["idCours"],$infoDuCours["usernameMoniteur"],$infoDuCours["dateCours"],$infoDuCours["heureDebutCours"]);
 
-if($placesRestantes<=0){
-    header('Location: ../');
-    exit;
-}
+$restePlace = $placesRestantes>=1;
 
 // echo "<pre>";
 // print_r($infoDuCours);
@@ -46,15 +43,27 @@ if($placesRestantes<=0){
     <body>
         <header>
             <h1>GRAND GALOP</h1>
+            <?php
+            if(! $restePlace){
+                echo "<div id='cotisationNonPayer'>";
+                echo "<div>";
+                echo "<img src='../assets/images/warning.png' alt='warning'>";
+                echo "<p>Il n'y a plus de place pour ce cours, vous pouvez demander un cours similaire avec l'option pour demander un cours.</p>";
+                echo "<a href='./demandeCours.php'>Demander un cours</a>";
+                echo "</div>";
+                echo "</div>";
+            }
+            ?>
             <nav>
             <ul>
                 <li>
                     <a href="moniteur.php" >
-                        retour
+                        Retour
                     </a>
                 </li>
             
             </ul>
+
         </nav>
         </header>
         
@@ -97,8 +106,11 @@ if($placesRestantes<=0){
                         
                         <button type="button" id="button-left" class="nav-btn left" onclick="scrollCarousel(-1)">&#10094;</button>
                         <button type="button" id="button-right" class="nav-btn right" onclick="scrollCarousel(1)">&#10095;</button>
-
-                    <button id="ReserverValider" type="submit">Reserver</button>
+                    <?php
+                    if($restePlace){
+                        echo"<button id='ReserverValider' type='submit'>Reserver</button>";
+                    }
+                    ?>
 
                 </form>
 

@@ -266,4 +266,6 @@ td{
 #cotisationNonPayer a{
     font-size: inherit;
     cursor: pointer;
+    color : #007BFF;
+    text-decoration: underline;
 }
