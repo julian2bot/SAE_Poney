@@ -437,6 +437,23 @@ function existUsername(PDO $bdd, string $username): bool
 	return $reqMail->rowCount() >= 1;
 }
 
+function getCotisationsAnneeEnCours(PDO $bdd):array{
+    $date = new DateTime();
+    $date2 = new DateTime();
+
+    if((int)$date->format("m")>=9){ //septembre
+        $date2->add(DateInterval::createFromDateString('1 year'));
+        $periode = $date->format("Y")."-".$date2->format("Y");
+    }
+    else{
+        $date2->sub(DateInterval::createFromDateString('1 year'));
+        $periode = $date2->format("Y")."-".$date->format("Y");
+    }
+    $reqCoti = $bdd->prepare("SELECT * FROM COTISATION WHERE periode=?");
+	$reqCoti->execute(array($periode));
+    return $reqCoti->fetchAll();
+}
+
 function insererCotisations(PDO $bdd):void{
     $date = new DateTime();
     $date2 = new DateTime();

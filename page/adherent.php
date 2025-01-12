@@ -6,7 +6,6 @@ estConnecte();
 // print_r($_SESSION);
 // echo "</pre>";
 $aPayerCotisation = clientAPayerCotisation($bdd, $_SESSION["connecte"]["username"]);
-insererCotisations($bdd);
 ?>
 
 
@@ -41,6 +40,7 @@ insererCotisations($bdd);
                         echo "<div>";
                         echo "<img src='../assets/images/warning.png' alt='warning'>";
                         echo "<p>Vous n'avez pas payé la cotisation pour cette année, veuillez la payer afin de pouvoir réserver des cours.</p>";
+                        echo "<a href='./payerCotisation.php'>Payer</a>";
                         echo "</div>";
                         echo "</div>";
                     }
