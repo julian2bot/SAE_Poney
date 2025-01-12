@@ -9,6 +9,26 @@ function convertFloatToTime(time) {
     return `${whole}:${fraction === 0.5 ? "30" : "00"}`;
 }
 
+
+function resetInfoDispo(texte="Aucune disponibilité"){
+    const lesInfos = document.getElementById("info-disponibilite");
+            
+    const calendrier = document.getElementById("calendrier-disponibilite");
+
+    if(lesInfos.classList.contains("open"))
+        lesInfos.classList.remove("open");
+
+    if(calendrier.classList.contains("open"))
+        calendrier.classList.remove("open");
+
+    lesInfos.innerHTML = "";
+    let p = document.createElement("p");
+    p.innerHTML = texte;
+
+    lesInfos.appendChild(p);
+}
+
+
 function addDisponibiliteInfo(date) {
     const xhr = new XMLHttpRequest();
     
@@ -22,7 +42,15 @@ function addDisponibiliteInfo(date) {
             const response = JSON.parse(xhr.responseText);
             console.log(response); // Affiche les résultats dans la console
             // Par exemple, mettre à jour un élément HTML avec les résultats
-            const lesInfos = document.getElementById("info-disponibilite"); 
+            const lesInfos = document.getElementById("info-disponibilite");
+            
+            const calendrier = document.getElementById("calendrier-disponibilite");
+
+            if(!lesInfos.classList.contains("open"))
+                lesInfos.classList.add("open");
+
+            if(!calendrier.classList.contains("open"))
+                calendrier.classList.add("open");
 
             while (lesInfos.firstChild) {
                 lesInfos.removeChild(lesInfos.firstChild);
@@ -121,6 +149,7 @@ function getMonthName(month) {
 function createCalendarDispo(month, year){
     const calendrier = document.getElementById("calendrier-disponibilite");
     const monthDisplay = document.getElementById("month-display-disponibilite");
+    resetInfoDispo();
 
     monthDisplay.textContent = `${getMonthName(month)} ${year}`;
 
@@ -200,6 +229,7 @@ document.getElementById("prev-month-disponibilite").addEventListener("click", fu
 });
 
 document.getElementById("next-month-disponibilite").addEventListener("click", function() {
+
     if (currentMonthDispo === 11) {
         currentMonthDispo = 0; // Janvier
         currentYearDispo++;

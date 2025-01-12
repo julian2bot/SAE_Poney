@@ -285,6 +285,25 @@ function getCours(PDO $bdd, int $idCours):array{
 	return $info;
 }
 
+
+function getRepresentation(PDO $bdd, int $idCours, string $usernameMoniteur, string $dateCours, float $heureDebut):array{
+    $reqRepr = $bdd->prepare("SELECT * FROM REPRESENTATION NATURAL JOIN COURS WHERE idCours = ? AND usernameMoniteur = ? AND dateCours = ? AND heureDebutCours = ?");
+	$reqRepr->execute(array($idCours,$usernameMoniteur,$dateCours,$heureDebut));
+	$info = $reqRepr->fetch();
+	return $info;
+}
+function getNbRestantCours(PDO $bdd, int $idCours, string $usernameMoniteur, string $dateCours, float $heureDebut):int{
+    $representation = getRepresentation($bdd, $idCours, $usernameMoniteur, $dateCours, $heureDebut);
+
+    $reqResrv = $bdd->prepare("SELECT * FROM RESERVATION WHERE idCours = ? AND usernameMoniteur = ? AND dateCours = ? AND heureDebutCours = ?");
+	$reqResrv->execute(array($idCours,$usernameMoniteur,$dateCours,$heureDebut));
+	$info = $reqResrv->rowCount();
+    $nbRestant = $representation["nbMax"] - $info;
+    if($nbRestant<0)
+        $nbRestant = 0;
+    return $nbRestant;
+}
+
 /**
  * Renvoie si une demande de cours existe pour un jour
  *
@@ -416,6 +435,71 @@ function existUsername(PDO $bdd, string $username): bool
 	$reqMail = $bdd->prepare("SELECT * FROM PERSONNE WHERE username = ?");
 	$reqMail->execute(array($username));
 	return $reqMail->rowCount() >= 1;
+}
+
+function getCotisationsAnneeEnCours(PDO $bdd):array{
+    $date = new DateTime();
+    $date2 = new DateTime();
+
+    if((int)$date->format("m")>=9){ //septembre
+        $date2->add(DateInterval::createFromDateString('1 year'));
+        $periode = $date->format("Y")."-".$date2->format("Y");
+    }
+    else{
+        $date2->sub(DateInterval::createFromDateString('1 year'));
+        $periode = $date2->format("Y")."-".$date->format("Y");
+    }
+    $reqCoti = $bdd->prepare("SELECT * FROM COTISATION WHERE periode=?");
+	$reqCoti->execute(array($periode));
+    return $reqCoti->fetchAll();
+}
+
+function insererCotisations(PDO $bdd):void{
+    $date = new DateTime();
+    $date2 = new DateTime();
+    $date3 = new DateTime();
+
+    if((int)$date->format("m")>=9){ //septembre
+        $date2->add(DateInterval::createFromDateString('1 year'));
+        $date3->sub(DateInterval::createFromDateString('1 year'));
+        $periode = $date->format("Y")."-".$date2->format("Y");
+        $lastPeriode = $date3->format("Y")."-".$date->format("Y");
+    }
+    else{
+        $date2->sub(DateInterval::createFromDateString('1 year'));
+        $date3->sub(DateInterval::createFromDateString('2 year'));
+        $periode = $date2->format("Y")."-".$date->format("Y");
+        $lastPeriode = $date3->format("Y")."-".$date2->format("Y");
+    }
+
+
+    $reqCoti = $bdd->prepare("SELECT * FROM COTISATION WHERE periode=?");
+	$reqCoti->execute(array($periode));
+    if($reqCoti->rowCount()<=0){
+        $reqCoti->execute(array($lastPeriode));
+        $anciennesCoti = $reqCoti->fetchAll();
+        $reqInsert = $bdd->prepare("INSERT INTO COTISATION (nomCotisation, periode, prixCotisationAnnuelle) VALUES (?,?,?)");
+        foreach($anciennesCoti as $cotisation){
+            $reqInsert->execute(array($cotisation["nomCotisation"],$periode,$cotisation["prixCotisationAnnuelle"]));
+        }
+    }
+}
+
+function clientAPayerCotisation(PDO $bdd, string $username):bool{
+    $date = new DateTime();
+    $date2 = new DateTime();
+
+    if((int)$date->format("m")>=9){ //septembre
+        $date2->add(DateInterval::createFromDateString('1 year'));
+        $periode = $date->format("Y")."-".$date2->format("Y");
+    }
+    else{
+        $date2->sub(DateInterval::createFromDateString('1 year'));
+        $periode = $date2->format("Y")."-".$date->format("Y");
+    }
+    $reqPayer = $bdd->prepare("SELECT * FROM PAYER WHERE usernameClient = ? AND periode=?");
+	$reqPayer->execute(array($username,$periode));
+	return $reqPayer->rowCount() >= 1;
 }
 
 /**
@@ -771,7 +855,6 @@ function getInfoCours(PDO $bdd, int $idcours, string $dateCours, float $heureDeb
 	return $reqUser->fetch();
 }
 
-
 /**
  * formater un cours
  *
@@ -864,6 +947,7 @@ function getReserv(PDO $bdd, int $niveau): array
 	$info = $reqUser->fetchAll();
 	return $info;
 }
+
 
 
 

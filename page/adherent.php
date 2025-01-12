@@ -5,7 +5,7 @@ estConnecte();
 // echo "<pre>";
 // print_r($_SESSION);
 // echo "</pre>";
-
+$aPayerCotisation = clientAPayerCotisation($bdd, $_SESSION["connecte"]["username"]);
 ?>
 
 
@@ -35,6 +35,15 @@ estConnecte();
                     
                             <button onclick="location.href=\'../utils/all/login/logout.php\';" class="affichelogin">Logout</button>
                         </div>';
+                    if(! $aPayerCotisation){
+                        echo "<div id='cotisationNonPayer'>";
+                        echo "<div>";
+                        echo "<img src='../assets/images/warning.png' alt='warning'>";
+                        echo "<p>Vous n'avez pas payé la cotisation pour cette année, veuillez la payer afin de pouvoir réserver des cours.</p>";
+                        echo "<a href='./payerCotisation.php'>Payer</a>";
+                        echo "</div>";
+                        echo "</div>";
+                    }
                     include "../assets/affichage/header.php";
                 }
                 else{
@@ -155,6 +164,13 @@ estConnecte();
                 showPopUp(\"$_SESSION[succes]\");
             </script>";
         unset($_SESSION["succes"]); // Supprime la valeur après utilisation
+    }
+
+    if(isset($_SESSION["popUp"])){
+        echo "<script type='text/javascript'>
+                showPopUp(\"".$_SESSION["popUp"]["message"]."\",".($_SESSION["popUp"]["success"] ? "true" : "false").");
+              </script>";
+        unset($_SESSION["popUp"]);
     }
     ?>
 

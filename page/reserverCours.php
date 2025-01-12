@@ -4,6 +4,12 @@ require_once "../utils/annexe.php";
 
 estConnecte();
 
+if( !clientAPayerCotisation($bdd, $_SESSION["connecte"]["username"])){
+    createPopUp("Vous devez payer la cotisation annuelle avant de pouvoir vous inscrire au cours",false);
+    header('Location: ../');
+    exit;
+}
+
 if( !isset($_GET["idcours"]) AND !isset($_GET["dateCours"]) AND !isset($_GET["heureCours"])){
     header('Location: ../');
     exit;
@@ -12,7 +18,9 @@ if( !isset($_GET["idcours"]) AND !isset($_GET["dateCours"]) AND !isset($_GET["he
 
 $infoDuCours = getInfoCours($bdd, $_GET["idcours"], $_GET["dateCours"], $_GET["heureCours"]);
 
+$placesRestantes = getNbRestantCours($bdd,$infoDuCours["idCours"],$infoDuCours["usernameMoniteur"],$infoDuCours["dateCours"],$infoDuCours["heureDebutCours"]);
 
+$restePlace = $placesRestantes>=1;
 
 // echo "<pre>";
 // print_r($infoDuCours);
@@ -35,15 +43,27 @@ $infoDuCours = getInfoCours($bdd, $_GET["idcours"], $_GET["dateCours"], $_GET["h
     <body>
         <header>
             <h1>GRAND GALOP</h1>
+            <?php
+            if(! $restePlace){
+                echo "<div id='cotisationNonPayer'>";
+                echo "<div>";
+                echo "<img src='../assets/images/warning.png' alt='warning'>";
+                echo "<p>Il n'y a plus de place pour ce cours, vous pouvez demander un cours similaire avec l'option pour demander un cours.</p>";
+                echo "<a href='./demandeCours.php'>Demander un cours</a>";
+                echo "</div>";
+                echo "</div>";
+            }
+            ?>
             <nav>
             <ul>
                 <li>
                     <a href="moniteur.php" >
-                        retour
+                        Retour
                     </a>
                 </li>
             
             </ul>
+
         </nav>
         </header>
         
@@ -55,7 +75,7 @@ $infoDuCours = getInfoCours($bdd, $_GET["idcours"], $_GET["dateCours"], $_GET["h
                     <li>avec le prof : <?php echo $infoDuCours["usernameMoniteur"]?> </li>
                     <li> A <?php echo $infoDuCours["prix"] ?> €</li>
                     <li><?php echo formatCours($infoDuCours["dateCours"], $infoDuCours["heureDebutCours"], $infoDuCours["duree"])?></li>
-                    <li>Place Restant XX/<?php  echo $infoDuCours["nbMax"]?></li>
+                    <li>Places Restante :<?php  echo $placesRestantes?></li>
                 </ul>
             </section>
             
@@ -86,8 +106,11 @@ $infoDuCours = getInfoCours($bdd, $_GET["idcours"], $_GET["dateCours"], $_GET["h
                         
                         <button type="button" id="button-left" class="nav-btn left" onclick="scrollCarousel(-1)">&#10094;</button>
                         <button type="button" id="button-right" class="nav-btn right" onclick="scrollCarousel(1)">&#10095;</button>
-
-                    <button id="ReserverValider" type="submit">Reserver</button>
+                    <?php
+                    if($restePlace){
+                        echo"<button id='ReserverValider' type='submit'>Reserver</button>";
+                    }
+                    ?>
 
                 </form>
 
