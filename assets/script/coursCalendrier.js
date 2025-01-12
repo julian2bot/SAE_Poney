@@ -2,7 +2,16 @@
 let abortControllerClient = null;
 let abortControllerMoniteur = null;
 
+function convertFloatToTime(time) {
+    let whole = Math.floor(time).toString();
+    let fraction = time - Math.floor(time);
 
+    if (whole.length < 2) {
+        whole = whole.padStart(2, "0");
+    }
+
+    return `${whole}:${fraction === 0.5 ? "30" : "00"}`;
+}
 
 function requestClientCours(year, month, day) {
     if (abortControllerClient) {
@@ -70,7 +79,10 @@ function requestClientCours(year, month, day) {
 
                 let heureDebutCours = document.createElement("p");
                 let nomCoursP = document.createElement("p");
-                heureDebutCours.innerHTML = unCours.heureDebutCours +' - '+ (unCours.heureDebutCours + unCours.duree); 
+                let strHeureDeb = convertFloatToTime(unCours.heureDebutCours);
+                let strHeureFin = convertFloatToTime(parseFloat(unCours.heureDebutCours) + unCours.duree);
+                heureDebutCours.innerHTML = strHeureDeb +' - '+ strHeureFin; 
+                // heureDebutCours.innerHTML = unCours.heureDebutCours +' - '+ (unCours.heureDebutCours + unCours.duree); 
                 nomCoursP.innerHTML = unCours.nomCours ? unCours.nomCours : "Cours poney"; 
                 divInfo.appendChild(heureDebutCours); 
                 lesInfos.appendChild(divInfo);
@@ -140,7 +152,9 @@ function requestMoniteurCours(year, month, day) {
 
                 let heureDebutCours = document.createElement("p");
                 let nomCoursP = document.createElement("p");
-                heureDebutCours.innerHTML = unCours.heureDebutCours +' - '+ (unCours.heureDebutCours + unCours.duree); 
+                let strHeureDeb = convertFloatToTime(unCours.heureDebutCours);
+                let strHeureFin = convertFloatToTime(parseFloat(unCours.heureDebutCours) + unCours.duree);
+                heureDebutCours.innerHTML = strHeureDeb +' - '+ strHeureFin; 
                 nomCoursP.innerHTML = unCours.nomCours ? unCours.nomCours : "Cours poney"; 
                 divInfo.appendChild(heureDebutCours);
                 lesInfos.appendChild(divInfo);
