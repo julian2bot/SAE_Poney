@@ -58,9 +58,14 @@ CREATE TABLE OBTENTION(
     
     PRIMARY KEY (username, idNiveau),
     
-    FOREIGN KEY (username) REFERENCES PERSONNE(username),
     FOREIGN KEY (idNiveau) REFERENCES NIVEAU(idNiveau)
 );
+
+ALTER TABLE OBTENTION
+ADD CONSTRAINT usernameObtention_fk FOREIGN KEY (username)
+REFERENCES PERSONNE(username)
+ON UPDATE CASCADE;
+
 
 CREATE TABLE DISPONIBILITE(
     usernameMoniteur VARCHAR(32), -- cle etrangere ==> usernameMoniteur

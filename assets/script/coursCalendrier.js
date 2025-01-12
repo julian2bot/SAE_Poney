@@ -2,7 +2,16 @@
 let abortControllerClient = null;
 let abortControllerMoniteur = null;
 
+function convertFloatToTime(time) {
+    let whole = Math.floor(time).toString();
+    let fraction = time - Math.floor(time);
 
+    if (whole.length < 2) {
+        whole = whole.padStart(2, "0");
+    }
+
+    return `${whole}:${fraction === 0.5 ? "30" : "00"}`;
+}
 
 function requestClientCours(year, month, day) {
     if (abortControllerClient) {
@@ -23,8 +32,15 @@ function requestClientCours(year, month, day) {
         if (xhr.readyState === 4 && xhr.status === 200) {
             // Manipuler les données de la réponse (par exemple, afficher les résultats)
             const response = JSON.parse(xhr.responseText);
+            const calendrier = document.getElementById("calendrier");
 
-            const lesInfos = document.getElementById("infoCours"); 
+            const lesInfos = document.getElementById("infoCours");
+            if(!lesInfos.classList.contains("open"))
+                lesInfos.classList.add("open");
+
+            if(!calendrier.classList.contains("open"))
+                calendrier.classList.add("open");
+
 
             while (lesInfos.firstChild) {
                 lesInfos.removeChild(lesInfos.firstChild);
@@ -68,12 +84,23 @@ function requestClientCours(year, month, day) {
                 let divInfo = document.createElement("div");
                 divInfo.classList.add("infoDivCours");
 
+                let divGauche = document.createElement("div");
+                divGauche.classList.add("infoDivCoursGauche");
+
                 let heureDebutCours = document.createElement("p");
                 let nomCoursP = document.createElement("p");
-                heureDebutCours.innerHTML = convertFloatToTime(unCours.heureDebutCours) +' - '+ addFloatTimes(unCours.heureDebutCours, unCours.duree); 
+                let strHeureDeb = convertFloatToTime(unCours.heureDebutCours);
+                let strHeureFin = convertFloatToTime(parseFloat(unCours.heureDebutCours) + unCours.duree);
+                heureDebutCours.innerHTML = strHeureDeb +' - '+ strHeureFin; 
                 // heureDebutCours.innerHTML = unCours.heureDebutCours +' - '+ (unCours.heureDebutCours + unCours.duree); 
                 nomCoursP.innerHTML = unCours.nomCours ? unCours.nomCours : "Cours poney"; 
-                divInfo.appendChild(heureDebutCours); 
+
+                let nbPlaceRestante = document.createElement("p");
+                nbPlaceRestante.innerHTML = "Places: "+ unCours.restant;
+
+                divGauche.appendChild(heureDebutCours); 
+                divGauche.appendChild(nbPlaceRestante); 
+                divInfo.appendChild(divGauche); 
                 lesInfos.appendChild(divInfo);
 
                 
@@ -137,8 +164,14 @@ function requestMoniteurCours(year, month, day) {
             // Manipuler les données de la réponse (par exemple, afficher les résultats)
             const response = JSON.parse(xhr.responseText);
 
+            const calendrier = document.getElementById("calendrier");
 
-            const lesInfos = document.getElementById("infoCours"); 
+            const lesInfos = document.getElementById("infoCours");
+            if(!lesInfos.classList.contains("open"))
+                lesInfos.classList.add("open");
+
+            if(!calendrier.classList.contains("open"))
+                calendrier.classList.add("open");
 
             while (lesInfos.firstChild) {
                 lesInfos.removeChild(lesInfos.firstChild);
@@ -160,7 +193,9 @@ function requestMoniteurCours(year, month, day) {
 
                 let heureDebutCours = document.createElement("p");
                 let nomCoursP = document.createElement("p");
-                heureDebutCours.innerHTML = convertFloatToTime(unCours.heureDebutCours) +' - '+ addFloatTimes(unCours.heureDebutCours, unCours.duree); 
+                let strHeureDeb = convertFloatToTime(unCours.heureDebutCours);
+                let strHeureFin = convertFloatToTime(parseFloat(unCours.heureDebutCours) + unCours.duree);
+                heureDebutCours.innerHTML = strHeureDeb +' - '+ strHeureFin; 
                 nomCoursP.innerHTML = unCours.nomCours ? unCours.nomCours : "Cours poney"; 
                 divInfo.appendChild(heureDebutCours);
                 lesInfos.appendChild(divInfo);
@@ -296,12 +331,32 @@ function getMonthName(month) {
     return monthNames[month];
 }
 
+function resetInfo(texte="Pas de cours"){
+    const calendrier = document.getElementById("calendrier");
+
+    const lesInfos = document.getElementById("infoCours");
+
+    if(lesInfos.classList.contains("open"))
+        lesInfos.classList.remove("open");
+
+    if(calendrier.classList.contains("open"))
+        calendrier.classList.remove("open");
+
+    lesInfos.innerHTML = "";
+    let p = document.createElement("p");
+    p.innerHTML = texte;
+
+    lesInfos.appendChild(p);
+}
+
 
 
 function createCalendar(month, year){
 
     const calendrier = document.getElementById("calendrier");
     const monthDisplay = document.getElementById("month-display");
+
+    resetInfo();
 
     monthDisplay.textContent = `${getMonthName(month)} ${year}`;
 
