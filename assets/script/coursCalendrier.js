@@ -188,7 +188,11 @@ function getMoniteurACoursOuPas(date) {
         const username = document.getElementById("username");
 
         // Configurer la requête GET
-        xhr.open('GET', `../utils/moniteur/getter/getCoursByDateMoniteur.php?year=${date.getFullYear()}&month=${date.getMonth()+1}&username=${username.value}`, true);
+        if((date.getMonth()+1)<10){
+            xhr.open('GET', `../utils/moniteur/getter/getCoursByDateMoniteur.php?year=${date.getFullYear()}&month=0${date.getMonth()+1}&username=${username.value}`, true);
+        }else{
+            xhr.open('GET', `../utils/moniteur/getter/getCoursByDateMoniteur.php?year=${date.getFullYear()}&month=${date.getMonth()+1}&username=${username.value}`, true);
+        }
 
         xhr.onreadystatechange = function() {
             if (xhr.readyState === 4) {
@@ -226,12 +230,18 @@ function getCoursClientByDate(date) {
         const xhr = new XMLHttpRequest();
         
         // Configurer la requête GET
-        xhr.open('GET', `../utils/client/getter/getCoursByDate.php?year=${date.getFullYear()}&month=${date.getMonth() + 1}`, true);
+        if((date.getMonth() + 1)<10){
+            xhr.open('GET', `../utils/client/getter/getCoursByDate.php?year=${date.getFullYear()}&month=0${date.getMonth() + 1}`, true);
+        }else{
+            xhr.open('GET', `../utils/client/getter/getCoursByDate.php?year=${date.getFullYear()}&month=${date.getMonth() + 1}`, true);
+        }
         
         xhr.onreadystatechange = function() {
             if (xhr.readyState === 4) {
                 if (xhr.status === 200) {
                     const response = JSON.parse(xhr.responseText);
+                    console.log(response, `../utils/client/getter/getCoursByDate.php?year=${date.getFullYear()}&month=${date.getMonth() + 1}`);
+
                     if (Array.isArray(response)) {
                         resolve(response);
                     } else {
