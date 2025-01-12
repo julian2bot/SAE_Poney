@@ -2,6 +2,8 @@
 document.addEventListener('DOMContentLoaded', () => {
     Combobox();
     Comboboxpersonne();
+    comboboxduree();
+    
 });
 
 function getDate(month,year){

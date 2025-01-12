@@ -94,9 +94,6 @@ for ($i = 0; $i < $remainingDays; $i++) {
 
 function validerchoix($bdd)
 {
-
-
-
 (int)$idNiveau = $_POST['niveau'];
 $nomCours = $_POST['nom'];
 (int)$duree = $_POST['choixheure'];
