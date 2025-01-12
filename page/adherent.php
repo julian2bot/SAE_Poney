@@ -6,7 +6,7 @@ estConnecte();
 // print_r($_SESSION);
 // echo "</pre>";
 $aPayerCotisation = clientAPayerCotisation($bdd, $_SESSION["connecte"]["username"]);
-
+insererCotisations($bdd);
 ?>
 
 

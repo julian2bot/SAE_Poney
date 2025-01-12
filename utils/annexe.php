@@ -437,6 +437,37 @@ function existUsername(PDO $bdd, string $username): bool
 	return $reqMail->rowCount() >= 1;
 }
 
+function insererCotisations(PDO $bdd):void{
+    $date = new DateTime();
+    $date2 = new DateTime();
+    $date3 = new DateTime();
+
+    if((int)$date->format("m")>=9){ //septembre
+        $date2->add(DateInterval::createFromDateString('1 year'));
+        $date3->sub(DateInterval::createFromDateString('1 year'));
+        $periode = $date->format("Y")."-".$date2->format("Y");
+        $lastPeriode = $date3->format("Y")."-".$date->format("Y");
+    }
+    else{
+        $date2->sub(DateInterval::createFromDateString('1 year'));
+        $date3->sub(DateInterval::createFromDateString('2 year'));
+        $periode = $date2->format("Y")."-".$date->format("Y");
+        $lastPeriode = $date3->format("Y")."-".$date2->format("Y");
+    }
+
+
+    $reqCoti = $bdd->prepare("SELECT * FROM COTISATION WHERE periode=?");
+	$reqCoti->execute(array($periode));
+    if($reqCoti->rowCount()<=0){
+        $reqCoti->execute(array($lastPeriode));
+        $anciennesCoti = $reqCoti->fetchAll();
+        $reqInsert = $bdd->prepare("INSERT INTO COTISATION (nomCotisation, periode, prixCotisationAnnuelle) VALUES (?,?,?)");
+        foreach($anciennesCoti as $cotisation){
+            $reqInsert->execute(array($cotisation["nomCotisation"],$periode,$cotisation["prixCotisationAnnuelle"]));
+        }
+    }
+}
+
 function clientAPayerCotisation(PDO $bdd, string $username):bool{
     $date = new DateTime();
     $date2 = new DateTime();

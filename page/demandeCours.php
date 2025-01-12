@@ -5,20 +5,11 @@ require_once "../utils/constante.php";
 
 estConnecte();
 
-// if( !isset($_GET["idcours"]) AND !isset($_GET["dateCours"]) AND !isset($_GET["heureCours"])){
-//     header('Location: ../');
-//     exit;
-// }
-
-
-// $infoDuCours = getInfoCours($bdd, $_GET["idcours"], $_GET["dateCours"], $_GET["heureCours"]);
-
-
-
-// echo "<pre>";
-// print_r($_SESSION);
-// echo "</pre>";
-
+if( !clientAPayerCotisation($bdd, $_SESSION["connecte"]["username"])){
+    createPopUp("Vous devez payer la cotisation annuelle avant de pouvoir vous inscrire au cours",false);
+    header('Location: ../');
+    exit;
+}
 
 
 ?>
