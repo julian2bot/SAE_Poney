@@ -58,9 +58,14 @@ CREATE TABLE OBTENTION(
     
     PRIMARY KEY (username, idNiveau),
     
-    FOREIGN KEY (username) REFERENCES PERSONNE(username),
     FOREIGN KEY (idNiveau) REFERENCES NIVEAU(idNiveau)
 );
+
+ALTER TABLE OBTENTION
+ADD CONSTRAINT usernameObtention_fk FOREIGN KEY (username)
+REFERENCES PERSONNE(username)
+ON UPDATE CASCADE;
+
 
 CREATE TABLE DISPONIBILITE(
     usernameMoniteur VARCHAR(32), -- cle etrangere ==> usernameMoniteur
@@ -101,10 +106,10 @@ CREATE TABLE COTISATION(
     PRIMARY KEY (nomCotisation, periode)    
 );
 
-CREATE TABLE nomCotisation(
+CREATE TABLE PAYER(
     nomCotisation VARCHAR(100),-- cle etrangere ==> nomCotisation
     periode VARCHAR(9),-- cle etrangere ==> annees de cotisation
-    nomCotisation VARCHAR(32), -- cle etrangere ==> username
+    usernameClient VARCHAR(32), -- cle etrangere ==> username
     
     PRIMARY KEY (nomCotisation, periode, usernameClient),
     
