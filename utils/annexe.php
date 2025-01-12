@@ -285,6 +285,25 @@ function getCours(PDO $bdd, int $idCours):array{
 	return $info;
 }
 
+
+function getRepresentation(PDO $bdd, int $idCours, string $usernameMoniteur, string $dateCours, float $heureDebut):array{
+    $reqRepr = $bdd->prepare("SELECT * FROM REPRESENTATION NATURAL JOIN COURS WHERE idCours = ? AND usernameMoniteur = ? AND dateCours = ? AND heureDebutCours = ?");
+	$reqRepr->execute(array($idCours,$usernameMoniteur,$dateCours,$heureDebut));
+	$info = $reqRepr->fetch();
+	return $info;
+}
+function getNbRestantCours(PDO $bdd, int $idCours, string $usernameMoniteur, string $dateCours, float $heureDebut):int{
+    $representation = getRepresentation($bdd, $idCours, $usernameMoniteur, $dateCours, $heureDebut);
+
+    $reqResrv = $bdd->prepare("SELECT * FROM RESERVATION WHERE idCours = ? AND usernameMoniteur = ? AND dateCours = ? AND heureDebutCours = ?");
+	$reqResrv->execute(array($idCours,$usernameMoniteur,$dateCours,$heureDebut));
+	$info = $reqResrv->rowCount();
+    $nbRestant = $representation["nbMax"] - $info;
+    if($nbRestant<0)
+        $nbRestant = 0;
+    return $nbRestant;
+}
+
 /**
  * Renvoie si une demande de cours existe pour un jour
  *
@@ -823,6 +842,7 @@ function getReserv(PDO $bdd, int $niveau): array
 	$info = $reqUser->fetchAll();
 	return $info;
 }
+
 
 
 

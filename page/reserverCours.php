@@ -12,7 +12,12 @@ if( !isset($_GET["idcours"]) AND !isset($_GET["dateCours"]) AND !isset($_GET["he
 
 $infoDuCours = getInfoCours($bdd, $_GET["idcours"], $_GET["dateCours"], $_GET["heureCours"]);
 
+$placesRestantes = getNbRestantCours($bdd,$infoDuCours["idCours"],$infoDuCours["usernameMoniteur"],$infoDuCours["dateCours"],$infoDuCours["heureDebutCours"]);
 
+if($placesRestantes<=0){
+    header('Location: ../');
+    exit;
+}
 
 // echo "<pre>";
 // print_r($infoDuCours);
@@ -55,7 +60,7 @@ $infoDuCours = getInfoCours($bdd, $_GET["idcours"], $_GET["dateCours"], $_GET["h
                     <li>avec le prof : <?php echo $infoDuCours["usernameMoniteur"]?> </li>
                     <li> A <?php echo $infoDuCours["prix"] ?> €</li>
                     <li><?php echo formatCours($infoDuCours["dateCours"], $infoDuCours["heureDebutCours"], $infoDuCours["duree"])?></li>
-                    <li>Place Restant XX/<?php  echo $infoDuCours["nbMax"]?></li>
+                    <li>Places Restante :<?php  echo $placesRestantes?></li>
                 </ul>
             </section>
             
