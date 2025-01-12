@@ -16,7 +16,7 @@
 [/]         ==> date et heure precise  
 [/]         ==> cours = 1 heure ou 2 max  
 [/]         ==> poney apres 2h => 1h de pause 
-[/]         ==> poney doit suppor   té un certain poid  
+[/]         ==> poney doit supporté un certain poid  
 [/]     ==> insert    
 [/]     ==> test   
 
@@ -31,32 +31,52 @@
 
 [ ] html/ css / js / php   
 [X]     ==> page connexion / inscription * 3    
-[ ]     ==> page planing *3
+[X]     ==> page planing *3
 [X]         ==> creation du calendrier
 [X]         ==> affichage des infos dans le calendrier
 [/]     ==> page accueil * 3  
-[ ]     ==> page resevation client  
-[ ]     ==> page demande cours client
-[ ]     ==> page creation cours moniteur 
-[ ]     ==> page disponibilité moniteur 
-[ ]     ==> page 404 
-[ ]     ==> page deniedAcces ?mais est ce vraiment utile avec le mode actuelle ?? 
+[X]     ==> page resevation client  
+[/]     ==> page demande cours client
+[ ]         ==> envoie email au client pour dire d'attendre comfirmation
+[ ]         ==> ajoute demande de cours a la bd
+[ ]         ==> page moniteur avec les demandes de cours (accepte)
+[ ]         ==> moniteur + client recoi un email pour la validation du cours
+[ ]         ==> moniteur + client recoi un email pour la validation du cours
+[/]     ==> page creation cours moniteur (clement)
+[X]     ==> page disponibilité moniteur 
+[x]     ==> page 404 
+[?]     ==> page deniedAcces ?mais est ce vraiment utile avec le mode actuelle ?? 
  
 [ ] divers  
 [ ]     ==> exporter un PDF avec les plannings et les horaires    
-[ ]     ==> posibilitée de refermer les pages de creation poney (repasser le div en display none)
+[X]     ==> posibilitée de refermer les pages de creation poney (repasser le div en display none)
 
 
 
 
-[ ] php  
+[X] php  
 [X]     ==> ajouter Poney admin   
-[ ]     ==> edit les poneys (/ client?) admin 
-[ ]     ==> afficher moniteur admin   
-[ ]     ==> ajouter/creer moniteur admin 
+[X]     ==> edit les poneys (/ client?) admin 
+[X]     ==> afficher moniteur admin   
+[X]     ==> ajouter/creer moniteur admin 
 [X]     ==> supprimer moniteur admin   
+[X]     ==> gestion des soldes du clients
 
 
 [ ] tache  
 [ ]     ==> sous tache  
 [ ]         ==> sous sous tache  
+
+
+[ ] admin  
+[ ]     ==> cascade pour suppr les moniteurs/ poney et client  
+        >>> remove / modifier une disponibilité, faudrait que je regarde s'il n'a pas de cours avant de modif/supp
+[ ] reserver  
+[ ]     ==> nb place restant  
+
+[ ] moniteur  
+[ ]     ==> disponibilité a revoir  
+[ ] client
+[ ]     ==> solde  
+[ ]     ==> cotisation  
+

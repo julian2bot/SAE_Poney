@@ -1,5 +1,5 @@
 <?php
-require_once "utils/connexionBD.php";
+require_once "utils/BDD/connexionBD.php";
 
 if(isset($_SESSION["connecte"])){
     switch ($_SESSION["connecte"]["role"]) {
@@ -32,7 +32,8 @@ if(isset($_SESSION["connecte"])){
     <title>Grand Galop</title>
     <link rel="stylesheet" href="assets/style/style.css">
     <link rel="stylesheet" href="assets/style/form.css">
-</head>
+    <link rel="stylesheet" href="assets/style/versionTel.css">
+    </head>
     <body>
         <header>
             <h1>GRAND GALOP</h1>
@@ -65,14 +66,14 @@ if(isset($_SESSION["connecte"])){
                 <section>
                     <h2>Login</h2>
                     <p>Entrer vos compte pour vous connecter</p>
-                    <form method="POST" action ="utils/login.php" class="form">
+                    <form method="POST" action ="utils/all/login/login.php" class="form">
 
                         <label for="Name">UserName</label>
                         <input type="text" name="Name" id="Name" placeholder="UserName" autocomplete="off" class="form-control-material">
 
                         <!-- passWord -->
                         <label for="PassWordLogin">Password</label>
-                        <input type="text" name="PassWordLogin" id="PassWordLogin" placeholder="PassWord" autocomplete="off" class="form-control-material">
+                        <input type="password" name="PassWordLogin" id="PassWordLogin" placeholder="PassWord" autocomplete="off" class="form-control-material">
                         <!-- <img src="assets/images/eye-off.png" id="eye" onclick="" alt=""> -->
                         <?php
                         if(isset($_GET["erreurLogin"])){
@@ -95,7 +96,7 @@ if(isset($_SESSION["connecte"])){
                 <section>
                     <h2>SignIn</h2>
                     <p>Entrer vos compte pour vous connecter</p>
-                    <form method="POST" action="utils/signIn.php" class="form">
+                    <form method="POST" action="utils/all/login/signIn.php" class="form">
 
                         <label for="NameSignIn">UserName</label>
                         <input type="text" name="NameSignIn" id="NameSignIn" placeholder="UserName" autocomplete="off" class="form-control-material">
@@ -114,10 +115,10 @@ if(isset($_SESSION["connecte"])){
 
                         <!-- passWord -->
                         <label for="Password">Password</label>
-                        <input type="text" name="Password" id="Password" placeholder="PassWord" autocomplete="off" class="form-control-material">
+                        <input type="password" name="Password" id="Password" placeholder="PassWord" autocomplete="off" class="form-control-material">
                         
                         <label for="RePassword">Re-Password</label>
-                        <input type="text" name="RePassword" id="RePassword" placeholder="Re-Password" autocomplete="off" class="form-control-material">
+                        <input type="password" name="RePassword" id="RePassword" placeholder="Re-Password" autocomplete="off" class="form-control-material">
                         <?php
                         if(isset($_GET["erreurSignIn"])){
                             echo '<font color="red">'.$_GET["erreurSignIn"]."</font>";

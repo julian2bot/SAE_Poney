@@ -1,7 +1,12 @@
+header ul li{
+    width: max-content;
+}
 header ul{
     display: flex;
     justify-content: space-evenly;
     list-style: none;
+    flex-wrap: wrap;
+    gap: 10px;
 }
 header a {
     font-size: 2em;
@@ -9,8 +14,15 @@ header a {
     text-decoration: none;
 }
 
+
+.pageAdmin{
+    height: inherit !important;
+    margin: 10px;
+    padding: inherit !important;
+}
+
 .pageAdmin ul{
-    justify-content: inherit;
+    justify-content: inherit !important;
 }
 
 header a:hover {

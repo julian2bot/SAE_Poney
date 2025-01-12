@@ -1,3 +1,7 @@
+
+// script pour affiché les logins/ signIn dans la page d'accueil
+
+
 document.querySelectorAll('.affichelogin').forEach(link => {
     link.addEventListener('click', function(event) {
         event.preventDefault(); 

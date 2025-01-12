@@ -94,6 +94,6 @@ form > input::placeholder{
 }
 
 form > label{
-    visibility: hidden;
+    /* visibility: hidden; */
 }
 /*  Footer  */
