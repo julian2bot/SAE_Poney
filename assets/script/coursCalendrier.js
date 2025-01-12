@@ -367,14 +367,24 @@ function calendrierGraphiqueCreation(calendrier, year, month, date,daysInMonth, 
                 day.innerHTML = date;
                 if(typeClient==="moniteur"){    
                     day.addEventListener("click", () => {
+                        const pastilCliqueElements = calendrier.querySelectorAll('.PastiClique');
 
+                        // Parcourir chaque élément et supprimer la classe 'pastilClique'
+                        pastilCliqueElements.forEach((element) => {
+                            element.classList.remove('PastiClique');
+                        });
+
+
+                        day.classList.add("PastiClique");
                         requestMoniteurCours(year, month+1, day.innerHTML);
                     });                }
                 if (coursMap.has(date)) {
                     day.classList.add("PastiCours");
                     
                     if(typeClient==="adherent"){    
+                        day.classList.add("PastiCours");
                         day.addEventListener("click", () => {
+                          
                             // requestClientCours(new Date(year, month+1, date));
                             requestClientCours(year, month+1, day.innerHTML);
                         });

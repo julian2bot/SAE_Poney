@@ -34,11 +34,12 @@
 }
 #infoCours, #info-disponibilite{
     overflow: auto;
-    max-height: 250px;
+    max-height: 280px;
     display: flex;
     flex-direction: column;
     justify-content: start;
     align-items: center;
+    overflow-x: hidden;
 }
 .infoDivCours{
     display: flex;
@@ -47,7 +48,7 @@
     width: 100%;
     gap: 40px;
     margin: 10px;
-    max-width: 250px;
+    max-width: 280px;
     cursor: pointer;
 }
 
