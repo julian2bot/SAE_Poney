@@ -18,6 +18,8 @@ estAdmin();
     <link rel="stylesheet" href="../assets/style/header.css">
     <link rel="stylesheet" href="../assets/style/styleSousPage.css">
     <link rel="stylesheet" href="../assets/style/form.css">
+    <link rel="stylesheet" href="../assets/style/coursCalendrier.css">
+    <link rel="stylesheet" href="../assets/style/calendrier.css">
     <script src="../assets/script/popUpGestionErr.js"></script>
 </head>
     <body style="position: relative;">
@@ -102,6 +104,26 @@ estAdmin();
 
     </div>
 
+    <div class="calendrierPoney" id="calendrierPoney"
+         style="display: none;">
+
+        <h2>Calendrier du Poney</h2>
+        <h3 id="month-display"></h3>
+                    
+        <div id="calendar-container">
+            <button class="boutonsCalendrier" id="prev-month">Mois Précédent</button>
+            <button class="boutonsCalendrier" id="next-month">Mois Suivant</button>
+            <div class="container-info-cal">
+                <div id="infoCours">
+                    <p >
+                        Pas de cours
+                    </p>
+                </div>
+                <table id="calendrier"></table>
+            </div>
+        </div>
+
+    </div>
 
     <div id="flou" class="admin-container">
         <!-- Section des cas d'utilisation -->
@@ -128,6 +150,7 @@ estAdmin();
                         foreach (getPoney($bdd) as $poney) {
                             echo '<li>'.$poney["nomPoney"].'';
                             echo "<div class = 'boutons'>";
+                            echo "<button onclick=' afficheCalendrierPoney(".$poney["idPoney"].")' class='remove-btn'>Calendrier</button>";
                             echo "<button onclick='remplirPoneyModif(\"".$poney["idPoney"]."\",\"".$poney["nomPoney"]."\",\"".$poney["poidsMax"]."\",\"".$poney["photo"]."\",\"".$poney["nomRace"]."\")' class='remove-btn'>Modifier</button>";
                             echo '<a href="../utils/admin/remove/removePoney.php?idPoney='.$poney["idPoney"].'" class="remove-btn">Retirer</a>';
                             echo "</div>";

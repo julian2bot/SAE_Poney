@@ -70,7 +70,8 @@ function requestClientCours(year, month, day) {
 
                 let heureDebutCours = document.createElement("p");
                 let nomCoursP = document.createElement("p");
-                heureDebutCours.innerHTML = unCours.heureDebutCours +' - '+ (unCours.heureDebutCours + unCours.duree); 
+                heureDebutCours.innerHTML = convertFloatToTime(unCours.heureDebutCours) +' - '+ addFloatTimes(unCours.heureDebutCours, unCours.duree); 
+                // heureDebutCours.innerHTML = unCours.heureDebutCours +' - '+ (unCours.heureDebutCours + unCours.duree); 
                 nomCoursP.innerHTML = unCours.nomCours ? unCours.nomCours : "Cours poney"; 
                 divInfo.appendChild(heureDebutCours); 
                 lesInfos.appendChild(divInfo);
@@ -94,6 +95,25 @@ function requestClientCours(year, month, day) {
 
     
 }
+
+function addFloatTimes(startTime, endTime) {
+    // console.log(startTime, endTime, startTime + endTime)
+    const totalTime = parseFloat(startTime) + parseFloat(endTime); // Additionner les heures en float
+    // console.log(totalTime)
+    return convertFloatToTime(totalTime); // Convertir le résultat en h:mm
+}
+
+function convertFloatToTime(floatTime) {
+    // Extraire les heures
+    const hours = Math.floor(floatTime);
+
+    // Calculer les minutes
+    const minutes = Math.round((floatTime - hours) * 60);
+
+    // Retourner au format h:mm
+    return `${hours}h${minutes.toString().padStart(2, '0')}`;
+}
+
 
 function requestMoniteurCours(year, month, day) {
 
@@ -140,7 +160,7 @@ function requestMoniteurCours(year, month, day) {
 
                 let heureDebutCours = document.createElement("p");
                 let nomCoursP = document.createElement("p");
-                heureDebutCours.innerHTML = unCours.heureDebutCours +' - '+ (unCours.heureDebutCours + unCours.duree); 
+                heureDebutCours.innerHTML = convertFloatToTime(unCours.heureDebutCours) +' - '+ addFloatTimes(unCours.heureDebutCours, unCours.duree); 
                 nomCoursP.innerHTML = unCours.nomCours ? unCours.nomCours : "Cours poney"; 
                 divInfo.appendChild(heureDebutCours);
                 lesInfos.appendChild(divInfo);
