@@ -79,9 +79,9 @@ isset($_POST["heure"])){
 
 
 }
-header(" Location: ../../../page/demandeCours.php");
-exit;
 
+header("Location: ../../../page/demandeCours.php");
+exit;
 
 
 
