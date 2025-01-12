@@ -990,7 +990,7 @@ function mailClientDemandeCours($sendingEmail, $email, $username, $object, $date
         $mail->addAddress($email);
         
         // Contenu
-        $mail->addEmbeddedImage('../assets/images/poney/flocon.jpg', 'image_cid');
+        // $mail->addEmbeddedImage('../assets/images/poney/flocon.jpg', 'image_cid');
 
         $mail->isHTML(true);            
         $mail->CharSet = 'UTF-8';           
@@ -1087,7 +1087,7 @@ function mailClientDemandeCours($sendingEmail, $email, $username, $object, $date
         // print_r($e);
         // echo "</pre>";
 
-        // echo "Erreur lors de l'envoi du mail : ", $mail->ErrorInfo;
+        echo "Erreur lors de l'envoi du mail : ", $mail->ErrorInfo;
 
         return false;
 
