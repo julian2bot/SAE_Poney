@@ -21,7 +21,7 @@ require_once "../utils/connexionBD.php";
                 <button class="afficheSignIn">Sign In</button>
             </div>
         </header>
-        
+        <?php print_r($_SESSION["connecte"]);?>
         <main class="container">
 
             <section class="gauche-section">

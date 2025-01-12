@@ -1,9 +1,9 @@
 <?php
 require_once "../utils/connexionBD.php";
 require_once "../utils/annexe.php";
-?>
 
-<?php
+include "../utils/connexionBD.php";
+
 // Gestion des dates pour le calendrier avec une approche différente
 $month = isset($_GET['month']) ? intval($_GET['month']) : date('n');
 $year = isset($_GET['year']) ? intval($_GET['year']) : date('Y');
@@ -33,7 +33,7 @@ $months = [
 
 // Vérifier si le formulaire est soumis
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    validerchoix();
+    validerchoix($bdd);
 }
 
 
@@ -75,7 +75,6 @@ for ($day = 1; $day <= $daysInMonth; $day++) {
         echo '<td class="' . $classes .'"id='.$id.' onclick="getDate('.$month.','.$year.')" >' . $day . '</td>';
     }
     
-
     // Retour à la ligne chaque dimanche
     if (($firstDayOfWeek + $day) % 7 == 0) {
         echo '</tr><tr>';
@@ -92,34 +91,92 @@ for ($i = 0; $i < $remainingDays; $i++) {
 }
 
 
-/*
-function validerchoix()
+
+function validerchoix($bdd)
 {
 
-// Récupérer les données
 
-$idCours = "Select max(idCours) FROM COURS"
-$idNiveau = $_POST['niveau'];
+
+(int)$idNiveau = $_POST['niveau'];
 $nomCours = $_POST['nom'];
-$duree = $_POST['choixheure'];
-$prix = $_POST['prix'];
-$nbMax = $_POST['nbmax'];
+(int)$duree = $_POST['choixheure'];
+(int)$prix = $_POST['prix'];
+(int)$nbMax = $_POST['nbmax'];
 
-
-$datevalider = $_POST['datevalider'];
+$usernameMoniteur = $_SESSION["connecte"]["username"];
+$activite = $_POST['description'];
+$dateCours = $_POST['datevalider'];
 $temp = $_POST['temp'];
 
-$insertionCOURS = "INSERT INTO COURS(idCours,idNiveau,nomCours,duree,prix,nbMax)
-VALUES ('.$idCours.','.$idNiveau.','.$nomCours.','.$duree.','.$prix.','.$nbMax.')";
+// Séparer l'heure et les minutes
+list($heures, $minutes) = explode(":", $temp);
+// Convertir en une valeur décimale
+$temp = $heures + ($minutes / 60);
 
-$insertionCOURS = "INSERT INTO COURS(idCours,idNiveau,nomCours,duree,prix,nbMax)
-VALUES ('.$idCours.','.$idNiveau.','.$nomCours.','.$duree.','.$prix.','.$nbMax.')";
+try {
+
+    // Récupérer les données
+
+    $sql = "SELECT MAX(idCours) AS derniere_id FROM COURS";
+    $stmt = $bdd->prepare($sql);
+    $stmt->execute();
+
+    // Récupérer la valeur
+    $result = $stmt->fetch();
+    if ($result && isset($result['derniere_id'])) {
+        $idCours = $result['derniere_id'];
+        $idCours = (int)$idCours+1;
+    } else {
+        $idCours = 0;
+    }
+
+ 
+    echo $idCours ,"\n";
+    echo $idNiveau ,"\n";
+    echo $nomCours,"\n";
+    echo $duree,"\n";
+    echo $prix,"\n";
+    echo $nbMax,"\n";
+    echo $usernameMoniteur,"\n";
+    echo $activite,"\n";
+    echo $dateCours,"\n";
+    echo $temp,"\n";
+
+    $insertionCours = $bdd->prepare("INSERT INTO COURS(idCours,idNiveau,nomCours,duree,prix,nbMax) VALUES(?, ?, ?, ?, ?, ?)");
+    $insertionCours->execute(array(
+        $idCours,
+        $idNiveau,
+        $nomCours,
+        $duree,
+        $prix,
+        $nbMax
+    ));
+
+    $insertionRepresentation = $bdd->prepare("INSERT INTO REPRESENTATION (idCours,usernameMoniteur,dateCours,heureDebutCours,activite) VALUES(?, ?, ?, ?, ?)");
+    $insertionRepresentation->execute(array(
+        $idCours,
+        $usernameMoniteur,
+        $dateCours,
+        $temp,
+        $activite
+    ));
+
+    // Redirection vers moniteur
+    header("Location: ../page/moniteur.php");
+    exit;
+}
+
+catch (Exeption $e) {
+    echo 'Echec :' .$e->getMessage();
+    // Redirection vers creationCours
+    header("Location: ../page/creationCours.php");
+    exit;
+}
 
 
-// Redirection vers une autre page
-header("Location: ../page/moniteur.php");
-exit;
 
 }
-*/
+
+
+
 ?>

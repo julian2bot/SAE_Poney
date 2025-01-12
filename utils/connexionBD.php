@@ -1,5 +1,5 @@
 <?php
-// base de base 
+// base de base
 // code de connexion a une base de donnée
 session_start();
 require_once "annexe.php";
