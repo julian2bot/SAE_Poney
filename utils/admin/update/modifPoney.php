@@ -31,7 +31,7 @@ if($_SESSION["connecte"]["role"] === "admin" &&
         $result = $updateStmt->execute([
             $_POST["nomPoney"], 
             $_POST["poidMax"], 
-            $_POST["photo"], 
+            mb_substr($_POST["photo"], 0, 28), 
             $_POST["race"], 
             $_POST["identifiant"]]
         );

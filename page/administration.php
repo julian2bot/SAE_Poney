@@ -42,7 +42,7 @@ estAdmin();
 
         <section>
             <h2>Ajouter un Poney</h2>
-            <form method="POST" action="../utils/admin/add/creerPoney.php" class="form">
+            <form method="POST" action="../utils/admin/add/creerPoney.php" class="form"  enctype="multipart/form-data">
                 <?php
                     require "../assets/affichage/adminPoney.php";
                 ?>
@@ -74,7 +74,7 @@ estAdmin();
 
         <section>
             <h2>ModifIer un Poney</h2>
-            <form method="POST" action="../utils/admin/update/modifPoney.php" class="form">
+            <form method="POST" action="../utils/admin/update/modifPoney.php" class="form" enctype="multipart/form-data" >
                 <input type="hidden" name="identifiant" class="identifiant form-control-material" required>
                 <?php
                     require "../assets/affichage/adminPoney.php";
