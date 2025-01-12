@@ -1,7 +1,7 @@
 <?php
 // code pour modifier le moniteur dans la page admin
-require_once "../utils/BDD/connexionBD.php";
-require_once "../utils/annexe.php";
+require_once __DIR__."/../../BDD/connexionBD.php";
+require_once __DIR__."/../../annexe.php";
 estAdmin();
 
 /**
@@ -39,14 +39,14 @@ if($_SESSION["connecte"]["role"] === "admin" &&
         $erreur = "Ce mail est déjà utilisé";
         setErrors();
         createPopUp($erreur,false);
-        header("Location: ../page/administration.php?erreurModifMoniteur=$erreur#Moniteurs");
+        header("Location: ../../../page/administration.php#Moniteurs");
         exit;
     }
     else if($_POST["identifiant"] != $_POST["usernameMoniteur"] && existUsername($bdd,$_POST["usernameMoniteur"])){
         $erreur = "Ce nom d'utilisateur est déjà utilisé";
         setErrors();
         createPopUp($erreur,false);
-        header("Location: ../page/administration.php?erreurModifMoniteur=$erreur#Moniteurs");
+        header("Location: ../../../page/administration.php#Moniteurs");
         exit;
     }
     else{
@@ -109,5 +109,5 @@ if($_SESSION["connecte"]["role"] === "admin" &&
         }
 }
 
-header("Location: ../page/administration.php#Moniteurs");
+header("Location: ../../../page/administration.php#Moniteurs");
 exit;
