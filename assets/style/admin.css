@@ -136,11 +136,17 @@ header p {
     justify-content: space-between;
 }
 
+.creerPoney img{
+    margin : initial;
+}
+
 .creerPoney > section {
     padding: 2em;
-    width: calc(50% - 2em* 2);
+    width: 100%;
     /* position: fixed; */
     color: #eee;
+    overflow-y: auto;
+    overflow-x: hidden;
 }
 
 form > input {
