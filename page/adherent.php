@@ -83,12 +83,12 @@ estConnecte();
                             <table id="calendrier"></table>
                         </div>
                     </div>
-                    <a class="boutonsCalendrier" href="demandeCours.php">Demande de cours</a>
+                    <a class="formBoutonCenter" href="demandeCours.php">Demande de cours</a>
                 </section>
                 
                 <section class="droite-section droite">
                     <figure class="image-block">
-                            <img src="../assets/images/cheval2.png" alt="Cheval" class="cheval-image-droite">
+                            <img src="../assets/images/SignInImage.jpg" alt="Cheval" class="cheval-image-droite">
                     </figure>
                 </section>
             </section>
@@ -98,7 +98,7 @@ estConnecte();
                 <h2 class="titreSection"> Gérer mon dossier</h2>
             
                 <section class="gauche-section gauche">
-                <h2>Parametre page</h2>
+                <h2>Parametre</h2>
                     <form action="../utils/all/update/traitementParametre.php" method="post">
                         <input type="hidden" id="clientmoniteur" name="clientmoniteur" value="client">
 
@@ -122,7 +122,7 @@ estConnecte();
                 
                 <section class="droite-section droite">
                     <figure class="image-block">
-                            <img src="../assets/images/cheval2.png" alt="Cheval" class="cheval-image-droite">
+                            <img src="../assets/images/loginImage.jpg" alt="Cheval" class="cheval-image-droite">
                     </figure>
                 </section>
             </section>

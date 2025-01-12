@@ -1,38 +1,69 @@
+function focusDivFlex(){
+    document.body.style.overflow = "hidden"; 
+    document.getElementById('flou').style.filter = "blur(1px)"; 
+    
+    let listes = document.getElementsByClassName("list");
+
+    for (let liste of listes) {
+        liste.style.overflow = "hidden";
+    }
+
+}
+
+function reversefocusDivFlex(){
+    document.body.style.overflow = "auto"; 
+    document.getElementById('flou').style.filter = "blur(0px)"; 
+    let listes = document.getElementsByClassName("list");
+
+    for (let liste of listes) {
+        liste.style.overflow = "auto";
+    }
+}
+
+
 //  dans la page d'administration affiché / retirer les pop Up pour edit / creer des poneys ou moniteur
 function afficheCreerPoney(){
     document.getElementById('creerPoney').style.display = "flex";
+    focusDivFlex();
 }
 
 function closeCreerPoney(){
     document.getElementById('creerPoney').style.display = "none";
+    reversefocusDivFlex();
 }
 
 function afficheCreerMoniteur(){
     document.getElementById('creerMoniteur').style.display = "flex";
+    focusDivFlex();
 }
 
 
 function closeCreerMoniteur(){
     document.getElementById('creerMoniteur').style.display = "none";
+    reversefocusDivFlex();
 }
 
 
 
 function afficheModifPoney(){
     document.getElementById('modifierPoney').style.display = "flex";
+    focusDivFlex()
 }
 
 function closeModifPoney(){
     document.getElementById('modifierPoney').style.display = "none";
+    reversefocusDivFlex();
 }
 
 function afficheModifMoniteur(){
     document.getElementById('modifierMoniteur').style.display = "flex";
+    focusDivFlex()
 }
 
 
 function closeModifMoniteur(){
     document.getElementById('modifierMoniteur').style.display = "none";
+    reversefocusDivFlex();
 }
 
 function remplirPoney(nomPoney, poidMax, photo, race){

@@ -67,11 +67,11 @@
                             $result = $resultMin;
                         }
                         
-                        echo "<input type='date' value=$result min=$resultMin name='dateDispo' id='dateDispo' required>";
-                        echo "<input type='time' min='01:00' max='23:00' step='1800' value=$timeStart name='heureDebut' id='heureDebut' required>";
-                        echo "<input type='time' min='01:00' max='23:00' step='1800' value=$timeFinish name='heureFin' id='heureFin' required>";
+                        echo "<input class='styled-input' type='date' value=$result min=$resultMin name='dateDispo' id='dateDispo' required>";
+                        echo "<input class='styled-input' type='time' min='01:00' max='23:00' step='1800' value=$timeStart name='heureDebut' id='heureDebut' required>";
+                        echo "<input class='styled-input' type='time' min='01:00' max='23:00' step='1800' value=$timeFinish name='heureFin' id='heureFin' required>";
                     ?>
-                    <input type="submit" value="Modifier">
+                    <input class='styled-input' type="submit" value="Modifier">
                 </form>
                 <form method="POST" action="../utils/moniteur/remove/removeDisponibilite.php">
                     <?php
@@ -82,7 +82,7 @@
                         echo "<input type='hidden' name='previousTime' value=$timeStart>";
                         
                     ?>
-                    <input type="submit" value="Retirer disponibilité">
+                    <input class='styled-input' type="submit" value="Retirer disponibilité">
                 </form>
             </section>
             

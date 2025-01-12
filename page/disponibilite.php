@@ -49,11 +49,11 @@ estConnecte();
                             $result = $date->format('Y-m-d');
                             $resultMin = $date->format('Y-m-d');
                         }
-                        echo "<input type='date' value=$result min=$resultMin name='dateDispo' id='dateDispo' required>"
+                        echo "<input class='styled-input' type='date' value=$result min=$resultMin name='dateDispo' id='dateDispo' required>"
                     ?>
-                    <input type="time" min="01:00" max="23:00" step="1800" name="heureDebut" id="heureDebut" required>
-                    <input type="time" min="01:00" max="23:00" step="1800" name="heureFin" id="heureFin" required>
-                    <input type="submit" value="Ajouter">
+                    <input class="styled-input" type="time" min="01:00" max="23:00" step="1800" name="heureDebut" id="heureDebut" required>
+                    <input class="styled-input" type="time" min="01:00" max="23:00" step="1800" name="heureFin" id="heureFin" required>
+                    <input class="styled-input" type="submit" value="Ajouter">
                 </form>
             </section>
             

@@ -3,7 +3,7 @@
 table {
     border-collapse: collapse;
     border: none;
-    margin-left: calc((60vw - 80px * 7 - 20px) / 2);
+    margin-left: calc((60vw - 80px * 7 - 20px) / 2) !important;
 
 }
 
