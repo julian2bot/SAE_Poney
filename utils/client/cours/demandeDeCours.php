@@ -35,12 +35,19 @@ isset($_POST["heure"])){
         header("Location: ../../../page/demandeCours.php");
         exit;
     }
-
+    $dateDemandeCours = new DateTime($_POST["dateDemandeCours"]);
+    $today = new DateTime();
+    if($dateDemandeCours <= $today){
+        createPopUp("Veuillez entrer une date valide ",false);
+        header("Location: ../../../page/demandeCours.php");
+        exit;
+    }
     // Insertion dans la BD
 
     $soldeCourant = updateDecrSoldeCLient($bdd, $_SESSION["connecte"]["username"], $coursPerso["prix"]);
     if($soldeCourant === -1){
         $err ="Votre solde n'est pas assez élevé";
+        createPopUp("Votre solde n'est pas assez élevé", false);
         header("Location: ../../../page/adherent.php?errReservCours=".$err);
         exit;
     }
