@@ -56,6 +56,23 @@ td {
     border-radius: 50%; /* Forme circulaire */
     z-index: 0; /* Place la pastille derrière le texte */
 }
+
+.PastiClique::before {
+    content: ''; /* Crée un élément virtuel */
+    position: absolute; /* Positionne la pastille relativement au `td` */
+    /* top: 50%;  */
+    /* left: 50%;  */
+    top: 15px;
+    left: 15px;
+    transform: translate(-10px, -12px); /* Centre exact */
+    /* width: 2em;  */
+    /* height: 2em; */
+    width: 15px; 
+    height: 15px;
+    background-color: #193813; /* Couleur de la pastille */
+    border-radius: 50%; /* Forme circulaire */
+    z-index: 0; /* Place la pastille derrière le texte */
+}
 .styled-cell {
     background-color: #e0f7fa; 
     position: relative; 

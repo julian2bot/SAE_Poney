@@ -9,6 +9,10 @@ estConnecte();
 $year = $_GET["year"];
 $month = $_GET["month"];
 
+// if($month<10){
+//     $likePattern = $year . '-0' . $month . '%'; // "YYYY-MM%"
+
+// }
 $likePattern = $year . '-' . $month . '%'; // "YYYY-MM%"
 
 $reqUser = $bdd->prepare("SELECT * FROM REPRESENTATION NATURAL JOIN COURS WHERE dateCours LIKE ?");
