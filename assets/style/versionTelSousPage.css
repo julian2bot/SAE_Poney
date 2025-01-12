@@ -1,0 +1,86 @@
+
+
+
+@media screen and (max-width: 768px){
+    /* sous page */
+    .droite-section.disponible{
+        display: none;
+    }
+   
+    .gauche-section{
+        width: 90vw !important;
+    }
+    .list:first-child{
+        background-color: red;
+
+    }
+    #pony-list li {
+        width: min-content;
+        flex-basis: 100%;
+        text-align: center;
+        flex-wrap: wrap;
+        justify-content: center;
+        padding: 11px 30px;
+    } 
+
+    .creerPoney img{
+        display: none;
+    }
+    .creerPoney {
+        position: fixed;
+        width: 70vw;
+        height: 82vh;
+        margin-left: calc(64vw - 100vw / 2);
+        z-index: 3;
+        background-color: #495B4B;
+        border-radius: 42px;
+        display: none;
+        justify-content: space-between;
+    }
+    .calendrierPoney{
+        width: 90vw;
+        height: 82vh;
+        margin-left: calc((100vw - 90vw) / 2);
+    }
+
+    .creerPoney section{
+    
+        width: auto;
+    }
+
+    #calendrier *, #calendrier-disponibilite * {
+        padding: 10px !important;
+    }
+
+    .container-info-cal {
+        display: block !important;
+    }
+
+    table{
+        /* margin-left: 0 !important; */
+        border-collapse: collapse;
+        border: none;
+    }
+    th{
+        max-width: min-content;
+        font-size:10px;
+    }
+
+    td {
+        height: auto;
+        width: max-content;
+    
+    }
+
+    .planningCal{
+        margin: 10px;
+        width: calc(100% - 20px);
+    }
+
+    .gauche-section-none{
+        top:0;
+    }
+    .droite-section.reserverCoursDroite{
+        width: 90vw;
+    }
+}   

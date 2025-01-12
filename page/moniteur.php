@@ -22,6 +22,8 @@ estMoniteur();
         <link rel="stylesheet" href="../assets/style/styleSousPage.css">
     <link rel="stylesheet" href="../assets/style/coursCalendrier.css">
     <link rel="stylesheet" href="../assets/style/calendrier.css">
+    <link rel="stylesheet" href="../assets/style/versionTel.css">
+
         <script src="../assets/script/popUpGestionErr.js"></script>
     </head>
     <body>
