@@ -123,6 +123,25 @@ function requestClientCours(year, month, day) {
     
 }
 
+function addFloatTimes(startTime, endTime) {
+    // console.log(startTime, endTime, startTime + endTime)
+    const totalTime = parseFloat(startTime) + parseFloat(endTime); // Additionner les heures en float
+    // console.log(totalTime)
+    return convertFloatToTime(totalTime); // Convertir le résultat en h:mm
+}
+
+function convertFloatToTime(floatTime) {
+    // Extraire les heures
+    const hours = Math.floor(floatTime);
+
+    // Calculer les minutes
+    const minutes = Math.round((floatTime - hours) * 60);
+
+    // Retourner au format h:mm
+    return `${hours}h${minutes.toString().padStart(2, '0')}`;
+}
+
+
 function requestMoniteurCours(year, month, day) {
 
     if (abortControllerMoniteur) {
@@ -224,7 +243,11 @@ function getMoniteurACoursOuPas(date) {
         const username = document.getElementById("username");
 
         // Configurer la requête GET
-        xhr.open('GET', `../utils/moniteur/getter/getCoursByDateMoniteur.php?year=${date.getFullYear()}&month=${date.getMonth()+1}&username=${username.value}`, true);
+        if((date.getMonth()+1)<10){
+            xhr.open('GET', `../utils/moniteur/getter/getCoursByDateMoniteur.php?year=${date.getFullYear()}&month=0${date.getMonth()+1}&username=${username.value}`, true);
+        }else{
+            xhr.open('GET', `../utils/moniteur/getter/getCoursByDateMoniteur.php?year=${date.getFullYear()}&month=${date.getMonth()+1}&username=${username.value}`, true);
+        }
 
         xhr.onreadystatechange = function() {
             if (xhr.readyState === 4) {
@@ -262,12 +285,18 @@ function getCoursClientByDate(date) {
         const xhr = new XMLHttpRequest();
         
         // Configurer la requête GET
-        xhr.open('GET', `../utils/client/getter/getCoursByDate.php?year=${date.getFullYear()}&month=${date.getMonth() + 1}`, true);
+        if((date.getMonth() + 1)<10){
+            xhr.open('GET', `../utils/client/getter/getCoursByDate.php?year=${date.getFullYear()}&month=0${date.getMonth() + 1}`, true);
+        }else{
+            xhr.open('GET', `../utils/client/getter/getCoursByDate.php?year=${date.getFullYear()}&month=${date.getMonth() + 1}`, true);
+        }
         
         xhr.onreadystatechange = function() {
             if (xhr.readyState === 4) {
                 if (xhr.status === 200) {
                     const response = JSON.parse(xhr.responseText);
+                    console.log(response, `../utils/client/getter/getCoursByDate.php?year=${date.getFullYear()}&month=${date.getMonth() + 1}`);
+
                     if (Array.isArray(response)) {
                         resolve(response);
                     } else {
@@ -413,14 +442,24 @@ function calendrierGraphiqueCreation(calendrier, year, month, date,daysInMonth, 
                 day.innerHTML = date;
                 if(typeClient==="moniteur"){    
                     day.addEventListener("click", () => {
+                        const pastilCliqueElements = calendrier.querySelectorAll('.PastiClique');
 
+                        // Parcourir chaque élément et supprimer la classe 'pastilClique'
+                        pastilCliqueElements.forEach((element) => {
+                            element.classList.remove('PastiClique');
+                        });
+
+
+                        day.classList.add("PastiClique");
                         requestMoniteurCours(year, month+1, day.innerHTML);
                     });                }
                 if (coursMap.has(date)) {
                     day.classList.add("PastiCours");
                     
                     if(typeClient==="adherent"){    
+                        day.classList.add("PastiCours");
                         day.addEventListener("click", () => {
+                          
                             // requestClientCours(new Date(year, month+1, date));
                             requestClientCours(year, month+1, day.innerHTML);
                         });

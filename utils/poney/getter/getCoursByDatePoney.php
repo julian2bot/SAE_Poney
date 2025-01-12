@@ -8,15 +8,12 @@ estConnecte();
 
 $year = $_GET["year"];
 $month = $_GET["month"];
+$idPoney = $_GET["idPoney"];
 
-// if($month<10){
-//     $likePattern = $year . '-0' . $month . '%'; // "YYYY-MM%"
-
-// }
 $likePattern = $year . '-' . $month . '%'; // "YYYY-MM%"
 
-$reqUser = $bdd->prepare("SELECT * FROM REPRESENTATION NATURAL JOIN COURS WHERE dateCours LIKE ?");
-$reqUser->execute([$likePattern]);
+$reqUser = $bdd->prepare("SELECT * FROM RESERVATION NATURAL JOIN COURS WHERE dateCours LIKE ? AND idPoney = ?");
+$reqUser->execute([$likePattern, $idPoney]);
 $info = $reqUser->fetchAll();
 if ($info === false) {
     error_log("Erreur lors de la récupération des données SQL");

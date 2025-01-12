@@ -165,3 +165,30 @@ form > input {
     object-fit: cover;
 } 
 
+
+
+
+/* poney calendrier */
+.calendrierPoney{
+
+    position: fixed;
+    width: 50vw;
+    height: 82vh;
+    margin-left: calc(50vw / 2);
+    z-index: 3;
+    background-color: #396939;
+    border-radius: 42px;
+    /* display: none; */
+    justify-content: space-between;
+}
+.calendrierPoney h3,
+.calendrierPoney h2{
+    margin:1em ;
+}
+#prev-month{
+    margin-left:1em ;
+
+}
+#calendrier{
+    margin: 0 !important;
+}

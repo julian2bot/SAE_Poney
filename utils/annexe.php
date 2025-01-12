@@ -695,6 +695,38 @@ function getAllInfoByMonth(PDO $bdd, string $client, string $month, string $year
 	return $coursesByDay;
 }
 
+
+/**
+ * get toutes les informations pour un mois donnée
+ *
+ * @param PDO la base de donnée, 
+ * @param string $client nom client
+ * @param string $month le mois 
+ * @param string $year l'année 
+ *
+ * @return array liste information sur le mois 
+ */
+function getAllInfoByMonthMoniteur(PDO $bdd, string $client, string $month, string $year): array
+{
+	$reqUser = $bdd->prepare("SELECT heureDebutCours, activite, nomCours, day(dateCours) as day 
+                              FROM RESERVATION 
+                              NATURAL JOIN COURS 
+                              NATURAL JOIN REPRESENTATION 
+                              WHERE usernameMoniteur = ? 
+                              AND MONTH(dateCours) = ? 
+                              AND YEAR(dateCours) = ?");
+	$reqUser->execute([$client, $month, $year]);
+	$info = $reqUser->fetchAll();
+
+	$coursesByDay = [];
+	foreach ($info as $cours) {
+		$coursesByDay[$cours['day']][] = $cours;
+	}
+	return $coursesByDay;
+}
+
+
+
 /**
  * format une heure decimal
  *
@@ -758,7 +790,16 @@ function creerCalendrier(PDO $bdd, string $client): void
 	echo '<th>Dimanche</th>';
 	echo '</tr>';
 
-	$coursesByDay = getAllInfoByMonth($bdd, $client, $date->format('m'), $date->format('Y'));
+    $role = getRole($bdd, $client);
+
+    if($role === "admin" || $role === "moniteur"){
+        $coursesByDay = getAllInfoByMonthMoniteur($bdd, $client, $date->format('m'), $date->format('Y'));
+    }else {
+        $coursesByDay = getAllInfoByMonth($bdd, $client, $date->format('m'), $date->format('Y'));
+    }
+
+    // print_r($coursesByDay);
+
 
 	for ($i = 0; $i < 6; $i++) {
 		echo '<tr>';
@@ -1360,3 +1401,13 @@ function updateDecrSoldeCLient(PDO $bdd, string $usernameClient, int $decrSolde)
     }
     return -1; 
 }
+
+
+
+// SELECT heureDebutCours, activite, nomCours, day(dateCours) as day 
+//                               FROM RESERVATION 
+//                               NATURAL JOIN COURS 
+//                               NATURAL JOIN REPRESENTATION 
+//                               WHERE usernameClient = "client1" 
+//                               AND MONTH(dateCours) = "01" 
+//                               AND YEAR(dateCours) = "2025";
