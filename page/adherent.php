@@ -21,6 +21,7 @@ estConnecte();
     <link rel="stylesheet" href="../assets/style/calendrier.css">
     <link rel="stylesheet" href="../assets/style/coursCalendrier.css">
     <link rel="stylesheet" href="../assets/style/calendrier.css">
+    <link rel="stylesheet" href="../assets/style/versionTel.css">
     <script src="../assets/script/popUpGestionErr.js"></script>
 </head>
     
@@ -80,7 +81,7 @@ estConnecte();
                                     Pas de cours
                                 </p>
                             </div>
-                            <table id="calendrier"></table>
+                            <table class="calendrierLeft" id="calendrier"></table>
                         </div>
                     </div>
                     <a class="formBoutonCenter" href="demandeCours.php">Demande de cours</a>

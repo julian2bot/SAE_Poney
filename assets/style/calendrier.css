@@ -1,6 +1,6 @@
 
 /* style a la chatgpt lol car pas envie de le refaire */
-table {
+.calendrierLeft {
     border-collapse: collapse;
     border: none;
     margin-left: calc((60vw - 80px * 7 - 20px) / 2) !important;

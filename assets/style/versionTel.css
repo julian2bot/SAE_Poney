@@ -1,0 +1,37 @@
+
+
+
+@media screen and (max-width: 768px){
+
+    .droite-section{
+        display: none;
+    }
+   
+    .gauche-section{
+        width: 100vw;
+    }
+    .titreSection {
+        margin: 4em !important;
+    }
+
+    .sectionPage {
+        height: 100vh !important;
+    }
+
+    h1 {
+        margin-top: 1em;
+    }
+
+    #calendrier *, #calendrier-disponibilite * {
+        padding: 10px !important;
+
+    }
+
+    .container-info-cal {
+        display: block !important;
+    }
+
+    table{
+        margin-left: 0 !important;
+    }
+}
