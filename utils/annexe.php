@@ -818,7 +818,7 @@ function updateMoniteur(PDO $bdd, string $oldUsername, string $username, string 
  */
 function getReserv(PDO $bdd, int $niveau): array
 {
-	$reqUser = $bdd->prepare("SELECT * FROM DEMANDECOURS NATURAL JOIN PONEY NATURAL JOIN COURS where idNiveau <= ? ORDER BY dateCours DESC");
+	$reqUser = $bdd->prepare("SELECT * FROM DEMANDECOURS NATURAL JOIN PONEY NATURAL JOIN COURS NATURAL JOIN NIVEAU where idNiveau <= ? ORDER BY dateCours DESC");
 	$reqUser->execute([$niveau]);
 	$info = $reqUser->fetchAll();
 	return $info;
