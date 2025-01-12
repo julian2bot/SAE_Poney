@@ -73,7 +73,7 @@ estAdmin();
 
         <section>
             <h2>ModifIer un Poney</h2>
-            <form method="POST" action="../utils/modifPoney.php" class="form">
+            <form method="POST" action="../utils/admin/update/modifPoney.php" class="form">
                 <input type="hidden" name="identifiant" class="identifiant form-control-material" required>
                 <?php
                     require "../assets/affichage/adminPoney.php";
@@ -89,7 +89,7 @@ estAdmin();
 
         <section>
             <h2>Modifier un moniteur</h2>
-            <form method="POST" action="../utils/modifMoniteur.php" class="form">
+            <form method="POST" action="../utils/admin/update/modifMoniteur.php" class="form">
                 <input type="hidden" name="identifiant" class="identifiant form-control-material" required>
                 <input type="hidden" name="ancienMail" class="ancienMail form-control-material" required>
                 <?php

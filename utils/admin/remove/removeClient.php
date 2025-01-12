@@ -32,9 +32,17 @@ if($_SESSION["connecte"]["role"] === "admin"){
             $stmt3 = $bdd->prepare($sql3);
             $stmt3->execute([":id" => $_GET["id"]]);
 
+            $sql7 = "DELETE FROM DEMANDECOURS WHERE usernameClient = :id";
+            $stmt7 = $bdd->prepare($sql7);
+            $stmt7->execute([":id" => $_GET["id"]]);
+
             $sql4 = "DELETE FROM CLIENT WHERE usernameClient = :id";
             $stmt4 = $bdd->prepare($sql4);
             $stmt4->execute([":id" => $_GET["id"]]);
+
+            $sql6 = "DELETE FROM OBTENTION WHERE username = :id";
+            $stmt6 = $bdd->prepare($sql6);
+            $stmt6->execute([":id" => $_GET["id"]]);
 
             $sql5 = "DELETE FROM PERSONNE WHERE username = :id";
             $stmt5 = $bdd->prepare($sql5);

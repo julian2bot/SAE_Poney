@@ -40,25 +40,26 @@ INSERT INTO COTISATION (nomCotisation, periode, prixCotisationAnnuelle) VALUES
 ('Cotisation C', '2021-2022', 185);
 
 -- Insertion pour la table PERSONNE (incluant moniteurs et clients)
+-- Mdp : mdp123
 INSERT INTO PERSONNE (username, mdp, prenomPersonne, nomPersonne, mail) VALUES
-('moniteur1', 'mdp123', 'Alice', 'Martin', 'alice.martin@poneyclub.com'),
-('moniteur2', 'mdp123', 'Pierre', 'Dupont', 'pierre.dupont@poneyclub.com'),
-('moniteur3', 'mdp123', 'Sophie', 'Leroy', 'sophie.leroy@poneyclub.com'),
-('client1', 'mdp123', 'Julien', 'Bernard', 'julien.bernard@client.com'),
-('client2', 'mdp123', 'Claire', 'Petit', 'claire.petit@client.com'),
-('client3', 'mdp123', 'Lucas', 'Blanc', 'lucas.blanc@client.com'),
-('client4', 'mdp123', 'Marie', 'Moreau', 'marie.moreau@client.com'),
-('client5', 'mdp123', 'Paul', 'Dumont', 'paul.dumont@client.com'),
-('client6', 'mdp123', 'Emma', 'Garnier', 'emma.garnier@client.com'),
-('client7', 'mdp123', 'Léo', 'Lemoine', 'leo.lemoine@client.com'),
-('client8', 'mdp123', 'Chloé', 'Perrot', 'chloe.perrot@client.com'),
-('client9', 'mdp123', 'Hugo', 'Roussel', 'hugo.roussel@client.com'),
-('client10', 'mdp123', 'Anaïs', 'Fischer', 'anais.fischer@client.com'),
-('client11', 'mdp123', 'Lucas', 'Fabre', 'lucas.fabre@client.com'),
-('client12', 'mdp123', 'Julie', 'Olivier', 'julie.olivier@client.com'),
-('client13', 'mdp123', 'Thomas', 'Michel', 'thomas.michel@client.com'),
-('client14', 'mdp123', 'Sarah', 'Renaud', 'sarah.renaud@client.com'),
-('client15', 'mdp123', 'Nina', 'Jacquet', 'nina.jacquet@client.com');
+('moniteur1', 'ae3fc6fbe0c483e288ed135d174a3b5a2d4d733a', 'Alice', 'Martin', 'alice.martin@poneyclub.com'),
+('moniteur2', 'ae3fc6fbe0c483e288ed135d174a3b5a2d4d733a', 'Pierre', 'Dupont', 'pierre.dupont@poneyclub.com'),
+('moniteur3', 'ae3fc6fbe0c483e288ed135d174a3b5a2d4d733a', 'Sophie', 'Leroy', 'sophie.leroy@poneyclub.com'),
+('client1', 'ae3fc6fbe0c483e288ed135d174a3b5a2d4d733a', 'Julien', 'Bernard', 'julien.bernard@client.com'),
+('client2', 'ae3fc6fbe0c483e288ed135d174a3b5a2d4d733a', 'Claire', 'Petit', 'claire.petit@client.com'),
+('client3', 'ae3fc6fbe0c483e288ed135d174a3b5a2d4d733a', 'Lucas', 'Blanc', 'lucas.blanc@client.com'),
+('client4', 'ae3fc6fbe0c483e288ed135d174a3b5a2d4d733a', 'Marie', 'Moreau', 'marie.moreau@client.com'),
+('client5', 'ae3fc6fbe0c483e288ed135d174a3b5a2d4d733a', 'Paul', 'Dumont', 'paul.dumont@client.com'),
+('client6', 'ae3fc6fbe0c483e288ed135d174a3b5a2d4d733a', 'Emma', 'Garnier', 'emma.garnier@client.com'),
+('client7', 'ae3fc6fbe0c483e288ed135d174a3b5a2d4d733a', 'Léo', 'Lemoine', 'leo.lemoine@client.com'),
+('client8', 'ae3fc6fbe0c483e288ed135d174a3b5a2d4d733a', 'Chloé', 'Perrot', 'chloe.perrot@client.com'),
+('client9', 'ae3fc6fbe0c483e288ed135d174a3b5a2d4d733a', 'Hugo', 'Roussel', 'hugo.roussel@client.com'),
+('client10', 'ae3fc6fbe0c483e288ed135d174a3b5a2d4d733a', 'Anaïs', 'Fischer', 'anais.fischer@client.com'),
+('client11', 'ae3fc6fbe0c483e288ed135d174a3b5a2d4d733a', 'Lucas', 'Fabre', 'lucas.fabre@client.com'),
+('client12', 'ae3fc6fbe0c483e288ed135d174a3b5a2d4d733a', 'Julie', 'Olivier', 'julie.olivier@client.com'),
+('client13', 'ae3fc6fbe0c483e288ed135d174a3b5a2d4d733a', 'Thomas', 'Michel', 'thomas.michel@client.com'),
+('client14', 'ae3fc6fbe0c483e288ed135d174a3b5a2d4d733a', 'Sarah', 'Renaud', 'sarah.renaud@client.com'),
+('client15', 'ae3fc6fbe0c483e288ed135d174a3b5a2d4d733a', 'Nina', 'Jacquet', 'nina.jacquet@client.com');
 
 -- Insertion pour la table MONITEUR
 INSERT INTO MONITEUR (usernameMoniteur, salaire, isAdmin) VALUES
