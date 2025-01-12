@@ -3,7 +3,8 @@
     /* width: 300px; */
     margin: 20px auto;
     text-align: center;
-    background-color: antiquewhite;
+    background-color: whitesmoke;
+    border-radius: 15px;
 }
 .week-row, .days-grid {
     display: grid;
@@ -29,6 +30,7 @@
     display: flex;
     height: min-content;
     overflow: auto;
+    margin-top: 10px;
 }
 #infoCours, #info-disponibilite{
     overflow: auto;
@@ -58,7 +60,7 @@
     width: max-content;
 }
 
-.boutonsCalendrier{
+.boutonsCalendrier {
     box-shadow:inset 0px 1px 0px 0px #ffffff;
     background:linear-gradient(to bottom, #f9f9f9 5%, #e9e9e9 100%);
     background-color:#f9f9f9;

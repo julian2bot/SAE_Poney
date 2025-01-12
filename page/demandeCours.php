@@ -31,6 +31,7 @@ estConnecte();
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Grand Galop</title>
     <link rel="stylesheet" href="../assets/style/style.css">
+    <link rel="stylesheet" href="../assets/style/header.css">
     <link rel="stylesheet" href="../assets/style/reservation.css">
     
     <link rel="stylesheet" href="../assets/style/coursCalendrier.css">
@@ -55,7 +56,7 @@ estConnecte();
         
         <main class="container">
 
-            <section class="gauche-section" style="width:auto;">
+            <section class="gauche-section">
             <h2 id="month-display"></h2>
 
                 <div id="calendrierSelect">
@@ -67,7 +68,7 @@ estConnecte();
                 </div>
             </section>
             
-            <section class="droite-section">
+            <section class="droite-section demandeCoursDroite">
 
                 <form method="POST" action="../utils/client/cours/demandeDeCours.php" class="formReserv" id="formDemandeCours">
                     <div class="container-carrousel-poney" id="carrousel">
@@ -93,16 +94,16 @@ estConnecte();
                     <input type="hidden" name="niveau" required id="niveauAdherent" value="<?php echo $_SESSION["connecte"]["info"]["niveau"]??0?>"/>
                     
                     <label for="heureCours">Heure debut du cours</label>
-                    <input type="time" required name="heureCours" id="heureCoursReserv"  min='01:00' max='23:00' step='1800' >
+                    <input class="styled-input" type="time" required name="heureCours" id="heureCoursReserv"  min='01:00' max='23:00' step='1800' >
                     
                     <label for="heure">Nombre d'heure pour le cours:</label>
-                    <select name="heure" class="heure" required>
+                    <select class="styled-input" name="heure" class="heure" required>
                         
                         <option value="1">1h</option>
                         <option value="2">2h</option>
                     </select>
                     
-                    <textarea name="activiteDuCours" placeholder="J'aimerais faire un cours pour réviser ....." maxlength="200"></textarea>
+                    <textarea class="styled-textarea" name="activiteDuCours" placeholder="J'aimerais faire un cours pour réviser ....." maxlength="200"></textarea>
 
                     <button id="ReserverValider" type="submit">Reserver</button>
 

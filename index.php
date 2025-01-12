@@ -72,7 +72,7 @@ if(isset($_SESSION["connecte"])){
 
                         <!-- passWord -->
                         <label for="PassWordLogin">Password</label>
-                        <input type="text" name="PassWordLogin" id="PassWordLogin" placeholder="PassWord" autocomplete="off" class="form-control-material">
+                        <input type="password" name="PassWordLogin" id="PassWordLogin" placeholder="PassWord" autocomplete="off" class="form-control-material">
                         <!-- <img src="assets/images/eye-off.png" id="eye" onclick="" alt=""> -->
                         <?php
                         if(isset($_GET["erreurLogin"])){
@@ -114,10 +114,10 @@ if(isset($_SESSION["connecte"])){
 
                         <!-- passWord -->
                         <label for="Password">Password</label>
-                        <input type="text" name="Password" id="Password" placeholder="PassWord" autocomplete="off" class="form-control-material">
+                        <input type="password" name="Password" id="Password" placeholder="PassWord" autocomplete="off" class="form-control-material">
                         
                         <label for="RePassword">Re-Password</label>
-                        <input type="text" name="RePassword" id="RePassword" placeholder="Re-Password" autocomplete="off" class="form-control-material">
+                        <input type="password" name="RePassword" id="RePassword" placeholder="Re-Password" autocomplete="off" class="form-control-material">
                         <?php
                         if(isset($_GET["erreurSignIn"])){
                             echo '<font color="red">'.$_GET["erreurSignIn"]."</font>";

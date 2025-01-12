@@ -14,6 +14,7 @@ estAdmin();
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Administration</title>
     <link rel="stylesheet" href="../assets/style/admin.css">
+    <link rel="stylesheet" href="../assets/style/style.css">
     <link rel="stylesheet" href="../assets/style/header.css">
     <link rel="stylesheet" href="../assets/style/styleSousPage.css">
     <link rel="stylesheet" href="../assets/style/form.css">
@@ -102,7 +103,7 @@ estAdmin();
     </div>
 
 
-    <div class="admin-container">
+    <div id="flou" class="admin-container">
         <!-- Section des cas d'utilisation -->
         <header>
             <h1>Administration</h1>

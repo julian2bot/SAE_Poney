@@ -87,7 +87,7 @@ estMoniteur();
                 
                 <section class="droite-section droite">
                     <figure class="image-block">
-                            <img src="../assets/images/cheval2.png" alt="Cheval" class="cheval-image-droite">
+                            <img src="../assets/images/loginImage.jpg" alt="Cheval" class="cheval-image-droite">
                     </figure>
                 </section>
             </section>
@@ -109,14 +109,14 @@ estMoniteur();
                             <table id="calendrier-disponibilite"></table>
                         </div>
                     </div>
-                    <form action="../page/disponibilite.php">
+                    <form action="../page/disponibilite.php" class="formBoutonCenter">
                         <input class="boutonsCalendrier" type="submit" value="Ajouter une disponibilité" />
                     </form>
                 </section>
                 
                 <section class="droite-section droite">
                     <figure class="image-block">
-                            <img src="../assets/images/cheval2.png" alt="Cheval" class="cheval-image-droite">
+                            <img src="../assets/images/SignInImage.jpg" alt="Cheval" class="cheval-image-droite">
                     </figure>
                 </section>
             </section>
@@ -126,7 +126,7 @@ estMoniteur();
                 <h2 class="titreSection"> Gérer mon dossier</h2>
             
                 <section class="gauche-section gauche">
-                    <h2>Parametre page</h2>
+                    <h2>Parametre</h2>
                     <form action="../utils/all/update/traitementParametre.php" method="post">
                         <input type="hidden" id="clientmoniteur" name="clientmoniteur" value="moniteur">
                         

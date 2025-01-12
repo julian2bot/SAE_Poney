@@ -1,6 +1,8 @@
 .gauche-section-none {
     position: absolute;
-    bottom: 0;
+    /* bottom: 0; */
+    top: 7em;
+
     left: 0;
     /* width: 60vw; */
     height: 60vh;
@@ -12,12 +14,20 @@
     margin-left: 1.5em;
     list-style: none;
 }
-
-
 .droite-section {
     padding: 0;
+    top: 10em;
+    height: inherit !important;
 }
 
+.reserverCoursDroite{
+    bottom: inherit !important;
+    height: auto !important;
+}
+.demandeCoursDroite{
+    bottom: inherit !important;
+    height: auto !important;
+}
 
 
 /* Container principal du carrousel */
@@ -27,7 +37,7 @@
     width: 100%;
     position: relative;
     align-items: center;
-    padding: 10px;
+    /* padding: 10px; */
     border-radius: 20px;
     background-color: #D9D9D9;
 
@@ -48,7 +58,7 @@
 }
 
 .poney-item img {
-    max-width: 100%;
+    max-width: 50%;
     border: 2px solid transparent;
     border-radius: 10px;
     transition: border-color 0.3s ease-in-out;
@@ -100,6 +110,7 @@ input[type="radio"] {
     display: flex;
     flex-direction: column;
     align-items: center;
+    gap: 10px;
 }
 
 
@@ -128,4 +139,17 @@ input[type="radio"] {
 #ReserverValider:active {
 	position:relative;
 	top:1px;
+}
+
+.container{
+    height: auto !important;
+}
+
+
+.gauche-section{
+    z-index: 0;
+}
+#calendrierSelect, #calendrier, #calendrier-disponibilite{
+    width: min-content;
+    margin: 10px !important;
 }
