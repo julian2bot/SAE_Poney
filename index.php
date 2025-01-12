@@ -32,7 +32,8 @@ if(isset($_SESSION["connecte"])){
     <title>Grand Galop</title>
     <link rel="stylesheet" href="assets/style/style.css">
     <link rel="stylesheet" href="assets/style/form.css">
-</head>
+    <link rel="stylesheet" href="assets/style/versionTel.css">
+    </head>
     <body>
         <header>
             <h1>GRAND GALOP</h1>

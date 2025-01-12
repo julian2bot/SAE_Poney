@@ -1,9 +1,12 @@
 
 /* style a la chatgpt lol car pas envie de le refaire */
-table {
-    border-collapse: collapse;
-    border: none;
-    margin-left: calc((60vw - 80px * 7 - 20px) / 2) !important;
+
+@media screen and (min-width: 768px){
+    .calendrierLeft {
+        border-collapse: collapse;
+        border: none;
+        margin-left: calc((60vw - 80px * 7 - 20px) / 2) !important;
+    }
 }
 
 

@@ -15,6 +15,7 @@ estConnecte();
     <link rel="stylesheet" href="../assets/style/style.css">
     <link rel="stylesheet" href="../assets/style/styleSousPage.css">
     <link rel="stylesheet" href="../assets/style/reservation.css">
+    <link rel="stylesheet" href="../assets/style/versionTelSousPage.css">
     <script src="../assets/script/popUpGestionErr.js"></script>
 </head> 
     <body>

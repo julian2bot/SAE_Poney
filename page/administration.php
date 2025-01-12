@@ -20,6 +20,7 @@ estAdmin();
     <link rel="stylesheet" href="../assets/style/form.css">
     <link rel="stylesheet" href="../assets/style/coursCalendrier.css">
     <link rel="stylesheet" href="../assets/style/calendrier.css">
+    <link rel="stylesheet" href="../assets/style/versionTelSousPage.css">
     <script src="../assets/script/popUpGestionErr.js"></script>
 </head>
     <body style="position: relative;">

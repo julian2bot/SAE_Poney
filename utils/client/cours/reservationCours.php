@@ -30,8 +30,8 @@ try {
     $soldeCourant = updateDecrSoldeCLient($bdd, $_POST["userclient"], (int)$_POST["prix"]);
     if($soldeCourant === -1){
         $err ="Votre solde n'est pas assez élevé";
-        // header("Location: ../../../page/adherent.php?errReservCours=".$err);
-        // exit;
+        header("Location: ../../../page/adherent.php?errReservCours=".$err);
+        exit;
     }
 
     $insertReservation = $bdd->prepare("INSERT INTO RESERVATION (idCours, usernameMoniteur, dateCours, heureDebutCours, usernameClient, idPoney) VALUES(?, ?, ?, ?, ?, ?)");
@@ -45,13 +45,13 @@ try {
         ,(int)$_POST["poneySelectionne"]    
     ));
 
-    // header("Location: ../../../");
+    header("Location: ../../../");
     exit;
 
 } catch (PDOException $e) {
     echo "Erreur lors de l'insertion dans la base de données : " . $e->getMessage();
     $err ="erreur lors de la reservation du cours";
-    // header("Location: ../../../page/adherent.php?errReservCours=".$err);
+    header("Location: ../../../page/adherent.php?errReservCours=".$err);
     exit;
 }
 

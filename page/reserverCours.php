@@ -39,6 +39,7 @@ $restePlace = $placesRestantes>=1;
     <title>Grand Galop</title>
     <link rel="stylesheet" href="../assets/style/style.css">
     <link rel="stylesheet" href="../assets/style/reservation.css">
+    <link rel="stylesheet" href="../assets/style/versionTelSousPage.css">
 </head>
     <body>
         <header>

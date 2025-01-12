@@ -22,6 +22,8 @@ estMoniteur();
         <link rel="stylesheet" href="../assets/style/styleSousPage.css">
     <link rel="stylesheet" href="../assets/style/coursCalendrier.css">
     <link rel="stylesheet" href="../assets/style/calendrier.css">
+    <link rel="stylesheet" href="../assets/style/versionTel.css">
+
         <script src="../assets/script/popUpGestionErr.js"></script>
     </head>
     <body>
@@ -79,7 +81,7 @@ estMoniteur();
                             <div id="infoCours">
                                 <p>Pas de cours</p>
                             </div>
-                            <table id="calendrier"></table>
+                            <table class="calendrierLeft" id="calendrier"></table>
                         </div>
                     </div>
 
@@ -106,7 +108,7 @@ estMoniteur();
                             <div id="info-disponibilite">
                                 <p>Aucune disponibilité</p>
                             </div>
-                            <table id="calendrier-disponibilite"></table>
+                            <table class="calendrierLeft" id="calendrier-disponibilite"></table>
                         </div>
                     </div>
                     <form action="../page/disponibilite.php" class="formBoutonCenter">

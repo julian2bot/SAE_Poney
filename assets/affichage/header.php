@@ -35,7 +35,11 @@ elseif($_SESSION["connecte"]["role"] ==="moniteur"){
                 <li>
                     <a href="#gestionDisponibilite">Disponibilité</a>
                 </li>
-                
+                                
+                <li>
+                    <a href="gestionReserv.php">Reservations</a>
+                </li>
+
                 <li>
                     <a href="#parametre">Parametre</a>
                 </li>
@@ -61,6 +65,10 @@ elseif($_SESSION["connecte"]["role"] === "admin"){
                 
                 <li>
                     <a href="#parametre">Parametre</a>
+                </li>
+                
+                <li>
+                    <a href="gestionReserv.php">Reservations</a>
                 </li>
 
                 <li>

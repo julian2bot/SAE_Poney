@@ -779,7 +779,7 @@ function creerCalendrier(PDO $bdd, string $client): void
 	$jourDebutMois = $date->format('N'); // Le jour de la semaine du 1er jour du mois (1 = lundi, 7 = dimanche)
 
 	// header basique avec les jours
-	echo '<table border="1">';
+	echo '<table border="1" class="planningCal">';
 	echo '<tr>';
 	echo '<th>Lundi</th>';
 	echo '<th>Mardi</th>';
