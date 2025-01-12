@@ -449,7 +449,7 @@ function clientAPayerCotisation(PDO $bdd, string $username):bool{
         $date2->sub(DateInterval::createFromDateString('1 year'));
         $periode = $date2->format("Y")."-".$date->format("Y");
     }
-    $reqPayer = $bdd->prepare("SELECT * FROM nomCotisation WHERE usernameClient = ? AND periode=?");
+    $reqPayer = $bdd->prepare("SELECT * FROM PAYER WHERE usernameClient = ? AND periode=?");
 	$reqPayer->execute(array($username,$periode));
 	return $reqPayer->rowCount() >= 1;
 }
