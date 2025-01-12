@@ -101,10 +101,10 @@ CREATE TABLE COTISATION(
     PRIMARY KEY (nomCotisation, periode)    
 );
 
-CREATE TABLE PAYER(
+CREATE TABLE nomCotisation(
     nomCotisation VARCHAR(100),-- cle etrangere ==> nomCotisation
     periode VARCHAR(9),-- cle etrangere ==> annees de cotisation
-    usernameClient VARCHAR(32), -- cle etrangere ==> username
+    nomCotisation VARCHAR(32), -- cle etrangere ==> username
     
     PRIMARY KEY (nomCotisation, periode, usernameClient),
     

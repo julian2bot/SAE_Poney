@@ -437,6 +437,23 @@ function existUsername(PDO $bdd, string $username): bool
 	return $reqMail->rowCount() >= 1;
 }
 
+function clientAPayerCotisation(PDO $bdd, string $username):bool{
+    $date = new DateTime();
+    $date2 = new DateTime();
+
+    if((int)$date->format("m")>=9){ //septembre
+        $date2->add(DateInterval::createFromDateString('1 year'));
+        $periode = $date->format("Y")."-".$date2->format("Y");
+    }
+    else{
+        $date2->sub(DateInterval::createFromDateString('1 year'));
+        $periode = $date2->format("Y")."-".$date->format("Y");
+    }
+    $reqPayer = $bdd->prepare("SELECT * FROM nomCotisation WHERE usernameClient = ? AND periode=?");
+	$reqPayer->execute(array($username,$periode));
+	return $reqPayer->rowCount() >= 1;
+}
+
 /**
  * verifie l'existance d'une dispo
  *
@@ -748,7 +765,6 @@ function getInfoCours(PDO $bdd, int $idcours, string $dateCours, float $heureDeb
 	$reqUser->execute([$idcours, $dateCours, $heureDebutCours]);
 	return $reqUser->fetch();
 }
-
 
 /**
  * formater un cours

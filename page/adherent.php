@@ -5,6 +5,7 @@ estConnecte();
 // echo "<pre>";
 // print_r($_SESSION);
 // echo "</pre>";
+// clientAPayerCotisation($bdd, $_SESSION["connecte"]["username"]);
 
 ?>
 
