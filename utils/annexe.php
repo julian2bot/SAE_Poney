@@ -369,6 +369,24 @@ function getDispoDay(PDO $bdd, string $username, string $day): array
 	$info = $reqUser->fetchAll();
 	return $info;
 }
+
+/**
+ * Renvoie les représentation d'un moniteur pour la journée
+ *
+ * @param PDO la base de donnée, 
+ * @param string usrname nom moniteur 
+ * @param string $day date  
+ *
+ * @return array les représentation
+ */
+function getRepresentationDay(PDO $bdd, string $username, string $day): array
+{
+	$reqUser = $bdd->prepare("SELECT * FROM REPRESENTATION NATURAL JOIN COURS WHERE usernameMoniteur = ? AND dateCours = ?");
+	$reqUser->execute([$username, $day]);
+	$info = $reqUser->fetchAll();
+	return $info;
+}
+
 /**
  * verifie l'existance du mail de la bd
  *
@@ -420,7 +438,6 @@ function existDateDispoDay(PDO $bdd, string $username, string $day): bool
 /**
  * Renvoie si il y a un chevauchement entre deux période horaire
  *
- * @param PDO la base de donnée, 
  * @param string $heureDebut heure de début période 1 
  * @param string $heureFin heure de fin période 1   
  * @param string $heureDebut2 heure de début période 2
@@ -428,7 +445,7 @@ function existDateDispoDay(PDO $bdd, string $username, string $day): bool
  *
  * @return bool chevauchement
  */
-function chevauchementHeure(PDO $heureDebut, string $heureFin, string $heureDebut2, string $heureFin2): bool
+function chevauchementHeure(string $heureDebut, string $heureFin, string $heureDebut2, string $heureFin2): bool
 {
 	$debut1 = strtotime($heureDebut);
 	$fin1 = strtotime($heureFin);
@@ -436,6 +453,26 @@ function chevauchementHeure(PDO $heureDebut, string $heureFin, string $heureDebu
 	$fin2 = strtotime($heureFin2);
 
 	return $debut1 <= $fin2 && $debut2 <= $fin1;
+}
+
+/**
+ * Renvoie si la période 1 se trouve dans la période 2
+ *
+ * @param string $heureDebut heure de début période 1 
+ * @param string $heureFin heure de fin période 1   
+ * @param string $heureDebut2 heure de début période 2
+ * @param string $heureFin2 heure de fin période 2
+ *
+ * @return bool chevauchement
+ */
+function heureDedans(string $heureDebut, string $heureFin, string $heureDebut2, string $heureFin2): bool
+{
+	$debut1 = strtotime($heureDebut);
+	$fin1 = strtotime($heureFin);
+	$debut2 = strtotime($heureDebut2);
+	$fin2 = strtotime($heureFin2);
+
+	return $debut1 <= $fin2 && $fin1 <= $fin2 && $debut2 <= $fin1 && $debut2 <= $debut1;
 }
 
 /**
@@ -450,12 +487,47 @@ function chevauchementHeure(PDO $heureDebut, string $heureFin, string $heureDebu
  *
  * @return bool si la dispo donné entre en conflit avec celles existantes
  */
-function existDateDispoConflit(PDO $bdd, string $username, string $day, string $heureDebut, string $heureFin, string $heureDebutEviter = "")
+function existDateDispoConflit(PDO $bdd, string $username, string $day, string $heureDebut, string $heureFin, string $heureDebutEviter = ""):bool
 {
 	$dispoDay = getDispoDay($bdd, $username, $day);
 	foreach ($dispoDay as $dispo) {
-		if (($heureDebutEviter == "" || $heureDebutEviter != $dispo["heureDebutDispo"]) && chevauchementHeure($heureDebut, $heureFin, $dispo["heureDebutDispo"], $dispo["heureFinDispo"])) {
-			echo $heureDebutEviter, $dispo["heureDebutDispo"], "<br>";
+        $heureDebutDispo = convertFloatToTime($dispo["heureDebutDispo"]);
+        $heureFinDispo = convertFloatToTime($dispo["heureFinDispo"]);
+		if (($heureDebutEviter == "" || $heureDebutEviter != $heureDebutDispo) && chevauchementHeure($heureDebut, $heureFin, $heureDebutDispo, $heureFinDispo)) {
+			echo $heureDebutEviter,"<br>", $heureDebutEviter, "<br>";
+			return true;
+		}
+	}
+	return false;
+}
+
+/**
+ * Vérifie si le moniteur est disponible pour le cours donnée
+ *
+ * @param PDO la base de donnée, 
+ * @param string usrname nom moniteur 
+ * @param string $day date  
+ * @param string $heureDebut heure de début période
+ * @param string $heureFin heure de fin période
+ *
+ * @return bool Si le moniteur est disponible
+ */
+function moniteurEstDispo(PDO $bdd, string $username, string $day, string $heureDebut, string $heureFin):bool
+{
+    // Faut vérifier en plus qu'il n'a déjà cours
+	$dispoDay = getDispoDay($bdd, $username, $day);
+    $lesRepresentation = getRepresentationDay($bdd, $username, $day);
+	foreach ($dispoDay as $dispo) {
+        $heureDebutDispo = convertFloatToTime($dispo["heureDebutDispo"]);
+        $heureFinDispo = convertFloatToTime($dispo["heureFinDispo"]);
+		if (heureDedans($heureDebut, $heureFin, $heureDebutDispo, $heureFinDispo)) {
+			return true;
+		}
+	}
+    foreach ($lesRepresentation as $representation) {
+        $heureDebut = convertFloatToTime((string)$representation["heureDebutCours"]);
+        $heureFinRep = convertFloatToTime ((string)($representation["heureDebutCours"] + $representation["duree"]));
+		if (heureDedans($heureDebut, $heureFin, $heureDebut, $heureFinRep)) {
 			return true;
 		}
 	}
