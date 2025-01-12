@@ -1,6 +1,8 @@
 .gauche-section-none {
     position: absolute;
-    bottom: 0;
+    /* bottom: 0; */
+    top: 7em;
+
     left: 0;
     /* width: 60vw; */
     height: 60vh;
@@ -12,15 +14,20 @@
     margin-left: 1.5em;
     list-style: none;
 }
-
-
 .droite-section {
     padding: 0;
-    /* bottom: inherit !important; */
-    top: 15em;
+    top: 10em;
     height: inherit !important;
 }
 
+.reserverCoursDroite{
+    bottom: inherit !important;
+    height: auto !important;
+}
+.demandeCoursDroite{
+    bottom: inherit !important;
+    height: auto !important;
+}
 
 
 /* Container principal du carrousel */

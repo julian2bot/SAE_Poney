@@ -68,7 +68,7 @@ estConnecte();
                 </div>
             </section>
             
-            <section class="droite-section">
+            <section class="droite-section demandeCoursDroite">
 
                 <form method="POST" action="../utils/client/cours/demandeDeCours.php" class="formReserv" id="formDemandeCours">
                     <div class="container-carrousel-poney" id="carrousel">
