@@ -523,6 +523,13 @@ function clientAPayerCotisation(PDO $bdd, string $username):bool{
 	return $reqPayer->rowCount() >= 1;
 }
 
+function existReservation(PDO $bdd, string $username, int $idCours, string $day, float $heure, string $usernameClient): bool
+{
+	$reqRes = $bdd->prepare("SELECT * FROM RESERVATION WHERE usernameMoniteur = ? AND idCours = ? AND dateCours = ? AND heureDebutCours = ? AND usernameClient = ?");
+	$reqRes->execute(array($username, $idCours, $day,$heure, $usernameClient));
+	return $reqRes->rowCount() >= 1;
+}
+
 /**
  * verifie l'existance d'une dispo
  *

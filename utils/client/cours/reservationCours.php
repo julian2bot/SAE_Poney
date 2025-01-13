@@ -10,12 +10,12 @@ estConnecte();
 
 if(
         !isset($_POST["idCours"]) 
-    AND !isset($_POST["usernameMoniteur"]) 
-    AND !isset($_POST["dateCours"]) 
-    AND !isset($_POST["heureDebutCours"]) 
-    AND !isset($_POST["userclient"]) 
-    AND !isset($_POST["poneySelectionne"])
-    AND !isset($_POST["prix"])
+    && !isset($_POST["usernameMoniteur"]) 
+    && !isset($_POST["dateCours"]) 
+    && !isset($_POST["heureDebutCours"]) 
+    && !isset($_POST["userclient"]) 
+    && !isset($_POST["poneySelectionne"])
+    && !isset($_POST["prix"])
 ){
     header("Location: ../../../");
     exit;
@@ -26,17 +26,21 @@ $dateCours = $_POST["dateCours"];
 print_r(getSoldeClient($bdd, $_POST["userclient"]));
 
 try {
+    if(existReservation($bdd,$_POST["usernameMoniteur"],(int)$_POST["idCours"], $dateCours,$_POST["heureDebutCours"],$_POST["userclient"])){
+        createPopUp("Vous avez déjà réservé ce cours",false);
+        header("Location: ../../../page/adherent.php");
+        exit;
+    }
 
     $soldeCourant = updateDecrSoldeCLient($bdd, $_POST["userclient"], (int)$_POST["prix"]);
     if($soldeCourant === -1){
-        $err ="Votre solde n'est pas assez élevé";
-        header("Location: ../../../page/adherent.php?errReservCours=".$err);
+        createPopUp("Votre solde n'est pas assez élevé",false);
+        header("Location: ../../../page/adherent.php");
         exit;
     }
 
     $insertReservation = $bdd->prepare("INSERT INTO RESERVATION (idCours, usernameMoniteur, dateCours, heureDebutCours, usernameClient, idPoney) VALUES(?, ?, ?, ?, ?, ?)");
     $insertReservation->execute(array(
-        
         (int)$_POST["idCours"]
         ,$_POST["usernameMoniteur"]
         , $dateCours
@@ -45,13 +49,14 @@ try {
         ,(int)$_POST["poneySelectionne"]    
     ));
 
+    createPopUp("Cour réservé avec succès");
     header("Location: ../../../");
     exit;
 
 } catch (PDOException $e) {
     echo "Erreur lors de l'insertion dans la base de données : " . $e->getMessage();
-    $err ="erreur lors de la reservation du cours";
-    header("Location: ../../../page/adherent.php?errReservCours=".$err);
+    createPopUp("Erreur lors de la reservation du cours",false);
+    header("Location: ../../../page/adherent.php");
     exit;
 }
 
