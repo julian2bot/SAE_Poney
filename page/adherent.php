@@ -35,7 +35,7 @@ $solde = getSoldeClient($bdd,$_SESSION["connecte"]["username"]);
                 if(isset($_SESSION["connecte"])){
                     echo '<div class="auth-buttons">
                             <p>'.$_SESSION["connecte"]["prenom"].'</p>
-                            <p>Solde :'.$solde.' €</p>
+                            <p id="solde">Solde : '.$solde.' €</p>
                     
                             <button onclick="location.href=\'../utils/all/login/logout.php\';" class="affichelogin">Logout</button>
                         </div>';

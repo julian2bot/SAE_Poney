@@ -6,8 +6,6 @@ require_once __DIR__."/../../constante.php";
 estConnecte();
 // TODO
 
-// require_once __DIR__."/../../BDD/connexionBD.php";
-// require_once __DIR__."/../../annexe.php";
 
 
 echo "<pre>";
@@ -27,12 +25,26 @@ isset($_POST["heure"])){
 
     if(!isset($coursPerso["idCours"])){
         createPopUp("Problème pour trouver un cours adéquat",false);
-        header("Location: ../../../page/demandeCours.php");
+        header("Location: ../../../page/adherent.php");
         exit;
     }
     else if(getDemandeExistDay($bdd,$_SESSION["connecte"]["username"],$_POST["dateDemandeCours"])){
         createPopUp("Vous avez déjà réalisé une demande de cours pour ce jour",false);
+        header("Location: ../../../page/adherent.php");
+        exit;
+    }
+    $dateDemandeCours = new DateTime($_POST["dateDemandeCours"]);
+    $today = new DateTime();
+    if($dateDemandeCours <= $today){
+        createPopUp("Veuillez entrer une date valide ",false);
         header("Location: ../../../page/demandeCours.php");
+        exit;
+    }
+
+    if(estTropLourd($bdd, $_POST["poneySelectionne"], $_SESSION["connecte"]["username"])){
+        
+        createPopUp("Votre poids est supérieur à ce que le poney peut porter.", false);
+        header("Location: ../../../page/adherent.php?errReservCours=".$err);
         exit;
     }
 
@@ -40,8 +52,8 @@ isset($_POST["heure"])){
 
     $soldeCourant = updateDecrSoldeCLient($bdd, $_SESSION["connecte"]["username"], $coursPerso["prix"]);
     if($soldeCourant === -1){
-        $err ="Votre solde n'est pas assez élevé";
-        header("Location: ../../../page/adherent.php?errReservCours=".$err);
+        createPopUp("Votre solde n'est pas suffisamment élevé",false);
+        header("Location: ../../../page/adherent.php");
         exit;
     }
 
@@ -70,7 +82,7 @@ isset($_POST["heure"])){
 
     // Envoyer mail
     
-    if(mailClientDemandeCours(SENDINGEMAIL,$email, $username, $object, $dateDemandeCours, $heureCours, $dureeCours, $activiteDuCours)){
+    if(mailClientDemandeCours(SENDINGEMAIL, $email, $username, $object, $dateDemandeCours, $heureCours, $dureeCours, $activiteDuCours)){
         echo "mail envoyer";
     }
     else{
@@ -79,11 +91,6 @@ isset($_POST["heure"])){
 
 
 }
-
-header("Location: ../../../page/demandeCours.php");
+header("Location: ../../../page/adherent.php");
 exit;
-
-
-
-
 ?>

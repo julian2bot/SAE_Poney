@@ -8,8 +8,7 @@ estConnecte();
 
 // print_r($_POST);
 
-if(
-        !isset($_POST["idCours"]) 
+if(!isset($_POST["idCours"]) 
     && !isset($_POST["usernameMoniteur"]) 
     && !isset($_POST["dateCours"]) 
     && !isset($_POST["heureDebutCours"]) 
@@ -34,7 +33,15 @@ try {
 
     $soldeCourant = updateDecrSoldeCLient($bdd, $_POST["userclient"], (int)$_POST["prix"]);
     if($soldeCourant === -1){
-        createPopUp("Votre solde n'est pas assez élevé",false);
+        createPopUp("Votre solde n'est pas suffisamment élevé",false);
+        header("Location: ../../../page/adherent.php?errReservCours=".$err);
+        exit;
+    }
+
+
+    if(estTropLourd($bdd, $_POST["poneySelectionne"], $_SESSION["connecte"]["username"])){
+        
+        createPopUp("Votre poids est supérieur à ce que le poney peut porter.", false);
         header("Location: ../../../page/adherent.php");
         exit;
     }

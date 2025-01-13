@@ -35,6 +35,7 @@ function add100ToSolde(userId) {
             if (xhr.status === 200) {
                 
                 getsolde(userId, function (solde) {
+                    document.getElementById("solde").innerHTML = "Solde : " + solde + '€';
                     showPopUp(`Votre solde a été crédité de 100€. Vous avez maintenant ${solde}€`);
                 });
                 // showPopUp(`Votre solde a été crédité de 100€ vous avez ${getsolde(userId)}`);

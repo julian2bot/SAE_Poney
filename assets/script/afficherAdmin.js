@@ -127,7 +127,15 @@ function remplirPoney(nomPoney, poidMax, photo, race){
     let div = document.getElementById("creerPoney");
     div.getElementsByClassName("nomPoney")[0].value = nomPoney;
     div.getElementsByClassName("poidMax")[0].value = poidMax;
-    div.getElementsByClassName("photo")[0].value = photo;
+    div.getElementsByClassName("preview")[0].src = photo;
+    
+    let preview = div.getElementsByClassName("preview")[0];
+
+    let currentSrc = preview.src.split('/').pop(); // Extrait juste le nom du fichier actuel (sans chemin)
+
+    preview.src = "../../assets/images/poney/" + photo;
+
+    preview.style.display = 'block';
     div.getElementsByClassName("race")[0].value = race;
     afficheCreerPoney();
 }
@@ -137,7 +145,20 @@ function remplirPoneyModif(identifiant, nomPoney, poidMax, photo, race){
     div.getElementsByClassName("identifiant")[0].value = identifiant;
     div.getElementsByClassName("nomPoney")[0].value = nomPoney;
     div.getElementsByClassName("poidMax")[0].value = poidMax;
-    div.getElementsByClassName("photo")[0].value = photo;
+    // div.getElementsByClassName("preview")[0].src = photo;
+    // console.log(div.getElementsByClassName("preview")[0].src)
+    // div.getElementsByClassName("preview")[0].src = "../../assets/images/poney/"+div.getElementsByClassName("preview")[0].src+ photo;
+    // div.getElementsByClassName("preview")[0].style.display = '';
+
+
+    let preview = div.getElementsByClassName("preview")[0];
+
+    let currentSrc = preview.src.split('/').pop(); // Extrait juste le nom du fichier actuel (sans chemin)
+
+    preview.src = "../../assets/images/poney/" + photo;
+
+    preview.style.display = 'block';
+
     div.getElementsByClassName("race")[0].value = race;
     afficheModifPoney();
 }
@@ -489,3 +510,32 @@ function calendrierGraphiqueCreationPoney(calendrier, year, month, date,daysInMo
     }
 }
 
+
+
+document.getElementById('photo').addEventListener('change', function(event) {
+    const file = event.target.files[0];
+    if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            const preview = document.getElementById('preview');
+            preview.src = e.target.result;
+            preview.style.display = "block";
+        };
+        reader.readAsDataURL(file);
+    }
+});
+
+
+
+document.getElementById('photo').addEventListener('change', function(event) {
+    const file = event.target.files[0];
+    if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            const preview = document.getElementById('preview');
+            preview.src = e.target.result;
+            preview.style.display = "block";
+        };
+        reader.readAsDataURL(file);
+    }
+});
