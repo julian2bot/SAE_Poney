@@ -273,7 +273,7 @@ function getIdMax(PDO $bdd, string $idNom, string $table): array
 function getCoursPerso(PDO $bdd, string $idNiveau, string $duree): array
 {
 	$reqUser = $bdd->prepare("SELECT * FROM COURS WHERE idNiveau = ? AND duree = ? AND nomCours LIKE ?");
-	$reqUser->execute(array($idNiveau, $duree, "Cours perso%"));
+	$reqUser->execute(array($idNiveau, $duree, "Cours perso niveau%"));
 	$info = $reqUser->fetch();
 	return $info;
 }
@@ -282,6 +282,20 @@ function getCours(PDO $bdd, int $idCours):array{
     $reqUser = $bdd->prepare("SELECT * FROM COURS WHERE idCours = ?");
 	$reqUser->execute(array($idCours));
 	$info = $reqUser->fetch();
+	return $info;
+}
+
+function getLesCours(PDO $bdd):array{
+    $reqUser = $bdd->prepare("SELECT * FROM COURS");
+	$reqUser->execute(array());
+	$info = $reqUser->fetchAll();
+	return $info;
+}
+
+function getLesCoursSansPerso(PDO $bdd):array{
+    $reqUser = $bdd->prepare("SELECT * FROM COURS WHERE nomCours NOT LIKE ?");
+	$reqUser->execute(array("Cours perso niveau%"));
+	$info = $reqUser->fetchAll();
 	return $info;
 }
 

@@ -32,7 +32,7 @@
         
     ];
 
-    $lesNiveaux = getNiveau($bdd);
+    $lesCours = getLesCoursSansPerso($bdd);
 ?>
 
 
@@ -51,7 +51,7 @@
     <body>
         <header>
             <h1>GRAND GALOP</h1>
-            <h2>Créer un cours</h2>
+            <h2>Créer une représentation</h2>
             <nav>
             <ul>
                 <li>
@@ -64,42 +64,17 @@
         </header>
         <main class="container">
             <section class="gauche-section sectionFormCours">
-                <a href="creerRepresentation.php">Créer une représentation</a>
-                <form action="../utils/moniteur/cours/creerCours.php" method="POST">
-                    <div>
-                        <label for="nom">Nom du cours</label>
-                        <input class="styled-input" name="nom" id="nom" type="text" required placeholder="Cours débutant - Saut d'obstacles"/>
-                    </div>
+                <a href="creerCours.php">Créer un cours</a>
+                <form action="../utils/moniteur/cours/creerRepresentation.php" method="POST">
 
                     <div>
-                        <label for="niveau">Niveau du cours</label>
-                        <select class="styled-input" name="niveau" id="niveau" id="combobox" required>
+                        <label for="cours">Cours</label>
+                        <select class="styled-input" name="cours" id="cours" id="cours" required>
                             <?php
-                                foreach ($lesNiveaux as $niveau) {
-                                    echo "<option value='$niveau[idNiveau]'>$niveau[nomNiveau]</option>";
+                                foreach ($lesCours as $cours) {
+                                    echo "<option value='$cours[idCours]'>$cours[nomCours]</option>";
                                 }
                             ?>
-                        </select>
-                    </div>
-
-                    <div>
-                        <label for="prix">Prix du cours</label>
-                        <input class="styled-input" name="prix" id="prix" type="number"  min="1" max="2500" list="defaultNumbers" required placeholder="0"/>
-
-                        <!-- <datalist id="defaultNumbers">
-                            <option value="400"></option>
-                            <option value="200"></option>
-                            <option value="350"></option>
-                            <option value="10"></option>
-                            <option value="99"></option>
-                        </datalist> -->
-                    </div>
-
-                    <div>
-                        <label for="comboboxpersonne">Nombre maximum de personne</label>
-                        <select class="styled-input" id="comboboxpersonne" name="nbmax" id="comboboxpersonne" required>
-                            <option value=1 checked>Individuel</option>
-                            <option value=10 >10 personne</option>
                         </select>
                     </div>
                     
@@ -112,15 +87,6 @@
                     <div>
                         <label for="temp">Heure du cours</label>
                         <input class="styled-input heure" type="time" id="temp" name="temp" min='01:00' max='22:00' step='1800' required />
-                    </div>
-
-
-                    <div>
-                        <label for="choixheure">Duree du cours</label>
-                        <select class="styled-input" id="choixheure" name="choixheure" id="choixheure" required>
-                            <option value=1 checked>1h</option>
-                            <option value=2 >2h</option>
-                        </select>
                     </div>
 
                     <div>
