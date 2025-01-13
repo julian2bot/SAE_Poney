@@ -65,7 +65,7 @@ if(isset($_SESSION["connecte"])){
             <div class="login" id="login">
                 <section>
                     <h2>Login</h2>
-                    <p>Entrer vos compte pour vous connecter</p>
+                    <p>Entrez vos identifiants pour vous connecter</p>
                     <form method="POST" action ="utils/all/login/login.php" class="form">
 
                         <label for="Name">UserName</label>
@@ -95,7 +95,7 @@ if(isset($_SESSION["connecte"])){
                 <img src="assets/images/SignInImage.jpg" alt=""> 
                 <section>
                     <h2>SignIn</h2>
-                    <p>Entrer vos compte pour vous connecter</p>
+                    <p>Entrez vos identifiants pour vous inscrire</p>
                     <form method="POST" action="utils/all/login/signIn.php" class="form">
 
                         <label for="NameSignIn">UserName</label>

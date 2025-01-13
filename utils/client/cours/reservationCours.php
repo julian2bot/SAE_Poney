@@ -29,7 +29,15 @@ try {
 
     $soldeCourant = updateDecrSoldeCLient($bdd, $_POST["userclient"], (int)$_POST["prix"]);
     if($soldeCourant === -1){
-        $err ="Votre solde n'est pas assez élevé";
+        $err ="Votre solde n'est pas suffisamment élevé";
+        header("Location: ../../../page/adherent.php?errReservCours=".$err);
+        exit;
+    }
+
+
+    if(estTropLourd($bdd, $_POST["poneySelectionne"], $_SESSION["connecte"]["username"])){
+        
+        createPopUp("Votre poids est supérieur à ce que le poney peut porter.", false);
         header("Location: ../../../page/adherent.php?errReservCours=".$err);
         exit;
     }
@@ -51,6 +59,8 @@ try {
 } catch (PDOException $e) {
     echo "Erreur lors de l'insertion dans la base de données : " . $e->getMessage();
     $err ="erreur lors de la reservation du cours";
+    createPopUp("Erreur lors de la réservation du cours.", false);
+
     header("Location: ../../../page/adherent.php?errReservCours=".$err);
     exit;
 }

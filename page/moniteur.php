@@ -68,7 +68,7 @@ estMoniteur();
             </section>
                     
             <section id="creerCours" class="sectionPage">
-                <h2 class="titreSection"> Creer un cours</h2>
+                <h2 class="titreSection"> Créer un cours</h2>
             
                 <section class="gauche-section gauche">
                     <!-- ? a faire calendrier -->
@@ -95,7 +95,7 @@ estMoniteur();
             </section>
 
             <section id="gestionDisponibilite" class="sectionPage">
-                <h2 class="titreSection">Gérer mes disponibilité</h2>
+                <h2 class="titreSection">Gérer mes disponibilités</h2>
             
                 <section class="gauche-section gauche">
                     <!-- ? a faire calendrier -->
@@ -128,7 +128,7 @@ estMoniteur();
                 <h2 class="titreSection"> Gérer mon dossier</h2>
             
                 <section class="gauche-section gauche">
-                    <h2>Parametre</h2>
+                    <h2>Paramètres</h2>
                     <form action="../utils/all/update/traitementParametre.php" method="post">
                         <input type="hidden" id="clientmoniteur" name="clientmoniteur" value="moniteur">
                         

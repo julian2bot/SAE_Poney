@@ -14,7 +14,7 @@ if($_SESSION["connecte"]["role"] ==="client"){
                 </li>
                 
                 <li>
-                <a href="#parametre">Parametre</a>
+                <a href="#parametre">Paramètres</a>
                 </li>
             </nav>
         </header>';
@@ -29,19 +29,19 @@ elseif($_SESSION["connecte"]["role"] ==="moniteur"){
                 </li>
                 
                 <li>
-                    <a href="#creerCours">Creer cours</a>
+                    <a href="#creerCours">Créer un cours</a>
                 </li>
                 
                 <li>
-                    <a href="#gestionDisponibilite">Disponibilité</a>
+                    <a href="#gestionDisponibilite">Disponibilités</a>
                 </li>
                                 
                 <li>
-                    <a href="gestionReserv.php">Reservations</a>
+                    <a href="gestionReserv.php">Réservations</a>
                 </li>
 
                 <li>
-                    <a href="#parametre">Parametre</a>
+                    <a href="#parametre">Paramètres</a>
                 </li>
             </nav>
         </header>';
@@ -56,23 +56,23 @@ elseif($_SESSION["connecte"]["role"] === "admin"){
                 </li>
                 
                 <li>
-                    <a href="#creerCours">Creer cours</a>
+                    <a href="#creerCours">Créer un cours</a>
                 </li>
 
                 <li>
-                    <a href="#gestionDisponibilite">Disponibilité</a>
+                    <a href="#gestionDisponibilite">Disponibilités</a>
                 </li>
                 
                 <li>
-                    <a href="#parametre">Parametre</a>
+                    <a href="#parametre">Paramètres</a>
                 </li>
                 
                 <li>
-                    <a href="gestionReserv.php">Reservations</a>
+                    <a href="gestionReserv.php">Réservations</a>
                 </li>
 
                 <li>
-                    <a href="administration.php">administration</a>
+                    <a href="administration.php">Administration</a>
                 </li>
             </nav>
         </header>';

@@ -40,12 +40,20 @@ isset($_POST["heure"])){
         header("Location: ../../../page/demandeCours.php");
         exit;
     }
+
+    if(estTropLourd($bdd, $_POST["poneySelectionne"], $_SESSION["connecte"]["username"])){
+        
+        createPopUp("Votre poids est supérieur à ce que le poney peut porter.", false);
+        header("Location: ../../../page/adherent.php?errReservCours=".$err);
+        exit;
+    }
+
     // Insertion dans la BD
 
     $soldeCourant = updateDecrSoldeCLient($bdd, $_SESSION["connecte"]["username"], $coursPerso["prix"]);
     if($soldeCourant === -1){
         $err ="Votre solde n'est pas assez élevé";
-        createPopUp("Votre solde n'est pas assez élevé", false);
+        createPopUp("Votre solde n'est pas suffisamment élevé", false);
         header("Location: ../../../page/adherent.php?errReservCours=".$err);
         exit;
     }

@@ -169,7 +169,7 @@ function getInfo(PDO $bdd, string $username): array
 			$resultat["dateInscription"] = $info["dateInscription"];
 			$resultat["poid"] = $info["poidsClient"];
 			$resultat["solde"] = $info["solde"];
-			$resultat["niveau"] = $info["idNiveau"] ??0;
+			$resultat["niveau"] = $info["idNiveau"] ?? 0;
 			return $resultat;
 		}
 	}
@@ -1444,3 +1444,30 @@ function updateDecrSoldeCLient(PDO $bdd, string $usernameClient, int $decrSolde)
 //                               WHERE usernameClient = "client1" 
 //                               AND MONTH(dateCours) = "01" 
 //                               AND YEAR(dateCours) = "2025";
+
+
+
+
+
+/**
+ * renvoie true, si moins lourd que le poid max du poney
+ *
+ * @param PDO $bdd la base de donnée, 
+ * @param int $idPoney id poney, 
+ * @param PDO $usernameClient username du client, 
+ *
+ * @return bool true si client trop lourd, false sinon
+ */
+function estTropLourd(PDO $bdd, int $idPoney, string $usernameClient): bool
+{
+    $poidClient = getInfo($bdd, $usernameClient)["poid"];
+	$poidPoney = getPoneyById($bdd, $idPoney)["poidsMax"];
+
+    if(isset($poidClient) && isset($poidPoney)){
+        if($poidClient <= $poidPoney){
+            return true;
+        }
+    }
+    return false;
+    
+}
