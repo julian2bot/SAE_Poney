@@ -169,7 +169,7 @@ function getInfo(PDO $bdd, string $username): array
 			$resultat["dateInscription"] = $info["dateInscription"];
 			$resultat["poid"] = $info["poidsClient"];
 			$resultat["solde"] = $info["solde"];
-			$resultat["niveau"] = $info["idNiveau"] ?? 0;
+			$resultat["niveau"] = $info["idNiveau"] ??0;
 			return $resultat;
 		}
 	}
@@ -275,7 +275,10 @@ function getCoursPerso(PDO $bdd, string $idNiveau, string $duree): array
 	$reqUser = $bdd->prepare("SELECT * FROM COURS WHERE idNiveau = ? AND duree = ? AND nomCours LIKE ?");
 	$reqUser->execute(array($idNiveau, $duree, "Cours perso%"));
 	$info = $reqUser->fetch();
-	return $info;
+    if(!$info){
+        return array();
+    }
+    return $info;
 }
 
 function getCours(PDO $bdd, int $idCours):array{
@@ -283,6 +286,10 @@ function getCours(PDO $bdd, int $idCours):array{
 	$reqUser->execute(array($idCours));
 	$info = $reqUser->fetch();
 	return $info;
+    if(!$info){
+        return array();
+    }
+    return $info;
 }
 
 
@@ -290,7 +297,10 @@ function getRepresentation(PDO $bdd, int $idCours, string $usernameMoniteur, str
     $reqRepr = $bdd->prepare("SELECT * FROM REPRESENTATION NATURAL JOIN COURS WHERE idCours = ? AND usernameMoniteur = ? AND dateCours = ? AND heureDebutCours = ?");
 	$reqRepr->execute(array($idCours,$usernameMoniteur,$dateCours,$heureDebut));
 	$info = $reqRepr->fetch();
-	return $info;
+    if(!$info){
+        return array();
+    }
+    return $info;
 }
 function getNbRestantCours(PDO $bdd, int $idCours, string $usernameMoniteur, string $dateCours, float $heureDebut):int{
     $representation = getRepresentation($bdd, $idCours, $usernameMoniteur, $dateCours, $heureDebut);
@@ -369,7 +379,10 @@ function getDispo(PDO $bdd, string $username, string $day, string $startTime): a
 	$reqUser = $bdd->prepare("SELECT * FROM DISPONIBILITE WHERE usernameMoniteur = ? AND dateDispo = ? AND heureDebutDispo = ?");
 	$reqUser->execute([$username, $day, $startTime]);
 	$info = $reqUser->fetch();
-	return $info;
+    if(!$info){
+        return array();
+    }
+    return $info;
 }
 
 /**
@@ -1392,14 +1405,14 @@ function updateDecrSoldeCLient(PDO $bdd, string $usernameClient, int $decrSolde)
             // Exécuter la requête
             if ($stmt->execute()) {
                 echo "Solde mis à jour avec succès.";
-                return $soldeClient - $decrSolde; 
+                return $soldeClient - $decrSolde;
             } 
         } catch (PDOException $e) {
             echo "Erreur : " . $e->getMessage();
-            return -1; 
+            return -1;
         }
     }
-    return -1; 
+    return -1;
 }
 
 

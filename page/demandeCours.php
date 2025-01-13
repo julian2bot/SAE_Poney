@@ -83,7 +83,7 @@ if( !clientAPayerCotisation($bdd, $_SESSION["connecte"]["username"])){
                     
                     <input type="hidden" name="usernameClient" required id="usernameClient" value="<?php echo $_SESSION["connecte"]["username"]?>"/>
                     <input type="hidden" name="dateDemandeCours" required id="dateDemandeCours" value=""/>
-                    <input type="hidden" name="niveau" required id="niveauAdherent" value="<?php echo $_SESSION["connecte"]["info"]["niveau"]??0?>"/>
+                    <input type="hidden" name="niveau" required id="niveauAdherent" value="<?php echo $_SESSION["connecte"]["info"]["niveau"]?>"/>
                     
                     <label for="heureCours">Heure debut du cours</label>
                     <input class="styled-input" type="time" required name="heureCours" id="heureCoursReserv"  min='01:00' max='23:00' step='1800' >
@@ -119,4 +119,5 @@ if( !clientAPayerCotisation($bdd, $_SESSION["connecte"]["username"])){
 
     
 </html>
+
 

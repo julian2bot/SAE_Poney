@@ -6,8 +6,6 @@ require_once __DIR__."/../../constante.php";
 estConnecte();
 // TODO
 
-// require_once __DIR__."/../../BDD/connexionBD.php";
-// require_once __DIR__."/../../annexe.php";
 
 
 echo "<pre>";
@@ -77,12 +75,12 @@ isset($_POST["heure"])){
 
     // Envoyer mail
     
-    if(mailClientDemandeCours(SENDINGEMAIL,$email, $username, $object, $dateDemandeCours, $heureCours, $dureeCours, $activiteDuCours)){
-        echo "mail envoyer";
-    }
-    else{
-        echo "mail non envoyer";
-    }
+    // if(mailClientDemandeCours(SENDINGEMAIL,$email, $username, $object, $dateDemandeCours, $heureCours, $dureeCours, $activiteDuCours)){
+    //     echo "mail envoyer";
+    // }
+    // else{
+    //     echo "mail non envoyer";
+    // }
 
 
 }
