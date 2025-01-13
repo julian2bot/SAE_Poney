@@ -191,6 +191,26 @@ function getPoney(PDO $bdd): array
 	return $info;
 }
 
+
+
+/**
+ * get les poneys de la bd
+ *
+ * @param PDO la base de donnée, 
+ *
+ * @return array les poneys
+ */
+function getPoneyById(PDO $bdd, int $idPoney): array
+{
+	$reqUser = $bdd->prepare("SELECT * FROM PONEY where idPoney = ?");
+	$reqUser->execute([$idPoney]);
+	$info = $reqUser->fetch();
+	if (isset($info)) {
+		return $info;
+	}
+	return array();
+}
+
 /**
  * get les clients de la bd
  *
@@ -275,14 +295,20 @@ function getCoursPerso(PDO $bdd, string $idNiveau, string $duree): array
 	$reqUser = $bdd->prepare("SELECT * FROM COURS WHERE idNiveau = ? AND duree = ? AND nomCours LIKE ?");
 	$reqUser->execute(array($idNiveau, $duree, "Cours perso niveau%"));
 	$info = $reqUser->fetch();
-	return $info;
+    if(!$info){
+        return array();
+    }
+    return $info;
 }
 
 function getCours(PDO $bdd, int $idCours):array{
     $reqUser = $bdd->prepare("SELECT * FROM COURS WHERE idCours = ?");
 	$reqUser->execute(array($idCours));
 	$info = $reqUser->fetch();
-	return $info;
+    if(!$info){
+        return array();
+    }
+    return $info;
 }
 
 function getLesCours(PDO $bdd):array{
@@ -307,11 +333,15 @@ function getNiveau(PDO $bdd):array{
 }
 
 
+
 function getRepresentation(PDO $bdd, int $idCours, string $usernameMoniteur, string $dateCours, float $heureDebut):array{
     $reqRepr = $bdd->prepare("SELECT * FROM REPRESENTATION NATURAL JOIN COURS WHERE idCours = ? AND usernameMoniteur = ? AND dateCours = ? AND heureDebutCours = ?");
 	$reqRepr->execute(array($idCours,$usernameMoniteur,$dateCours,$heureDebut));
 	$info = $reqRepr->fetch();
-	return $info;
+    if(!$info){
+        return array();
+    }
+    return $info;
 }
 function getNbRestantCours(PDO $bdd, int $idCours, string $usernameMoniteur, string $dateCours, float $heureDebut):int{
     $representation = getRepresentation($bdd, $idCours, $usernameMoniteur, $dateCours, $heureDebut);
@@ -390,7 +420,10 @@ function getDispo(PDO $bdd, string $username, string $day, string $startTime): a
 	$reqUser = $bdd->prepare("SELECT * FROM DISPONIBILITE WHERE usernameMoniteur = ? AND dateDispo = ? AND heureDebutDispo = ?");
 	$reqUser->execute([$username, $day, $startTime]);
 	$info = $reqUser->fetch();
-	return $info;
+    if(!$info){
+        return array();
+    }
+    return $info;
 }
 
 /**
@@ -1434,14 +1467,14 @@ function updateDecrSoldeCLient(PDO $bdd, string $usernameClient, int $decrSolde)
             // Exécuter la requête
             if ($stmt->execute()) {
                 echo "Solde mis à jour avec succès.";
-                return $soldeClient - $decrSolde; 
+                return $soldeClient - $decrSolde;
             } 
         } catch (PDOException $e) {
             echo "Erreur : " . $e->getMessage();
-            return -1; 
+            return -1;
         }
     }
-    return -1; 
+    return -1;
 }
 
 /**
@@ -1488,6 +1521,34 @@ function remboursementAllClientRepresentation(PDO $bdd, int $idCours, string $us
 //                               WHERE usernameClient = "client1" 
 //                               AND MONTH(dateCours) = "01" 
 //                               AND YEAR(dateCours) = "2025";
+
+
+
+
+
+/**
+ * renvoie true, si moins lourd que le poid max du poney
+ *
+ * @param PDO $bdd la base de donnée, 
+ * @param int $idPoney id poney, 
+ * @param PDO $usernameClient username du client, 
+ *
+ * @return bool true si client trop lourd, false sinon
+ */
+function estTropLourd(PDO $bdd, int $idPoney, string $usernameClient): bool
+{
+    $poidClient = getInfo($bdd, $usernameClient)["poid"];
+	$poidPoney = getPoneyById($bdd, $idPoney)["poidsMax"];
+
+    if(isset($poidClient) && isset($poidPoney)){
+        if($poidClient <= $poidPoney){
+            return true;
+        }
+    }
+    return false;
+    
+}
+
 
 function generercase($firstDayOfWeek,$daysInMonth,$month,$year):array{
     $result = [];

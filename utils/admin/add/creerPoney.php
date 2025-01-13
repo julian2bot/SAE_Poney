@@ -4,22 +4,55 @@
 require_once __DIR__."/../../BDD/connexionBD.php";
 require_once __DIR__."/../../annexe.php";
 estAdmin();
-
+print_r($_FILES);
+print_r($_POST);
 
 if($_SESSION["connecte"]["role"] === "admin" && 
     isset($_POST["nomPoney"]) &&
     isset($_POST["poidMax"]) && 
-    isset($_POST["photo"]) &&
+    isset($_FILES["photo"]) &&
+    // isset($_POST["photo"]) &&
     isset($_POST["race"])){
+        
     // requete insert exemple:
     if(getRaceExist($bdd, $_POST["race"])){
+        $targetDir = __DIR__."/../../../assets/images/poney/";
+        
+
+        $nameImageTime = new DateTime();
+        $nameImageFormat = $nameImageTime->format("siHmY");
+        
+        $nameImage = mb_substr($_SESSION["connecte"]["username"].$nameImageFormat, 0, 24).".png";
+
+
+        $fileName = basename($nameImage); 
+        $targetFilePath = $targetDir . $fileName; 
+        
+        if (!is_dir($targetDir)) {
+            mkdir($targetDir, 0755, true);
+        }
+        $allowedTypes = ["jpg", "jpeg", "png", "gif"];
+        $fileType = strtolower(pathinfo($targetFilePath, PATHINFO_EXTENSION));
+
+        if (in_array($fileType, $allowedTypes)) {
+            // Déplace le fichier téléchargé vers le dossier cible
+            if (!move_uploaded_file($_FILES["photo"]["tmp_name"], $targetFilePath)) {
+                // not goood
+                echo 'not goood';
+                createPopUp("Probleme import de l'image", false);
+            }
+        }    
+        else{
+            createPopUp("Probleme import de l'image", false);
+        }
+        // echo mb_substr($_FILES["photo"]["name"], 0, 28);
 
         $insertmbr = $bdd->prepare("INSERT INTO PONEY (idPoney, nomPoney, poidsMax, photo, nomRace) VALUES(?, ?, ?, ?, ?)");
         $insertmbr->execute(array(
             getIdMax($bdd, "idPoney", "PONEY")[0] + 1,
             $_POST["nomPoney"],
             $_POST["poidMax"],
-            $_POST["photo"],
+            $nameImage,
             $_POST["race"]
         ));    
         $_SESSION["erreur"] = [];

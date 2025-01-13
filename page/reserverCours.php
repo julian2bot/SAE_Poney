@@ -93,9 +93,9 @@ $aReserve = existReservation($bdd,$infoDuCours["usernameMoniteur"],(int)$infoDuC
                 <h2><?php echo $infoDuCours["nomCours"]?></h2>
                 <ul>
                     <li>Avec le prof : <?php echo $infoDuCours["usernameMoniteur"]?> </li>
-                    <li>A <?php echo $infoDuCours["prix"] ?> €</li>
+                    <li>À <?php echo $infoDuCours["prix"] ?> €</li>
                     <li><?php echo formatCours($infoDuCours["dateCours"], $infoDuCours["heureDebutCours"], $infoDuCours["duree"])?></li>
-                    <li>Places Restante :<?php  echo $placesRestantes?></li>
+                    <li>Places Restantes : <?php  echo $placesRestantes?></li>
                 </ul>
             </section>
             
