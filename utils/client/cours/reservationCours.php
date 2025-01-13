@@ -8,8 +8,7 @@ estConnecte();
 
 // print_r($_POST);
 
-if(
-        !isset($_POST["idCours"]) 
+if(!isset($_POST["idCours"]) 
     && !isset($_POST["usernameMoniteur"]) 
     && !isset($_POST["dateCours"]) 
     && !isset($_POST["heureDebutCours"]) 

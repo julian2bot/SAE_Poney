@@ -1436,7 +1436,25 @@ function updateDecrSoldeCLient(PDO $bdd, string $usernameClient, int $decrSolde)
     return -1; 
 }
 
+/**
+ * mets a jour le solde du client 
+ * 
+ * @param PDO $bdd base de donnée
+ * @param string $usernameClient username du client
+ * @param int decrSolde le sole a incrementer
+ * 
+ * 
+ * @return le solde du client actuelle, -1 s'il y a une erreur (le solde se decremente seulement si le final est au dessus de 0)
+ */
+function updateAddSoldeCLient(PDO $bdd, string $usernameClient, int $addSolde) : bool{
+    $soldeClient = getSoldeClient($bdd, $usernameClient);
 
+    $newSolde = $soldeClient + $addSolde;
+
+    // Préparer la requête sécurisée
+    $stmt = $bdd->prepare("UPDATE CLIENT SET solde = ? WHERE usernameClient = ?");
+    return $stmt->execute(array($newSolde,$usernameClient));
+}
 
 // SELECT heureDebutCours, activite, nomCours, day(dateCours) as day 
 //                               FROM RESERVATION 
@@ -1445,7 +1463,6 @@ function updateDecrSoldeCLient(PDO $bdd, string $usernameClient, int $decrSolde)
 //                               WHERE usernameClient = "client1" 
 //                               AND MONTH(dateCours) = "01" 
 //                               AND YEAR(dateCours) = "2025";
-
 
 function generercase($firstDayOfWeek,$daysInMonth,$month,$year):array{
     $result = [];
