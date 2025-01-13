@@ -530,6 +530,14 @@ function existReservation(PDO $bdd, string $username, int $idCours, string $day,
 	return $reqRes->rowCount() >= 1;
 }
 
+
+function getLesReserv(PDO $bdd, string $username, int $idCours, string $day, float $heure): array
+{
+	$reqRes = $bdd->prepare("SELECT * FROM RESERVATION NATURAL JOIN COURS WHERE usernameMoniteur = ? AND idCours = ? AND dateCours = ? AND heureDebutCours = ?");
+	$reqRes->execute(array($username, $idCours, $day,$heure));
+	return $reqRes->fetchAll();
+}
+
 /**
  * verifie l'existance d'une dispo
  *
@@ -1436,7 +1444,42 @@ function updateDecrSoldeCLient(PDO $bdd, string $usernameClient, int $decrSolde)
     return -1; 
 }
 
+/**
+ * mets a jour le solde du client 
+ * 
+ * @param PDO $bdd base de donnée
+ * @param string $usernameClient username du client
+ * @param int decrSolde le sole a incrementer
+ * 
+ * 
+ * @return bool solde du client actuelle, -1 s'il y a une erreur (le solde se decremente seulement si le final est au dessus de 0)
+ */
+function updateAddSoldeCLient(PDO $bdd, string $usernameClient, int $addSolde) : bool{
+    $soldeClient = getSoldeClient($bdd, $usernameClient);
 
+    $newSolde = $soldeClient + $addSolde;
+
+    // Préparer la requête sécurisée
+    $stmt = $bdd->prepare("UPDATE CLIENT SET solde = ? WHERE usernameClient = ?");
+    return $stmt->execute(array($newSolde,$usernameClient));
+}
+
+function remboursementClientReservation(PDO $bdd, string $usernameClient, int $idCours, string $usernameMoniteur, string $dateCours, float $heureDebut):int{
+    $representation = getRepresentation($bdd,$idCours,$usernameMoniteur,$dateCours,$heureDebut);
+    if(isset($representation["idCours"])){
+        updateAddSoldeCLient($bdd,$usernameClient,$representation["prix"]);
+        return $representation["prix"];
+    }
+    return -1;
+}
+
+function remboursementAllClientRepresentation(PDO $bdd, int $idCours, string $usernameMoniteur, string $dateCours, float $heureDebut):int{
+    $reservations = getLesReserv($bdd,$idCours,$usernameMoniteur,$dateCours,$heureDebut);
+    foreach ($reservations as $reserv) {
+        updateAddSoldeCLient($bdd,$reserv["usernameClient"],$reserv["prix"]);
+    }
+    return -1;
+}
 
 // SELECT heureDebutCours, activite, nomCours, day(dateCours) as day 
 //                               FROM RESERVATION 
@@ -1445,7 +1488,6 @@ function updateDecrSoldeCLient(PDO $bdd, string $usernameClient, int $decrSolde)
 //                               WHERE usernameClient = "client1" 
 //                               AND MONTH(dateCours) = "01" 
 //                               AND YEAR(dateCours) = "2025";
-
 
 function generercase($firstDayOfWeek,$daysInMonth,$month,$year):array{
     $result = [];
