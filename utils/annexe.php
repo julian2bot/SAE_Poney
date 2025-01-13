@@ -729,10 +729,10 @@ function getAllInfoByMonth(PDO $bdd, string $client, string $month, string $year
  */
 function getAllInfoByMonthMoniteur(PDO $bdd, string $client, string $month, string $year): array
 {
-	$reqUser = $bdd->prepare("SELECT heureDebutCours, activite, nomCours, day(dateCours) as day 
-                              FROM RESERVATION 
+	$reqUser = $bdd->prepare("SELECT heureDebutCours, activite, nomCours, usernameClient, day(dateCours) as day 
+                              FROM REPRESENTATION 
                               NATURAL JOIN COURS 
-                              NATURAL JOIN REPRESENTATION 
+                              NATURAL LEFT JOIN RESERVATION 
                               WHERE usernameMoniteur = ? 
                               AND MONTH(dateCours) = ? 
                               AND YEAR(dateCours) = ?");
@@ -832,9 +832,15 @@ function creerCalendrier(PDO $bdd, string $client): void
 				if (isset($coursesByDay[$Days])) {
 					echo "<td class='styled-cell hover'> $Days";
 					foreach ($coursesByDay[$Days] as $cours) {
-						echo "<div class='event-box'>
-                                <h2 class='event-title'>{$cours['nomCours']}</h2>
-                               " . "<p>Horaires : " . formatHeure($cours['heureDebutCours']) . "</p>" . "
+						echo "<div class='event-box'>";
+                        if(($role !== "admin" && $role !== "moniteur") || (isset($cours["usernameClient"]) && ! is_null($cours["usernameClient"]))){
+                            echo "<h2 class='event-title'>{$cours['nomCours']}</h2>";
+                        }
+                        else{
+                            echo "<h2 class='event-title-rep'>{$cours['nomCours']}</h2>";
+                        }
+
+                        echo   "" . "<p>Horaires : " . formatHeure($cours['heureDebutCours']) . "</p>" . "
                                 <div class='event-details'>
                                     " . "<p>Horaires : " . formatHeure($cours['heureDebutCours']) . "</p>" . "
                                     <p>Lieu : XX rue du 16</p>
