@@ -27,12 +27,12 @@ isset($_POST["heure"])){
 
     if(!isset($coursPerso["idCours"])){
         createPopUp("Problème pour trouver un cours adéquat",false);
-        header("Location: ../../../page/demandeCours.php");
+        header("Location: ../../../page/adherent.php");
         exit;
     }
     else if(getDemandeExistDay($bdd,$_SESSION["connecte"]["username"],$_POST["dateDemandeCours"])){
         createPopUp("Vous avez déjà réalisé une demande de cours pour ce jour",false);
-        header("Location: ../../../page/demandeCours.php");
+        header("Location: ../../../page/adherent.php");
         exit;
     }
 
@@ -40,8 +40,8 @@ isset($_POST["heure"])){
 
     $soldeCourant = updateDecrSoldeCLient($bdd, $_SESSION["connecte"]["username"], $coursPerso["prix"]);
     if($soldeCourant === -1){
-        $err ="Votre solde n'est pas assez élevé";
-        header("Location: ../../../page/adherent.php?errReservCours=".$err);
+        createPopUp("Votre solde n'est pas assez élevé",false);
+        header("Location: ../../../page/adherent.php");
         exit;
     }
 
@@ -79,11 +79,6 @@ isset($_POST["heure"])){
 
 
 }
-
-header("Location: ../../../page/demandeCours.php");
+header("Location: ../../../page/adherent.php");
 exit;
-
-
-
-
 ?>
