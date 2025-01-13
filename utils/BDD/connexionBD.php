@@ -1,5 +1,5 @@
 <?php
-// base de base 
+// base de base
 // code de connexion a une base de donnée
 session_start();
 require_once __DIR__."/../annexe.php";
@@ -23,7 +23,7 @@ $bdd = new PDO('mysql:host='.$host.';dbname='.$table.'', $user, $mdp);
 
 
 // pour crypter directement toute les mdps de la bd selon le sha1
-// CrypterMdp($bdd);
+//CrypterMdp($bdd);
 
 
 
