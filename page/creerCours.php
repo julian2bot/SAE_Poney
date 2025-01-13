@@ -64,7 +64,7 @@
         </header>
         <main class="container">
             <section class="gauche-section sectionFormCours">
-                <a href="creerRepresentation.php">Créer une représentation</a>
+                <a href="creerRepresentation.php?month=<?php echo $month;?>&year=<?php echo $year;if(isset($_GET["day"])){echo "&day=$_GET[day]";}?>">Créer une représentation</a>
                 <form action="../utils/moniteur/cours/creerCours.php" method="POST">
                     <div>
                         <label for="nom">Nom du cours</label>
