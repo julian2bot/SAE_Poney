@@ -6,6 +6,7 @@ estConnecte();
 // print_r($_SESSION);
 // echo "</pre>";
 $aPayerCotisation = clientAPayerCotisation($bdd, $_SESSION["connecte"]["username"]);
+$solde = getSoldeClient($bdd,$_SESSION["connecte"]["username"]);
 ?>
 
 
@@ -22,6 +23,7 @@ $aPayerCotisation = clientAPayerCotisation($bdd, $_SESSION["connecte"]["username
     <link rel="stylesheet" href="../assets/style/coursCalendrier.css">
     <link rel="stylesheet" href="../assets/style/calendrier.css">
     <link rel="stylesheet" href="../assets/style/versionTel.css">
+    <link rel="stylesheet" href="../assets/style/popUp.css">
     <script src="../assets/script/popUpGestionErr.js"></script>
 </head>
     
@@ -33,6 +35,7 @@ $aPayerCotisation = clientAPayerCotisation($bdd, $_SESSION["connecte"]["username
                 if(isset($_SESSION["connecte"])){
                     echo '<div class="auth-buttons">
                             <p>'.$_SESSION["connecte"]["prenom"].'</p>
+                            <p id="solde">Solde : '.$solde.' €</p>
                     
                             <button onclick="location.href=\'../utils/all/login/logout.php\';" class="affichelogin">Logout</button>
                         </div>';

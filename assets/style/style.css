@@ -28,6 +28,7 @@ h1 {
 
 .auth-buttons {
     display: flex;
+    gap: 10px;
     position: absolute;
     top: 20px;
     right: 20px;
@@ -36,7 +37,7 @@ h1 {
 }
 
 .auth-buttons button {
-    margin-left: 10px;
+    /* margin-left: 10px; */
     padding: 10px 20px;
     background-color: #eee;
     border: none;
@@ -264,6 +265,15 @@ td{
 }
 
 #cotisationNonPayer a{
+    font-size: inherit;
+    cursor: pointer;
+    color : #007BFF;
+    text-decoration: underline;
+}
+
+#cotisationNonPayer input{
+    background-color: inherit;
+    border: inherit;
     font-size: inherit;
     cursor: pointer;
     color : #007BFF;

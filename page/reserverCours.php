@@ -26,7 +26,7 @@ $restePlace = $placesRestantes>=1;
 // print_r($infoDuCours);
 // echo "</pre>";
 
-
+$aReserve = existReservation($bdd,$infoDuCours["usernameMoniteur"],(int)$infoDuCours["idCours"], $infoDuCours["dateCours"],$infoDuCours["heureDebutCours"],$_SESSION["connecte"]["username"])
 
 ?>
 
@@ -40,12 +40,29 @@ $restePlace = $placesRestantes>=1;
     <link rel="stylesheet" href="../assets/style/style.css">
     <link rel="stylesheet" href="../assets/style/reservation.css">
     <link rel="stylesheet" href="../assets/style/versionTelSousPage.css">
+    <link rel="stylesheet" href="../assets/style/popUp.css">
 </head>
     <body>
         <header>
             <h1>GRAND GALOP</h1>
             <?php
-            if(! $restePlace){
+            if($aReserve){
+                echo "<div id='cotisationNonPayer'>";
+                echo "<div>";
+                echo "<img src='../assets/images/warning.png' alt='warning'>";
+                echo "<p>Vous avez déjà réservé ce cours.</p>";
+                echo "<form action='../utils/client/cours/annulationReserv.php' method='post' class='formReserv'>";
+                echo "<input type='hidden' required id='idCours' name='idCours'  value='$_GET[idcours]'/>";
+                echo "<input type='hidden' required id='usernameMoniteur' name='usernameMoniteur' value='$infoDuCours[usernameMoniteur]'/>";
+                echo "<input type='hidden' required id='dateCours' name='dateCours' value='$infoDuCours[dateCours]'/>";
+                echo "<input type='hidden' required id='heureDebutCours' name='heureDebutCours' value='$infoDuCours[heureDebutCours]'/>";
+                echo "<input type='hidden' required id='userclient' name='userclient'  value='".$_SESSION["connecte"]["username"]."'/>";
+                echo "<input type='submit' value='Annuler la réservation'>";
+                echo "</form>";
+                echo "</div>";
+                echo "</div>";
+            }
+            else if(! $restePlace){
                 echo "<div id='cotisationNonPayer'>";
                 echo "<div>";
                 echo "<img src='../assets/images/warning.png' alt='warning'>";
@@ -54,7 +71,9 @@ $restePlace = $placesRestantes>=1;
                 echo "</div>";
                 echo "</div>";
             }
+            
             ?>
+            
             <nav>
             <ul>
                 <li>
@@ -74,7 +93,7 @@ $restePlace = $placesRestantes>=1;
                 <h2><?php echo $infoDuCours["nomCours"]?></h2>
                 <ul>
                     <li>Avec le prof : <?php echo $infoDuCours["usernameMoniteur"]?> </li>
-                    <li> À <?php echo $infoDuCours["prix"] ?> €</li>
+                    <li>À <?php echo $infoDuCours["prix"] ?> €</li>
                     <li><?php echo formatCours($infoDuCours["dateCours"], $infoDuCours["heureDebutCours"], $infoDuCours["duree"])?></li>
                     <li>Places Restantes : <?php  echo $placesRestantes?></li>
                 </ul>

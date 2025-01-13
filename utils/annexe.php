@@ -293,7 +293,7 @@ function getIdMax(PDO $bdd, string $idNom, string $table): array
 function getCoursPerso(PDO $bdd, string $idNiveau, string $duree): array
 {
 	$reqUser = $bdd->prepare("SELECT * FROM COURS WHERE idNiveau = ? AND duree = ? AND nomCours LIKE ?");
-	$reqUser->execute(array($idNiveau, $duree, "Cours perso%"));
+	$reqUser->execute(array($idNiveau, $duree, "Cours perso niveau%"));
 	$info = $reqUser->fetch();
     if(!$info){
         return array();
@@ -305,12 +305,33 @@ function getCours(PDO $bdd, int $idCours):array{
     $reqUser = $bdd->prepare("SELECT * FROM COURS WHERE idCours = ?");
 	$reqUser->execute(array($idCours));
 	$info = $reqUser->fetch();
-	return $info;
     if(!$info){
         return array();
     }
     return $info;
 }
+
+function getLesCours(PDO $bdd):array{
+    $reqUser = $bdd->prepare("SELECT * FROM COURS");
+	$reqUser->execute(array());
+	$info = $reqUser->fetchAll();
+	return $info;
+}
+
+function getLesCoursSansPerso(PDO $bdd):array{
+    $reqUser = $bdd->prepare("SELECT * FROM COURS WHERE nomCours NOT LIKE ?");
+	$reqUser->execute(array("Cours perso niveau%"));
+	$info = $reqUser->fetchAll();
+	return $info;
+}
+
+function getNiveau(PDO $bdd):array{
+    $reqUser = $bdd->prepare("SELECT * FROM NIVEAU");
+	$reqUser->execute(array());
+	$info = $reqUser->fetchAll();
+	return $info;
+}
+
 
 
 function getRepresentation(PDO $bdd, int $idCours, string $usernameMoniteur, string $dateCours, float $heureDebut):array{
@@ -535,6 +556,21 @@ function clientAPayerCotisation(PDO $bdd, string $username):bool{
 	return $reqPayer->rowCount() >= 1;
 }
 
+function existReservation(PDO $bdd, string $username, int $idCours, string $day, float $heure, string $usernameClient): bool
+{
+	$reqRes = $bdd->prepare("SELECT * FROM RESERVATION WHERE usernameMoniteur = ? AND idCours = ? AND dateCours = ? AND heureDebutCours = ? AND usernameClient = ?");
+	$reqRes->execute(array($username, $idCours, $day,$heure, $usernameClient));
+	return $reqRes->rowCount() >= 1;
+}
+
+
+function getLesReserv(PDO $bdd, string $username, int $idCours, string $day, float $heure): array
+{
+	$reqRes = $bdd->prepare("SELECT * FROM RESERVATION NATURAL JOIN COURS WHERE usernameMoniteur = ? AND idCours = ? AND dateCours = ? AND heureDebutCours = ?");
+	$reqRes->execute(array($username, $idCours, $day,$heure));
+	return $reqRes->fetchAll();
+}
+
 /**
  * verifie l'existance d'une dispo
  *
@@ -741,10 +777,10 @@ function getAllInfoByMonth(PDO $bdd, string $client, string $month, string $year
  */
 function getAllInfoByMonthMoniteur(PDO $bdd, string $client, string $month, string $year): array
 {
-	$reqUser = $bdd->prepare("SELECT heureDebutCours, activite, nomCours, day(dateCours) as day 
-                              FROM RESERVATION 
+	$reqUser = $bdd->prepare("SELECT heureDebutCours, activite, nomCours, usernameClient, day(dateCours) as day 
+                              FROM REPRESENTATION 
                               NATURAL JOIN COURS 
-                              NATURAL JOIN REPRESENTATION 
+                              NATURAL LEFT JOIN RESERVATION 
                               WHERE usernameMoniteur = ? 
                               AND MONTH(dateCours) = ? 
                               AND YEAR(dateCours) = ?");
@@ -844,9 +880,15 @@ function creerCalendrier(PDO $bdd, string $client): void
 				if (isset($coursesByDay[$Days])) {
 					echo "<td class='styled-cell hover'> $Days";
 					foreach ($coursesByDay[$Days] as $cours) {
-						echo "<div class='event-box'>
-                                <h2 class='event-title'>{$cours['nomCours']}</h2>
-                               " . "<p>Horaires : " . formatHeure($cours['heureDebutCours']) . "</p>" . "
+						echo "<div class='event-box'>";
+                        if(($role !== "admin" && $role !== "moniteur") || (isset($cours["usernameClient"]) && ! is_null($cours["usernameClient"]))){
+                            echo "<h2 class='event-title'>{$cours['nomCours']}</h2>";
+                        }
+                        else{
+                            echo "<h2 class='event-title-rep'>{$cours['nomCours']}</h2>";
+                        }
+
+                        echo   "" . "<p>Horaires : " . formatHeure($cours['heureDebutCours']) . "</p>" . "
                                 <div class='event-details'>
                                     " . "<p>Horaires : " . formatHeure($cours['heureDebutCours']) . "</p>" . "
                                     <p>Lieu : XX rue du 16</p>
@@ -1435,7 +1477,42 @@ function updateDecrSoldeCLient(PDO $bdd, string $usernameClient, int $decrSolde)
     return -1;
 }
 
+/**
+ * mets a jour le solde du client 
+ * 
+ * @param PDO $bdd base de donnée
+ * @param string $usernameClient username du client
+ * @param int decrSolde le sole a incrementer
+ * 
+ * 
+ * @return bool solde du client actuelle, -1 s'il y a une erreur (le solde se decremente seulement si le final est au dessus de 0)
+ */
+function updateAddSoldeCLient(PDO $bdd, string $usernameClient, int $addSolde) : bool{
+    $soldeClient = getSoldeClient($bdd, $usernameClient);
 
+    $newSolde = $soldeClient + $addSolde;
+
+    // Préparer la requête sécurisée
+    $stmt = $bdd->prepare("UPDATE CLIENT SET solde = ? WHERE usernameClient = ?");
+    return $stmt->execute(array($newSolde,$usernameClient));
+}
+
+function remboursementClientReservation(PDO $bdd, string $usernameClient, int $idCours, string $usernameMoniteur, string $dateCours, float $heureDebut):int{
+    $representation = getRepresentation($bdd,$idCours,$usernameMoniteur,$dateCours,$heureDebut);
+    if(isset($representation["idCours"])){
+        updateAddSoldeCLient($bdd,$usernameClient,$representation["prix"]);
+        return $representation["prix"];
+    }
+    return -1;
+}
+
+function remboursementAllClientRepresentation(PDO $bdd, int $idCours, string $usernameMoniteur, string $dateCours, float $heureDebut):int{
+    $reservations = getLesReserv($bdd,$idCours,$usernameMoniteur,$dateCours,$heureDebut);
+    foreach ($reservations as $reserv) {
+        updateAddSoldeCLient($bdd,$reserv["usernameClient"],$reserv["prix"]);
+    }
+    return -1;
+}
 
 // SELECT heureDebutCours, activite, nomCours, day(dateCours) as day 
 //                               FROM RESERVATION 
@@ -1470,4 +1547,61 @@ function estTropLourd(PDO $bdd, int $idPoney, string $usernameClient): bool
     }
     return false;
     
+}
+
+
+function generercase($firstDayOfWeek,$daysInMonth,$month,$year):array{
+    $result = [];
+    // Cases vides avant le premier jour du mois
+    for ($i = 0; $i < $firstDayOfWeek; $i++) {
+        echo '<td class="passer"></td>';
+    }
+    
+    // Affichage des jours du mois
+    for ($day = 1; $day <= $daysInMonth; $day++) {
+        $classes = '';
+        $id =0;
+    
+        if ($day < date('j') && $month <= date('n') || $year < date('Y') ) {
+            $classes = 'passer';
+        }
+    
+        else{
+            $classes = 'jourpossible';
+            $id =$day;
+        }
+    
+        if ($day == date('j') && $month == date('n') && $year == date('Y')) {
+            $classes = 'jourpossible selected';
+            $id =$day;
+            $result["jour"] = $day;
+            $result["mois"] = $month;
+            $result["annee"] = $year;
+        }
+    
+        if ($classes == 'passer')
+        {
+            echo '<td class="' . $classes .'"id='.$id.'>' . $day . '</td>';
+        }
+    
+        else
+        {
+            echo '<td class="' . $classes .'"id='.$id.' onclick="getDate(event,'.$month.','.$year.')" >' . $day . '</td>';
+        }
+        
+        // Retour à la ligne chaque dimanche
+        if (($firstDayOfWeek + $day) % 7 == 0) {
+            echo '</tr><tr>';
+        }
+    }
+    
+    
+    
+    // Cases vides après le dernier jour du mois
+    $remainingDays = (7 - (($firstDayOfWeek + $daysInMonth) % 7)) % 7;
+    for ($i = 0; $i < $remainingDays; $i++) {
+        echo '<td class="passer"></td>';
+    }
+
+    return $result;
 }
