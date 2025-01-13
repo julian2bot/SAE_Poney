@@ -18,11 +18,12 @@ if($_SESSION["connecte"]["role"] === "admin" &&
     if(getRaceExist($bdd, $_POST["race"])){
         $targetDir = __DIR__."/../../../assets/images/poney/";
         
+
+        $nameImageTime = new DateTime();
+        $nameImageFormat = $nameImageTime->format("siHmY");
         
-        $replace = [";","\n","\r","\r\n", " ", "-" ];
-        
-        $nameImage = str_replace($replace,"_", $_FILES["photo"]["name"] ) ;
-        $nameImage = mb_substr($nameImage, 0, 25).".png";
+        $nameImage = mb_substr($_SESSION["connecte"]["username"].$nameImageFormat, 0, 24).".png";
+
 
         $fileName = basename($nameImage); 
         $targetFilePath = $targetDir . $fileName; 
@@ -51,7 +52,7 @@ if($_SESSION["connecte"]["role"] === "admin" &&
             getIdMax($bdd, "idPoney", "PONEY")[0] + 1,
             $_POST["nomPoney"],
             $_POST["poidMax"],
-            $nameImage ,
+            $nameImage,
             $_POST["race"]
         ));    
         $_SESSION["erreur"] = [];

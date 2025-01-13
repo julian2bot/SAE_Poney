@@ -191,6 +191,26 @@ function getPoney(PDO $bdd): array
 	return $info;
 }
 
+
+
+/**
+ * get les poneys de la bd
+ *
+ * @param PDO la base de donnée, 
+ *
+ * @return array les poneys
+ */
+function getPoneyById(PDO $bdd, int $idPoney): array
+{
+	$reqUser = $bdd->prepare("SELECT * FROM PONEY where idPoney = ?");
+	$reqUser->execute([$idPoney]);
+	$info = $reqUser->fetch();
+	if (isset($info)) {
+		return $info;
+	}
+	return array();
+}
+
 /**
  * get les clients de la bd
  *

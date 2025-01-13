@@ -12,7 +12,7 @@
 <label for="photo">Photo (chemin acces)</label>
 <!-- <input type="text" name="photo" placeholder="blabla.png" autocomplete="off" class="photo form-control-material" required> -->
 <input type="file" id="photo" name="photo" accept="image/*" class=" photo form-control-material" required>
-<img id="preview" src="#" alt="Prévisualisation" style="display:none; max-width:200px; margin-top:10px;">
+<img id="preview" class='preview' src="#" alt="Prévisualisation" style="display:none; max-width:200px; margin-top:10px;">
 
 <label for="race">Race</label>
 
@@ -22,5 +22,5 @@
         foreach(getRaces($bdd) as $race){
             echo "<option value='$race[nomRace]'>$race[nomRace]</option>";
         }
-    ?>
+    ?>  
 </select>
