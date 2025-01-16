@@ -127,7 +127,12 @@ function getMail(PDO $bdd, string $username):string{
 function getPersonne(PDO $bdd, string $username):array{
     $reqUser = $bdd->prepare("SELECT * FROM PERSONNE WHERE username = ?");
 	$reqUser->execute(array($username));
-	return $reqUser->fetch();
+
+	$info = $reqUser->fetch();
+    if(!$info){
+        return[];
+    }
+    return $info;
 }
 
 /**
@@ -386,7 +391,11 @@ function getDemandeDeCours(PDO $bdd, string $username, string $day, int $idCours
 {
 	$reqUser = $bdd->prepare("SELECT * FROM DEMANDECOURS WHERE usernameClient = ? AND dateCours = ? AND idCours = ? AND heureDebutCours = ?");
 	$reqUser->execute(array($username, $day,$idCours, $heure));
-	return $reqUser->fetch();
+	$info = $reqUser->fetch();
+    if(!$info){
+        return[];
+    }
+    return $info;
 }
 
 
@@ -927,7 +936,11 @@ function getInfoCours(PDO $bdd, int $idcours, string $dateCours, float $heureDeb
 {
 	$reqUser = $bdd->prepare("SELECT idCours, usernameMoniteur, nomNiveau, nomCours, duree, prix, nbMax, dateCours, heureDebutCours FROM REPRESENTATION NATURAL JOIN COURS NATURAL JOIN NIVEAU WHERE idCours = ? AND dateCours = ? AND heureDebutCours = ?");
 	$reqUser->execute([$idcours, $dateCours, $heureDebutCours]);
-	return $reqUser->fetch();
+	$info = $reqUser->fetch();
+    if(!$info){
+        return[];
+    }
+    return $info;
 }
 
 /**
