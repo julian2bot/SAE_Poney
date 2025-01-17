@@ -31,15 +31,18 @@ entre une personne, un **poney** et un **moniteur**,
 ### **Chris Mathevet**
     - Analyse du projet
     - MCD
+    - Developpement web full stack
 ### **Clement Renaudin**
     - Analyse du projet
     - USE CASE
     - TRIGGER
+    - Developpement web full stack
 ### **Julian Marques**
     - Analyse du projet
     - USE CASE
     - Script sql
     - Maquette site
+    - Developpement web full stack
 
 
 ## Fonctionnalités
