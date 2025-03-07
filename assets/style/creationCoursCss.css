@@ -1,0 +1,150 @@
+.droite-section{
+    width: 50%;
+    padding-right: 0;
+}
+
+.gauche-section{
+    width: 50%;
+}
+
+form{
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 2vh;
+}
+
+form button{
+    margin: 1em;
+    padding: 10px calc(50% - 2em - 1em);
+    background-color: #eee;
+    border: none;
+    cursor: pointer;
+    border-radius: 10px;
+    border: #6e6e6e 1px solid;
+}
+
+form > a:hover{
+    text-decoration: underline #b3b2b2;
+}
+
+form >div>input , select{
+    padding: 3px;
+    border: none;
+    border-bottom: 1px solid #eee;
+    caret-color: white;
+    color: black;
+}
+
+form>div
+{
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 0;
+  width: 45%;
+}
+
+form > input::placeholder{
+    
+    color: white;
+    
+}
+
+td {
+    padding: 10px;
+    border: 1px solid #ddd;
+    cursor: pointer; /* Change le curseur pour indiquer qu'il est cliquable */
+}
+
+
+th, td { padding: 10px; text-align: center; /*! border: 1px solid #ddd; */ }
+th { background-color: #f2f2f2; color: #ffff;}
+td:hover { background-color: #ADD8E6; cursor: pointer; }
+
+.current-day { background-color: #ffdd57; font-weight: bold; }
+button { margin: 10px; padding: 10px 20px; }
+
+.passer { background-color: grey;pointer-events: none; }
+button { margin: 10px; padding: 10px 20px; }
+
+
+
+
+
+
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    margin: 20px;
+}
+table {
+    margin: 0 auto;
+    border-collapse: collapse;
+    width: 90%;
+    max-width: 600px;
+}
+
+th {
+    background-color: #347429;
+}
+.navigation {
+    margin: 20px;
+}
+.navigation a {
+    margin: 0 10px;
+    text-decoration: none;
+    color: red;
+    font-weight: bold;
+}
+.navigation a:hover {
+    text-decoration: underline;
+}
+.empty {
+    background-color: #f9f9f9;
+}
+.selected {
+    background-color: #FFD700;
+  }
+
+td{
+     background-color: #f3f3f3f3;
+}
+
+/* .text-block
+{
+   text-align: left;
+} */
+
+.sectionFormCours{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+fieldset
+{
+    display: flex;
+    justify-content: space-between;
+    text-align: center;
+
+    width: 100px;
+    
+    flex-grow: 0;
+
+}
+
+fieldset>div
+{
+    text-align: center;
+    padding-left: 20px;
+    padding-right:20px;
+    width: 100px;
+}
+
+fieldset>div>input
+{
+transform: scale(1.5); /* Augmenter la taille du bouton radio de 1.5x */
+
+}

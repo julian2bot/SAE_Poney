@@ -1,0 +1,151 @@
+
+/* style a la chatgpt lol car pas envie de le refaire */
+
+@media screen and (min-width: 768px){
+    .calendrierLeft {
+        border-collapse: collapse;
+        border: none;
+        margin-left: calc((60vw - 80px * 7 - 20px) / 2) !important;
+    }
+}
+
+
+td {
+    border: 1px solid #ddd;
+    height: 80px;
+    width: 80px;
+    position: relative; 
+    text-align: left;
+    vertical-align: top;
+    padding: 5px;
+    transition: transform 0.3s ease, z-index 0.3s ease; 
+    text-align: center;
+}
+#calendrier, #calendrier-disponibilite{
+    border-collapse: collapse;
+    border: none;
+}
+#calendrier td , #calendrier-disponibilite td{
+    border: none;
+
+    height: inherit;
+    width: inherit;
+    position: relative; /* Nécessaire pour positionner la pastille */
+    text-align: left;
+    vertical-align: top;
+    padding: 10px; /* Ajoute de l'espace autour du texte */
+    transition: transform 0.3s ease, z-index 0.3s ease;
+    text-align: center;
+    cursor: pointer;
+}
+
+#calendrier *, #calendrier-disponibilite *{
+    padding:15px;
+}
+
+.PastiCours::before {
+    content: ''; /* Crée un élément virtuel */
+    position: absolute; /* Positionne la pastille relativement au `td` */
+    /* top: 50%;  */
+    /* left: 50%;  */
+    top: 15px;
+    left: 15px;
+    transform: translate(-10px, -12px); /* Centre exact */
+    /* width: 2em;  */
+    /* height: 2em; */
+    width: 15px; 
+    height: 15px;
+    background-color: #347429; /* Couleur de la pastille */
+    border-radius: 50%; /* Forme circulaire */
+    z-index: 0; /* Place la pastille derrière le texte */
+}
+
+.PastiClique::before {
+    content: ''; /* Crée un élément virtuel */
+    position: absolute; /* Positionne la pastille relativement au `td` */
+    /* top: 50%;  */
+    /* left: 50%;  */
+    top: 15px;
+    left: 15px;
+    transform: translate(-10px, -12px); /* Centre exact */
+    /* width: 2em;  */
+    /* height: 2em; */
+    width: 15px; 
+    height: 15px;
+    background-color: #193813; /* Couleur de la pastille */
+    border-radius: 50%; /* Forme circulaire */
+    z-index: 0; /* Place la pastille derrière le texte */
+}
+.styled-cell {
+    background-color: #e0f7fa; 
+    position: relative; 
+    overflow: hidden;
+}
+
+.event-box {
+    font-family: Arial, sans-serif;
+    color: #333;
+    position: relative; 
+}
+
+.event-box p {
+    font-size: 10px;
+    margin: 0;
+}
+
+.event-title {
+    font-size: 12px;
+    font-weight: bold;
+    color: #2e7d32;  
+    margin-bottom: 5px;
+}
+
+.event-title-rep {
+    font-size: 12px;
+    font-weight: bold;
+    color: #8f2b2a;  
+    margin-bottom: 5px;
+}
+
+.event-details {
+    position: absolute; 
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%; 
+    display: none;  
+    background-color: #a5d6a7;  
+    padding: 5px;
+    box-sizing: border-box;
+    color: #333;
+    z-index: 5; 
+    transition: all 0.5s ease;  
+    overflow: auto;  
+}
+.event-details p{
+    font-size: 8px;
+}
+
+.styled-cell.hover:hover {
+    transform: scale(1.6);  
+    z-index: 10;  
+}
+
+.styled-cell.hover:hover .event-details {
+    display: block;
+}
+
+
+.event-details::-webkit-scrollbar {
+    width: 4px; 
+    height: 4px; 
+}
+
+.event-details::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, 0.2); 
+    border-radius: 10px; 
+}
+
+.event-details::-webkit-scrollbar-track {
+    background: transparent; 
+}
