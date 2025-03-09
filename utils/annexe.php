@@ -1036,6 +1036,15 @@ function getReserv(PDO $bdd, int $niveau): array
 	return $info;
 }
 
+function getpassMail():string {
+    $passCsv = fopen( __DIR__ ."/../dataMonted/passMail.csv", 'r');
+    if (!feof($passCsv)) {
+        $replace = [";","\n","\r","\r\n"];
+
+        return str_replace($replace,"",fgets($passCsv)) ;
+    }
+    return '';
+}
 
 
 
@@ -1066,7 +1075,7 @@ function mailClientDemandeCours($sendingEmail, $email, $username, $object, $date
         $mail->SMTPAuth = true;                   
         $mail->Username = $sendingEmail; 
         // $mail->Password = $ligne;
-        $mail->Password = "tnlfxcttheyncjyv";
+        $mail->Password = getpassMail();
 
         $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;  
         $mail->Port = 587;
@@ -1203,7 +1212,7 @@ function mailClientDemandeCoursConfirme( $sendingEmail, $email, $username, $obje
         $mail->SMTPAuth = true;                   
         $mail->Username = $sendingEmail; 
         // $mail->Password = $ligne;
-        $mail->Password = "tnlfxcttheyncjyv";
+        $mail->Password = getpassMail();
 
         $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;  
         $mail->Port = 587;
@@ -1336,7 +1345,7 @@ function mailMoniteurDemandeCoursConfirme($sendingEmail, $email, $moniteurName, 
         $mail->SMTPAuth = true;                   
         $mail->Username = $sendingEmail; 
         // $mail->Password = $ligne;
-        $mail->Password = "tnlfxcttheyncjyv";
+        $mail->Password = getpassMail();
 
         $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;  
         $mail->Port = 587;

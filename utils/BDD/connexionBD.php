@@ -9,17 +9,19 @@ $host ="servinfo-maria";
 $user = 'marques';
 
 
-$passCsv = fopen( __DIR__ . '/pass.csv', 'r');
+$passCsv = fopen( __DIR__ . '/../../dataMonted/pass.csv', 'r');
 if (!feof($passCsv)) {
     $replace = [";","\n","\r","\r\n"];
 
     $host = str_replace($replace,"",fgets($passCsv)) ;
+    $dbname = str_replace($replace,"",fgets($passCsv)) ;
+    $port = str_replace($replace,"",fgets($passCsv)) ;
     $user = str_replace($replace,"",fgets($passCsv)) ;
-    $table = str_replace($replace,"",fgets($passCsv)) ;
     $mdp = str_replace($replace,"",fgets($passCsv)) ;
 }
-
-$bdd = new PDO('mysql:host='.$host.';dbname='.$table.'', $user, $mdp);
+var_dump($host);
+// $bdd = new PDO('mysql:host='.$host.';dbname='.$table.'', $user, $mdp);
+$bdd = new PDO("mysql:host=$host;port=$port;dbname=$dbname;charset=utf8", $user, $mdp);
 
 
 // pour crypter directement toute les mdps de la bd selon le sha1
